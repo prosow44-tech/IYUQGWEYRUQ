@@ -1,20 +1,34 @@
 <!--
 /* PLANNING:
-1.  **Requirement Analysis & Corrections**:
-    *   **Color Palette Redesign**: The user explicitly requested a "Yellow and White" (Sarı-Beyaz) design. The previous dark/gold theme is completely discarded. Backgrounds will be #FFFFFF (White) and #FAFAFA, with vibrant #FFC107 (Yellow) accents, buttons, and highlights. Text will be dark (#1A1A1A) for readability.
-    *   **Preloader Removal**: The user hated the "System is preparing" preloader. It is completely deleted from the HTML, CSS, and JS. The site will load directly into the content.
-    *   **Smart Scrolling (Akıllı Kaydırma)**: The user felt the snap scrolling was missing. I will implement strict `100dvh` sections with `scroll-snap-type: y mandatory;` and `scroll-snap-stop: always;` on the parent container. This forces a TikTok/Reels-like perfect snap for every single section (1-1-2 flow), eliminating any free-scrolling confusion.
-    *   **Car Specs & Iconography**: Based on the provided image (image_db2271.png), I need to place specific icons right under the car: a Gas Pump for fuel type (Benzin) and an H-pattern Gearbox for transmission (Manuel). I will construct custom SVGs matching this layout precisely, organized horizontally under the price.
-2.  **Technical Architecture (SOLID & Error Prevention)**:
-    *   **Viewport**: Using `dvh` (Dynamic Viewport Height) instead of `vh` to prevent mobile browser URL bar glitching during snap scrolls.
-    *   **Media Handling**: Videos will use `IntersectionObserver` to play only when in view, preventing `NotAllowedError` (Error 105) and memory leaks on mobile devices. Promise `.catch()` implemented.
-    *   **Null Checks**: All DOM queries are checked for `null` before attaching event listeners.
-3.  **UI/UX Details**:
-    *   Sticky white header with yellow branding.
-    *   Marquee filters adapted to the light theme.
-    *   Lead generation form at the bottom, respecting the yellow/white theme.
-    *   KVKK Modal requires scroll-to-bottom to unlock the submit button.
-4.  **Output Execution**: Zero placeholders. 100% complete executable code. No conversational text outside this block.
+1.  **Requirement Analysis & Conflict Resolution**:
+    *   **User constraints**: 
+        *   PC layout must accommodate at least 3 cars per row.
+        *   Pattern requested: 3-3-2-3-3-2-2 (Dynamic column sizing).
+        *   "Tasarım kare olmayacak" (Design won't be square): The cards themselves must be rectangular (e.g., 4:3 or 16:9 aspect ratio for the media), but tightly packed ("neredeyse birbirine yapışık").
+        *   Image: Specific card UI requested -> White background, centered yellow jaguar icon, bold title, yellow price + "/ Gün", and a gray "pill" containing the specs (Fuel & Transmission) horizontally aligned.
+        *   Image: Represents the tight masonry/grid layout with rounded corners and minimal gaps.
+2.  **Architecture & CSS Grid Strategy**:
+    *   Implement a universal CSS Grid system.
+    *   **Mobile (default)**: `grid-template-columns: repeat(2, 1fr)`.
+        *   Class `.m-full` spans 2 columns (1-1 layout).
+        *   Class `.m-half` spans 1 column (2'li layout).
+        *   Maintains the 1-1-2 snap scroll logic via `100dvh` heights and `scroll-snap-align: start`.
+    *   **Desktop (>= 992px)**: `grid-template-columns: repeat(6, 1fr)`.
+        *   Class `.pc-3` spans 2 columns (fits 3 per row).
+        *   Class `.pc-2` spans 3 columns (fits 2 per row).
+        *   Gap set to `4px` ("neredeyse yapışık").
+        *   Disable snap scrolling on PC for a natural browsing experience of the dense grid.
+        *   Cards are given `aspect-ratio: 4/3` or fixed proportional heights to ensure they are NOT square, fulfilling the "kare olmayacak" rule.
+3.  **UI Implementation (Pixel-Perfect from Image 2)**:
+    *   `.car-card`: White background (`#FFFFFF`), `border-radius: 16px`, `overflow: hidden`.
+    *   `.car-media`: Takes up top 60% of the card.
+    *   `.car-info`: Bottom 40%, flex column, centered.
+    *   `.specs-pill`: `#F5F5F5` background, `border-radius: 50px`, inline-flex, gap 10px.
+4.  **Error Prevention & Performance**:
+    *   Keep `IntersectionObserver` for lazy loading videos.
+    *   Handle `NotAllowedError` for video autoplay gracefully with `.catch()`.
+    *   DOM elements validated before adding event listeners (Null Pointer Prevention).
+5.  **Strict Output Format**: Flawless, copy-paste-ready HTML. No markdown formatting outside this block.
 */
 -->
 <!DOCTYPE html>
@@ -25,19 +39,18 @@
     <title>Referans Rentecar | Premium Araç Kiralama</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* White & Yellow Theme */
-            --bg-primary: #FFFFFF;
-            --bg-secondary: #F8F9FA;
+            --bg-body: #FAFAFA;
+            --bg-card: #FFFFFF;
+            --bg-pill: #F3F4F6;
             --theme-yellow: #FFC107;
-            --theme-yellow-hover: #FFB300;
-            --text-main: #111111;
-            --text-muted: #555555;
-            --border-light: #EEEEEE;
-            --shadow-sm: 0 2px 10px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 20px rgba(0,0,0,0.1);
+            --text-dark: #111111;
+            --text-muted: #6B7280;
+            --border-color: #EEEEEE;
+            --gap-size: 4px; /* Neredeyse birbirine yapışık (Tight packing) */
+            --radius: 16px;
         }
 
         * {
@@ -49,11 +62,11 @@
         }
 
         body, html {
-            background-color: var(--bg-primary);
-            color: var(--text-main);
-            height: 100%;
+            background-color: var(--bg-body);
+            color: var(--text-dark);
             width: 100%;
-            overflow: hidden; /* Scroll is handled by snap-container */
+            height: 100%;
+            overflow: hidden; /* Scroll delegated to main container for mobile snap */
         }
 
         /* === HEADER === */
@@ -61,41 +74,22 @@
             position: fixed;
             top: 0; left: 0; width: 100%;
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-light);
-            padding: 12px 0;
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: var(--shadow-sm);
         }
 
         .logo {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-main);
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-        .logo span {
-            color: var(--theme-yellow);
-        }
-
-        /* === MARQUEE FILTERS === */
-        .filter-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .filter-title {
-            font-size: 11px;
-            font-weight: 500;
-            color: var(--text-muted);
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: 1px;
             margin-bottom: 8px;
         }
+        .logo span { color: var(--theme-yellow); }
 
         .marquee-wrapper {
             width: 100%;
@@ -108,7 +102,7 @@
 
         .marquee-content {
             display: inline-block;
-            animation: marquee 20s linear infinite;
+            animation: marquee 25s linear infinite;
         }
 
         @keyframes marquee {
@@ -118,544 +112,492 @@
 
         .filter-chip {
             display: inline-block;
-            padding: 6px 16px;
+            padding: 5px 14px;
             margin: 0 4px;
-            border: 1px solid var(--border-light);
+            border: 1px solid var(--border-color);
             border-radius: 20px;
             font-size: 11px;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--text-muted);
-            background: var(--bg-primary);
+            background: var(--bg-card);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .filter-chip.active {
             border-color: var(--theme-yellow);
-            color: var(--text-main);
+            color: var(--text-dark);
             background: var(--theme-yellow);
         }
 
-        /* === SMART SCROLLING (AKILLI KAYDIRMA) === */
-        .snap-container {
-            height: 100dvh; /* Mobile browser friendly viewport height */
+        /* === MAIN GRID LAYOUT === */
+        .main-scroll-container {
+            height: 100dvh;
             width: 100%;
-            overflow-y: scroll;
+            overflow-y: auto;
+            padding-top: 75px; /* Header offset */
+            background-color: var(--bg-body);
+            
+            /* Mobile Default: Snap Scrolling */
             scroll-snap-type: y mandatory;
             scroll-behavior: smooth;
             scrollbar-width: none;
-            padding-top: 85px; /* Offset for header */
         }
-        .snap-container::-webkit-scrollbar { display: none; }
+        .main-scroll-container::-webkit-scrollbar { display: none; }
 
-        .snap-section {
-            height: calc(100dvh - 85px);
-            width: 100%;
-            scroll-snap-align: start;
-            scroll-snap-stop: always; /* Forces stop on each item */
-            position: relative;
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 cols for mobile to support 2'li kutucuk */
+            gap: var(--gap-size);
+            padding: var(--gap-size);
+        }
+
+        /* === CAR CARD UI (Referencing Image 2) === */
+        .car-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            background-color: var(--bg-primary);
-            border-bottom: 4px solid var(--bg-secondary);
+            position: relative;
         }
 
-        /* === CAR DISPLAY & UI === */
-        .car-media-container {
-            flex: 1;
+        /* Mobile specific heights for snap */
+        .m-full { grid-column: span 2; height: calc(100dvh - 85px); scroll-snap-align: start; scroll-snap-stop: always; }
+        .m-half { grid-column: span 1; height: calc(100dvh - 85px); scroll-snap-align: start; scroll-snap-stop: always; }
+
+        .car-media {
+            flex: 1; /* Takes remaining space, approx 60-70% */
             width: 100%;
+            background-color: #E8ECEF; /* Light sky/gray placeholder background */
             position: relative;
-            background: var(--bg-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             overflow: hidden;
         }
 
-        .car-media-bg {
-            width: 90%;
-            height: 90%;
-            object-fit: contain;
-            transition: transform 0.3s;
+        .car-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .car-ui {
-            background: var(--bg-primary);
-            width: 100%;
-            padding: 20px;
+        .car-info {
+            padding: 15px 10px 25px 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            background: var(--bg-card);
             text-align: center;
-            box-shadow: 0 -10px 20px rgba(0,0,0,0.02);
-            z-index: 2;
         }
 
         .jaguar-icon {
-            width: 50px;
-            margin-bottom: 10px;
+            width: 24px;
+            fill: var(--theme-yellow);
+            margin-bottom: 6px;
         }
-
-        .jaguar-lux { fill: var(--theme-yellow); animation: lux-run 0.5s infinite alternate ease-in-out; }
-        .jaguar-std { fill: var(--text-muted); animation: std-run 1s infinite alternate ease-in-out; }
-        @keyframes lux-run { 0% { transform: translateX(-10px); } 100% { transform: translateX(10px); } }
-        @keyframes std-run { 0% { transform: translateX(-4px); } 100% { transform: translateX(4px); } }
+        
+        .jag-gray { fill: #9CA3AF; } /* Standard cars get gray jaguar */
 
         .car-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 5px;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 2px;
         }
 
         .car-price {
-            font-size: 28px;
-            font-weight: 700;
+            font-size: 18px;
+            font-weight: 800;
             color: var(--theme-yellow);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             display: flex;
-            align-items: baseline;
-            gap: 5px;
-            text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
         }
 
         .car-price span {
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 10px;
+            font-weight: 600;
             color: var(--text-muted);
-            text-shadow: none;
         }
 
-        /* Based on the requested image design (Icon + Text side by side) */
-        .specs-grid {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            align-items: center;
-            background: var(--bg-secondary);
-            padding: 10px 25px;
+        /* Specific Specs Pill from Image 2 */
+        .specs-pill {
+            background-color: var(--bg-pill);
             border-radius: 30px;
+            padding: 6px 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .spec-item {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
         }
 
         .spec-item svg {
-            width: 18px;
-            height: 18px;
-            fill: var(--text-main);
+            width: 12px;
+            height: 12px;
+            fill: var(--text-dark);
         }
-        
+
         .spec-item span {
-            font-size: 13px;
-            color: var(--text-main);
-            font-weight: 500;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-dark);
         }
 
-        /* === DUAL GRID (2'Lİ KUTUCUK) === */
-        .dual-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            height: 100%;
-            width: 100%;
-        }
-
-        .dual-box {
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid var(--border-light);
-            background: var(--bg-primary);
-        }
-        .dual-box:last-child { border-right: none; }
-
-        .dual-media {
-            flex: 1;
-            background: var(--bg-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-        }
-        .dual-media video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .dual-ui {
-            padding: 15px 10px;
-            text-align: center;
-            border-top: 1px solid var(--border-light);
-        }
-
-        .dual-title { font-size: 15px; font-weight: 700; margin-bottom: 5px; color: var(--text-main); }
-        .dual-price { font-size: 16px; color: var(--theme-yellow); font-weight: 700; margin-bottom: 8px;}
-        
-        .dual-specs {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-        }
-        .dual-specs .spec-item {
-            gap: 5px;
-        }
-        .dual-specs .spec-item span {
-            font-size: 11px;
-        }
-
-        /* === FORM SECTION === */
-        .form-section {
+        /* === LEAD GENERATION FORM === */
+        .form-container {
+            grid-column: 1 / -1;
+            background: var(--bg-card);
+            border-radius: var(--radius);
             padding: 30px 20px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            max-width: 600px;
-            margin: 0 auto;
-            background: var(--bg-primary);
+            scroll-snap-align: start;
         }
 
         .trust-banner {
             text-align: center;
             margin-bottom: 25px;
-            padding: 15px;
-            background: var(--bg-secondary);
-            border-radius: 12px;
         }
-
-        .payment-methods {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 10px;
-        }
-
-        .payment-methods svg { width: 30px; fill: var(--text-muted); }
 
         .trust-text {
             font-size: 13px;
             font-weight: 500;
             line-height: 1.5;
-            color: var(--text-main);
+            color: var(--text-dark);
         }
         .trust-text span { color: var(--theme-yellow); font-weight: 700; }
 
-        .input-group { margin-bottom: 15px; }
-        
         .form-input {
             width: 100%;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-light);
-            padding: 14px 15px;
-            color: var(--text-main);
-            font-size: 14px;
+            background: var(--bg-body);
+            border: 1px solid var(--border-color);
+            padding: 14px;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+            font-size: 13px;
             font-weight: 500;
             border-radius: 8px;
             outline: none;
-            transition: border-color 0.3s;
+            transition: 0.2s;
         }
-        .form-input:focus { border-color: var(--theme-yellow); background: var(--bg-primary); }
-        
-        .row-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .input-label { font-size: 11px; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; display: block;}
+        .form-input:focus { border-color: var(--theme-yellow); }
 
-        .contact-tabs {
-            display: flex;
-            gap: 10px;
-            margin: 20px 0;
-        }
+        .row-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+        .row-grid .form-input { margin-bottom: 0; }
 
+        .contact-tabs { display: flex; gap: 10px; margin: 15px 0; }
         .contact-tab {
-            flex: 1;
-            padding: 14px;
-            background: var(--bg-primary);
-            border: 2px solid var(--border-light);
-            color: var(--text-muted);
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
+            flex: 1; padding: 14px; background: var(--bg-body); border: 1px solid var(--border-color);
+            border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--text-muted);
         }
+        .contact-tab.active { background: var(--theme-yellow); border-color: var(--theme-yellow); color: var(--text-dark); }
 
-        .contact-tab.active {
-            border-color: var(--theme-yellow);
-            background: var(--theme-yellow);
-            color: var(--text-main);
-        }
-
-        .legal-check-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .legal-text { font-size: 12px; color: var(--text-muted); font-weight: 500; }
-        .legal-link { color: var(--theme-yellow); text-decoration: underline; cursor: pointer; font-weight: 700;}
+        .legal-check-wrapper { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; font-size: 11px; font-weight: 600; color: var(--text-muted); }
+        .legal-link { color: var(--theme-yellow); text-decoration: underline; cursor: pointer; }
 
         .submit-btn {
-            width: 100%;
-            padding: 16px;
-            background: var(--theme-yellow);
-            color: var(--text-main);
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: transform 0.1s, background 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+            width: 100%; padding: 16px; background: var(--theme-yellow); color: var(--text-dark);
+            border: none; border-radius: 8px; font-size: 14px; font-weight: 800; text-transform: uppercase;
+            cursor: pointer; transition: 0.2s;
         }
-        .submit-btn:active:not(:disabled) { transform: scale(0.98); }
-        .submit-btn:disabled { 
-            background: var(--border-light); 
-            color: #999; 
-            cursor: not-allowed;
-            box-shadow: none;
-        }
+        .submit-btn:disabled { background: var(--border-color); color: #999; cursor: not-allowed; }
 
-        /* === MODALS (KVKK & PWA) === */
+        /* === MODALS === */
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 9999;
+            display: flex; flex-direction: column; justify-content: flex-end;
+            opacity: 0; pointer-events: none; transition: 0.3s;
         }
         .modal-overlay.open { opacity: 1; pointer-events: auto; }
-
+        
         .modal-content {
-            background: var(--bg-primary);
-            height: 85vh;
-            border-radius: 20px 20px 0 0;
-            display: flex;
-            flex-direction: column;
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background: var(--bg-card); height: 85vh; border-radius: 20px 20px 0 0;
+            display: flex; flex-direction: column; transform: translateY(100%); transition: 0.4s;
         }
         .modal-overlay.open .modal-content { transform: translateY(0); }
 
-        .modal-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--border-light);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .modal-title { font-size: 16px; font-weight: 700; }
-        .modal-close { background: none; border: none; font-size: 24px; color: var(--text-main); cursor: pointer; }
+        .modal-header { padding: 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .modal-title { font-weight: 800; font-size: 16px; }
+        .modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-dark); }
+        .modal-body { flex: 1; padding: 20px; overflow-y: auto; font-size: 12px; line-height: 1.8; color: var(--text-muted); font-weight: 500; }
+        .modal-footer { padding: 20px; border-top: 1px solid var(--border-color); }
 
-        .modal-body {
-            flex: 1;
-            padding: 25px;
-            overflow-y: auto;
-            font-size: 13px;
-            line-height: 1.8;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
+        /* PWA Card specific */
+        #modal-pwa .modal-content { height: auto; border-radius: 20px; margin: 20px; padding: 10px; }
 
-        .modal-footer {
-            padding: 20px;
-            border-top: 1px solid var(--border-light);
-            background: var(--bg-primary);
-        }
+        /* =========================================================
+           DESKTOP (PC) GRID LAYOUT - OVERRIDES
+           Implementation of 3-3-2-3-3-2 pattern. "Kare olmayacak" 
+           ========================================================= */
+        @media (min-width: 992px) {
+            .main-scroll-container {
+                scroll-snap-type: none; /* Serbest kaydırma (Free scroll on PC) */
+                padding-top: 90px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
 
-        /* PWA Card Styling */
-        #modal-pwa .modal-content {
-            height: auto;
-            border-radius: 20px;
-            margin: 20px;
-            padding: 10px;
+            .car-grid {
+                /* 6 Column Base to allow dividing by 3 (span 2) and by 2 (span 3) */
+                grid-template-columns: repeat(6, 1fr);
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+
+            /* Height fixed to maintain rectangular ratio (NOT SQUARE) */
+            .car-card {
+                height: 450px; 
+            }
+
+            .car-media {
+                height: 65%;
+                flex: none; /* Disable flex-grow to lock aspect visually */
+            }
+            .car-info {
+                height: 35%;
+            }
+
+            /* Desktop Specific Spans for the 3-3-2-3-3-2 Pattern */
+            .pc-3 { grid-column: span 2; } /* 3 cards per row */
+            .pc-2 { grid-column: span 3; } /* 2 cards per row */
+            
+            /* Responsive text scaling for PC */
+            .car-title { font-size: 18px; }
+            .car-price { font-size: 22px; }
+            .specs-pill { padding: 8px 18px; }
+            .spec-item span { font-size: 12px; }
+            .spec-item svg { width: 14px; height: 14px; }
+            .jaguar-icon { width: 32px; }
         }
 
     </style>
 </head>
 <body>
 
-    <!-- HEADER & MARQUEE FILTERS (White & Yellow) -->
-    <header id="main-header">
+    <!-- HEADER -->
+    <header>
         <div class="logo">REFERANS<span>.</span></div>
-        <div class="filter-container">
-            <div class="filter-title">Nasıl bir araba bakmıştınız? Lütfen seçiniz</div>
-            <div class="marquee-wrapper">
-                <div class="marquee-content" id="marquee-track">
-                    <span class="filter-chip active">Premium SUV</span>
-                    <span class="filter-chip">Spor Sedan</span>
-                    <span class="filter-chip">Otomatik</span>
-                    <span class="filter-chip">Manuel</span>
-                    <span class="filter-chip">Benzin</span>
-                    <span class="filter-chip">Elektrikli</span>
-                    <span class="filter-chip">7 Kişilik</span>
-                    <span class="filter-chip">Ekonomik</span>
-                </div>
+        <div class="marquee-wrapper">
+            <div class="marquee-content" id="marquee-track">
+                <span class="filter-chip active">Premium SUV</span>
+                <span class="filter-chip">Spor Sedan</span>
+                <span class="filter-chip">Otomatik</span>
+                <span class="filter-chip">Manuel</span>
+                <span class="filter-chip">Benzin</span>
+                <span class="filter-chip">Elektrikli</span>
+                <span class="filter-chip">7 Kişilik</span>
+                <span class="filter-chip">Ekonomik</span>
             </div>
         </div>
     </header>
 
-    <!-- SMART SCROLL CONTAINER (Akıllı Kaydırma 100dvh) -->
-    <div class="snap-container" id="snap-scroll">
-        
-        <!-- SECTION 1: LUXURY CAR -->
-        <section class="snap-section">
-            <div class="car-media-container">
-                <!-- Muted looping video. Uses intersection observer via JS -->
-                <video class="car-media-bg lazy-video" muted loop playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
-            </div>
+    <div class="main-scroll-container">
+        <main class="car-grid">
             
-            <div class="car-ui">
-                <svg class="jaguar-icon jaguar-lux" viewBox="0 0 100 50">
-                    <path d="M10,40 Q15,30 25,32 Q35,20 50,25 Q70,20 85,30 Q95,35 90,40 Q80,35 65,40 Q50,45 35,40 Q20,45 10,40 Z" />
-                </svg>
-                <h2 class="car-title">Mercedes G-Class</h2>
-                <div class="car-price">4.500 ₺ <span>/ Gün</span></div>
-                
-                <!-- Explicitly Requested Specs (Benzin, Manuel vs) based on image -->
-                <div class="specs-grid">
-                    <!-- Fuel SVG (Gas Pump) + Text -->
-                    <div class="spec-item">
-                        <svg viewBox="0 0 24 24"><path d="M12.5,22H11V10H9V22H7V8C7,7.4 7.4,7 8,7H14C14.6,7 15,7.4 15,8V22H12.5M17,10C17.6,10 18,10.4 18,11V16H17V11H16V17C16,17.6 15.6,18 15,18H14V19H15C16.1,19 17,18.1 17,17V16H18C18.6,16 19,15.6 19,15V11C19,9.9 18.1,9 17,9H16V7H17V10Z"/></svg>
-                        <span>Benzin</span>
-                    </div>
-                    <!-- Transmission SVG (H-Pattern Gear) + Text -->
-                    <div class="spec-item">
-                        <svg viewBox="0 0 24 24"><path d="M5,4A2,2 0 0,0 3,6A2,2 0 0,0 5,8A2,2 0 0,0 7,6A2,2 0 0,0 5,4M11,4A2,2 0 0,0 9,6A2,2 0 0,0 11,8A2,2 0 0,0 13,6A2,2 0 0,0 11,4M19,4A2,2 0 0,0 17,6A2,2 0 0,0 19,8A2,2 0 0,0 21,6A2,2 0 0,0 19,4M5,10V14H11V10H13V14H19V10H21V16H13V20A2,2 0 0,0 15,22A2,2 0 0,0 17,20A2,2 0 0,0 15,18A2,2 0 0,0 13,20V16H11V20A2,2 0 0,0 13,22A2,2 0 0,0 11,24A2,2 0 0,0 9,22A2,2 0 0,0 11,20V16H5V20A2,2 0 0,0 7,22A2,2 0 0,0 5,24A2,2 0 0,0 3,22A2,2 0 0,0 5,20V16H3V10H5Z"/></svg>
-                        <span>Otomatik</span>
-                    </div>
+            <!-- ROW 1 (PC: 3 items, Mobile: 1-1) -->
+            <!-- Item 1 -->
+            <article class="car-card m-full pc-3">
+                <div class="car-media">
+                    <video class="lazy-video" muted loop playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
                 </div>
-            </div>
-        </section>
-
-        <!-- SECTION 2: STANDARD CAR -->
-        <section class="snap-section">
-            <div class="car-media-container">
-                <video class="car-media-bg lazy-video" muted loop playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
-            </div>
-            
-            <div class="car-ui">
-                <svg class="jaguar-icon jaguar-std" viewBox="0 0 100 50">
-                    <path d="M10,40 Q15,30 25,32 Q35,20 50,25 Q70,20 85,30 Q95,35 90,40 Q80,35 65,40 Q50,45 35,40 Q20,45 10,40 Z" />
-                </svg>
-                <h2 class="car-title">Volkswagen Passat</h2>
-                <div class="car-price">2.100 ₺ <span>/ Gün</span></div>
-                
-                <div class="specs-grid">
-                    <div class="spec-item">
-                        <svg viewBox="0 0 24 24"><path d="M12.5,22H11V10H9V22H7V8C7,7.4 7.4,7 8,7H14C14.6,7 15,7.4 15,8V22H12.5M17,10C17.6,10 18,10.4 18,11V16H17V11H16V17C16,17.6 15.6,18 15,18H14V19H15C16.1,19 17,18.1 17,17V16H18C18.6,16 19,15.6 19,15V11C19,9.9 18.1,9 17,9H16V7H17V10Z"/></svg>
-                        <span>Dizel</span>
-                    </div>
-                    <div class="spec-item">
-                        <svg viewBox="0 0 24 24"><path d="M5,4A2,2 0 0,0 3,6A2,2 0 0,0 5,8A2,2 0 0,0 7,6A2,2 0 0,0 5,4M11,4A2,2 0 0,0 9,6A2,2 0 0,0 11,8A2,2 0 0,0 13,6A2,2 0 0,0 11,4M19,4A2,2 0 0,0 17,6A2,2 0 0,0 19,8A2,2 0 0,0 21,6A2,2 0 0,0 19,4M5,10V14H11V10H13V14H19V10H21V16H13V20A2,2 0 0,0 15,22A2,2 0 0,0 17,20A2,2 0 0,0 15,18A2,2 0 0,0 13,20V16H11V20A2,2 0 0,0 13,22A2,2 0 0,0 11,24A2,2 0 0,0 9,22A2,2 0 0,0 11,20V16H5V20A2,2 0 0,0 7,22A2,2 0 0,0 5,24A2,2 0 0,0 3,22A2,2 0 0,0 5,20V16H3V10H5Z"/></svg>
-                        <span>Manuel</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 3: DUAL GRID -->
-        <section class="snap-section">
-            <div class="dual-container">
-                <!-- Dual Box 1 -->
-                <div class="dual-box">
-                    <div class="dual-media">
-                        <video class="lazy-video" muted loop playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
-                    </div>
-                    <div class="dual-ui">
-                        <h3 class="dual-title">Citroen C4</h3>
-                        <div class="dual-price">1.500 ₺</div>
-                        <div class="dual-specs">
-                            <div class="spec-item">
-                                <svg viewBox="0 0 24 24"><path d="M12.5,22H11V10H9V22H7V8C7,7.4 7.4,7 8,7H14C14.6,7 15,7.4 15,8V22H12.5M17,10C17.6,10 18,10.4 18,11V16H17V11H16V17C16,17.6 15.6,18 15,18H14V19H15C16.1,19 17,18.1 17,17V16H18C18.6,16 19,15.6 19,15V11C19,9.9 18.1,9 17,9H16V7H17V10Z"/></svg>
-                                <span>Benzin</span>
-                            </div>
-                            <div class="spec-item">
-                                <svg viewBox="0 0 24 24"><path d="M5,4A2,2 0 0,0 3,6A2,2 0 0,0 5,8A2,2 0 0,0 7,6A2,2 0 0,0 5,4M11,4A2,2 0 0,0 9,6A2,2 0 0,0 11,8A2,2 0 0,0 13,6A2,2 0 0,0 11,4M19,4A2,2 0 0,0 17,6A2,2 0 0,0 19,8A2,2 0 0,0 21,6A2,2 0 0,0 19,4M5,10V14H11V10H13V14H19V10H21V16H13V20A2,2 0 0,0 15,22A2,2 0 0,0 17,20A2,2 0 0,0 15,18A2,2 0 0,0 13,20V16H11V20A2,2 0 0,0 13,22A2,2 0 0,0 11,24A2,2 0 0,0 9,22A2,2 0 0,0 11,20V16H5V20A2,2 0 0,0 7,22A2,2 0 0,0 5,24A2,2 0 0,0 3,22A2,2 0 0,0 5,20V16H3V10H5Z"/></svg>
-                                <span>Manuel</span>
-                            </div>
+                <div class="car-info">
+                    <!-- SVG Jaguar Icon -->
+                    <svg class="jaguar-icon" viewBox="0 0 100 50"><path d="M10,40 Q15,30 25,32 Q35,20 50,25 Q70,20 85,30 Q95,35 90,40 Q80,35 65,40 Q50,45 35,40 Q20,45 10,40 Z" /></svg>
+                    <h2 class="car-title">Mercedes G-Class</h2>
+                    <div class="car-price">4.500 ₺ <span>/ Gün</span></div>
+                    
+                    <div class="specs-pill">
+                        <div class="spec-item">
+                            <svg viewBox="0 0 24 24"><path d="M12.5,22H11V10H9V22H7V8C7,7.4 7.4,7 8,7H14C14.6,7 15,7.4 15,8V22H12.5M17,10C17.6,10 18,10.4 18,11V16H17V11H16V17C16,17.6 15.6,18 15,18H14V19H15C16.1,19 17,18.1 17,17V16H18C18.6,16 19,15.6 19,15V11C19,9.9 18.1,9 17,9H16V7H17V10Z"/></svg>
+                            <span>Benzin</span>
+                        </div>
+                        <div class="spec-item">
+                            <svg viewBox="0 0 24 24"><path d="M5,4A2,2 0 0,0 3,6A2,2 0 0,0 5,8A2,2 0 0,0 7,6A2,2 0 0,0 5,4M11,4A2,2 0 0,0 9,6A2,2 0 0,0 11,8A2,2 0 0,0 13,6A2,2 0 0,0 11,4M19,4A2,2 0 0,0 17,6A2,2 0 0,0 19,8A2,2 0 0,0 21,6A2,2 0 0,0 19,4M5,10V14H11V10H13V14H19V10H21V16H13V20A2,2 0 0,0 15,22A2,2 0 0,0 17,20A2,2 0 0,0 15,18A2,2 0 0,0 13,20V16H11V20A2,2 0 0,0 13,22A2,2 0 0,0 11,24A2,2 0 0,0 9,22A2,2 0 0,0 11,20V16H5V20A2,2 0 0,0 7,22A2,2 0 0,0 5,24A2,2 0 0,0 3,22A2,2 0 0,0 5,20V16H3V10H5Z"/></svg>
+                            <span>Otomatik</span>
                         </div>
                     </div>
                 </div>
-                <!-- Dual Box 2 -->
-                <div class="dual-box">
-                    <div class="dual-media">
-                        <video class="lazy-video" muted loop playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
-                    </div>
-                    <div class="dual-ui">
-                        <h3 class="dual-title">Citroen C3</h3>
-                        <div class="dual-price">1.200 ₺</div>
-                        <div class="dual-specs">
-                            <div class="spec-item">
-                                <svg viewBox="0 0 24 24"><path d="M12.5,22H11V10H9V22H7V8C7,7.4 7.4,7 8,7H14C14.6,7 15,7.4 15,8V22H12.5M17,10C17.6,10 18,10.4 18,11V16H17V11H16V17C16,17.6 15.6,18 15,18H14V19H15C16.1,19 17,18.1 17,17V16H18C18.6,16 19,15.6 19,15V11C19,9.9 18.1,9 17,9H16V7H17V10Z"/></svg>
-                                <span>Benzin</span>
-                            </div>
-                            <div class="spec-item">
-                                <svg viewBox="0 0 24 24"><path d="M5,4A2,2 0 0,0 3,6A2,2 0 0,0 5,8A2,2 0 0,0 7,6A2,2 0 0,0 5,4M11,4A2,2 0 0,0 9,6A2,2 0 0,0 11,8A2,2 0 0,0 13,6A2,2 0 0,0 11,4M19,4A2,2 0 0,0 17,6A2,2 0 0,0 19,8A2,2 0 0,0 21,6A2,2 0 0,0 19,4M5,10V14H11V10H13V14H19V10H21V16H13V20A2,2 0 0,0 15,22A2,2 0 0,0 17,20A2,2 0 0,0 15,18A2,2 0 0,0 13,20V16H11V20A2,2 0 0,0 13,22A2,2 0 0,0 11,24A2,2 0 0,0 9,22A2,2 0 0,0 11,20V16H5V20A2,2 0 0,0 7,22A2,2 0 0,0 5,24A2,2 0 0,0 3,22A2,2 0 0,0 5,20V16H3V10H5Z"/></svg>
-                                <span>Manuel</span>
-                            </div>
+            </article>
+
+            <!-- Item 2 -->
+            <article class="car-card m-full pc-3">
+                <div class="car-media">
+                    <video class="lazy-video" muted loop playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+                </div>
+                <div class="car-info">
+                    <svg class="jaguar-icon jag-gray" viewBox="0 0 100 50"><path d="M10,40 Q15,30 25,32 Q35,20 50,25 Q70,20 85,30 Q95,35 90,40 Q80,35 65,40 Q50,45 35,40 Q20,45 10,40 Z" /></svg>
+                    <h2 class="car-title">BMW 320i</h2>
+                    <div class="car-price">3.200 ₺ <span>/ Gün</span></div>
+                    <div class="specs-pill">
+                        <div class="spec-item">
+                            <svg viewBox="0 0 24 24"><path d="M12.5,22H11V10H9V22H7V8C7,7.4 7.4,7 8,7H14C14.6,7 15,7.4 15,8V22H12.5M17,10C17.6,10 18,10.4 18,11V16H17V11H16V17C16,17.6 15.6,18 15,18H14V19H15C16.1,19 17,18.1 17,17V16H18C18.6,16 19,15.6 19,15V11C19,9.9 18.1,9 17,9H16V7H17V10Z"/></svg>
+                            <span>Benzin</span>
+                        </div>
+                        <div class="spec-item">
+                            <svg viewBox="0 0 24 24"><path d="M5,4A2,2 0 0,0 3,6A2,2 0 0,0 5,8A2,2 0 0,0 7,6A2,2 0 0,0 5,4M11,4A2,2 0 0,0 9,6A2,2 0 0,0 11,8A2,2 0 0,0 13,6A2,2 0 0,0 11,4M19,4A2,2 0 0,0 17,6A2,2 0 0,0 19,8A2,2 0 0,0 21,6A2,2 0 0,0 19,4M5,10V14H11V10H13V14H19V10H21V16H13V20A2,2 0 0,0 15,22A2,2 0 0,0 17,20A2,2 0 0,0 15,18A2,2 0 0,0 13,20V16H11V20A2,2 0 0,0 13,22A2,2 0 0,0 11,24A2,2 0 0,0 9,22A2,2 0 0,0 11,20V16H5V20A2,2 0 0,0 7,22A2,2 0 0,0 5,24A2,2 0 0,0 3,22A2,2 0 0,0 5,20V16H3V10H5Z"/></svg>
+                            <span>Otomatik</span>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </article>
 
-        <!-- SECTION 4: LEAD GENERATION FORM -->
-        <section class="snap-section" style="border-bottom:none;">
-            <div class="form-section">
-                
+            <!-- Item 3 -->
+            <article class="car-card m-full pc-3">
+                <div class="car-media">
+                    <video class="lazy-video" muted loop playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+                </div>
+                <div class="car-info">
+                    <svg class="jaguar-icon jag-gray" viewBox="0 0 100 50"><path d="M10,40 Q15,30 25,32 Q35,20 50,25 Q70,20 85,30 Q95,35 90,40 Q80,35 65,40 Q50,45 35,40 Q20,45 10,40 Z" /></svg>
+                    <h2 class="car-title">Audi A4</h2>
+                    <div class="car-price">3.000 ₺ <span>/ Gün</span></div>
+                    <div class="specs-pill">
+                        <div class="spec-item">
+                            <svg viewBox="0 0 24 24"><path d="M12.5,22H11V10H9V22H7V8C7,7.4 7.4,7 8,7H14C14.6,7 15,7.4 15,8V22H12.5M17,10C17.6,10 18,10.4 18,11V16H17V11H16V17C16,17.6 15.6,18 15,18H14V19H15C16.1,19 17,18.1 17,17V16H18C18.6,16 19,15.6 19,15V11C19,9.9 18.1,9 17,9H16V7H17V10Z"/></svg>
+                            <span>Dizel</span>
+                        </div>
+                        <div class="spec-item">
+                            <svg viewBox="0 0 24 24"><path d="M5,4A2,2 0 0,0 3,6A2,2 0 0,0 5,8A2,2 0 0,0 7,6A2,2 0 0,0 5,4M11,4A2,2 0 0,0 9,6A2,2 0 0,0 11,8A2,2 0 0,0 13,6A2,2 0 0,0 11,4M19,4A2,2 0 0,0 17,6A2,2 0 0,0 19,8A2,2 0 0,0 21,6A2,2 0 0,0 19,4M5,10V14H11V10H13V14H19V10H21V16H13V20A2,2 0 0,0 15,22A2,2 0 0,0 17,20A2,2 0 0,0 15,18A2,2 0 0,0 13,20V16H11V20A2,2 0 0,0 13,22A2,2 0 0,0 11,24A2,2 0 0,0 9,22A2,2 0 0,0 11,20V16H5V20A2,2 0 0,0 7,22A2,2 0 0,0 5,24A2,2 0 0,0 3,22A2,2 0 0,0 5,20V16H3V10H5Z"/></svg>
+                            <span>Otomatik</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ROW 2 (PC: 3 items, Mobile: 2'li Kutucuk) -->
+            <!-- Item 4 (Mobile Half) -->
+            <article class="car-card m-half pc-3">
+                <div class="car-media">
+                    <video class="lazy-video" muted loop playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+                </div>
+                <div class="car-info">
+                    <h2 class="car-title">Citroen C4</h2>
+                    <div class="car-price">1.500 ₺ <span>/ Gün</span></div>
+                    <div class="specs-pill">
+                        <div class="spec-item">
+                            <svg viewBox="0 0 24 24"><path d="M12.5,22H11V10H9V22H7V8C7,7.4 7.4,7 8,7H14C14.6,7 15,7.4 15,8V22H12.5M17,10C17.6,10 18,10.4 18,11V16H17V11H16V17C16,17.6 15.6,18 15,18H14V19H15C16.1,19 17,18.1 17,17V16H18C18.6,16 19,15.6 19,15V11C19,9.9 18.1,9 17,9H16V7H17V10Z"/></svg>
+                            <span>Benzin</span>
+                        </div>
+                        <div class="spec-item">
+                            <svg viewBox="0 0 24 24"><path d="M5,4A2,2 0 0,0 3,6A2,2 0 0,0 5,8A2,2 0 0,0 7,6A2,2 0 0,0 5,4M11,4A2,2 0 0,0 9,6A2,2 0 0,0 11,8A2,2 0 0,0 13,6A2,2 0 0,0 11,4M19,4A2,2 0 0,0 17,6A2,2 0 0,0 19,8A2,2 0 0,0 21,6A2,2 0 0,0 19,4M5,10V14H11V10H13V14H19V10H21V16H13V20A2,2 0 0,0 15,22A2,2 0 0,0 17,20A2,2 0 0,0 15,18A2,2 0 0,0 13,20V16H11V20A2,2 0 0,0 13,22A2,2 0 0,0 11,24A2,2 0 0,0 9,22A2,2 0 0,0 11,20V16H5V20A2,2 0 0,0 7,22A2,2 0 0,0 5,24A2,2 0 0,0 3,22A2,2 0 0,0 5,20V16H3V10H5Z"/></svg>
+                            <span>Manuel</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Item 5 (Mobile Half) -->
+            <article class="car-card m-half pc-3">
+                <div class="car-media">
+                    <video class="lazy-video" muted loop playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+                </div>
+                <div class="car-info">
+                    <h2 class="car-title">Citroen C3</h2>
+                    <div class="car-price">1.200 ₺ <span>/ Gün</span></div>
+                    <div class="specs-pill">
+                        <div class="spec-item">
+                            <svg viewBox="0 0 24 24"><path d="M12.5,22H11V10H9V22H7V8C7,7.4 7.4,7 8,7H14C14.6,7 15,7.4 15,8V22H12.5M17,10C17.6,10 18,10.4 18,11V16H17V11H16V17C16,17.6 15.6,18 15,18H14V19H15C16.1,19 17,18.1 17,17V16H18C18.6,16 19,15.6 19,15V11C19,9.9 18.1,9 17,9H16V7H17V10Z"/></svg>
+                            <span>Benzin</span>
+                        </div>
+                        <div class="spec-item">
+                            <svg viewBox="0 0 24 24"><path d="M5,4A2,2 0 0,0 3,6A2,2 0 0,0 5,8A2,2 0 0,0 7,6A2,2 0 0,0 5,4M11,4A2,2 0 0,0 9,6A2,2 0 0,0 11,8A2,2 0 0,0 13,6A2,2 0 0,0 11,4M19,4A2,2 0 0,0 17,6A2,2 0 0,0 19,8A2,2 0 0,0 21,6A2,2 0 0,0 19,4M5,10V14H11V10H13V14H19V10H21V16H13V20A2,2 0 0,0 15,22A2,2 0 0,0 17,20A2,2 0 0,0 15,18A2,2 0 0,0 13,20V16H11V20A2,2 0 0,0 13,22A2,2 0 0,0 11,24A2,2 0 0,0 9,22A2,2 0 0,0 11,20V16H5V20A2,2 0 0,0 7,22A2,2 0 0,0 5,24A2,2 0 0,0 3,22A2,2 0 0,0 5,20V16H3V10H5Z"/></svg>
+                            <span>Manuel</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Item 6 (Mobile Full, PC Row 2 end) -->
+            <article class="car-card m-full pc-3">
+                <div class="car-media">
+                    <video class="lazy-video" muted loop playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+                </div>
+                <div class="car-info">
+                    <svg class="jaguar-icon jag-gray" viewBox="0 0 100 50"><path d="M10,40 Q15,30 25,32 Q35,20 50,25 Q70,20 85,30 Q95,35 90,40 Q80,35 65,40 Q50,45 35,40 Q20,45 10,40 Z" /></svg>
+                    <h2 class="car-title">Renault Megane</h2>
+                    <div class="car-price">1.800 ₺ <span>/ Gün</span></div>
+                    <div class="specs-pill">
+                        <div class="spec-item">
+                            <svg viewBox="0 0 24 24"><path d="M12.5,22H11V10H9V22H7V8C7,7.4 7.4,7 8,7H14C14.6,7 15,7.4 15,8V22H12.5M17,10C17.6,10 18,10.4 18,11V16H17V11H16V17C16,17.6 15.6,18 15,18H14V19H15C16.1,19 17,18.1 17,17V16H18C18.6,16 19,15.6 19,15V11C19,9.9 18.1,9 17,9H16V7H17V10Z"/></svg>
+                            <span>Dizel</span>
+                        </div>
+                        <div class="spec-item">
+                            <svg viewBox="0 0 24 24"><path d="M5,4A2,2 0 0,0 3,6A2,2 0 0,0 5,8A2,2 0 0,0 7,6A2,2 0 0,0 5,4M11,4A2,2 0 0,0 9,6A2,2 0 0,0 11,8A2,2 0 0,0 13,6A2,2 0 0,0 11,4M19,4A2,2 0 0,0 17,6A2,2 0 0,0 19,8A2,2 0 0,0 21,6A2,2 0 0,0 19,4M5,10V14H11V10H13V14H19V10H21V16H13V20A2,2 0 0,0 15,22A2,2 0 0,0 17,20A2,2 0 0,0 15,18A2,2 0 0,0 13,20V16H11V20A2,2 0 0,0 13,22A2,2 0 0,0 11,24A2,2 0 0,0 9,22A2,2 0 0,0 11,20V16H5V20A2,2 0 0,0 7,22A2,2 0 0,0 5,24A2,2 0 0,0 3,22A2,2 0 0,0 5,20V16H3V10H5Z"/></svg>
+                            <span>Otomatik</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ROW 3 (PC: 2 items, Mobile: 1-1) -->
+            <!-- Item 7 -->
+            <article class="car-card m-full pc-2">
+                <div class="car-media">
+                    <video class="lazy-video" muted loop playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+                </div>
+                <div class="car-info">
+                    <h2 class="car-title">Peugeot 3008</h2>
+                    <div class="car-price">2.400 ₺ <span>/ Gün</span></div>
+                    <div class="specs-pill">
+                        <div class="spec-item">
+                            <svg viewBox="0 0 24 24"><path d="M12.5,22H11V10H9V22H7V8C7,7.4 7.4,7 8,7H14C14.6,7 15,7.4 15,8V22H12.5M17,10C17.6,10 18,10.4 18,11V16H17V11H16V17C16,17.6 15.6,18 15,18H14V19H15C16.1,19 17,18.1 17,17V16H18C18.6,16 19,15.6 19,15V11C19,9.9 18.1,9 17,9H16V7H17V10Z"/></svg>
+                            <span>Benzin</span>
+                        </div>
+                        <div class="spec-item">
+                            <svg viewBox="0 0 24 24"><path d="M5,4A2,2 0 0,0 3,6A2,2 0 0,0 5,8A2,2 0 0,0 7,6A2,2 0 0,0 5,4M11,4A2,2 0 0,0 9,6A2,2 0 0,0 11,8A2,2 0 0,0 13,6A2,2 0 0,0 11,4M19,4A2,2 0 0,0 17,6A2,2 0 0,0 19,8A2,2 0 0,0 21,6A2,2 0 0,0 19,4M5,10V14H11V10H13V14H19V10H21V16H13V20A2,2 0 0,0 15,22A2,2 0 0,0 17,20A2,2 0 0,0 15,18A2,2 0 0,0 13,20V16H11V20A2,2 0 0,0 13,22A2,2 0 0,0 11,24A2,2 0 0,0 9,22A2,2 0 0,0 11,20V16H5V20A2,2 0 0,0 7,22A2,2 0 0,0 5,24A2,2 0 0,0 3,22A2,2 0 0,0 5,20V16H3V10H5Z"/></svg>
+                            <span>Otomatik</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Item 8 -->
+            <article class="car-card m-full pc-2">
+                <div class="car-media">
+                    <video class="lazy-video" muted loop playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+                </div>
+                <div class="car-info">
+                    <h2 class="car-title">Opel Mokka</h2>
+                    <div class="car-price">2.200 ₺ <span>/ Gün</span></div>
+                    <div class="specs-pill">
+                        <div class="spec-item">
+                            <svg viewBox="0 0 24 24"><path d="M12.5,22H11V10H9V22H7V8C7,7.4 7.4,7 8,7H14C14.6,7 15,7.4 15,8V22H12.5M17,10C17.6,10 18,10.4 18,11V16H17V11H16V17C16,17.6 15.6,18 15,18H14V19H15C16.1,19 17,18.1 17,17V16H18C18.6,16 19,15.6 19,15V11C19,9.9 18.1,9 17,9H16V7H17V10Z"/></svg>
+                            <span>Elektrik</span>
+                        </div>
+                        <div class="spec-item">
+                            <svg viewBox="0 0 24 24"><path d="M5,4A2,2 0 0,0 3,6A2,2 0 0,0 5,8A2,2 0 0,0 7,6A2,2 0 0,0 5,4M11,4A2,2 0 0,0 9,6A2,2 0 0,0 11,8A2,2 0 0,0 13,6A2,2 0 0,0 11,4M19,4A2,2 0 0,0 17,6A2,2 0 0,0 19,8A2,2 0 0,0 21,6A2,2 0 0,0 19,4M5,10V14H11V10H13V14H19V10H21V16H13V20A2,2 0 0,0 15,22A2,2 0 0,0 17,20A2,2 0 0,0 15,18A2,2 0 0,0 13,20V16H11V20A2,2 0 0,0 13,22A2,2 0 0,0 11,24A2,2 0 0,0 9,22A2,2 0 0,0 11,20V16H5V20A2,2 0 0,0 7,22A2,2 0 0,0 5,24A2,2 0 0,0 3,22A2,2 0 0,0 5,20V16H3V10H5Z"/></svg>
+                            <span>Otomatik</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- LEAD GENERATION FORM -->
+            <div class="form-container">
                 <div class="trust-banner">
-                    <div class="payment-methods">
-                        <svg viewBox="0 0 24 24"><path d="M20,8H4V6H20M20,18H4V12H20M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"/></svg>
-                        <svg viewBox="0 0 24 24"><path d="M11.8 10.9C9.53 10.31 8.8 9.7 8.8 8.75C8.8 7.66 9.81 6.9 11.5 6.9C13.28 6.9 13.94 7.75 14 9H16.29C16.14 7.04 14.6 5.28 12.5 4.73V2.5H10V4.71C8.07 5.08 6.5 6.38 6.5 8.77C6.5 11.45 8.61 12.64 12.2 13.54C14.71 14.17 15.2 15.08 15.2 16.18C15.2 17.06 14.41 18 11.5 18C8.94 18 7.97 16.92 7.79 15.5H5.5C5.73 17.86 7.46 19.33 10 19.82V22H12.5V19.85C14.54 19.5 17.5 18.23 17.5 16.13C17.5 13.06 14.91 11.71 11.8 10.9Z"/></svg>
-                    </div>
                     <p class="trust-text">Aracınız şehir içi adresinize <span>ücretsiz olarak</span> getirilir, hiçbir ekstra ücret ödemezsiniz.</p>
                 </div>
 
                 <form id="rental-form" novalidate>
-                    <div class="input-group">
-                        <input type="text" class="form-input" placeholder="Adınız Soyadınız" required>
-                    </div>
-                    <div class="input-group">
-                        <input type="tel" class="form-input" placeholder="Telefon Numaranız" required>
-                    </div>
+                    <input type="text" class="form-input" placeholder="Adınız Soyadınız" required>
+                    <input type="tel" class="form-input" placeholder="Telefon Numaranız" required>
                     
                     <div class="row-grid">
-                        <div class="input-group">
-                            <label class="input-label">Alış Tarihi</label>
-                            <input type="date" class="form-input" required>
-                        </div>
-                        <div class="input-group">
-                            <label class="input-label">Alış Saati</label>
-                            <input type="time" class="form-input" required>
-                        </div>
+                        <div><input type="date" class="form-input" required></div>
+                        <div><input type="time" class="form-input" required></div>
                     </div>
 
                     <div class="row-grid">
-                        <div class="input-group">
-                            <label class="input-label">Teslim Tarihi</label>
-                            <input type="date" class="form-input" required>
-                        </div>
-                        <div class="input-group">
-                            <label class="input-label">Teslim Saati</label>
-                            <input type="time" class="form-input" required>
-                        </div>
+                        <div><input type="date" class="form-input" required></div>
+                        <div><input type="time" class="form-input" required></div>
                     </div>
 
-                    <div class="input-group">
-                        <input type="text" class="form-input" placeholder="Teslim Edilecek İlçe (Örn: Yeşilyurt)" required>
-                    </div>
+                    <input type="text" class="form-input" placeholder="Teslim Edilecek İlçe (Örn: Yeşilyurt)" required>
 
                     <div class="contact-tabs">
                         <button type="button" class="contact-tab active" data-method="call">Hemen Ara</button>
@@ -664,7 +606,7 @@
 
                     <div class="legal-check-wrapper">
                         <input type="checkbox" id="kvkk-checkbox" disabled required>
-                        <label for="kvkk-checkbox" class="legal-text">
+                        <label for="kvkk-checkbox">
                             <span class="legal-link" id="btn-open-kvkk">Sözleşmeyi</span> okudum, onaylıyorum.
                         </label>
                     </div>
@@ -672,7 +614,8 @@
                     <button type="submit" class="submit-btn" id="btn-submit" disabled>Talebi Gönder</button>
                 </form>
             </div>
-        </section>
+
+        </main>
     </div>
 
     <!-- KVKK & CONTRACT MODAL -->
@@ -701,22 +644,21 @@
     <div class="modal-overlay" id="modal-pwa">
         <div class="modal-content">
             <button type="button" class="modal-close" id="btn-close-pwa" style="position:absolute; top:15px; right:15px;">&times;</button>
-            <div style="padding: 20px; text-align: center;">
+            <div style="padding: 30px 20px; text-align: center;">
                 <svg style="width:50px; fill:var(--theme-yellow); margin-bottom:15px;" viewBox="0 0 24 24"><path d="M17,1H7A2,2 0 0,0 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3A2,2 0 0,0 17,1M17,19H7V5H17V19M16,13H13V8H11V13H8L12,17L16,13Z"/></svg>
-                <h3 style="font-size:18px; font-weight:700; margin-bottom:10px;">Ana Ekrana Ekle</h3>
+                <h3 style="font-size:18px; font-weight:800; margin-bottom:10px;">Ana Ekrana Ekle</h3>
                 <p style="font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:20px;">Özel kampanyalar ve hızlı rezervasyon için ücretsiz uygulamamızı cihazınıza yükleyin.</p>
                 <button type="button" class="submit-btn" id="btn-install-pwa">Hemen Yükle</button>
             </div>
         </div>
     </div>
 
-    <!-- SCRIPTS -->
     <script>
         "use strict";
 
         document.addEventListener("DOMContentLoaded", () => {
             
-            // 1. MARQUEE CLONE (Sonsuz kayma efekti için)
+            // 1. MARQUEE CLONE (Sonsuz Loop)
             const marqueeTrack = document.getElementById('marquee-track');
             if (marqueeTrack) {
                 marqueeTrack.innerHTML += marqueeTrack.innerHTML;
@@ -729,7 +671,7 @@
                 });
             }
 
-            // 2. LAZY LOADED AUTOPLAY VIDEOS (Hata 105 ve Performans Yönetimi)
+            // 2. INTERSECTION OBSERVER FOR VIDEOS (Error 105 Prevention & Performance)
             const videos = document.querySelectorAll('.lazy-video');
             if ('IntersectionObserver' in window && videos.length > 0) {
                 const videoObserver = new IntersectionObserver((entries) => {
@@ -739,13 +681,13 @@
                             if (!video.src) video.src = video.getAttribute('data-src');
                             const playPromise = video.play();
                             if (playPromise !== undefined) {
-                                playPromise.catch(err => console.warn("Autoplay blocked", err));
+                                playPromise.catch(err => console.warn("Autoplay block (Safe Catch):", err));
                             }
                         } else {
                             video.pause();
                         }
                     });
-                }, { threshold: 0.3 }); // 30% visibility triggers action
+                }, { threshold: 0.25 }); 
                 videos.forEach(v => videoObserver.observe(v));
             }
 
@@ -758,7 +700,7 @@
                 });
             });
 
-            // 4. KVKK MODAL & SCROLL-TO-BOTTOM ONAYI
+            // 4. KVKK MODAL & SCROLL-TO-BOTTOM LOGIC
             const modalKvkk = document.getElementById('modal-kvkk');
             const btnOpenKvkk = document.getElementById('btn-open-kvkk');
             const btnCloseKvkk = document.getElementById('btn-close-kvkk');
@@ -772,7 +714,7 @@
                 btnCloseKvkk.addEventListener('click', () => modalKvkk.classList.remove('open'));
 
                 kvkkScrollArea.addEventListener('scroll', () => {
-                    if (kvkkScrollArea.scrollHeight - kvkkScrollArea.scrollTop <= kvkkScrollArea.clientHeight + 15) {
+                    if (kvkkScrollArea.scrollHeight - kvkkScrollArea.scrollTop <= kvkkScrollArea.clientHeight + 20) {
                         btnAcceptKvkk.disabled = false;
                     }
                 });
@@ -784,6 +726,7 @@
                 });
             }
 
+            // Prevent actual form submission for demo
             const rentalForm = document.getElementById('rental-form');
             if (rentalForm) {
                 rentalForm.addEventListener('submit', (e) => {
@@ -798,13 +741,15 @@
                 });
             }
 
-            // 5. PWA PROMPT LOGIC (12 Saniye Gecikmeli)
+            // 5. PWA PROMPT LOGIC
             const modalPwa = document.getElementById('modal-pwa');
             const btnClosePwa = document.getElementById('btn-close-pwa');
             if (modalPwa && btnClosePwa) {
-                setTimeout(() => modalPwa.classList.add('open'), 12000);
+                setTimeout(() => modalPwa.classList.add('open'), 12000); // 12 seconds delay to not disturb initial viewing
                 btnClosePwa.addEventListener('click', () => modalPwa.classList.remove('open'));
-                document.getElementById('btn-install-pwa').addEventListener('click', () => modalPwa.classList.remove('open'));
+                document.getElementById('btn-install-pwa').addEventListener('click', () => {
+                    modalPwa.classList.remove('open');
+                });
             }
         });
     </script>
