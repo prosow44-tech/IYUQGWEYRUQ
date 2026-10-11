@@ -3,1096 +3,540 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Referans Rentecar - Premium Araç Deneyimi</title>
-    <meta name="theme-color" content="#FFD700">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Referans Rentecar | Premium</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        gold: '#D4AF37',
+                        'brutal-gray': '#E5E7EB',
+                        'brutal-dark': '#111111'
+                    },
+                    animation: {
+                        'run-fast': 'runFast 0.4s infinite alternate ease-in-out',
+                        'run-slow': 'runSlow 1s infinite alternate ease-in-out',
+                        'marquee': 'marquee 20s linear infinite',
+                        'spin-slow': 'spin 8s linear infinite',
+                        'wiggle': 'wiggle 2s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        runFast: {
+                            '0%': { transform: 'scaleY(1) scaleX(1) translateX(0) rotate(0deg)' },
+                            '100%': { transform: 'scaleY(0.9) scaleX(1.1) translateX(8px) rotate(2deg)' }
+                        },
+                        runSlow: {
+                            '0%': { transform: 'scaleY(1) translateX(0)' },
+                            '100%': { transform: 'scaleY(0.95) translateX(3px)' }
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' }
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        /* ==========================================================================
-           ROOT & RESET & THEME VARIABLES
-           ========================================================================== */
-        :root {
-            --primary-yellow: #FFCC00;
-            --primary-yellow-hover: #E6B800;
-            --bg-white: #FAFAFA;
-            --card-white: #FFFFFF;
-            --text-dark: #1A1A1A;
-            --text-gray: #666666;
-            --luxury-gold: #D4AF37;
-            --standard-silver: #C0C0C0;
-            --red-alert: #FF3333;
-            --modal-bg: rgba(250, 250, 250, 0.98);
-            --transition-smooth: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            --shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.05);
-            --shadow-hover: 0 20px 40px rgba(255, 204, 0, 0.15);
-            --cap-border-width: 3px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            user-select: none;
-            -webkit-user-drag: none;
-        }
-
         body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--bg-white);
-            color: var(--text-dark);
-            overflow-x: hidden;
-            scroll-behavior: smooth;
+            background-color: #ffffff;
+            color: #000000;
+            overscroll-behavior-y: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        body.modal-open {
-            overflow: hidden;
+        /* Scroll Snap Konteyneri */
+        .snap-container {
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            height: calc(100vh - 120px); /* Header ve Filter alanı çıkarıldı */
+            scrollbar-width: none; /* Firefox */
+        }
+        .snap-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
         }
 
-        /* Security Helpers */
-        .honeypot { display: none !important; }
-
-        /* ==========================================================================
-           HEADER, FILTERS & STATUS BADGE
-           ========================================================================== */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 80px;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 30px;
-            pointer-events: none; /* Let clicks pass through empty areas */
-        }
-
-        .header-item {
-            pointer-events: auto;
-        }
-
-        /* Sol Üst - Kompakt Hap Filtreler */
-        .filter-pill-container {
-            display: flex;
-            background: var(--card-white);
-            border-radius: 50px;
-            padding: 5px;
-            box-shadow: var(--shadow-subtle);
-            border: 2px solid var(--primary-yellow);
-        }
-
-        .filter-btn {
-            background: transparent;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--text-gray);
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            font-family: 'Outfit', sans-serif;
-        }
-
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--primary-yellow);
-            color: var(--text-dark);
-        }
-
-        /* Orta Üst - Şu An Açığız Rozeti */
-        .status-badge {
-            background: var(--card-white);
-            border: 2px solid var(--primary-yellow);
-            padding: 8px 24px;
-            border-radius: 50px;
-            font-weight: 800;
-            font-size: 0.95rem;
-            color: var(--text-dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 5px 15px rgba(255, 204, 0, 0.2);
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 20px;
-        }
-
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            background: #00CC44;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #00CC44;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 204, 68, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 204, 68, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 204, 68, 0); }
-        }
-
-        /* Sağ Üst - Sıralama */
-        .sort-btn {
-            background: var(--card-white);
-            border: 2px solid var(--primary-yellow);
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            box-shadow: var(--shadow-subtle);
-        }
-        .sort-btn:hover {
-            background: var(--primary-yellow);
-        }
-
-        /* ==========================================================================
-           GRID SYSTEM (Asimetrik PC, Scroll-Snap Mobil)
-           ========================================================================== */
-        main {
-            padding: 120px 40px 60px;
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-
-        .car-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px 20px; /* Dikeyde kart şekillerinden dolayı biraz daha fazla boşluk */
-            align-items: start;
-        }
-
-        /* PC Asimetrik Layout */
-        .car-item:nth-child(1) { grid-column: span 2; grid-row: span 2; transform: scale(1.05); transform-origin: top left; z-index: 10; margin-bottom: 40px; }
-        .car-item:nth-child(2) { grid-column: span 1; margin-top: 60px; }
-        .car-item:nth-child(3) { grid-column: span 1; }
-        .car-item:nth-child(4) { grid-column: span 2; }
-        .car-item:nth-child(5) { grid-column: span 2; margin-top: -80px; }
-
-        @media (max-width: 1200px) {
-            .car-grid { grid-template-columns: repeat(2, 1fr); }
-            .car-item:nth-child(1) { grid-column: span 2; grid-row: span 1; transform: scale(1); margin-bottom: 20px; }
-            .car-item:nth-child(2), .car-item:nth-child(3), .car-item:nth-child(4), .car-item:nth-child(5) { grid-column: span 1; margin-top: 0; }
-        }
-
-        @media (max-width: 768px) {
-            main { padding: 100px 15px 40px; }
-            .car-grid {
-                display: flex;
-                flex-direction: column;
-                gap: 50px;
-                scroll-snap-type: y mandatory;
-                height: calc(100vh - 100px);
-                overflow-y: auto;
-                padding-bottom: 50vh;
-            }
-            .car-item {
-                scroll-snap-align: center;
-                scroll-snap-stop: always;
-                width: 100%;
-                margin: 0 !important;
-                transform: none !important;
-            }
-            header { flex-wrap: wrap; padding: 10px; height: auto; gap: 10px; justify-content: center; background: rgba(250,250,250,0.9); backdrop-filter: blur(10px); }
-            .status-badge { position: relative; left: auto; transform: none; top: auto; order: -1; width: 100%; justify-content: center; }
-            .filter-pill-container, .sort-btn { font-size: 0.8rem; padding: 5px 10px; }
-        }
-
-        /* ==========================================================================
-           KUSURSUZ KART MİMARİSİ (Resimdeki Tasarım Birebir)
-           ========================================================================== */
-        .car-capsule {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            width: 100%;
-        }
-
-        .car-capsule:hover {
-            transform: translateY(-5px);
+        /* 1-1-2 Grid Yükseklik Ayarları 
+           Her ekran yaklaşık 45vh. 
+           Bu sayede 2 tam kart (90vh) görünürken, altındaki 2'li kartın sadece üst %10-20'si peeking (gözükme) yapar. 
+        */
+        .snap-section {
+            scroll-snap-align: start;
+            height: 48vh; 
+            min-height: 350px;
         }
         
-        .car-capsule:hover .bottom-cap {
-            background: var(--primary-yellow);
-        }
-        .car-capsule:hover .cta-text {
-            color: var(--text-dark);
-        }
-
-        /* Özel Kırmızı Vurgulu Geçici Teklif Kartı */
-        .car-item.special-offer .top-cap,
-        .car-item.special-offer .bottom-cap {
-            border-color: var(--red-alert);
-        }
-        .car-item.special-offer .promo-text { color: var(--red-alert); }
-
-        /* --- Üst Kubbe (Top Cap) --- */
-        .top-cap {
-            width: 85%;
-            height: 90px;
-            background: var(--card-white);
-            border: var(--cap-border-width) solid var(--primary-yellow);
-            border-bottom: none;
-            border-radius: 120px 120px 0 0;
-            position: relative;
-            z-index: 1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 40px;
-            margin-bottom: -30px; /* Videonun altına gizlenerek birleşme sağlar */
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.02);
-            transition: var(--transition-smooth);
+        .snap-section-half {
+            scroll-snap-align: start;
+            height: 40vh;
+            min-height: 280px;
         }
 
-        .promo-text {
-            font-size: 0.75rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            white-space: nowrap;
-            opacity: 0.8;
+        /* 360 Görsel Etkileşim Alanı */
+        .box-360 {
+            touch-action: pan-y; /* Dikey kaydırmaya izin ver, yatayı JS ile yakala */
+            user-select: none;
+            cursor: ew-resize;
+            transition: transform 0.1s ease-out;
+        }
+        .box-360:active {
+            transform: scale(0.98);
         }
 
-        /* --- Jaguar Maskot Çerçevesi --- */
-        .jaguar-frame {
-            position: absolute;
-            top: -45px; /* Kubbenin üstünden dışarı taşar */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90px;
-            height: 90px;
-            background: var(--card-white);
-            border-radius: 50%;
-            overflow: hidden;
-            z-index: 5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        /* Dinamik Çerçeve Renkleri */
-        .car-item[data-luxury="true"] .jaguar-frame {
-            border: 4px solid var(--luxury-gold);
-            background: linear-gradient(135deg, #fff 0%, #fdf5e6 100%);
-        }
-        .car-item[data-luxury="false"] .jaguar-frame {
-            border: 4px solid var(--standard-silver);
-            background: #fff;
-        }
-
-        .jaguar-vid {
-            width: 140%; /* Çerçeveye sığdırmak için hafif zoom */
-            height: 140%;
-            object-fit: cover;
-            mix-blend-mode: darken; /* Beyaz arkaplanlı MP4'ü temizlemek için */
-        }
-
-        /* --- Ana Video Alanı (Merkez Siyah Dikdörtgen) --- */
-        .main-video-wrapper {
-            width: 100%;
-            aspect-ratio: 4/3;
-            background: #050505; /* Neredeyse tam siyah */
-            border-radius: 40px;
-            position: relative;
-            z-index: 2;
-            overflow: hidden;
-            box-shadow: var(--shadow-hover);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Oynatıcı Kontrollerini tamamen gizler, animasyonlu arka plan gibi davranır */
-        .main-car-vid {
-            width: 105%;
-            height: 105%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-        }
-        .main-car-vid.loaded { opacity: 1; }
+        /* Keskin Editorial Çizgiler */
+        .brutal-border-b { border-bottom: 1.5px solid #000; }
+        .brutal-border-r { border-right: 1.5px solid #000; }
+        .brutal-border-t { border-top: 1.5px solid #000; }
         
-        /* Video yüklenirken görünecek loading animasyonu */
-        .video-loader {
-            position: absolute;
-            width: 40px; height: 40px;
-            border: 3px solid rgba(255, 204, 0, 0.3);
-            border-top-color: var(--primary-yellow);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* --- Alt Kubbe (Bottom Cap) --- */
-        .bottom-cap {
-            width: 85%;
-            height: 110px;
-            background: var(--card-white);
-            border: var(--cap-border-width) solid var(--primary-yellow);
-            border-top: none;
-            border-radius: 0 0 120px 120px;
-            position: relative;
-            z-index: 1;
-            margin-top: -30px; /* Videonun üstüne çekerek boşluğu kapatır */
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            padding-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
-            transition: var(--transition-smooth);
-        }
-
-        .cta-text {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-gray);
-            margin-bottom: 2px;
-            transition: var(--transition-smooth);
-        }
-
-        .car-title {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            letter-spacing: -0.5px;
-        }
-
-        /* ==========================================================================
-           MODAL & 360 ETKİLEŞİM ARAYÜZÜ (Genişleyen Ekran)
-           ========================================================================== */
-        .expansion-modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--modal-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-        }
-        .expansion-modal.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-content-wrapper {
-            width: 100%;
-            max-width: 1200px;
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-            background: transparent;
-            transform: scale(0.95) translateY(20px);
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .expansion-modal.active .modal-content-wrapper {
-            transform: scale(1) translateY(0);
-        }
-
-        .modal-close-btn {
-            position: absolute;
-            top: 30px; right: 40px;
-            background: var(--card-white);
-            border: 2px solid var(--primary-yellow);
-            width: 50px; height: 50px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            display: flex; justify-content: center; align-items: center;
-            z-index: 1010;
-            font-family: sans-serif;
-            transition: var(--transition-smooth);
-        }
-        .modal-close-btn:hover { background: var(--primary-yellow); transform: rotate(90deg); }
-
-        /* 360 Etkileşimli Alan */
-        .interactive-360-container {
-            width: 100%;
-            flex: 1;
-            background: #000;
-            border-radius: 40px;
-            position: relative;
-            overflow: hidden;
-            cursor: ew-resize; /* Sağa sola çekme imleci */
-            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
-        }
-        
-        .interactive-360-vid {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            pointer-events: none; /* Etkileşimi container üzerinden yakalayacağız */
-        }
-
-        .drag-instruction {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.9);
-            padding: 10px 25px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            pointer-events: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            animation: floatUpDown 2s infinite ease-in-out;
-        }
-        @keyframes floatUpDown {
-            0%, 100% { transform: translate(-50%, 0); }
-            50% { transform: translate(-50%, -10px); }
-        }
-
-        /* Detaylı İstatistikler (Fiyat YOK) */
-        .modal-stats {
-            margin-top: 30px;
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .stat-box {
-            background: var(--card-white);
-            border: 2px solid #EEE;
-            padding: 20px 30px;
-            border-radius: 25px;
-            text-align: center;
-            min-width: 150px;
-            box-shadow: var(--shadow-subtle);
-            border-bottom: 4px solid var(--primary-yellow);
-        }
-        .stat-title { font-size: 0.8rem; color: var(--text-gray); text-transform: uppercase; font-weight: 800; margin-bottom: 5px; }
-        .stat-value { font-size: 1.8rem; font-weight: 800; color: var(--text-dark); }
-
-        /* Satış Hunisi ve Hukuki Modallar */
-        .funnel-actions {
-            margin-top: 40px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .btn-premium {
-            background: var(--primary-yellow);
-            color: var(--text-dark);
-            border: none;
-            padding: 20px 40px;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: 800;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(255, 204, 0, 0.3);
-            transition: var(--transition-smooth);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .btn-premium:hover { transform: translateY(-5px); box-shadow: 0 15px 25px rgba(255, 204, 0, 0.4); }
-
-        .btn-secondary {
-            background: var(--card-white);
-            color: var(--text-dark);
-            border: 2px solid var(--text-dark);
-            padding: 20px 40px;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: 800;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-        }
-        .btn-secondary:hover { background: var(--text-dark); color: var(--card-white); }
-
-        .funnel-badges {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-gray);
-        }
-
-        /* Sözleşme Onay Modalı (Scroll-to-Bottom Validation) */
-        .contract-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .contract-overlay.active { display: flex; }
-        
-        .contract-box {
-            background: var(--bg-white);
-            width: 100%; max-width: 600px;
-            border-radius: 30px;
-            padding: 30px;
-            display: flex; flex-direction: column;
-            position: relative;
-        }
-        .contract-back {
-            position: absolute; top: -20px; left: -20px;
-            width: 50px; height: 50px; border-radius: 50%;
-            background: var(--card-white); display: flex; justify-content: center; align-items: center;
-            font-weight: bold; cursor: pointer; box-shadow: var(--shadow-subtle); border: 2px solid var(--text-dark);
-        }
-        .contract-header { font-size: 1.5rem; font-weight: 800; margin-bottom: 20px; padding-left: 20px; }
-        .contract-body {
-            height: 300px; overflow-y: auto;
-            background: #F0F0F0; border-radius: 15px; padding: 20px;
-            font-size: 0.9rem; line-height: 1.6; color: #444;
-            margin-bottom: 20px; border: 1px solid #DDD;
-        }
-        .contract-body p { margin-bottom: 15px; }
-        
-        .btn-accept {
-            background: #CCCCCC; color: #666; pointer-events: none;
-            padding: 15px; border: none; border-radius: 50px; font-weight: 800; font-size: 1.1rem;
-            transition: var(--transition-smooth); text-align: center;
-        }
-        .btn-accept.enabled { background: var(--primary-yellow); color: var(--text-dark); pointer-events: auto; cursor: pointer; }
-
-        /* PWA Pop-up */
-        .pwa-popup {
-            position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
-            background: var(--card-white); border: 2px solid var(--primary-yellow);
-            padding: 15px 30px; border-radius: 50px; z-index: 3000;
-            display: flex; align-items: center; gap: 20px; font-weight: 700;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: bottom 0.5s ease;
-        }
-        .pwa-popup.show { bottom: 40px; }
-        .pwa-close { cursor: pointer; font-size: 1.5rem; color: var(--text-gray); }
-
+        /* Preloader */
+        #preloader { transition: opacity 0.5s ease; }
     </style>
 </head>
-<body>
+<body class="relative overflow-hidden w-full h-full max-w-[430px] mx-auto bg-white border-x border-gray-200 shadow-2xl">
 
-    <!-- ==========================================================================
-         BÖLÜM: ZİHİNSEL SİMÜLASYON VE PLANLAMA (Sıfır Yer Tutucu, Eksiksiz)
-         ========================================================================== -->
-    <!--
-      GÖREV HARİTASI (Referans Rentecar Mimarisi):
-      1. Tema: Sarı (#FFCC00) ve Beyaz. Siyah sadece metin ve video arkaplanı için.
-      2. Kart Şekli: Gelen referans görsele (image_9af679.png) birebir uygun;
-         - Üstte yarım oval kubbe (top-cap) -> İçinde Jaguar maskotu ve teşvik metni.
-         - Ortada büyük oval video (main-video) -> Siyah ekran, video loop.
-         - Altta yarım oval kubbe (bottom-cap) -> İncele texti + Araç Adı.
-      3. Grid: Masaüstünde asimetrik (ilk araç 2 kolon, devasa), mobilde scroll-snap 1-1-2.
-      4. Video Etkileşimi: Kart tıklandığında modal açılır. Modal içinde video SÜRÜKLEME (mouse/touch) ile ileri geri sarılır (360 hissi).
-      5. Jaguar Maskotu: Lüks araçlarda Altın, diğerlerinde gümüş çerçeve. Hızı data-speed'e bağlı.
-      6. İstatistikler: Fiyat verilmeyecek. Sadece performans verileri.
-      7. Sözleşme: Kaydırma zorunlu, geri butonu sol üstte. Form minimum 2 gün şartlı.
-      8. Güvenlik: Sağ tık, kopyalama, F12 engelli.
-    -->
+    <div id="preloader" class="absolute inset-0 z-[100] bg-black flex flex-col items-center justify-center">
+        <!-- Altın Jaguar Simülasyonu (SVG) -->
+        <svg class="w-24 h-12 text-gold animate-run-fast mb-6" viewBox="0 0 100 50" fill="currentColor">
+            <path d="M10,40 Q15,30 25,35 Q35,40 45,30 Q55,20 65,25 Q75,30 85,20 Q90,15 95,20 Q90,25 85,30 Q75,40 65,35 Q55,30 45,40 Q35,50 25,45 Q15,40 10,40 Z"/>
+            <circle cx="85" cy="22" r="2" fill="#000"/>
+        </svg>
+        <div class="text-gold font-black tracking-[0.3em] uppercase text-sm animate-pulse">Referans</div>
+        <div class="text-white text-[9px] tracking-[0.5em] mt-1 opacity-50">PREMIUM KİRALAMA</div>
+    </div>
 
-    <!-- ==========================================================================
-         GÜVENLİK VE HONEYPOT ALANI
-         ========================================================================== -->
-    <form style="display:none;" id="antiBotForm">
-        <input type="text" name="email_trap" class="honeypot" tabindex="-1" autocomplete="off">
-    </form>
-
-    <!-- ==========================================================================
-         HEADER & ARAYÜZ KONTROLLERİ
-         ========================================================================== -->
-    <header>
-        <div class="header-item filter-pill-container">
-            <button class="filter-btn active" data-filter="all">Tümü</button>
-            <button class="filter-btn" data-filter="luxury">Premium</button>
-            <button class="filter-btn" data-filter="sport">Spor</button>
+    <header class="h-[120px] w-full bg-white brutal-border-b z-40 relative flex flex-col">
+        <!-- Üst Logo Kısmı -->
+        <div class="flex items-center justify-between px-4 py-3 brutal-border-b">
+            <div class="flex flex-col">
+                <span class="font-black text-xl tracking-tighter leading-none">REFERANS</span>
+                <span class="text-[8px] font-bold tracking-widest text-gray-500">RENTECAR</span>
+            </div>
+            <div class="bg-black text-white text-[10px] font-black px-3 py-1.5 uppercase tracking-wider rounded-sm">
+                VIP SERVİS
+            </div>
         </div>
 
-        <div class="header-item status-badge">
-            <div class="status-dot"></div>
-            ŞU AN AÇIĞIZ
+        <!-- Hareketli Filtre (Marquee) Alanı -->
+        <div class="flex-grow flex flex-col justify-center overflow-hidden bg-gray-50">
+            <div class="px-4 text-[9px] font-black uppercase tracking-wider text-gray-400 mb-1">
+                Nasıl bir araba bakmıştınız? Seçiniz:
+            </div>
+            <div class="relative w-full flex overflow-hidden whitespace-nowrap">
+                <div class="flex animate-marquee hover:pause w-max" id="filterTrack">
+                    <!-- Filtre Butonları (Tekrarlı yapıda ki kesintisiz dönsün) -->
+                    <div class="flex gap-2 px-2">
+                        <button onclick="selectFilter(this)" class="filter-btn border border-black px-4 py-1.5 text-xs font-bold rounded-full bg-white text-black transition-colors">🚀 Spor</button>
+                        <button onclick="selectFilter(this)" class="filter-btn border border-gray-300 px-4 py-1.5 text-xs font-bold rounded-full bg-white text-gray-500 transition-colors">👨‍👩‍👧‍👦 5 Kişilik</button>
+                        <button onclick="selectFilter(this)" class="filter-btn border border-gray-300 px-4 py-1.5 text-xs font-bold rounded-full bg-white text-gray-500 transition-colors">⚙️ Otomatik</button>
+                        <button onclick="selectFilter(this)" class="filter-btn border border-gray-300 px-4 py-1.5 text-xs font-bold rounded-full bg-white text-gray-500 transition-colors">⛽ Dizel</button>
+                        <button onclick="selectFilter(this)" class="filter-btn border border-gray-300 px-4 py-1.5 text-xs font-bold rounded-full bg-white text-gray-500 transition-colors">💼 Geniş Bagaj</button>
+                    </div>
+                    <!-- Kesintisiz akış için kopyası -->
+                    <div class="flex gap-2 px-2">
+                        <button onclick="selectFilter(this)" class="filter-btn border border-black px-4 py-1.5 text-xs font-bold rounded-full bg-white text-black transition-colors">🚀 Spor</button>
+                        <button onclick="selectFilter(this)" class="filter-btn border border-gray-300 px-4 py-1.5 text-xs font-bold rounded-full bg-white text-gray-500 transition-colors">👨‍👩‍👧‍👦 5 Kişilik</button>
+                        <button onclick="selectFilter(this)" class="filter-btn border border-gray-300 px-4 py-1.5 text-xs font-bold rounded-full bg-white text-gray-500 transition-colors">⚙️ Otomatik</button>
+                        <button onclick="selectFilter(this)" class="filter-btn border border-gray-300 px-4 py-1.5 text-xs font-bold rounded-full bg-white text-gray-500 transition-colors">⛽ Dizel</button>
+                        <button onclick="selectFilter(this)" class="filter-btn border border-gray-300 px-4 py-1.5 text-xs font-bold rounded-full bg-white text-gray-500 transition-colors">💼 Geniş Bagaj</button>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <button class="header-item sort-btn" id="sortPriceBtn">
-            Fiyat: Yüksekten Düşüğe
-        </button>
     </header>
 
-    <!-- ==========================================================================
-         ANA GRID (ARAÇ VİTRİNİ)
-         ========================================================================== -->
-    <main>
-        <div class="car-grid" id="carGrid">
-
-            <!-- KART 1: Özel Teklif (Büyük ve Kırmızı Vurgulu) -->
-            <div class="car-item special-offer luxury" data-price="25000" data-luxury="true" 
-                 data-stats='{"hp":"450 HP", "accel":"4.2s", "drivetrain":"AWD", "range":"600 km"}'>
-                <div class="car-capsule" onclick="open360Modal(this)">
-                    <!-- Üst Kubbe -->
-                    <div class="top-cap">
-                        <span class="promo-text left" style="color:var(--red-alert)">GEÇİCİ TEKLİF</span>
-                        <div class="jaguar-frame">
-                            <!-- Jaguar Videosu (Hızı: 2x - Çok hızlı) -->
-                            <video src="https://www.w3schools.com/html/mov_bbb.mp4" class="jaguar-vid" data-speed="2.5" loop muted autoplay playsinline></video>
-                        </div>
-                        <span class="promo-text right">ÜCRETSİZ TESLİM</span>
-                    </div>
-                    <!-- Merkez Video -->
-                    <div class="main-video-wrapper">
-                        <div class="video-loader"></div>
-                        <!-- Araç Videosu (Gecikmeli yüklenecek, arkaplan gibi) -->
-                        <video data-src="https://www.w3schools.com/html/mov_bbb.mp4" class="main-car-vid lazy-vid" data-delay="100" loop muted playsinline></video>
-                    </div>
-                    <!-- Alt Kubbe -->
-                    <div class="bottom-cap">
-                        <div class="cta-text">Detaylı İncelemek İçin Tıkla</div>
-                        <div class="car-title">Range Rover Velar</div>
-                    </div>
+    <main class="snap-container bg-white relative z-10 w-full">
+        
+        <!-- KART 1: Tekil, En Pahalı (Altın Jaguar) -->
+        <article class="snap-section brutal-border-b w-full p-4 flex flex-col justify-between relative bg-white">
+            <div class="flex justify-between items-start z-10">
+                <div class="flex items-center gap-2">
+                    <!-- Premium Altın Jaguar İkonu -->
+                    <svg class="w-8 h-4 text-gold animate-run-fast drop-shadow-md" viewBox="0 0 100 50" fill="currentColor">
+                        <path d="M10,40 Q15,30 25,35 Q35,40 45,30 Q55,20 65,25 Q75,30 85,20 Q90,15 95,20 Q90,25 85,30 Q75,40 65,35 Q55,30 45,40 Q35,50 25,45 Q15,40 10,40 Z"/>
+                    </svg>
+                    <h2 class="text-sm font-black uppercase tracking-tight">Mercedes G63 AMG</h2>
+                </div>
+                <div class="text-right">
+                    <p class="text-gold font-black text-lg tracking-tighter shadow-sm">₺25.000</p>
+                    <p class="text-[8px] font-bold text-gray-400 uppercase tracking-widest">/ Gün</p>
                 </div>
             </div>
 
-            <!-- KART 2: Standart Spor -->
-            <div class="car-item sport" data-price="18000" data-luxury="false"
-                 data-stats='{"hp":"320 HP", "accel":"5.1s", "drivetrain":"RWD", "range":"550 km"}'>
-                <div class="car-capsule" onclick="open360Modal(this)">
-                    <div class="top-cap">
-                        <span class="promo-text left">YENİ ARAÇ</span>
-                        <div class="jaguar-frame">
-                            <video src="https://www.w3schools.com/html/mov_bbb.mp4" class="jaguar-vid" data-speed="1.8" loop muted autoplay playsinline></video>
-                        </div>
-                        <span class="promo-text right">%10 İNDİRİM</span>
-                    </div>
-                    <div class="main-video-wrapper">
-                        <div class="video-loader"></div>
-                        <video data-src="https://www.w3schools.com/html/mov_bbb.mp4" class="main-car-vid lazy-vid" data-delay="400" loop muted playsinline></video>
-                    </div>
-                    <div class="bottom-cap">
-                        <div class="cta-text">Detaylı İncelemek İçin Tıkla</div>
-                        <div class="car-title">Honda Civic Type-R</div>
-                    </div>
+            <!-- 360 Görsel Alanı (Simülasyon) -->
+            <div class="box-360 relative flex-grow my-4 bg-brutal-dark rounded-[2rem] overflow-hidden flex items-center justify-center border-4 border-black" data-angle="0">
+                <span class="absolute text-white/10 font-black text-6xl tracking-tighter angle-text select-none">0°</span>
+                
+                <!-- Otomatik sallanma animasyonu: Kullanıcıyı dokunmaya teşvik eder -->
+                <div class="absolute bottom-4 flex flex-col items-center animate-wiggle">
+                    <svg class="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                    <span class="text-[8px] font-black text-white/50 uppercase tracking-widest mt-1">360° İncele</span>
+                </div>
+                
+                <!-- Araç İllüstrasyonu (Placeholder) -->
+                <svg class="w-3/4 h-auto text-white/80 transition-transform duration-75 car-svg" viewBox="0 0 24 10" fill="currentColor">
+                    <path d="M2 8h20v-2l-3-4H7L4 6v2z M4 8a1 1 0 100 2 1 1 0 000-2zm14 0a1 1 0 100 2 1 1 0 000-2z" />
+                </svg>
+            </div>
+
+            <!-- Minimalist İkonik Özellikler & Buton -->
+            <div class="flex justify-between items-center z-10">
+                <div class="flex gap-3 text-black">
+                    <span class="flex items-center gap-1 text-[10px] font-bold"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> 5.0L V8</span>
+                    <span class="flex items-center gap-1 text-[10px] font-bold">⚙️ OTO</span>
+                    <span class="flex items-center gap-1 text-[10px] font-bold">⛽ BENZİN</span>
+                </div>
+                <button onclick="openBooking('Mercedes G63 AMG')" class="bg-black text-white text-[10px] font-black uppercase px-4 py-2.5 rounded-full tracking-widest active:scale-95 transition-transform">Hemen Rezerve Et</button>
+            </div>
+        </article>
+
+        <!-- KART 2: Tekil, Yüksek Fiyatlı (Altın Jaguar) -->
+        <article class="snap-section brutal-border-b w-full p-4 flex flex-col justify-between relative bg-white">
+            <div class="flex justify-between items-start z-10">
+                <div class="flex items-center gap-2">
+                    <!-- Premium Altın Jaguar İkonu -->
+                    <svg class="w-8 h-4 text-gold animate-run-fast drop-shadow-md" viewBox="0 0 100 50" fill="currentColor">
+                        <path d="M10,40 Q15,30 25,35 Q35,40 45,30 Q55,20 65,25 Q75,30 85,20 Q90,15 95,20 Q90,25 85,30 Q75,40 65,35 Q55,30 45,40 Q35,50 25,45 Q15,40 10,40 Z"/>
+                    </svg>
+                    <h2 class="text-sm font-black uppercase tracking-tight">Range Rover Velar</h2>
+                </div>
+                <div class="text-right">
+                    <p class="text-gold font-black text-lg tracking-tighter shadow-sm">₺18.500</p>
+                    <p class="text-[8px] font-bold text-gray-400 uppercase tracking-widest">/ Gün</p>
                 </div>
             </div>
 
-            <!-- KART 3: Lüks Segment -->
-            <div class="car-item luxury" data-price="21000" data-luxury="true"
-                 data-stats='{"hp":"380 HP", "accel":"4.8s", "drivetrain":"AWD", "range":"700 km"}'>
-                <div class="car-capsule" onclick="open360Modal(this)">
-                    <div class="top-cap">
-                        <span class="promo-text left">HEMEN TESLİM</span>
-                        <div class="jaguar-frame">
-                            <video src="https://www.w3schools.com/html/mov_bbb.mp4" class="jaguar-vid" data-speed="2.0" loop muted autoplay playsinline></video>
-                        </div>
-                        <span class="promo-text right">ŞOFÖRLÜ</span>
-                    </div>
-                    <div class="main-video-wrapper">
-                        <div class="video-loader"></div>
-                        <video data-src="https://www.w3schools.com/html/mov_bbb.mp4" class="main-car-vid lazy-vid" data-delay="800" loop muted playsinline></video>
-                    </div>
-                    <div class="bottom-cap">
-                        <div class="cta-text">Detaylı İncelemek İçin Tıkla</div>
-                        <div class="car-title">Mercedes E300</div>
-                    </div>
-                </div>
+            <!-- 360 Görsel Alanı -->
+            <div class="box-360 relative flex-grow my-4 bg-brutal-dark rounded-[2rem] overflow-hidden flex items-center justify-center border-4 border-black" data-angle="0">
+                <span class="absolute text-white/10 font-black text-6xl tracking-tighter angle-text select-none">0°</span>
+                <svg class="w-3/4 h-auto text-white/80 transition-transform duration-75 car-svg" viewBox="0 0 24 10" fill="currentColor">
+                    <path d="M1 8h22v-2l-4-3H5L1 6v2z M4 8a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm16 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
+                </svg>
             </div>
 
-            <!-- KART 4: Ekonomik / Standart -->
-            <div class="car-item" data-price="12000" data-luxury="false"
-                 data-stats='{"hp":"140 HP", "accel":"9.5s", "drivetrain":"FWD", "range":"850 km"}'>
-                <div class="car-capsule" onclick="open360Modal(this)">
-                    <div class="top-cap">
-                        <span class="promo-text left">EKONOMİK</span>
-                        <div class="jaguar-frame">
-                            <!-- Yavaş koşan jaguar -->
-                            <video src="https://www.w3schools.com/html/mov_bbb.mp4" class="jaguar-vid" data-speed="1.0" loop muted autoplay playsinline></video>
-                        </div>
-                        <span class="promo-text right">AZ YAKAR</span>
-                    </div>
-                    <div class="main-video-wrapper">
-                        <div class="video-loader"></div>
-                        <video data-src="https://www.w3schools.com/html/mov_bbb.mp4" class="main-car-vid lazy-vid" data-delay="1200" loop muted playsinline></video>
-                    </div>
-                    <div class="bottom-cap">
-                        <div class="cta-text">Detaylı İncelemek İçin Tıkla</div>
-                        <div class="car-title">Renault Megane</div>
-                    </div>
+            <div class="flex justify-between items-center z-10">
+                <div class="flex gap-3 text-black">
+                    <span class="flex items-center gap-1 text-[10px] font-bold">💼 5 Valiz</span>
+                    <span class="flex items-center gap-1 text-[10px] font-bold">⚙️ OTO</span>
+                    <span class="flex items-center gap-1 text-[10px] font-bold">⛽ DİZEL</span>
                 </div>
+                <button onclick="openBooking('Range Rover Velar')" class="bg-black text-white text-[10px] font-black uppercase px-4 py-2.5 rounded-full tracking-widest active:scale-95 transition-transform">Hemen Rezerve Et</button>
             </div>
+        </article>
 
-             <!-- KART 5: Lüks SUV -->
-             <div class="car-item luxury" data-price="28000" data-luxury="true"
-             data-stats='{"hp":"500 HP", "accel":"3.9s", "drivetrain":"AWD", "range":"500 km"}'>
-            <div class="car-capsule" onclick="open360Modal(this)">
-                <div class="top-cap">
-                    <span class="promo-text left">VIP HİZMET</span>
-                    <div class="jaguar-frame">
-                        <video src="https://www.w3schools.com/html/mov_bbb.mp4" class="jaguar-vid" data-speed="3.0" loop muted autoplay playsinline></video>
+        <!-- Bu bölümün yüksekliği kasıtlı olarak ayarlandı ki %20'lik kısmı alttan gözüksün -->
+        <div class="snap-section-half flex w-full brutal-border-b bg-gray-50">
+            
+            <!-- Sol İkiz (C4) -->
+            <article class="w-1/2 brutal-border-r p-3 flex flex-col justify-between h-full relative">
+                <div class="flex justify-between items-start">
+                    <h2 class="text-[11px] font-black uppercase tracking-tight leading-tight w-2/3">Citroen C4</h2>
+                    <!-- Standart Siyah Jaguar (Yavaş) -->
+                    <svg class="w-5 h-2.5 text-black animate-run-slow" viewBox="0 0 100 50" fill="currentColor">
+                        <path d="M10,40 Q15,30 25,35 Q35,40 45,30 Q55,20 65,25 Q75,30 85,20 Q90,15 95,20 Q90,25 85,30 Q75,40 65,35 Q55,30 45,40 Q35,50 25,45 Q15,40 10,40 Z"/>
+                    </svg>
+                </div>
+                
+                <div class="box-360 relative flex-grow my-2 bg-brutal-dark rounded-l-[1.5rem] overflow-hidden flex items-center justify-center border-y-2 border-l-2 border-black" data-angle="0">
+                     <span class="absolute text-white/10 font-black text-4xl tracking-tighter angle-text select-none">0°</span>
+                </div>
+
+                <div class="flex flex-col gap-1 text-black">
+                    <p class="text-gold font-black text-sm tracking-tighter">₺8.500</p>
+                    <div class="flex gap-2">
+                        <span class="text-[8px] font-bold">⚙️ OTO</span>
+                        <span class="text-[8px] font-bold">⛽ BENZİN</span>
                     </div>
-                    <span class="promo-text right">TAM ZIRHLI</span>
                 </div>
-                <div class="main-video-wrapper">
-                    <div class="video-loader"></div>
-                    <video data-src="https://www.w3schools.com/html/mov_bbb.mp4" class="main-car-vid lazy-vid" data-delay="1600" loop muted playsinline></video>
+                <button onclick="openBooking('Citroen C4')" class="absolute bottom-3 right-3 w-8 h-8 bg-black text-white rounded-full flex items-center justify-center font-black active:scale-95">+</button>
+            </article>
+
+            <!-- Sağ İkiz (C3) -->
+            <article class="w-1/2 p-3 flex flex-col justify-between h-full relative">
+                <div class="flex justify-between items-start">
+                    <h2 class="text-[11px] font-black uppercase tracking-tight leading-tight w-2/3">Citroen C3</h2>
+                    <!-- Standart Siyah Jaguar (Yavaş) -->
+                    <svg class="w-5 h-2.5 text-black animate-run-slow" viewBox="0 0 100 50" fill="currentColor">
+                        <path d="M10,40 Q15,30 25,35 Q35,40 45,30 Q55,20 65,25 Q75,30 85,20 Q90,15 95,20 Q90,25 85,30 Q75,40 65,35 Q55,30 45,40 Q35,50 25,45 Q15,40 10,40 Z"/>
+                    </svg>
                 </div>
-                <div class="bottom-cap">
-                    <div class="cta-text">Detaylı İncelemek İçin Tıkla</div>
-                    <div class="car-title">Porsche Cayenne</div>
+                
+                <div class="box-360 relative flex-grow my-2 bg-brutal-dark rounded-r-[1.5rem] overflow-hidden flex items-center justify-center border-y-2 border-r-2 border-black" data-angle="0">
+                     <span class="absolute text-white/10 font-black text-4xl tracking-tighter angle-text select-none">0°</span>
                 </div>
-            </div>
+
+                <div class="flex flex-col gap-1 text-black">
+                    <p class="text-gold font-black text-sm tracking-tighter">₺7.000</p>
+                    <div class="flex gap-2">
+                        <span class="text-[8px] font-bold">⚙️ MANUEL</span>
+                        <span class="text-[8px] font-bold">⛽ DİZEL</span>
+                    </div>
+                </div>
+                <button onclick="openBooking('Citroen C3')" class="absolute bottom-3 right-3 w-8 h-8 bg-black text-white rounded-full flex items-center justify-center font-black active:scale-95">+</button>
+            </article>
+
+        </div>
+        
+        <!-- Devamı niteliğinde boş alan, "snap" döngüsünün sürmesi için -->
+        <div class="h-[50vh] bg-white flex flex-col items-center justify-center">
+            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Daha Fazla Araç Yükleniyor...</p>
         </div>
 
-        </div>
     </main>
 
-    <!-- ==========================================================================
-         BÜYÜYEN MODAL ARAYÜZÜ (360 DERECE VİDEO VE SATIŞ HUNİSİ)
-         ========================================================================== -->
-    <div class="expansion-modal" id="modal360">
-        <button class="modal-close-btn" onclick="close360Modal()">✕</button>
-        <div class="modal-content-wrapper">
+    
+    <!-- Rezervasyon Modalı -->
+    <div id="bookingModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex-col justify-end">
+        <div class="bg-white w-full rounded-t-[2rem] p-6 pb-8 border-t-[3px] border-black transform translate-y-full transition-transform duration-300" id="bookingContent">
             
-            <!-- Etkileşimli 360 Video Alanı -->
-            <div class="interactive-360-container" id="interactionArea">
-                <!-- Video buraya JS ile enjekte edilecek ve mouse/touch ile kontrol edilecek -->
-                <video id="modalVideoPlayer" src="" playsinline preload="auto"></video>
-                <div class="drag-instruction">
-                    <span>↔</span> Sağa Sola Kaydırarak Aracı İncele
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h3 class="text-2xl font-black uppercase tracking-tighter leading-none" id="modalCarTitle">Araç Adı</h3>
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">Hızlı Rezervasyon</p>
+                </div>
+                <button onclick="closeBooking()" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center font-black active:scale-95">X</button>
+            </div>
+
+            <form id="leadForm" onsubmit="submitForm(event)" class="space-y-4">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[9px] font-black uppercase tracking-wider text-black mb-1">Adınız Soyadınız</label>
+                        <input type="text" required class="w-full border-[1.5px] border-black rounded-none px-3 py-3 text-xs font-bold outline-none focus:bg-gray-50">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] font-black uppercase tracking-wider text-black mb-1">Telefonunuz</label>
+                        <input type="tel" required placeholder="05XX" class="w-full border-[1.5px] border-black rounded-none px-3 py-3 text-xs font-bold outline-none focus:bg-gray-50">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[9px] font-black uppercase tracking-wider text-black mb-1">Alış - Teslim Tarihi</label>
+                        <input type="date" required class="w-full border-[1.5px] border-black rounded-none px-3 py-3 text-[10px] font-bold outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] font-black uppercase tracking-wider text-black mb-1">Teslim Edilecek İlçe</label>
+                        <select required class="w-full border-[1.5px] border-black rounded-none px-3 py-3 text-[10px] font-bold outline-none appearance-none bg-white">
+                            <option value="">Seçiniz...</option>
+                            <option>Şişli (Ücretsiz)</option>
+                            <option>Beşiktaş (Ücretsiz)</option>
+                            <option>Kadıköy (Ücretsiz)</option>
+                            <option>Diğer (+Ücret)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Nasıl İletişime Geçelim? (Asosyal kitlesi için) -->
+                <div class="mt-2">
+                    <label class="block text-[9px] font-black uppercase tracking-wider text-black mb-2">Nasıl İletişime Geçelim?</label>
+                    <div class="flex gap-2">
+                        <label class="flex-1 border-[1.5px] border-black p-2 flex items-center justify-center gap-2 cursor-pointer has-[:checked]:bg-black has-[:checked]:text-white transition-colors">
+                            <input type="radio" name="contact" checked class="hidden">
+                            <span class="text-[10px] font-bold uppercase">📞 Hemen Ara</span>
+                        </label>
+                        <label class="flex-1 border-[1.5px] border-black p-2 flex items-center justify-center gap-2 cursor-pointer has-[:checked]:bg-black has-[:checked]:text-white transition-colors">
+                            <input type="radio" name="contact" class="hidden">
+                            <span class="text-[10px] font-bold uppercase">💬 Sadece Mesaj</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Hayati Hukuki Onay Alanı -->
+                <div class="bg-gray-100 p-3 mt-4 border border-gray-300 relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-12 h-12 bg-gold rotate-45"></div>
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" required class="w-5 h-5 mt-0.5 accent-black border-2 border-black rounded-none">
+                        <span class="text-[9px] font-bold text-gray-700 leading-relaxed">
+                            Aracınız şehir içi adresinize <u>ücretsiz</u> olarak getirilir. Sorumluluklar ve iptal şartları için <button type="button" onclick="openLegal()" class="text-black font-black underline decoration-2">Sözleşmeyi Okudum, Anladım.</button>
+                        </span>
+                    </label>
+                </div>
+
+                <button type="submit" class="w-full bg-gold text-black font-black text-sm uppercase tracking-widest py-4 border-2 border-black hover:bg-yellow-400 active:scale-95 transition-all flex items-center justify-center gap-2">
+                    Talebi Gönder
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sözleşme Tam Ekran Modalı -->
+    <div id="legalModal" class="fixed inset-0 z-[60] bg-white hidden flex-col">
+        <div class="p-4 brutal-border-b flex items-center justify-between bg-black text-white">
+            <button onclick="closeLegal()" class="text-[10px] font-black uppercase tracking-widest flex items-center gap-1 active:text-gold">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Geri Dön
+            </button>
+            <span class="text-[10px] font-bold tracking-widest text-gold uppercase">Yasal Sözleşme</span>
+        </div>
+        <div class="p-6 overflow-y-auto pb-20">
+            <h1 class="text-2xl font-black uppercase tracking-tighter mb-6">Mesafeli Kiralama Şartları</h1>
+            <div class="space-y-4 text-[11px] font-medium text-gray-800 leading-relaxed">
+                <p><strong class="text-black">1. Kapsam ve Teslimat:</strong> İşbu sözleşme çerçevesinde belirlenen "şehir içi" bölge sınırları dahiline araç ücretsiz teslim edilir. Kiracının adreste bulunmaması operasyonel bedel oluşturur.</p>
+                <p><strong class="text-black">2. Ödeme ve Provizyon:</strong> Teslimat anında Dolar/TL veya kredi kartı ile işlem yapılabilir. Segment kuralları (yaş, ehliyet süresi, provizyon blokesi) geçerlidir.</p>
+                <p><strong class="text-black">3. Sorumluluk Reddi:</strong> Aracın alkollü, yasadışı veya kurallara aykırı kullanımında doğacak tüm maddi/manevi zararlar tamamen Kiracı'ya rücu edilir. Firmamız mesuliyet kabul etmez.</p>
+                <div class="p-4 bg-gray-100 border border-gray-300 font-bold mt-8 text-black">
+                    Müşteri, sipariş ekranındaki kutucuğu işaretleyerek bu maddeleri mahkemede delil niteliğinde kabul etmiş sayılır.
                 </div>
             </div>
-
-            <!-- Fiyatsız Dinamik İstatistikler -->
-            <div class="modal-stats" id="modalStatsContainer">
-                <!-- JS ile doldurulacak -->
-            </div>
-
-            <!-- Satış Hunisi Butonları -->
-            <div class="funnel-actions">
-                <button class="btn-premium" onclick="openContractModal()">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                    Hemen Kirala (Min. 2 Gün)
-                </button>
-                <button class="btn-secondary" onclick="alert('WhatsApp Yönlendirmesi Başlatılıyor...')">
-                    Sadece Mesaj At
-                </button>
-            </div>
-            
-            <div class="funnel-badges">
-                <span>💳 Kredi Kartı Geçerlidir</span>
-                <span>💵 Nakit ve Döviz Kabul Edilir</span>
-                <span>✨ Ücretsiz Adrese Teslimat</span>
-            </div>
-
         </div>
     </div>
 
-    <!-- ==========================================================================
-         HUKUKİ KORUMA: SÖZLEŞME ONAY MODALI (SCROLL-TO-BOTTOM)
-         ========================================================================== -->
-    <div class="contract-overlay" id="contractModal">
-        <div class="contract-box">
-            <div class="contract-back" onclick="closeContractModal()">←</div>
-            <div class="contract-header">Kiralama Sözleşmesi Şartları</div>
-            
-            <div class="contract-body" id="contractTextBody">
-                <p><strong>Madde 1: Minimum Kiralama Süresi</strong><br>
-                İşbu sözleşme kapsamında belirtilen araçların minimum kiralama süresi 2 (iki) tam gündür. 2 günden az kiralama talepleri sistem tarafından otomatik reddedilir.</p>
-                <p><strong>Madde 2: Sigorta ve Teminat</strong><br>
-                Araç, tam kapsamlı kasko ile korunmaktadır. Ancak kullanıcı kaynaklı ağır ihmal durumlarında (alkollü sürüş vb.) tüm hasar bedeli kullanıcıya rücu eder.</p>
-                <p><strong>Madde 3: Kilometre Sınırı</strong><br>
-                Günlük limit 300 KM'dir. Aşımı durumunda kilometre başına güncel tarife üzerinden ek ücretlendirme tahsil edilir.</p>
-                <p><strong>Madde 4: Teslimat ve İade</strong><br>
-                Ücretsiz adres teslimatı yalnızca şehir merkezi sınırları içinde geçerlidir. Araç, teslim alındığı yakıt seviyesi ile iade edilmek zorundadır.</p>
-                <p><strong>Madde 5: Hukuki Yükümlülükler</strong><br>
-                Kiralama süresince araca yazılacak her türlü trafik cezası ve OGS/HGS kaçak geçiş ücretleri, kiracının beyan ettiği kredi kartından doğrudan tahsil edilir.</p>
-                <p><em>Sözleşmenin tüm şartlarını okuyup anladığınızı onaylamak için lütfen metnin en sonuna kadar kaydırınız.</em></p>
-                <!-- Kaydırma boşluğu yaratmak için -->
-                <br><br><br><br><br><br>
-                <p style="text-align:center; font-weight:bold; color:var(--red-alert);">--- SÖZLEŞME SONU ---</p>
+    <!-- PWA (Uygulamayı Ana Ekrana Ekle) Pop-up -->
+    <div id="pwaBanner" class="fixed bottom-0 left-0 w-full z-50 p-4 transform translate-y-full transition-transform duration-700 ease-out">
+        <div class="bg-black text-white p-4 brutal-border-t border-gray-800 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gold text-black flex items-center justify-center font-black text-lg">RR</div>
+                <div class="flex flex-col">
+                    <span class="text-xs font-black uppercase tracking-wide">Uygulamayı İndir</span>
+                    <span class="text-[9px] text-gray-400 font-bold">Özel bildirimler ve indirimler.</span>
+                </div>
             </div>
-
-            <button class="btn-accept" id="acceptContractBtn" onclick="finalizeBooking()">Sözleşmeyi Okudum ve Onaylıyorum</button>
+            <button onclick="closePWA()" class="bg-white text-black px-4 py-2 text-[10px] font-black uppercase tracking-widest active:scale-95">Ekle</button>
         </div>
     </div>
 
-    <!-- ==========================================================================
-         PWA EKRANA EKLE POP-UP
-         ========================================================================== -->
-    <div class="pwa-popup" id="pwaPopup">
-        <span>📲 Uygulamayı Ana Ekrana Ekle, %5 İndirim Kazan!</span>
-        <span class="pwa-close" onclick="document.getElementById('pwaPopup').classList.remove('show')">✕</span>
-    </div>
-
-    <!-- ==========================================================================
-         ZİNCİRLEME DÜŞÜNME JS MİMARİSİ
-         ========================================================================== -->
     <script>
-        // ------------------------------------------------------------------------
-        // 1. DEFANSİF PROGRAMLAMA & GÜVENLİK
-        // ------------------------------------------------------------------------
-        document.addEventListener('contextmenu', event => event.preventDefault()); // Sağ tık engelle
-        
-        document.addEventListener('keydown', (e) => {
-            // F12, Ctrl+Shift+I, Ctrl+U engelle
-            if(e.key === 'F12' || 
-              (e.ctrlKey && e.shiftKey && e.key === 'I') || 
-              (e.ctrlKey && e.key === 'u')) {
-                e.preventDefault();
-                return false;
-            }
-        });
-
-        // ------------------------------------------------------------------------
-        // 2. JAGUAR MASKOT HIZ KONTROLÜ
-        // ------------------------------------------------------------------------
-        const setJaguarSpeeds = () => {
-            document.querySelectorAll('.jaguar-vid').forEach(video => {
-                const speed = parseFloat(video.getAttribute('data-speed')) || 1.0;
-                video.playbackRate = speed;
-            });
-        };
-        // Videolar metadata yüklediğinde hızı tekrar garantile
-        document.querySelectorAll('.jaguar-vid').forEach(vid => {
-            vid.addEventListener('loadedmetadata', () => { vid.playbackRate = parseFloat(vid.getAttribute('data-speed')) || 1.0; });
-        });
-
-        // ------------------------------------------------------------------------
-        // 3. LAZY LOAD GECİKMELİ VİDEO YÜKLEME (Sayfa Kasmaması İçin)
-        // ------------------------------------------------------------------------
-        const initLazyVideos = () => {
-            const videos = document.querySelectorAll('.lazy-vid');
-            videos.forEach(vid => {
-                const delay = parseInt(vid.getAttribute('data-delay')) || 0;
-                const src = vid.getAttribute('data-src');
-                
-                setTimeout(() => {
-                    vid.src = src;
-                    vid.addEventListener('canplaythrough', () => {
-                        vid.classList.add('loaded');
-                        // Loader'ı gizle
-                        const loader = vid.previousElementSibling;
-                        if(loader && loader.classList.contains('video-loader')) {
-                            loader.style.opacity = '0';
-                        }
-                        vid.play().catch(e => console.warn('Otomatik oynatma engellendi:', e));
-                    }, { once: true });
-                }, delay);
-            });
-        };
-
-        // ------------------------------------------------------------------------
-        // 4. SIRALAMA VE FİLTRELEME (Çıpalama Etkisi)
-        // ------------------------------------------------------------------------
-        const grid = document.getElementById('carGrid');
-        const sortBtn = document.getElementById('sortPriceBtn');
-        let isSortedDesc = false;
-
-        sortBtn.addEventListener('click', () => {
-            const items = Array.from(grid.querySelectorAll('.car-item'));
-            
-            // Fiyatı yüksekten düşüğe sıralama
-            items.sort((a, b) => {
-                const priceA = parseInt(a.getAttribute('data-price'));
-                const priceB = parseInt(b.getAttribute('data-price'));
-                return priceB - priceA; // Her zaman yüksekten düşüğe zorla
-            });
-            
-            // Asimetrik grid yapısını bozmamak için önce temizle sonra ekle
-            items.forEach(item => {
-                item.style.opacity = '0';
-                item.style.transform = 'scale(0.95)';
-                grid.appendChild(item); // Sona taşıyarak sıralar
-            });
-
-            // Animasyonlu geri getirme
+        // Yükleniyor (Preloader) Animasyonunu Kaldır
+        window.addEventListener('load', () => {
             setTimeout(() => {
-                items.forEach((item, index) => {
-                    setTimeout(() => {
-                        item.style.transition = 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
-                        item.style.opacity = '1';
-                        // Asimetrik gridde ilk öğe büyütülmüştü, stil kirliliğini temizle
-                        if(window.innerWidth > 1200 && index === 0) {
-                            item.style.transform = 'scale(1.05)';
-                        } else {
-                            item.style.transform = 'scale(1)';
-                        }
-                    }, index * 50);
-                });
-            }, 100);
-
-            sortBtn.innerHTML = "Sıralandı: En Pahalı İlk";
-            sortBtn.style.background = "var(--primary-yellow)";
+                const preloader = document.getElementById('preloader');
+                preloader.style.opacity = '0';
+                setTimeout(() => preloader.style.display = 'none', 500);
+            }, 800); // Gerçekçi bir lüks hissiyatı için 0.8sn bekleme
         });
 
-        // Hap Filtreler
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
+        // 360 Derece Etkileşim Mantığı
+        document.querySelectorAll('.box-360').forEach(box => {
+            let startX = 0;
+            let currentAngle = 0;
+            const textEl = box.querySelector('.angle-text');
+            const svgEl = box.querySelector('.car-svg');
+            
+            box.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                box.style.cursor = 'grabbing';
+            }, {passive: true});
+
+            box.addEventListener('touchmove', (e) => {
+                const deltaX = startX - e.touches[0].clientX;
+                // Sadece yatay kaydırmayı algıla ve açıyı değiştir
+                currentAngle += deltaX * 1.5; 
                 
-                const filter = e.target.getAttribute('data-filter');
-                const items = document.querySelectorAll('.car-item');
+                if(currentAngle >= 360) currentAngle = currentAngle % 360;
+                if(currentAngle < 0) currentAngle = 360 + (currentAngle % 360);
                 
-                items.forEach(item => {
-                    if(filter === 'all') {
-                        item.style.display = 'block';
-                    } else if (item.classList.contains(filter)) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
+                textEl.textContent = Math.floor(currentAngle) + '°';
+                
+                // SVG'yi hafifçe y ekseninde döndürerek 3D hissi ver (CSS Perspective)
+                if(svgEl) {
+                    svgEl.style.transform = `rotateY(${currentAngle}deg)`;
+                }
+                
+                startX = e.touches[0].clientX;
+            }, {passive: true});
+
+            box.addEventListener('touchend', () => box.style.cursor = 'ew-resize');
+        });
+
+        // Filtre Seçimi ve Marquee Durdurma
+        function selectFilter(btn) {
+            // Tüm butonları sıfırla
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('border-black', 'text-black');
+                b.classList.add('border-gray-300', 'text-gray-500');
             });
-        });
-
-        // ------------------------------------------------------------------------
-        // 5. DEVASA MODAL & 360 DERECE VİDEO ETKİLEŞİMİ (Kusursuz Algoritma)
-        // ------------------------------------------------------------------------
-        const modal = document.getElementById('modal360');
-        const modalVideo = document.getElementById('modalVideoPlayer');
-        const interactionArea = document.getElementById('interactionArea');
-        const statsContainer = document.getElementById('modalStatsContainer');
-        let isDragging = false;
-        let dragStartX = 0;
-        let videoStartTarget = 0;
-
-        window.open360Modal = function(capsuleElement) {
-            const carItem = capsuleElement.closest('.car-item');
             
-            // 1. Videoyu Al
-            const sourceVideo = capsuleElement.querySelector('.main-car-vid');
-            if(!sourceVideo) return;
+            // Tıklananı aktif yap
+            btn.classList.remove('border-gray-300', 'text-gray-500');
+            btn.classList.add('border-black', 'text-black');
             
-            modalVideo.src = sourceVideo.src || sourceVideo.getAttribute('data-src');
+            // Animasyonu duraklat
+            const track = document.getElementById('filterTrack');
+            track.style.animationPlayState = 'paused';
             
-            // 2. İstatistikleri Doldur (Fiyat Hariç!)
-            const stats = JSON.parse(carItem.getAttribute('data-stats'));
-            statsContainer.innerHTML = `
-                <div class="stat-box"><div class="stat-title">Motor Gücü</div><div class="stat-value">${stats.hp}</div></div>
-                <div class="stat-box"><div class="stat-title">0-100 km/s</div><div class="stat-value">${stats.accel}</div></div>
-                <div class="stat-box"><div class="stat-title">Çekiş</div><div class="stat-value">${stats.drivetrain}</div></div>
-                <div class="stat-box"><div class="stat-title">Menzil</div><div class="stat-value">${stats.range}</div></div>
-            `;
+            // 3 saniye sonra geri başlat
+            setTimeout(() => {
+                track.style.animationPlayState = 'running';
+            }, 3000);
+        }
 
-            // 3. Modalı Aç
-            modalVideo.pause(); // Oynatma, kullanıcı sürüklesin
-            modal.classList.add('active');
-            document.body.classList.add('modal-open');
-        };
+        // Modal (Rezervasyon) Yönetimi
+        const bookingModal = document.getElementById('bookingModal');
+        const bookingContent = document.getElementById('bookingContent');
+        const modalCarTitle = document.getElementById('modalCarTitle');
 
-        window.close360Modal = function() {
-            modal.classList.remove('active');
-            document.body.classList.remove('modal-open');
-            modalVideo.src = ""; // Belleği temizle
-        };
+        function openBooking(carName) {
+            modalCarTitle.textContent = carName;
+            bookingModal.classList.remove('hidden');
+            bookingModal.classList.add('flex');
+            setTimeout(() => {
+                bookingContent.style.transform = 'translateY(0)';
+            }, 10);
+        }
 
-        // 360 Fare ve Dokunmatik Etkileşimi
-        const handleDragStart = (x) => {
-            isDragging = true;
-            dragStartX = x;
-            videoStartTarget = modalVideo.currentTime;
-        };
+        function closeBooking() {
+            bookingContent.style.transform = 'translateY(100%)';
+            setTimeout(() => {
+                bookingModal.classList.add('hidden');
+                bookingModal.classList.remove('flex');
+            }, 300);
+        }
 
-        const handleDragMove = (x) => {
-            if(!isDragging || isNaN(modalVideo.duration)) return;
+        // Form Gönderim Simülasyonu
+        function submitForm(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
             
-            const deltaX = x - dragStartX;
-            const sensitivity = 500; // Ne kadar sürüklemede video ne kadar ilerlesin
+            btn.innerHTML = `<svg class="animate-spin h-5 w-5 mx-auto text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
             
-            let newTime = videoStartTarget + (deltaX / sensitivity);
-            
-            // Loop mantığı (Video bitince başa, başa gelince sona)
-            if(newTime < 0) newTime = modalVideo.duration - 0.1;
-            if(newTime >= modalVideo.duration) newTime = 0.1;
-            
-            modalVideo.currentTime = newTime;
-        };
+            setTimeout(() => {
+                bookingContent.innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-black">
+                            <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <h2 class="text-2xl font-black uppercase tracking-tighter mb-2">Talep Alındı</h2>
+                        <p class="text-[10px] font-bold text-gray-600 mb-8">VIP temsilcimiz ${modalCarTitle.textContent} modeli için sizinle hemen iletişime geçecektir.</p>
+                        <button onclick="location.reload()" class="w-full bg-black text-white font-black uppercase text-xs py-4">Kapat</button>
+                    </div>
+                `;
+            }, 1000);
+        }
 
-        const handleDragEnd = () => { isDragging = false; };
+        // Hukuki Sözleşme Yönetimi
+        const legalModal = document.getElementById('legalModal');
+        
+        function openLegal() {
+            legalModal.classList.remove('hidden');
+            legalModal.classList.add('flex');
+        }
+        function closeLegal() {
+            legalModal.classList.add('hidden');
+            legalModal.classList.remove('flex');
+        }
 
-        // Mouse Events
-        interactionArea.addEventListener('mousedown', (e) => handleDragStart(e.clientX));
-        window.addEventListener('mousemove', (e) => handleDragMove(e.clientX));
-        window.addEventListener('mouseup', handleDragEnd);
-
-        // Touch Events (Mobil 360)
-        interactionArea.addEventListener('touchstart', (e) => handleDragStart(e.touches[0].clientX));
-        window.addEventListener('touchmove', (e) => {
-            if(isDragging) e.preventDefault(); // Sürüklerken sayfanın kaymasını engelle
-            handleDragMove(e.touches[0].clientX);
-        }, {passive: false});
-        window.addEventListener('touchend', handleDragEnd);
-
-
-        // ------------------------------------------------------------------------
-        // 6. HUKUKİ KORUMA: SÖZLEŞME VE SCROLL-TO-BOTTOM ONAYI
-        // ------------------------------------------------------------------------
-        const contractModal = document.getElementById('contractModal');
-        const contractBody = document.getElementById('contractTextBody');
-        const acceptBtn = document.getElementById('acceptContractBtn');
-
-        window.openContractModal = function() {
-            contractModal.classList.add('active');
-            acceptBtn.classList.remove('enabled');
-            acceptBtn.innerText = "Lütfen metni sonuna kadar okuyunuz...";
-            contractBody.scrollTop = 0; // Başa al
-        };
-
-        window.closeContractModal = function() {
-            contractModal.classList.remove('active');
-        };
-
-        // Sözleşme scroll dinleyicisi
-        contractBody.addEventListener('scroll', () => {
-            // Hata payı için 5px tolerans
-            if(contractBody.scrollTop + contractBody.clientHeight >= contractBody.scrollHeight - 5) {
-                acceptBtn.classList.add('enabled');
-                acceptBtn.innerText = "Sözleşmeyi Okudum ve Onaylıyorum";
-            }
-        });
-
-        window.finalizeBooking = function() {
-            if(acceptBtn.classList.contains('enabled')) {
-                alert("Sözleşme Onaylandı! Minimum 2 günlük kiralama işlemi ödeme adımına yönlendiriliyor.");
-                closeContractModal();
-                close360Modal();
-            }
-        };
-
-        // ------------------------------------------------------------------------
-        // 7. PWA ANA EKRANA EKLE (Gecikmeli Pop-up)
-        // ------------------------------------------------------------------------
+        // PWA (Ana Ekrana Ekle) Gösterimi - Gecikmeli Göster
         setTimeout(() => {
-            const pwa = document.getElementById('pwaPopup');
-            if(pwa) pwa.classList.add('show');
-        }, 12000); // 12 saniye sonra göster
+            document.getElementById('pwaBanner').style.transform = 'translateY(0)';
+        }, 8000); // 8 saniye sonra alttan kayarak çıkar
 
-
-        // ------------------------------------------------------------------------
-        // İNİŞ (BOOTSTRAP)
-        // ------------------------------------------------------------------------
-        window.onload = () => {
-            setJaguarSpeeds();
-            initLazyVideos();
-        };
-
+        function closePWA() {
+            document.getElementById('pwaBanner').style.transform = 'translateY(100%)';
+        }
     </script>
 </body>
 </html>
