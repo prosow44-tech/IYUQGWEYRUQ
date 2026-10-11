@@ -1,714 +1,464 @@
-<!--
-/* PLANNING:
-1.  **Görsel Analizi & Grid Düzeni (Sıkıştırılmış Perspektif):**
-    *   Kullanıcı %80 küçültme sorunu yaşamış. Demek ki `grid-template-rows` ve `gap` değerleri çok büyüktü ve viewport'a sığmıyordu.
-    *   Tüm ekranın (100vh) içine 4 kare + panter sığacak şekilde CSS `flex` veya oransal `grid` kullanılmalı.
-    *   Karelerin boyutları `max-width` ve `aspect-ratio` ile dinamik tutulmalı, dikey boşluklar minimuma indirilmeli.
-    *   Panter (Jaguar) tam ortada olacak. Kullanıcı "ortadakini ben kendim ekleyeceğim" dediği için panter görselini kaldırıp, onun için boyutlandırılmış net bir `div` (yer tutucu) bırakılacak.
-
-2.  **Çizgiler ve Simetri:**
-    *   Üst çizgiler ve alt çizgiler birbirine EŞİT uzunlukta olacak.
-    *   Aralarındaki boşluklar AYNI olacak.
-    *   Bunun için SVG path'leri dinamik koordinat hesaplama yerine, grid'in kendisine bağlı CSS pseudo-elementleri veya sabit SVG ViewBox ile çizmek daha stabil bir simetri sağlar.
-
-3.  **Modal (Tıklama Arayüzü) - "image_9d99f0" Referansı:**
-    *   Tıklanınca açılan arayüz.
-    *   Sol taraf: 360 Video alanı (Oran olarak 2/3 kaplayacak). Siyah bir kutu, köşeleri oval.
-    *   Sağ taraf (Bandana/Kenar Çubuğu - "image_9d9a72" Referansı): Beyaz zemin, açık gri gölgeli/border'lı hap şeklinde bilgi kutuları. Sol kenarlarında "bandana" gibi ince siyah/yeşil dikey çizgiler (border-left) olacak.
-    *   Üstte Araç İsmi (Örn: Honda Civic) ve çarpı butonu.
-    *   İçerik: Yakıt Tipi, Vites Türü, Motor Gücü, Performans, Klima, Kişi Sayısı vb. (Fiyat YOK).
-
-4.  **Üst Menü (Floating Navbar) - "image_9d9e2d" Referansı:**
-    *   Sitenin en üst ortasında sabit (fixed).
-    *   Yüzer (floating) menü mantığı: Kenarlardan boşluklu, hap (pill) şeklinde.
-    *   Sarı/Beyaz temaya uygun: Arka plan beyaz, altın sarısı (#D4AF37) ince kenarlık veya yumuşak gölge.
-    *   Üstünde yapışık "Şu Anda Açığız" ibaresi (yeşil noktalı).
-    *   İçerik: Anasayfa, Fiyat Listesi, Galeri, İletişim.
-
-5.  **Tasarım Renkleri:**
-    *   Arka plan: Saf Beyaz (#FFF)
-    *   Vurgular: Altın Sarısı (#D4AF37), Siyah (#000)
-    *   Çizgiler: Koyu Gri (#333)
-
-6.  **Kod Mimarisi (Zero Placeholder):**
-    *   Tek dosya, tam fonksiyonel. SVG çizgiler JS ile DOM yüklendiğinde eşit hesaplanacak.
-*/
--->
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Referans Rentecar - Lüks Araç Kiralama</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Altın Saray Düğün Kompleksi</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Montserrat:wght@300;500;700&display=swap');
+
         :root {
-            --color-white: #FFFFFF;
-            --color-gold: #D4AF37;
-            --color-black: #000000;
-            --color-grey: #333333;
-            --color-light-grey: #F5F5F5;
-            --color-green: #2ecc71;
-            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            --border-radius: 20px;
+            --bg-color: #050505;
+            --card-bg: #0a0a0a;
+            --neon-yellow: #FFEA00;
+            --neon-dark: #ccbc00;
+            --text-light: #f5f5f5;
+            --text-muted: #888;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none;
         }
 
         body {
-            font-family: var(--font-main);
-            background-color: var(--color-white);
-            color: var(--color-black);
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
             overflow-x: hidden;
-            height: 100vh; /* Tam ekrana sığdırmak için */
-            display: flex;
-            flex-direction: column;
-        }
-
-        body.modal-open {
-            overflow: hidden;
-        }
-
-        /* --- YÜZER ÜST MENÜ (Floating Navbar) --- */
-        .top-navigation-wrapper {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 90%;
-            max-width: 600px;
-        }
-
-        .status-badge {
-            background-color: var(--color-grey);
-            color: var(--color-white);
-            font-size: 11px;
-            font-weight: bold;
-            padding: 4px 15px;
-            border-radius: 10px 10px 0 0;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--color-green);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--color-green);
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(46, 204, 113, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
-        }
-
-        .floating-navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            width: 100%;
-            height: 60px;
-            border-radius: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border: 2px solid var(--color-gold);
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            padding: 0 20px;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: var(--color-black);
-            font-weight: 700;
-            font-size: 13px;
-            letter-spacing: 0.5px;
-            transition: color 0.3s;
-        }
-
-        .nav-link:hover {
-            color: var(--color-gold);
-        }
-
-        .nav-logo-circle {
-            width: 45px;
-            height: 45px;
-            background: var(--color-white);
-            border-radius: 50%;
-            border: 2px solid var(--color-gold);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            color: var(--color-gold);
-            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
-        }
-
-        /* --- ANA SAHNE VE GRID (Sıkıştırılmış Ekrana Sığan Yapı) --- */
-        .main-stage {
-            flex: 1;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding-top: 100px; /* Menü boşluğu */
-            padding-bottom: 20px;
             position: relative;
         }
 
-        .compact-grid {
-            position: relative;
-            width: 90vw;
-            max-width: 1200px;
-            height: 80vh; /* Ekranın %80'ini kapla, küçültmeye gerek kalmasın */
-            max-height: 800px;
+        /* SVG Çizgi ve Ok Katmanı */
+        #svg-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Tıklamaları engellememesi için */
+            z-index: 1;
+        }
+
+        .neon-line-track {
+            fill: none;
+            stroke: rgba(255, 234, 0, 0.05);
+            stroke-width: 2;
+        }
+
+        .neon-line {
+            fill: none;
+            stroke: var(--neon-yellow);
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-dasharray: 15, 25;
+            filter: drop-shadow(0 0 8px var(--neon-yellow)) drop-shadow(0 0 15px var(--neon-dark));
+            animation: flowNeon 1.5s linear infinite;
+        }
+
+        @keyframes flowNeon {
+            0% { stroke-dashoffset: 40; }
+            100% { stroke-dashoffset: 0; }
+        }
+
+        /* Ana Düzen Mimarisi (CSS Grid) */
+        .layout-container {
             display: grid;
-            grid-template-columns: 1fr 100px 1fr; /* Orta alan panter için daraltıldı */
-            grid-template-rows: 1fr auto 1fr;
+            grid-template-columns: minmax(300px, 1fr) minmax(350px, 1.5fr) minmax(300px, 1fr);
+            grid-template-rows: auto auto auto;
+            gap: 40px;
+            padding: 60px 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+            min-height: 100vh;
             align-items: center;
             justify-items: center;
-            z-index: 10;
+            position: relative;
+            z-index: 2;
         }
 
-        /* Araç Kartı */
-        .car-card-wrapper {
+        /* Kutu Sargıları (Card Wrapper) */
+        .card-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100%;
-            max-width: 380px; /* Karelerin çok büyümesini engelle */
             position: relative;
-        }
-
-        /* Konumlandırma */
-        .card-tl { grid-column: 1; grid-row: 1; }
-        .card-tr { grid-column: 3; grid-row: 1; }
-        .card-bl { grid-column: 1; grid-row: 3; }
-        .card-br { grid-column: 3; grid-row: 3; }
-
-        .click-hint {
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--color-grey);
-        }
-
-        .black-video-box {
             width: 100%;
-            aspect-ratio: 4 / 3; /* Tam kare yerine 4:3 oran, dikeyde yer kazandırır */
-            background-color: var(--color-black);
-            border-radius: 30px;
-            box-shadow: 10px 10px 0px 0px rgba(0, 0, 0, 0.15);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease;
+            max-width: 320px;
         }
 
-        .black-video-box:hover {
-            transform: scale(1.03);
-            box-shadow: 15px 15px 0px 0px var(--color-gold);
+        .card-top-text {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            transition: color 0.3s ease;
         }
 
-        .black-video-box video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.8;
-            pointer-events: none;
-        }
-
-        .car-name-container {
-            margin-top: 10px;
+        .card-bottom-text {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            color: var(--text-light);
+            margin-top: 20px;
             text-align: center;
-            width: 100%;
             position: relative;
+            transition: color 0.3s ease;
         }
 
-        .car-name {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--color-black);
-        }
-
-        .car-underline {
-            width: 80%;
-            height: 10px;
-            border-bottom: 2px solid var(--color-grey);
-            border-radius: 50%;
-            margin: 2px auto 0 auto;
-        }
-
-        /* Ok Bağlantı Noktaları (Görünmez referanslar) */
-        .point-start { position: absolute; width: 1px; height: 1px; }
-        .card-tl .point-start, .card-tr .point-start { bottom: -10px; left: 50%; }
-        .card-bl .point-start, .card-br .point-start { top: -40px; left: 50%; } /* Alt kartlar için oklar yukarıdan çıkacak gibi hesaplanacak */
-
-        /* Merkez Alan (Panterin geleceği yer) */
-        .center-core {
-            grid-column: 2;
-            grid-row: 2;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 20;
-        }
-
-        /* Kullanıcının Panteri Ekleyeceği Kutu (Yer Tutucu) */
-        .panther-placeholder {
-            width: 160px;
-            height: 80px;
-            position: relative;
-            /* background: rgba(255,0,0,0.1); -> Test için açılabilir */
-        }
-
-        .center-text {
-            font-size: 16px;
-            font-weight: 800;
-            margin-top: 5px;
-            text-align: center;
-            color: var(--color-black);
-            background: var(--color-white);
-            padding: 2px 10px;
-        }
-
-        /* SVG Çizgiler Katmanı */
-        #connectionLines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .line-path {
-            fill: none;
-            stroke: var(--color-grey);
-            stroke-width: 2.5;
-        }
-
-        /* --- MODAL (Genişleyen Detay Arayüzü) --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(255, 255, 255, 0.98);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            width: 95%;
-            max-width: 1100px;
-            height: 85vh;
-            max-height: 700px;
-            background: var(--color-white);
-            border-radius: var(--border-radius);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            border: 1px solid #E0E0E0;
-            display: flex;
-            position: relative;
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-            overflow: hidden;
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
-        }
-
-        .btn-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 30px;
-            font-weight: bold;
-            color: var(--color-black);
-            cursor: pointer;
-            z-index: 10;
-        }
-
-        /* Modal Sol: Video */
-        .modal-left-video {
-            flex: 1.8; /* Oran olarak daha geniş */
-            background: var(--color-black);
-            position: relative;
-            border-radius: var(--border-radius) 0 0 var(--border-radius);
-            overflow: hidden;
-        }
-
-        .modal-left-video video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .swipe-hint {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--color-white);
-            font-weight: 700;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Modal Sağ: Bilgiler (Bandana Stili) */
-        .modal-right-info {
-            flex: 1.2;
-            padding: 40px;
-            background: var(--color-white);
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-
-        .modal-title {
-            font-size: 32px;
-            font-weight: 900;
-            margin-bottom: 30px;
-            border-bottom: 3px solid var(--color-black);
-            padding-bottom: 10px;
-        }
-
-        /* Hap (Bandana) İstatistik Kutuları */
-        .info-pill-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .info-pill {
-            background: var(--color-light-grey);
-            border-radius: 12px;
-            padding: 15px 20px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        /* Sol Bandana Çizgisi */
-        .info-pill::before {
+        .card-bottom-text::after {
             content: '';
             position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 6px;
-            background-color: var(--color-black); /* Varsayılan siyah */
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background-color: var(--neon-yellow);
+            box-shadow: 0 0 10px var(--neon-yellow);
+            transition: width 0.3s ease;
         }
 
-        .info-pill.green-bandana::before {
-            background-color: var(--color-green); /* Performans için yeşil */
-        }
-        
-        .info-pill.gold-bandana::before {
-            background-color: var(--color-gold); /* Lüks hissi için sarı */
+        /* Siyah Kareler (Ana Kartlar) */
+        .black-card {
+            background-color: var(--card-bg);
+            width: 100%;
+            aspect-ratio: 4 / 5; /* Dikdörtgen/Kare formunu korur */
+            border-radius: 40px;
+            border: 1px solid #222;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 0 0 rgba(255, 234, 0, 0);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
         }
 
-        .pill-label {
-            font-size: 11px;
-            color: #888;
-            text-transform: uppercase;
-            font-weight: 700;
-            margin-bottom: 4px;
-            margin-left: 5px;
+        /* Kart İçerikleri */
+        .card-icon {
+            font-size: 3rem;
+            color: #333;
+            margin-bottom: 15px;
+            transition: all 0.4s ease;
         }
 
-        .pill-value {
-            font-size: 18px;
+        .card-desc {
+            font-size: 0.9rem;
+            color: #555;
+            text-align: center;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        /* Etkileşimler (Hover Efektleri) */
+        .card-wrapper:hover .black-card {
+            border-color: var(--neon-yellow);
+            box-shadow: 0 0 25px rgba(255, 234, 0, 0.3), inset 0 0 20px rgba(255, 234, 0, 0.05);
+            transform: translateY(-10px);
+        }
+
+        .card-wrapper:hover .card-icon {
+            color: var(--neon-yellow);
+            text-shadow: 0 0 15px var(--neon-yellow);
+            transform: scale(1.1);
+        }
+
+        .card-wrapper:hover .card-desc {
+            opacity: 1;
+            color: #ccc;
+            transform: translateY(0);
+        }
+
+        .card-wrapper:hover .card-top-text {
+            color: var(--neon-yellow);
+        }
+
+        .card-wrapper:hover .card-bottom-text {
+            color: var(--neon-yellow);
+        }
+
+        .card-wrapper:hover .card-bottom-text::after {
+            width: 100%;
+        }
+
+        /* Merkez Element (Panter/Araçlar yerine Düğün Teması) */
+        .center-hub {
+            grid-column: 2;
+            grid-row: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            background: radial-gradient(circle, rgba(255,234,0,0.1) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            position: relative;
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        .center-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: var(--neon-yellow);
+            text-shadow: 0 0 20px rgba(255, 234, 0, 0.5);
+            margin-bottom: 10px;
             font-weight: 800;
-            color: var(--color-black);
-            margin-left: 5px;
         }
 
-        /* Mobil Düzenlemeler */
-        @media (max-width: 900px) {
-            body { height: auto; overflow-y: auto; }
-            .top-navigation-wrapper { width: 95%; top: 10px; }
-            .floating-navbar { padding: 0 10px; height: 50px; }
-            .nav-link { font-size: 11px; }
-            
-            .compact-grid {
+        .center-subtitle {
+            font-size: 1rem;
+            color: #aaa;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        @keyframes pulseGlow {
+            0% { filter: drop-shadow(0 0 10px rgba(255, 234, 0, 0.2)); }
+            100% { filter: drop-shadow(0 0 30px rgba(255, 234, 0, 0.6)); }
+        }
+
+        /* Grid Konumlandırmaları */
+        /* Sığmayan 2 Ekstra Kare (Daha küçük boyutta üst seviye) */
+        .extra-box-1 { grid-column: 1; grid-row: 1; transform: scale(0.85); margin-bottom: -50px; }
+        .extra-box-2 { grid-column: 3; grid-row: 1; transform: scale(0.85); margin-bottom: -50px; }
+        
+        /* Ana Çizimdeki 4 Kare */
+        .main-box-tl { grid-column: 1; grid-row: 2; }
+        .main-box-tr { grid-column: 3; grid-row: 2; }
+        .main-box-bl { grid-column: 1; grid-row: 3; }
+        .main-box-br { grid-column: 3; grid-row: 3; }
+
+        /* Mobil Uyumluluk */
+        @media (max-width: 1024px) {
+            .layout-container {
                 grid-template-columns: 1fr;
                 grid-template-rows: auto;
-                height: auto;
-                gap: 40px;
+                gap: 60px;
             }
-            .card-tl, .card-tr, .card-bl, .card-br, .center-core {
-                grid-column: 1; grid-row: auto;
-            }
-            #connectionLines { display: none; }
-            
-            .modal-content { flex-direction: column; height: 95vh; }
-            .modal-left-video { border-radius: var(--border-radius) var(--border-radius) 0 0; flex: 1; min-height: 300px; }
-            .modal-right-info { flex: 2; padding: 20px; }
+            .extra-box-1 { grid-column: 1; grid-row: 1; margin-bottom: 0; }
+            .extra-box-2 { grid-column: 1; grid-row: 2; margin-bottom: 0; }
+            .main-box-tl { grid-column: 1; grid-row: 3; }
+            .main-box-tr { grid-column: 1; grid-row: 4; }
+            .center-hub  { grid-column: 1; grid-row: 5; }
+            .main-box-bl { grid-column: 1; grid-row: 6; }
+            .main-box-br { grid-column: 1; grid-row: 7; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. Yüzer Üst Menü -->
-    <div class="top-navigation-wrapper">
-        <div class="status-badge">
-            <div class="status-dot"></div>
-            Şu Anda Açığız
-        </div>
-        <nav class="floating-navbar">
-            <a href="#" class="nav-link">ANASAYFA</a>
-            <div class="nav-logo-circle">RR</div> <!-- Logo Alanı -->
-            <a href="#" class="nav-link">FİYAT LİSTESİ</a>
-            <a href="#" class="nav-link">GALERİ</a>
-            <a href="#" class="nav-link">İLETİŞİM</a>
-        </nav>
-    </div>
-
-    <!-- 2. Dinamik Eşit Çizgiler İçin SVG Katmanı -->
-    <svg id="connectionLines">
+    <!-- SVG Bağlantı Katmanı -->
+    <svg id="svg-layer">
         <defs>
-            <marker id="arrowHead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
-                <path d="M 0 0 L 8 4 L 0 8 z" fill="#333" />
+            <!-- Neon Sarı Ok Ucu Tanımlaması -->
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#FFEA00" />
             </marker>
         </defs>
-        <path id="lineTL" class="line-path" marker-end="url(#arrowHead)"></path>
-        <path id="lineTR" class="line-path" marker-end="url(#arrowHead)"></path>
-        <path id="lineBL" class="line-path" marker-end="url(#arrowHead)"></path>
-        <path id="lineBR" class="line-path" marker-end="url(#arrowHead)"></path>
-        <path id="lineTop1" class="line-path"></path>
-        <path id="lineTop2" class="line-path"></path>
+        <g id="paths-container"></g>
     </svg>
 
-    <!-- 3. Ana Sahne ve Sıkıştırılmış Grid -->
-    <main class="main-stage">
-        <div class="compact-grid">
-            
-            <!-- Sol Üst -->
-            <div class="car-card-wrapper card-tl">
-                <div class="click-hint">Detayı İncelemek İçin Tıkla</div>
-                <div class="black-video-box" onclick="openDetails('Honda Civic', 'Benzin', 'Otomatik', '210 HP', 'Yüksek Performans', '5 Kişi / 4 Bagaj')">
-                    <video muted loop playsinline src=""></video>
-                </div>
-                <div class="car-name-container">
-                    <div class="car-name">Honda Civic</div>
-                    <div class="car-underline"></div>
-                    <div class="point-start" id="p-tl"></div>
-                </div>
+    <!-- Ana Arayüz -->
+    <div class="layout-container">
+        
+        <!-- Ekstra Kutu 1 (Üst Sol) -->
+        <div class="card-wrapper extra-box-1" id="node-extra-1">
+            <div class="card-top-text">Özel Hizmetler</div>
+            <div class="black-card">
+                <div class="card-icon">✦</div>
+                <div class="card-desc">Özel karşılama hostesleri, vale hizmeti ve VIP lobi kullanımı.</div>
             </div>
-
-            <!-- Sağ Üst -->
-            <div class="car-card-wrapper card-tr">
-                <div class="click-hint">Detayı İncelemek İçin Tıkla</div>
-                <div class="black-video-box" onclick="openDetails('Hyundai Tucson', 'Dizel', 'Yarı-Otomatik', '180 HP', 'Arazi Modu', '5 Kişi / 5 Bagaj')">
-                    <video muted loop playsinline src=""></video>
-                </div>
-                <div class="car-name-container">
-                    <div class="car-name">Hyundai Tucson</div>
-                    <div class="car-underline"></div>
-                    <div class="point-start" id="p-tr"></div>
-                </div>
-            </div>
-
-            <!-- Merkez (Panter Alanı) -->
-            <div class="center-core">
-                <!-- KULLANICININ PANTERİ EKLEYECEĞİ YER TUTUCU -->
-                <div class="panther-placeholder" id="centerTarget"></div>
-                <div class="center-text" id="centerText">Ortalama Sekment<br>Araçlar</div>
-            </div>
-
-            <!-- Sol Alt -->
-            <div class="car-card-wrapper card-bl">
-                <div class="point-start" id="p-bl" style="top:-30px;"></div> <!-- Ok yukarıdan çıkacak gibi -->
-                <div class="click-hint">Detayı İncelemek İçin Tıkla</div>
-                <div class="black-video-box" onclick="openDetails('Renault Megane', 'Elektrik', 'Otomatik', '160 HP', 'Sessiz Sürüş', '5 Kişi / 3 Bagaj')">
-                    <video muted loop playsinline src=""></video>
-                </div>
-                <div class="car-name-container">
-                    <div class="car-name">Renault Megane</div>
-                    <div class="car-underline"></div>
-                </div>
-            </div>
-
-            <!-- Sağ Alt -->
-            <div class="car-card-wrapper card-br">
-                <div class="point-start" id="p-br" style="top:-30px;"></div>
-                <div class="click-hint">Detayı İncelemek İçin Tıkla</div>
-                <div class="black-video-box" onclick="openDetails('Toyota Corolla', 'Hibrit', 'Otomatik', '140 HP', 'Ekonomik Sürüş', '5 Kişi / 4 Bagaj')">
-                    <video muted loop playsinline src=""></video>
-                </div>
-                <div class="car-name-container">
-                    <div class="car-name">Toyota Corolla</div>
-                    <div class="car-underline"></div>
-                </div>
-            </div>
-
+            <div class="card-bottom-text">VIP Hizmetler</div>
         </div>
-    </main>
 
-    <!-- 4. Modal (Genişleyen Arayüz - Bandanalı) -->
-    <div class="modal-overlay" id="carModal">
-        <div class="modal-content">
-            <div class="btn-close" onclick="closeDetails()">&times;</div>
-            
-            <!-- Sol: Siyah 360 Video Kutusu -->
-            <div class="modal-left-video">
-                <video src="" muted playsinline id="modalVideo"></video>
-                <div class="swipe-hint">
-                    <span>&#8592;</span> 360° İncelemek İçin Kaydır <span>&#8594;</span>
-                </div>
+        <!-- Ekstra Kutu 2 (Üst Sağ) -->
+        <div class="card-wrapper extra-box-2" id="node-extra-2">
+            <div class="card-top-text">Medya Paketi</div>
+            <div class="black-card">
+                <div class="card-icon">🎥</div>
+                <div class="card-desc">Drone çekimi, jimmy jib ve kesintisiz 4K video kaydı.</div>
             </div>
-
-            <!-- Sağ: Bandanalı İstatistikler -->
-            <div class="modal-right-info">
-                <div class="modal-title" id="mTitle">Honda Civic</div>
-                
-                <div class="info-pill-container">
-                    <div class="info-pill black-bandana">
-                        <div class="pill-label">Yakit Tipi</div>
-                        <div class="pill-value" id="mFuel">Benzin</div>
-                    </div>
-                    
-                    <div class="info-pill black-bandana">
-                        <div class="pill-label">Vites Türü</div>
-                        <div class="pill-value" id="mGear">Otomatik</div>
-                    </div>
-                    
-                    <div class="info-pill black-bandana">
-                        <div class="pill-label">Motor Gücü</div>
-                        <div class="pill-value" id="mPower">210 HP</div>
-                    </div>
-
-                    <div class="info-pill gold-bandana">
-                        <div class="pill-label">Kapasite & Özellikler</div>
-                        <div class="pill-value" id="mCapacity">5 Kişi / 4 Bagaj</div>
-                    </div>
-                    
-                    <div class="info-pill green-bandana">
-                        <div class="pill-label">Performans (Jaguar Hızı)</div>
-                        <div class="pill-value" id="mPerf">Yüksek Performans</div>
-                    </div>
-                </div>
-            </div>
+            <div class="card-bottom-text">Fotoğraf & Video</div>
         </div>
+
+        <!-- Ana Kutu 1 (Sol Üst) -->
+        <div class="card-wrapper main-box-tl" id="node-tl">
+            <div class="card-top-text">Detayı İncelemek İçin Tıkla</div>
+            <div class="black-card">
+                <div class="card-icon">🍽️</div>
+                <div class="card-desc">Geniş menü seçenekleri, ara sıcaklar, ordövr tabağı ve düğün pastası.</div>
+            </div>
+            <div class="card-bottom-text">Yemekli Menüler</div>
+        </div>
+
+        <!-- Merkez Eleman -->
+        <div class="center-hub" id="node-center">
+            <div class="center-title">ALTIN SARAY</div>
+            <div class="center-subtitle">Premium Düğün Kompleksi</div>
+        </div>
+
+        <!-- Ana Kutu 2 (Sağ Üst) -->
+        <div class="card-wrapper main-box-tr" id="node-tr">
+            <div class="card-top-text">Detayı İncelemek İçin Tıkla</div>
+            <div class="black-card">
+                <div class="card-icon">🥂</div>
+                <div class="card-desc">Zengin aperatifler, sınırsız meşrubat ve özel kokteyl sunumları.</div>
+            </div>
+            <div class="card-bottom-text">Kokteyl Konsepti</div>
+        </div>
+
+        <!-- Ana Kutu 3 (Sol Alt) -->
+        <div class="card-wrapper main-box-bl" id="node-bl">
+            <div class="card-top-text">Detayı İncelemek İçin Tıkla</div>
+            <div class="black-card">
+                <div class="card-icon">💃</div>
+                <div class="card-desc">Özel taht, nedime ekibi, hint kınası ve yöresel müzik orkestrası.</div>
+            </div>
+            <div class="card-bottom-text">Kına Gecesi</div>
+        </div>
+
+        <!-- Ana Kutu 4 (Sağ Alt) -->
+        <div class="card-wrapper main-box-br" id="node-br">
+            <div class="card-top-text">Detayı İncelemek İçin Tıkla</div>
+            <div class="black-card">
+                <div class="card-icon">💍</div>
+                <div class="card-desc">Zarif masa süslemeleri, nişan masası kurulumu ve aile köşesi.</div>
+            </div>
+            <div class="card-bottom-text">Nişan & Sünnet</div>
+        </div>
+
     </div>
 
+    <!-- Matematiksel Çizgi (Perspektif) Motoru -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            calculateExactSymmetricalLines();
-            window.addEventListener('resize', calculateExactSymmetricalLines);
-        });
+            const svgLayer = document.getElementById("svg-layer");
+            const pathsContainer = document.getElementById("paths-container");
 
-        // EŞİT VE SİMETRİK ÇİZGİ HESAPLAMASI
-        function calculateExactSymmetricalLines() {
-            if(window.innerWidth < 900) return;
+            // Bağlanacak düğümlerin haritası (Start Node, End Node, Başlangıç Yüzü, Bitiş Yüzü)
+            const connections = [
+                // En üstteki ekstra karelerden sol/sağ ana karelere inen bağlantılar
+                { from: "node-extra-1", to: "node-tl", fromSide: "bottom", toSide: "top" },
+                { from: "node-extra-2", to: "node-tr", fromSide: "bottom", toSide: "top" },
+                
+                // 4 Ana karenin merkeze olan okları
+                { from: "node-tl", to: "node-center", fromSide: "right", toSide: "left" },
+                { from: "node-tr", to: "node-center", fromSide: "left", toSide: "right" },
+                { from: "node-bl", to: "node-center", fromSide: "right", toSide: "bottom-left" },
+                { from: "node-br", to: "node-center", fromSide: "left", toSide: "bottom-right" }
+            ];
 
-            const getC = (id) => {
-                const rect = document.getElementById(id).getBoundingClientRect();
-                return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2, left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom };
-            };
+            // Bir elemanın belirtilen yüzünün ortasının koordinatlarını hesaplar
+            function getPoint(elementId, side) {
+                const el = document.getElementById(elementId);
+                if (!el) return { x: 0, y: 0 };
+                
+                const rect = el.getBoundingClientRect();
+                const scrollX = window.scrollX || window.pageXOffset;
+                const scrollY = window.scrollY || window.pageYOffset;
 
-            const tl = getC('p-tl');
-            const tr = getC('p-tr');
-            const bl = getC('p-bl');
-            const br = getC('p-br');
-            const centerArea = getC('centerTarget');
-            const centerTxt = getC('centerText');
+                // Black-card div'ine odaklanarak daha isabetli bağlantılar yapalım
+                const target = el.querySelector('.black-card') || el;
+                const targetRect = target.getBoundingClientRect();
 
-            // Simetri için sabit DİKEY inme mesafesi
-            const verticalDropTop = 40; 
-            const verticalDropBottom = 30;
-            const targetOffset = 15; // Panterin kenarlarından boşluk
+                const top = targetRect.top + scrollY;
+                const left = targetRect.left + scrollX;
+                const width = targetRect.width;
+                const height = targetRect.height;
 
-            // SOL ÜST: İn, kavis çiz, sağa merkeze git
-            const pathTL = `M ${tl.x} ${tl.y} 
-                            L ${tl.x} ${tl.y + verticalDropTop} 
-                            Q ${tl.x} ${tl.y + verticalDropTop + 10} ${tl.x + 10} ${tl.y + verticalDropTop + 10} 
-                            L ${centerArea.left - targetOffset} ${centerArea.y}`;
+                switch (side) {
+                    case "top": return { x: left + width / 2, y: top };
+                    case "bottom": return { x: left + width / 2, y: top + height };
+                    case "left": return { x: left, y: top + height / 2 };
+                    case "right": return { x: left + width, y: top + height / 2 };
+                    case "bottom-left": return { x: left + width * 0.25, y: top + height - (height*0.1) };
+                    case "bottom-right": return { x: left + width * 0.75, y: top + height - (height*0.1) };
+                    default: return { x: left + width / 2, y: top + height / 2 };
+                }
+            }
+
+            // İki nokta arasına yumuşak, organik bir kavis (Bezier Curve) çizer
+            function createPath(startX, startY, endX, endY, fromSide, toSide) {
+                // Mobil ekranlarda düz yukarıdan aşağı mantığı için hafif müdahale
+                const isMobile = window.innerWidth <= 1024;
+                
+                let cp1x = startX, cp1y = startY;
+                let cp2x = endX, cp2y = endY;
+
+                const distance = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
+                const curveStrength = isMobile ? distance * 0.2 : distance * 0.4;
+
+                // Başlangıç noktasının kavis yönü
+                if (fromSide === "bottom") cp1y += curveStrength;
+                else if (fromSide === "top") cp1y -= curveStrength;
+                else if (fromSide === "left") cp1x -= curveStrength;
+                else if (fromSide === "right") cp1x += curveStrength;
+
+                // Bitiş noktasının kavis yönü (tersi olmalı ki pürüzsüz girsin)
+                if (toSide === "bottom" || toSide.includes("bottom")) cp2y += curveStrength;
+                else if (toSide === "top") cp2y -= curveStrength;
+                else if (toSide === "left") cp2x -= curveStrength;
+                else if (toSide === "right") cp2x += curveStrength;
+
+                return `M ${startX} ${startY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${endX} ${endY}`;
+            }
+
+            // Tüm çizgileri (okları) sahnede render eder
+            function drawConnections() {
+                pathsContainer.innerHTML = ''; // Eski çizgileri temizle
+                
+                // SVG çalışma alanının boyutunu belgenin tamamını kaplayacak şekilde güncelle
+                svgLayer.style.width = document.body.scrollWidth + 'px';
+                svgLayer.style.height = document.body.scrollHeight + 'px';
+
+                connections.forEach(conn => {
+                    const startP = getPoint(conn.from, conn.fromSide);
+                    const endP = getPoint(conn.to, conn.toSide);
+
+                    const pathString = createPath(startP.x, startP.y, endP.x, endP.y, conn.fromSide, conn.toSide);
+
+                    // 1. Zemin çizgisi (Sönük iz)
+                    const trackPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                    trackPath.setAttribute("d", pathString);
+                    trackPath.setAttribute("class", "neon-line-track");
+                    pathsContainer.appendChild(trackPath);
+
+                    // 2. Hareketli Neon Çizgi ve Ok ucu
+                    const neonPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                    neonPath.setAttribute("d", pathString);
+                    neonPath.setAttribute("class", "neon-line");
+                    neonPath.setAttribute("marker-end", "url(#arrowhead)"); // Uca ok ekler
+                    pathsContainer.appendChild(neonPath);
+                });
+            }
+
+            // Sistemi Başlat
+            drawConnections();
+
+            // Defansif Programlama: Ekran boyutu değiştiğinde çizgilerin kopmasını engelle
+            // Performans için ResizeObserver ve Timeout (Debounce) kullanımı
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    drawConnections();
+                }, 100); // 100ms gecikme ile GPU'yu yormadan hesaplar
+            });
             
-            // SAĞ ÜST: İn, kavis çiz, sola merkeze git (Tamamen Simetrik)
-            const pathTR = `M ${tr.x} ${tr.y} 
-                            L ${tr.x} ${tr.y + verticalDropTop} 
-                            Q ${tr.x} ${tr.y + verticalDropTop + 10} ${tr.x - 10} ${tr.y + verticalDropTop + 10} 
-                            L ${centerArea.right + targetOffset} ${centerArea.y}`;
-
-            // SOL ALT: Yukarı çık, kavis çiz, sağa merkeze (yazının altına) git
-            const pathBL = `M ${bl.x} ${bl.y} 
-                            L ${bl.x} ${bl.y - verticalDropBottom} 
-                            Q ${bl.x} ${bl.y - verticalDropBottom - 10} ${bl.x + 10} ${bl.y - verticalDropBottom - 10} 
-                            L ${centerArea.left - targetOffset} ${centerTxt.bottom + 5}`;
-
-            // SAĞ ALT: Yukarı çık, kavis çiz, sola merkeze (yazının altına) git (Tamamen Simetrik)
-            const pathBR = `M ${br.x} ${br.y} 
-                            L ${br.x} ${br.y - verticalDropBottom} 
-                            Q ${br.x} ${br.y - verticalDropBottom - 10} ${br.x - 10} ${br.y - verticalDropBottom - 10} 
-                            L ${centerArea.right + targetOffset} ${centerTxt.bottom + 5}`;
-
-            // Yukarıdan inen dik çizgiler
-            const midX = window.innerWidth / 2;
-            const pathTop1 = `M ${midX - 8} 0 L ${midX - 8} ${centerArea.top - 10}`;
-            const pathTop2 = `M ${midX + 8} 0 L ${midX + 8} ${centerArea.top - 10}`;
-
-            document.getElementById('lineTL').setAttribute('d', pathTL);
-            document.getElementById('lineTR').setAttribute('d', pathTR);
-            document.getElementById('lineBL').setAttribute('d', pathBL);
-            document.getElementById('lineBR').setAttribute('d', pathBR);
-            document.getElementById('lineTop1').setAttribute('d', pathTop1);
-            document.getElementById('lineTop2').setAttribute('d', pathTop2);
-        }
-
-        // MODAL YÖNETİMİ
-        const modal = document.getElementById('carModal');
-        const body = document.body;
-
-        function openDetails(title, fuel, gear, power, perf, cap) {
-            document.getElementById('mTitle').innerText = title;
-            document.getElementById('mFuel').innerText = fuel;
-            document.getElementById('mGear').innerText = gear;
-            document.getElementById('mPower').innerText = power;
-            document.getElementById('mPerf').innerText = perf;
-            document.getElementById('mCapacity').innerText = cap;
-
-            modal.classList.add('active');
-            body.classList.add('modal-open');
-        }
-
-        function closeDetails() {
-            modal.classList.remove('active');
-            body.classList.remove('modal-open');
-        }
+            // Cihazın orientasyonu (yatay/dikey) değişirse veya fontlar sonradan yüklenirse yedek bir hesaplama
+            window.addEventListener('orientationchange', () => { setTimeout(drawConnections, 300); });
+            window.addEventListener('load', drawConnections);
+        });
     </script>
 </body>
 </html>
