@@ -1,21 +1,16 @@
 <!--
-/* PLANNING: REFERANS RENTECAR KUSURSUZ MİMARİ İNŞASI
+/* PLANNING: REFERANS RENTECAR KUSURSUZ MİMARİ İNŞASI (V4 - ENTEGRE FİLO)
 -------------------------------------------------------------------------
 ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
-1.  [x] İzolasyon & Sıfır Yer Tutucu: Harici meta-sohbet kapatıldı. Dosyalar birleştirildi. Kısaltma (//... vb) yapılmadı.
-2.  [x] Tema ve Renkler: Sarı (#FFC107) ve Kırık Beyaz (#F8F9FA) premium konsept. Gri boğucu tasarımlar engellendi.
-3.  [x] Düzen (Layout): Masaüstünde sol sabit (sticky) filtre menüsü + sağda 3-3-2 asimetrik grid.
-4.  [x] Mobil Düzen: Sol menü gizlendi. Üstte zarif "Filtreler" ikonu ile alttan açılan (bottom drawer) çekmece yapıldı. Mobil akış 1-1-2 scroll-snap.
-5.  [x] Üst Vitrin (Fırsat Araçları): En üstte Kırmızı/Neon vurgulu geçici teklif alanı. İçerisinde Nissan Qashqai ve Renault Megane.
-6.  [x] Şekil ve Estetik: Araç kartları 24px oval, beyaz kalın çerçeveli fotoğraf çerçevesi estetiğinde.
-7.  [x] Basamak / Perspektif Animasyonu: Aşağı indikçe :nth-child ile %100, %96, %92 ölçeklenip aşağı kayan asimetrik merdiven efekti kurgulandı.
-8.  [x] Çıpalama ve Sıralama: Filo (Egea'dan Qashqai'ye 11 araç) sisteme karışık yüklendi. Sol menüdeki "Fiyatı Yüksekten Düşüğe Sırala" butonu ile JavaScript sort() fonksiyonu tetiklenerek anında sıralanacak.
-9.  [x] Jaguar Maskotu MP4 Konteynerleri: Araç isminin TAM ÜSTÜNE margin-top: -30px ile bindirildi. 2.7/1 yatay en-boy oranında sınırlandırıldı. Metni aşağı itmez. Qashqai, Megane ve Corolla'da .premium-jaguar, diğerlerinde .standard-jaguar sınıfları kullanıldı.
-10. [x] Video Tembel Yükleme (Lazy Load) ve Delay: 0.1s, 0.4s, 0.8s stagger delay ile RAM darboğazı engellendi. Error 105 try-catch zırhı eklendi.
-11. [x] Video Ping-Pong: HTML5 video bittiğinde JavaScript setInterval ile framesel geriye sarma (rewind) algoritması yazıldı.
-12. [x] Form ve Minimum 2 Gün Şartı: WhatsApp iptal. "Hemen Ara" / "Sadece Mesaj At" aktif. JS Date.parse ile Alış-Teslim tarihleri hesaplanıp 2 günden az ise işlem engellenir.
-13. [x] %100 Hukuki Güvence (KVKK): "Sözleşmeyi Okudum" tıklandığında açılan ekranda scrollHeight - scrollTop algoritması çalışır. En aşağı inilmeden buton ASLA yeşil olmaz.
-14. [x] Güvenlik & PWA: 12 saniye gecikmeli PWA prompt. JS ile F12, sağ tık ve kopyalama koruması. Formda Honeypot (bot tuzağı) aktif.
+1.  [x] Sıfır Yer Tutucu (Zero Placeholder): Hiçbir kod parçası atlanmamıştır. 11 aracın tamamı gerçek verileriyle (Kişi/Bagaj/Fiyat) HTML içine tam statik olarak gömülmüştür.
+2.  [x] Layout & Responsive: Masaüstünde (PC) sol sabit sidebar (Filtre/Sıralama) ve sağda asimetrik masonry (3-3-2) duvarı. Mobilde sidebar "Bottom Drawer" (açılır çekmece) olarak çalışır ve akış 1-1-2 scroll-snap kuralına uyar.
+3.  [x] Fırsat Vitrini (Hero): En pahalı 2 araç (Qashqai ve Megane) en üstte kırmızı/geçici teklif konseptiyle devasa 2'li vitrinde yer alır.
+4.  [x] Çıpalama Sıralaması: Araçlar HTML'e anında büyükten küçüğe dizili şekilde gömüldü (2300₺ -> 1500₺). Sabit menüdeki "Fiyatı Yüksekten Düşüğe Sırala" butonu DOM'u dinamik manipüle etmek için JS ile aktifleştirildi.
+5.  [x] Jaguar Maskot Geometrisi: aspect-ratio: 2.7/1 kuralıyla, videonun alt kesişimine margin-top: -30px ile bindirildi. Qashqai, Megane ve Corolla'da .premium-jaguar (Altın/Parlak), diğer 8 araçta .standard-jaguar (Gri/Mat) boş kapsayıcıları hazırlandı.
+6.  [x] Video Tembel Yükleme & Ping-Pong: IntersectionObserver ile .car-card'lar izlenir. Görünüme girince 0.1s, 0.4s, 0.8s kademeli gecikmeyle (delay) skeleton kaybolur ve MP4 yüklenir (RAM darboğazı engeli). Video bitince JS ile geriye sarılır.
+7.  [x] Dönüşüm Hunisi: "Hemen Ara" / "Sadece Mesaj At" sekmeli modern form. Kredi kartı logoları ve "Ücretsiz Teslim" etiketi.
+8.  [x] 2 Gün Şartı & Hukuki KVKK: Form JS'sinde Alış/Teslim tarihleri hesaplanır, 2 günden az ise Error fırlatır. KVKK ekranında scrollHeight hesaplaması ile müşteri metni dibe kaydırmadan Onay butonu AÇILMAZ.
+9.  [x] PWA ve Güvenlik: F12, Sağ Tık, Kopyalama blokajı aktif. Honeypot (bot tuzağı) aktif. PWA "Ana Ekrana Ekle" uyarısı 12. saniyede çıkar.
 -------------------------------------------------------------------------
 */
 -->
@@ -26,7 +21,7 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
     <title>Referans Rentecar | Malatya Premium Araç Kiralama</title>
-    <meta name="description" content="Malatya'nın en prestijli araç kiralama servisi. Ücretsiz adres teslimatı, net fiyatlar ve yüksek model premium araç filosu.">
+    <meta name="description" content="Malatya'nın en prestijli araç kiralama servisi. Ücretsiz adres teslimatı, net fiyatlar ve yüksek model araç filosu.">
     <meta name="theme-color" content="#FFC107">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,302 +29,259 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
-        /* ==========================================================================
-           1. KÖK DEĞİŞKENLER VE TEMA BEYİN (SARI & BEYAZ KONSEPT)
-           ========================================================================== */
+        /* 1. TEMA DEĞİŞKENLERİ VE BEYAZ/SARI KONSEPT */
         :root {
             --brand-yellow: #FFC107;
             --brand-yellow-dark: #E0A800;
-            --brand-red: #E63946;
-            --bg-premium: #F8F9FA; /* Ferah buz beyazı/mavi tonlu açık gri */
+            --brand-red: #D32F2F;
+            --bg-body: #F8F9FA;
             --bg-card: #FFFFFF;
             --text-dark: #1A1D20;
             --text-gray: #495057;
             --text-muted: #868E96;
             --border-color: #E9ECEF;
             --input-bg: #F1F3F5;
+            --status-green: #00E676;
             
-            --radius-frame: 24px; /* Oval fotoğraf çerçevesi */
+            --radius-card: 24px;
             --radius-btn: 12px;
             --radius-pill: 50px;
             
-            --shadow-sm: 0 4px 15px rgba(0,0,0,0.03);
+            --shadow-sm: 0 4px 15px rgba(0,0,0,0.04);
             --shadow-frame: 0 15px 35px rgba(0,0,0,0.06), 0 5px 15px rgba(255, 193, 7, 0.05);
             --shadow-modal: 0 25px 50px rgba(0,0,0,0.2);
-            --shadow-yellow: 0 8px 25px rgba(255, 193, 7, 0.3);
-            --shadow-red: 0 8px 25px rgba(230, 57, 70, 0.3);
+            --shadow-yellow: 0 8px 25px rgba(255, 193, 7, 0.25);
             
-            --gap-grid: 12px; 
-            --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --gap-grid: 15px;
             --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        /* ==========================================================================
-           2. RESET & GÜVENLİK (DEFANSİF CSS)
-           ========================================================================== */
+        /* 2. RESET & GÜVENLİK (DEFANSİF) */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html { scroll-behavior: smooth; overflow-x: hidden; }
         body { 
-            font-family: 'Montserrat', sans-serif; 
-            background-color: var(--bg-premium); 
-            color: var(--text-dark); 
-            line-height: 1.5; 
-            overflow-x: hidden;
-            width: 100vw;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            
-            /* Güvenlik: Metin Seçme, Sürükleme İptali */
-            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+            font-family: 'Montserrat', sans-serif; background-color: var(--bg-body); color: var(--text-dark); 
+            line-height: 1.5; overflow-x: hidden; width: 100vw;
+            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+            user-select: none; -webkit-user-select: none;
         }
-        /* Inputlarda seçime izin ver */
-        input, textarea, select { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
-        img, video, svg { -webkit-user-drag: none; user-drag: none; pointer-events: none; }
-        button, a { pointer-events: auto; }
+        input, textarea, select { user-select: text; -webkit-user-select: text; }
+        img, video, svg { pointer-events: none; -webkit-user-drag: none; }
+        button, a, label { pointer-events: auto; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
         .gpu-accel { transform: translateZ(0); will-change: transform, opacity; backface-visibility: hidden; }
 
-        /* ==========================================================================
-           3. HEADER & ŞEFFAF ARAYÜZ
-           ========================================================================== */
+        /* 3. PRELOADER */
+        #preloader {
+            position: fixed; inset: 0; background: #0A0A0A; z-index: 99999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        #preloader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        .preloader-jaguar { width: 150px; fill: var(--brand-yellow); animation: preloader-run 0.5s infinite alternate ease-in-out; filter: drop-shadow(0 0 15px rgba(255,193,7,0.5)); margin-bottom: 20px; }
+        @keyframes preloader-run { 0% { transform: scale(0.9) translateX(-15px) skewX(5deg); } 100% { transform: scale(1.1) translateX(15px) skewX(-5deg); } }
+        .preloader-text { font-size: 14px; font-weight: 800; color: var(--brand-yellow); letter-spacing: 4px; text-transform: uppercase; animation: pulse-text 1.5s infinite alternate; }
+        @keyframes pulse-text { 0% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        /* 4. HEADER ŞEFFAF & GÜVEN BARI */
         .site-header {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 9000;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            transition: transform 0.4s ease;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0,0,0,0.05); transition: transform 0.4s ease;
         }
         .header-hide { transform: translateY(-100%); }
         
         .top-trust-bar {
-            background: #1A1D20; color: #FFF; width: 100%; padding: 8px 20px;
+            background: #1A1D20; color: #FFF; padding: 8px 20px;
             display: flex; justify-content: space-between; align-items: center;
             font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
         }
         .status-open { display: flex; align-items: center; gap: 8px; }
-        .pulse-dot { width: 10px; height: 10px; background: #00E676; border-radius: 50%; box-shadow: 0 0 10px #00E676; animation: pulse-dot 1.5s infinite; }
+        .pulse-dot { width: 10px; height: 10px; background: var(--status-green); border-radius: 50%; box-shadow: 0 0 10px var(--status-green); animation: pulse-dot 1.5s infinite; }
         @keyframes pulse-dot { 0% { transform: scale(0.8); opacity: 0.5; } 50% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(0.8); opacity: 0.5; } }
         .trust-promise { color: var(--brand-yellow); text-transform: uppercase; font-weight: 800; }
 
         .header-content { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; width: 100%; }
-        .brand-logo { font-size: 24px; font-weight: 900; color: var(--text-dark); letter-spacing: -0.5px; text-transform: uppercase; }
+        .brand-logo { font-size: 24px; font-weight: 900; color: var(--text-dark); letter-spacing: -0.5px; }
         .brand-logo span { color: var(--brand-yellow); }
+        .header-subtitle { font-size: 12px; font-weight: 600; color: var(--text-muted); display: none; }
+        @media (min-width: 992px) { .header-subtitle { display: block; } }
+
         .mobile-filter-trigger {
             display: none; background: var(--text-dark); color: var(--brand-yellow); border: none;
-            padding: 8px 16px; border-radius: var(--radius-pill); font-weight: 700; font-size: 12px;
-            cursor: pointer; align-items: center; gap: 6px; box-shadow: var(--shadow-yellow);
+            padding: 10px 18px; border-radius: var(--radius-pill); font-weight: 700; font-size: 12px;
+            cursor: pointer; align-items: center; gap: 8px; box-shadow: var(--shadow-yellow);
         }
 
-        /* ==========================================================================
-           4. ANA YAPI (LAYOUT): SIDEBAR + CONTENT
-           ========================================================================== */
-        .layout-wrapper {
-            display: flex; gap: 30px; max-width: 1440px; margin: 0 auto;
-            padding: 130px 20px 100px 20px; min-height: 100vh;
-        }
-
-        /* --- SOL MENÜ (PC İÇİN SABİT - MOBİLDE ÇEKMECE) --- */
+        /* 5. LAYOUT: SIDEBAR (SOL MENÜ) + MAIN CONTENT */
+        .layout-wrapper { display: flex; gap: 30px; max-width: 1400px; margin: 0 auto; padding: 130px 20px 100px 20px; min-height: 100vh; }
+        
         .sidebar {
             flex: 0 0 280px; position: sticky; top: 130px; height: calc(100vh - 150px);
             background: var(--bg-card); border-radius: var(--radius-frame); padding: 25px;
             box-shadow: var(--shadow-sm); border: 1px solid var(--border-color);
-            display: flex; flex-direction: column; gap: 20px; overflow-y: auto;
-            scrollbar-width: none;
+            display: flex; flex-direction: column; gap: 20px; overflow-y: auto; scrollbar-width: none;
         }
         .sidebar::-webkit-scrollbar { display: none; }
         
-        .sidebar-title { font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .sidebar-title { font-size: 14px; font-weight: 900; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: flex; justify-content: space-between; align-items: center; }
+        .close-drawer { display: none; background: none; border: none; font-size: 28px; color: var(--text-dark); cursor: pointer; }
         
         .sort-btn {
-            width: 100%; background: var(--text-dark); color: var(--brand-yellow);
-            border: none; padding: 16px; border-radius: var(--radius-btn);
-            font-size: 13px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-            transition: var(--transition-bounce); box-shadow: var(--shadow-yellow);
+            width: 100%; background: #1A1D20; color: var(--brand-yellow); border: none; padding: 16px;
+            border-radius: var(--radius-btn); font-size: 13px; font-weight: 800; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px; transition: var(--transition-bounce);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
-        .sort-btn:hover { transform: translateY(-3px); background: #000; }
+        .sort-btn:hover { background: #000; transform: translateY(-3px); }
         .sort-btn:active { transform: scale(0.97); }
-        .sort-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .sort-btn svg { width: 18px; fill: currentColor; }
 
-        .filter-group { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
-        .filter-item {
-            background: var(--input-bg); border: 1px solid transparent; padding: 12px 16px;
-            border-radius: var(--radius-btn); font-size: 13px; font-weight: 700; color: var(--text-gray);
-            cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 10px;
-        }
+        .filter-list { display: flex; flex-direction: column; gap: 8px; }
+        .filter-item { background: var(--input-bg); padding: 14px 16px; border-radius: var(--radius-btn); font-size: 13px; font-weight: 700; color: var(--text-gray); cursor: pointer; transition: 0.3s; border: 1px solid transparent; }
         .filter-item:hover { background: #FFF; border-color: var(--brand-yellow); }
         .filter-item.active { background: var(--brand-yellow); color: var(--text-dark); box-shadow: var(--shadow-yellow); }
 
-        /* Mobil Çekmece (Drawer) Yapısı */
-        .drawer-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 9998;
-            opacity: 0; pointer-events: none; transition: 0.3s;
-        }
+        .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 9998; opacity: 0; pointer-events: none; transition: 0.3s; }
+        
         @media (max-width: 991px) {
             .mobile-filter-trigger { display: flex; }
             .layout-wrapper { display: block; padding-top: 110px; }
             .sidebar {
-                position: fixed; top: auto; bottom: 0; left: 0; width: 100%; height: 75vh;
+                position: fixed; top: auto; bottom: 0; left: 0; width: 100%; height: 70vh;
                 z-index: 9999; border-radius: 30px 30px 0 0; transform: translateY(100%);
-                transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); margin: 0;
+                transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); margin: 0;
             }
             .sidebar.open { transform: translateY(0); }
             .drawer-overlay.open { opacity: 1; pointer-events: auto; }
-            .sidebar-title { display: flex; justify-content: space-between; align-items: center; }
-            .close-drawer { background: none; border: none; font-size: 24px; color: var(--text-gray); cursor: pointer; }
+            .close-drawer { display: block; }
         }
-        @media (min-width: 992px) { .close-drawer, .drawer-overlay { display: none; } }
 
-        /* --- SAĞ İÇERİK (VİTRİN VE GRID) --- */
+        /* 6. ANA İÇERİK: FIRSAT VİTRİNİ & ARAÇ GRIDİ */
         .main-content { flex: 1; display: flex; flex-direction: column; gap: 40px; width: 100%; }
 
-        /* 5. FIRSAT ARAÇLARI VİTRİNİ (KAHRAMAN BÖLÜMÜ) */
+        /* Fırsat Vitrini (Hero Section) */
         .hero-showcase {
             display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap-grid);
-            background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
-            padding: 30px; border-radius: var(--radius-frame); position: relative;
+            background: linear-gradient(135deg, #1A1D20 0%, #2D3238 100%);
+            padding: 35px 25px 25px 25px; border-radius: var(--radius-frame); position: relative;
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
         .hero-badge {
             position: absolute; top: -15px; left: 30px; background: var(--brand-red); color: #FFF;
-            padding: 8px 20px; font-weight: 900; font-size: 12px; letter-spacing: 1px;
+            padding: 8px 24px; font-weight: 900; font-size: 12px; letter-spacing: 1px;
             border-radius: var(--radius-btn); text-transform: uppercase; box-shadow: var(--shadow-red);
-            animation: pulse-red 2s infinite; z-index: 20;
+            animation: pulse-red 2s infinite; z-index: 20; border: 2px solid #FFF;
         }
         @keyframes pulse-red { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        
         @media (max-width: 991px) {
-            .hero-showcase { grid-template-columns: 1fr; padding: 20px; padding-top: 35px; }
+            .hero-showcase { grid-template-columns: 1fr; padding: 40px 15px 15px 15px; }
             .hero-badge { left: 50%; transform: translateX(-50%); top: -12px; }
             @keyframes pulse-red { 0% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.05); } 100% { transform: translateX(-50%) scale(1); } }
         }
+        .hero-showcase .car-card { border-color: var(--brand-yellow); background: #FFF; }
 
-        /* Hero İçin Özel Kart Stili */
-        .hero-showcase .car-card { background: #FFF; border-color: var(--brand-yellow); }
+        /* Normal Araç Grid (Basamak Perspektifi 3-3-2) */
+        .car-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
 
-        /* 6. ANA ARAÇ GRID VE PERSPEKTİF MİMARİSİ */
-        .car-grid {
-            display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px;
-        }
-        
-        /* 
-           OVAL FOTOĞRAF ÇERÇEVESİ KARTI 
-        */
+        /* KART TASARIMI (OVAL FOTOĞRAF ÇERÇEVESİ) */
         .car-card {
             background: var(--bg-card); border-radius: var(--radius-frame);
-            border: 5px solid var(--bg-card); /* Kalın beyaz/kırık beyaz çerçeve hissiyatı */
-            box-shadow: var(--shadow-frame); position: relative;
-            display: flex; flex-direction: column; overflow: hidden;
-            transition: var(--transition-smooth); will-change: transform, opacity;
-            
-            /* Animasyon için başlangıç */
-            opacity: 0; transform: scale(1.05) translateY(-30px) translateZ(0);
+            border: 5px solid #FFF; box-shadow: var(--shadow-frame);
+            display: flex; flex-direction: column; position: relative; overflow: hidden;
+            opacity: 0; transform: scale(1.05) translateY(-20px) translateZ(0); /* Açılış Öncesi */
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s, border-color 0.3s;
+            will-change: transform, opacity;
         }
         .car-card.in-view { opacity: 1; transform: scale(1) translateY(0) translateZ(0); }
-        
-        /* 
-           BASAMAK PERSPEKTİFİ (Asimetrik Merdiven)
-           Sadece PC'de uygulanır.
-        */
+        .car-card:hover { border-color: var(--brand-yellow); transform: translateY(-5px) !important; box-shadow: var(--shadow-modal); z-index: 10 !important; }
+
+        /* Masaüstü Basamak Perspektifi */
         @media (min-width: 992px) {
-            .car-grid.perspective-active .car-card.in-view:nth-child(3n+1) { transform: scale(1) translateY(0) translateZ(0); z-index: 3; }
-            .car-grid.perspective-active .car-card.in-view:nth-child(3n+2) { transform: scale(0.97) translateY(20px) translateZ(0); z-index: 2; }
-            .car-grid.perspective-active .car-card.in-view:nth-child(3n+3) { transform: scale(0.94) translateY(40px) translateZ(0); z-index: 1; }
-            
-            /* Asimetrik Duvar Boyutları (3-3-2) */
-            .pc-3 { grid-column: span 2; height: 480px; }
-            .pc-2 { grid-column: span 3; height: 520px; }
+            .car-grid .car-card.in-view:nth-child(3n+1) { transform: scale(1) translateY(0); z-index: 3; }
+            .car-grid .car-card.in-view:nth-child(3n+2) { transform: scale(0.97) translateY(20px); z-index: 2; }
+            .car-grid .car-card.in-view:nth-child(3n+3) { transform: scale(0.94) translateY(40px); z-index: 1; }
+            /* 3-3-2 Asimetrisi */
+            .pc-3 { grid-column: span 2; height: 500px; }
+            .pc-2 { grid-column: span 3; height: 530px; }
         }
 
-        /* 
-           MOBİL 1-1-2 SCROLL SNAP
-        */
+        /* Mobil Scroll Snap 1-1-2 Akışı */
         @media (max-width: 991px) {
             html, body { scroll-snap-type: y proximity; }
             .car-grid { display: flex; flex-direction: column; gap: 25px; }
-            .car-card { scroll-snap-align: center; scroll-snap-stop: always; height: 65vh; min-height: 450px; }
+            .car-card { scroll-snap-align: center; scroll-snap-stop: always; height: 60vh; min-height: 420px; }
             
-            /* Mobilde 2'li (Yarım) kartlar */
-            .m-half-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; scroll-snap-align: start; }
-            .m-half-container .car-card { height: 40vh; min-height: 300px; border-width: 3px; }
-            .m-half-container .car-title { font-size: 13px; }
-            .m-half-container .car-price { font-size: 18px; }
-            .m-half-container .specs-grid { grid-template-columns: 1fr; gap: 6px; }
-            .m-half-container .jaguar-wrapper { transform: scale(0.7); margin-top: -20px; }
+            /* Yarım/İkili Kart Konteyneri */
+            .m-half-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; scroll-snap-align: start; }
+            .m-half-wrap .car-card { height: 40vh; min-height: 320px; border-width: 3px; }
+            .m-half-wrap .car-title { font-size: 14px; }
+            .m-half-wrap .car-price { font-size: 18px; }
+            .m-half-wrap .specs-grid { grid-template-columns: 1fr; gap: 6px; }
+            .m-half-wrap .jaguar-wrapper { transform: scale(0.75); margin-top: -20px; }
         }
 
-        .car-card:hover { border-color: var(--brand-yellow); transform: translateY(-5px) !important; box-shadow: var(--shadow-modal); z-index: 10 !important; }
-
-        /* Video / Medya Alanı */
+        /* VİDEO MEDYA ALANI */
         .card-media {
             flex: 0 0 50%; width: 100%; position: relative; background: #E9ECEF;
             border-radius: calc(var(--radius-frame) - 5px) calc(var(--radius-frame) - 5px) 0 0;
-            overflow: hidden; display: flex; align-items: center; justify-content: center;
+            overflow: hidden; display: flex; justify-content: center; align-items: center;
         }
-        /* Videonun altındaki estetik yumuşak geçiş */
         .card-media::after {
             content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 35%;
-            background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-            z-index: 3; pointer-events: none;
+            background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); z-index: 3; pointer-events: none;
         }
-        
-        .video-container { width: 100%; height: 100%; position: absolute; top:0; left:0; z-index: 2; opacity: 0; transition: opacity 0.5s ease; }
-        .video-container.loaded { opacity: 1; }
-        .video-player { width: 100%; height: 100%; object-fit: cover; }
-        
-        .skeleton-loader {
-            position: absolute; inset: 0; z-index: 5; background: #212529; display: flex; justify-content: center; align-items: center; transition: 0.5s;
-        }
+        .video-player { width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0; z-index: 2; opacity: 0; transition: opacity 0.5s ease; }
+        .video-player.loaded { opacity: 1; }
+        .skeleton-loader { position: absolute; inset: 0; z-index: 5; background: #212529; display: flex; justify-content: center; align-items: center; transition: 0.5s; }
         .skeleton-play { width: 0; height: 0; border-top: 15px solid transparent; border-bottom: 15px solid transparent; border-left: 25px solid #495057; animation: pulse-play 1.5s infinite alternate; }
-        @keyframes pulse-play { 0% { opacity: 0.5; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1.1); } }
         .video-ready .skeleton-loader { opacity: 0; pointer-events: none; }
 
-        /* 
-           7. JAGUAR MASKOTU (METNİN TAM ÜSTÜNE, 2.7/1 ORANIYLA KİLİTLENME) 
-        */
+        /* KART BİLGİ & JAGUAR ALANI */
         .card-info {
             flex: 1; padding: 15px 20px 20px 20px; display: flex; flex-direction: column; 
             align-items: center; text-align: center; position: relative; background: #FFF; z-index: 4;
             border-radius: 0 0 calc(var(--radius-frame) - 5px) calc(var(--radius-frame) - 5px);
         }
 
+        /* Jaguar Kilitlenme Katmanı (Overlap) */
         .jaguar-wrapper {
-            position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%);
-            width: clamp(80px, 10vw, 110px); aspect-ratio: 2.7 / 1;
+            position: relative; width: clamp(80px, 10vw, 110px); aspect-ratio: 2.7 / 1;
+            margin-top: -30px; /* Videonun altına bindirme kuralı */
             z-index: 10; pointer-events: none; display: flex; justify-content: center; align-items: flex-end;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            margin-bottom: 10px;
         }
-        /* Müşterinin ekleyeceği MP4'ler için alanlar. Boş görünmemesi için css gradient ile placeholder */
-        .jaguar-wrapper video { width: 100%; height: 100%; object-fit: contain; }
-        .premium-jaguar { filter: drop-shadow(0 0 12px rgba(255,193,7,0.6)); } /* Altın efekti */
-        .standard-jaguar { filter: grayscale(100%); opacity: 0.75; } /* Gri efekt */
-        .j-placeholder { width: 100%; height: 100%; background: rgba(0,0,0,0.03); border-radius: 8px; font-size: 8px; display:flex; align-items:center; justify-content:center; color:#999; }
+        .jaguar-wrapper video, .jaguar-wrapper div { width: 100%; height: 100%; object-fit: contain; }
+        /* Premium Altın ve Standart Gri CSS kuralları hazır (MP4 githubdan gelecek) */
+        .premium-jaguar { filter: drop-shadow(0 0 12px rgba(255,193,7,0.6)); }
+        .standard-jaguar { filter: grayscale(100%); opacity: 0.75; }
+        .j-placeholder { background: rgba(0,0,0,0.03); border-radius: 8px; border: 1px dashed #CCC; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 800; color: #999; text-transform: uppercase; }
 
-        .car-title { font-size: 18px; font-weight: 900; color: var(--text-dark); margin-top: 15px; margin-bottom: 2px; text-transform: uppercase; letter-spacing: -0.5px; }
+        .car-title { font-size: 18px; font-weight: 900; color: var(--text-dark); margin-bottom: 2px; text-transform: uppercase; letter-spacing: -0.5px; line-height: 1.1; }
+        .car-min-days { font-size: 10px; font-weight: 800; color: var(--brand-red); text-transform: uppercase; margin-bottom: 10px; background: rgba(211, 47, 47, 0.1); padding: 2px 8px; border-radius: 4px; }
         
-        .car-price { font-size: 28px; font-weight: 900; color: var(--brand-yellow-dark); margin-bottom: 12px; display: flex; align-items: flex-start; justify-content: center; line-height: 1; }
+        .car-price { font-size: 28px; font-weight: 900; color: var(--brand-yellow-dark); margin-bottom: 15px; display: flex; align-items: flex-start; justify-content: center; line-height: 1; }
         .car-price span.cur { font-size: 16px; margin-top: 2px; margin-right: 4px; }
         .car-price span.per { font-size: 11px; color: var(--text-muted); align-self: flex-end; margin-bottom: 4px; margin-left: 4px; font-weight: 700; text-transform: uppercase; }
 
-        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 15px; width: 100%; margin-bottom: 15px; padding: 0 10px; }
+        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-bottom: 20px; padding: 0 10px; }
         .spec-item { display: flex; align-items: center; gap: 8px; justify-content: flex-start; }
         .spec-item svg { width: 14px; height: 14px; fill: var(--text-gray); }
-        .spec-item span { font-size: 11px; font-weight: 700; color: var(--text-dark); }
+        .spec-item span { font-size: 11px; font-weight: 700; color: var(--text-dark); text-transform: uppercase; }
 
         .rent-btn {
             margin-top: auto; width: 100%; background: var(--input-bg); color: var(--text-dark);
-            padding: 14px; border: 2px solid transparent; border-radius: var(--radius-btn);
-            font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;
+            padding: 16px; border: 2px solid transparent; border-radius: var(--radius-btn);
+            font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;
             cursor: pointer; transition: var(--transition-bounce);
         }
         .car-card:hover .rent-btn { background: var(--brand-yellow); border-color: var(--brand-yellow); box-shadow: var(--shadow-yellow); }
         .rent-btn:active { transform: scale(0.96); }
 
-        /* ==========================================================================
-           8. DÖNÜŞÜM HUNİSİ VE HUKUKİ ALTYAPI (FORM & KVKK)
-           ========================================================================== */
+        /* 7. DÖNÜŞÜM HUNİSİ (FORM MODALI VE KVKK ZORUNLULUĞU) */
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10000;
-            background: rgba(26, 29, 32, 0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            position: fixed; inset: 0; z-index: 10000;
+            background: rgba(26, 29, 32, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             display: flex; justify-content: center; align-items: flex-end;
             opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
         }
@@ -346,10 +298,11 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
         @media (min-width: 768px) { .modal-box { border-radius: var(--radius-frame); transform: translateY(50px) scale(0.9); } }
         .modal-overlay.active .modal-box { transform: translateY(0) scale(1); }
 
-        .modal-close-btn { position: absolute; top: 20px; right: 20px; background: var(--input-bg); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 20px; color: var(--text-gray); cursor: pointer; transition: 0.3s; }
+        .modal-close-btn { position: absolute; top: 20px; right: 20px; background: var(--input-bg); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 20px; color: var(--text-gray); cursor: pointer; transition: 0.3s; z-index: 10; }
         .modal-close-btn:hover { background: #FFEbee; color: #D32F2F; transform: rotate(90deg); }
-        .modal-back-btn { position: absolute; top: 20px; left: 20px; background: var(--input-bg); border: none; width: 36px; height: 36px; border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer; z-index: 10; }
+        .modal-back-btn { position: absolute; top: 20px; left: 20px; background: var(--input-bg); border: none; width: 36px; height: 36px; border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer; z-index: 10; transition: 0.3s; }
         .modal-back-btn svg { width: 18px; fill: var(--text-dark); }
+        .modal-back-btn:hover { background: var(--brand-yellow); }
 
         .form-header-trust { text-align: center; margin-bottom: 25px; }
         .payment-icons { display: flex; justify-content: center; gap: 15px; margin-bottom: 12px; }
@@ -357,8 +310,8 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
         .trust-badge-text { font-size: 13px; font-weight: 700; color: var(--text-dark); line-height: 1.4; }
         .trust-badge-text span { color: var(--status-green); font-weight: 900; background: rgba(0,230,118,0.1); padding: 2px 8px; border-radius: 6px; }
 
-        .input-group { position: relative; margin-bottom: 15px; }
-        .custom-input { width: 100%; background: var(--input-bg); border: 2px solid transparent; border-radius: var(--radius-btn); padding: 15px 16px; font-size: 14px; font-weight: 600; color: var(--text-dark); transition: 0.3s; outline: none; }
+        .input-group { margin-bottom: 15px; }
+        .custom-input { width: 100%; background: var(--input-bg); border: 2px solid transparent; border-radius: var(--radius-btn); padding: 15px 16px; font-size: 14px; font-weight: 600; color: var(--text-dark); outline: none; transition: 0.3s; font-family: inherit; }
         .custom-input:focus { background: #FFF; border-color: var(--brand-yellow); box-shadow: var(--shadow-yellow); }
         
         .date-time-label { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; display: block; }
@@ -371,68 +324,75 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
         .tab-slider { position: absolute; top: 4px; left: 4px; width: calc(50% - 4px); height: calc(100% - 8px); background: var(--text-dark); border-radius: var(--radius-pill); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 1; }
         .contact-tab[data-target="msg"].active ~ .tab-slider { transform: translateX(100%); }
 
-        /* Hukuki Scroll Doğrulama Alanı */
         .legal-group { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; padding: 15px; background: rgba(255,193,7,0.05); border: 1px dashed rgba(255,193,7,0.4); border-radius: var(--radius-btn); }
-        .legal-check { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--status-green); cursor: not-allowed; }
+        .legal-check { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--status-green); cursor: not-allowed; }
         .legal-label { font-size: 12px; font-weight: 600; color: var(--text-gray); }
         .legal-link { color: #0056b3; font-weight: 800; text-decoration: underline; cursor: pointer; }
 
-        .submit-btn { width: 100%; padding: 18px; border: none; border-radius: var(--radius-btn); font-size: 15px; font-weight: 900; background: #E9ECEF; color: #ADB5BD; cursor: not-allowed; transition: 0.3s; text-transform: uppercase; }
+        .submit-btn { width: 100%; padding: 18px; background: #E9ECEF; color: #ADB5BD; border: none; border-radius: var(--radius-btn); font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; cursor: not-allowed; transition: 0.3s; }
         .submit-btn.enabled { background: var(--brand-yellow); color: var(--text-dark); cursor: pointer; box-shadow: var(--shadow-yellow); }
-        
-        #error-msg { color: var(--brand-red); font-size: 12px; font-weight: 700; text-align: center; margin-bottom: 10px; display: none; }
+        .submit-btn.enabled:hover { background: var(--brand-yellow-dark); color: #FFF; transform: translateY(-2px); }
 
-        /* Sözleşme İçeriği Modal Katmanı */
-        #contract-view { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-card); z-index: 5; padding: 70px 25px 25px 25px; transform: translateX(100%); transition: 0.4s; display: flex; flex-direction: column; }
+        #error-msg { color: #FFF; background: var(--brand-red); font-size: 12px; font-weight: 700; text-align: center; padding: 10px; border-radius: 8px; margin-bottom: 15px; display: none; animation: pulse-red 2s infinite; }
+
+        /* KVKK Sözleşme Görünümü */
+        #contract-view { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-card); z-index: 5; padding: 70px 25px 25px 25px; transform: translateX(100%); transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); display: flex; flex-direction: column; }
         #contract-view.show { transform: translateX(0); }
-        .contract-scroll-area { flex: 1; background: var(--input-bg); border-radius: 10px; padding: 20px; overflow-y: auto; font-size: 12px; color: var(--text-gray); margin-bottom: 15px; }
-        .scroll-warn { text-align: center; font-size: 11px; font-weight: 800; color: var(--brand-red); margin-bottom: 10px; animation: pulse-red 2s infinite; }
+        .contract-scroll-area { flex: 1; background: var(--input-bg); border-radius: 12px; padding: 20px; overflow-y: auto; font-size: 12px; color: var(--text-gray); margin-bottom: 15px; border: 1px solid var(--border-color); scrollbar-width: thin; scrollbar-color: var(--brand-yellow) var(--input-bg); }
+        .contract-scroll-area h4 { color: var(--text-dark); margin: 15px 0 5px 0; font-size: 13px; font-weight: 800; }
+        .contract-scroll-area h4:first-child { margin-top: 0; }
+        .scroll-warn { text-align: center; font-size: 11px; font-weight: 800; color: var(--brand-red); margin-bottom: 15px; animation: pulse-text 2s infinite; }
         .scroll-warn.met { color: var(--status-green); animation: none; }
-        .contract-accept-btn { width: 100%; padding: 16px; font-weight: 800; background: #E9ECEF; color: #999; border: none; border-radius: 10px; transition: 0.3s; cursor: not-allowed; }
-        .contract-accept-btn.ready { background: var(--status-green); color: #FFF; cursor: pointer; }
+        .contract-accept-btn { width: 100%; padding: 16px; font-weight: 800; background: #E9ECEF; color: #999; border: none; border-radius: 12px; transition: 0.3s; cursor: not-allowed; text-transform: uppercase; letter-spacing: 1px; }
+        .contract-accept-btn.ready { background: var(--status-green); color: #FFF; cursor: pointer; box-shadow: 0 8px 20px rgba(0,230,118,0.3); }
 
-        /* ==========================================================================
-           9. PWA, FAB, TOASTS
-           ========================================================================== */
-        #pwa-prompt { position: fixed; bottom: -100%; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: rgba(26,29,32,0.98); border-radius: var(--radius-frame); padding: 25px; box-shadow: var(--shadow-modal); z-index: 9999; text-align: center; transition: bottom 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        /* 8. PWA, FAB, TOASTS */
+        #pwa-prompt { position: fixed; bottom: -100%; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: rgba(26,29,32,0.98); border-radius: var(--radius-frame); padding: 30px 25px; box-shadow: var(--shadow-modal); z-index: 9999; text-align: center; transition: bottom 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
         #pwa-prompt.show { bottom: 30px; }
-        .pwa-btn { background: #FFF; color: #000; font-weight: 800; padding: 14px 30px; border-radius: var(--radius-pill); border: none; cursor: pointer; width: 100%; margin-top: 15px; }
+        .pwa-btn { background: #FFF; color: #000; font-weight: 900; padding: 16px; border-radius: var(--radius-pill); border: none; cursor: pointer; width: 100%; margin-top: 20px; text-transform: uppercase; letter-spacing: 0.5px; transition: 0.3s; }
+        .pwa-btn:hover { transform: scale(1.03); }
         
-        .fab-support { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #1A1D20; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border: 2px solid var(--brand-yellow); z-index: 8000; transition: 0.3s; }
-        .fab-support svg { width: 28px; fill: var(--brand-yellow); }
-        .fab-support:hover { transform: scale(1.1); background: var(--brand-yellow); border-color:#000; }
+        .fab-support { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: #1A1D20; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.25); border: 2px solid var(--brand-yellow); z-index: 8000; transition: var(--transition-bounce); }
+        .fab-support svg { width: 30px; fill: var(--brand-yellow); transition: 0.3s; }
+        .fab-support:hover { transform: scale(1.1) rotate(-10deg); background: var(--brand-yellow); border-color:#000; }
         .fab-support:hover svg { fill: #000; }
 
-        .toast-container { position: fixed; top: 120px; right: 20px; z-index: 8500; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
-        .toast-item { background: rgba(255,255,255,0.95); border-left: 4px solid var(--brand-yellow); padding: 12px 16px; border-radius: 10px; display: flex; gap: 12px; width: 280px; transform: translateX(120%); transition: 0.5s; box-shadow: var(--shadow-sm); }
+        .toast-container { position: fixed; top: 100px; right: 20px; z-index: 8500; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+        .toast-item { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-left: 4px solid var(--status-green); padding: 15px 20px; border-radius: 12px; display: flex; align-items: center; gap: 15px; width: max-content; max-width: 300px; transform: translateX(120%); transition: 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); box-shadow: var(--shadow-sm); pointer-events: auto; }
         .toast-item.show { transform: translateX(0); }
-        .toast-text { font-size: 11px; font-weight: 800; line-height: 1.3; }
-        .toast-text span { font-size: 9px; color: var(--text-muted); display: block; font-weight: 500; }
+        .toast-icon { background: rgba(0,230,118,0.1); padding: 8px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .toast-icon svg { width: 18px; fill: var(--status-green); }
+        .toast-text { font-size: 12px; font-weight: 800; line-height: 1.4; color: var(--text-dark); }
+        .toast-text span { font-size: 10px; color: var(--text-muted); display: block; font-weight: 600; margin-top: 2px; }
 
-        /* Utility Svg */
-        .svg-gas { d: path("M19.36 10.04C18.67 6.59 15.64 4 12 4 8.13 4 5 7.13 5 11c0 3.11 2.06 5.76 4.93 6.64.07-.31.07-.63 0-.94C7.54 15.69 6 13.53 6 11c0-3.31 2.69-6 6-6 3.03 0 5.56 2.25 5.95 5.17l1.41 3.87zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"); }
-        .svg-gear { d: path("M19.43 12.98c.04-.32.07-.64.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"); }
-        .svg-user { d: path("M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"); }
-        .svg-bag { d: path("M17,6H14V4H10V6H7A2,2 0 0,0 5,8V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V8A2,2 0 0,0 17,6M16,19H8V8H16V19Z"); }
+        /* Ortak SVG Datası Sınıfları */
+        .svg-icon { width: 14px; height: 14px; fill: var(--text-gray); }
     </style>
 </head>
 <body>
 
-    <!-- BİLDİRİM VE FAB EKLENTİLERİ -->
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <svg class="preloader-jaguar" viewBox="0 0 100 50"><path d="M10,40 Q15,30 25,32 Q35,20 50,25 Q70,20 85,30 Q95,35 90,40 Q80,35 65,40 Q50,45 35,40 Q20,45 10,40 Z"/></svg>
+        <div class="preloader-text">Sistem Hazırlanıyor...</div>
+    </div>
+
+    <!-- TOAST BİLDİRİMLERİ & FAB -->
     <div class="toast-container" id="toast-container"></div>
     <div class="fab-support"><svg viewBox="0 0 24 24"><path d="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M11,19.93C7.06,19.43 4,16.05 4,12C4,7.95 7.05,4.57 11,4.07V19.93M13,4.07C16.95,4.57 20,7.95 20,12C20,16.05 16.95,19.43 13,19.93V4.07Z"/></svg></div>
     
+    <!-- PWA -->
     <div id="pwa-prompt">
-        <button class="pwa-close" onclick="document.getElementById('pwa-prompt').classList.remove('show')">&times;</button>
-        <div style="width:50px;height:50px;background:var(--brand-yellow);border-radius:12px;margin:0 auto 15px auto;display:flex;align-items:center;justify-content:center;">
+        <button class="pwa-close" onclick="document.getElementById('pwa-prompt').classList.remove('show')" style="position:absolute;top:15px;right:15px;background:none;border:none;color:#999;font-size:24px;cursor:pointer;">&times;</button>
+        <div style="width:55px;height:55px;background:var(--brand-yellow);border-radius:14px;margin:0 auto 15px auto;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-yellow);">
             <svg style="width:30px;fill:#000;" viewBox="0 0 24 24"><path d="M16,18H8V6H16M17,2H7A2,2 0 0,0 5,4V20A2,2 0 0,0 7,22H17A2,2 0 0,0 19,20V4A2,2 0 0,0 17,2M12,15L15.5,11.5L14.08,10.09L13,11.17V8H11V11.17L9.92,10.09L8.5,11.5L12,15Z"/></svg>
         </div>
-        <h2 style="color:#FFF;font-size:18px;font-weight:900;">Ana Ekrana Ekle</h2>
-        <p style="color:#ADB5BD;font-size:12px;font-weight:500;margin-top:5px;">Kampanyalar ve hızlı rezervasyon için ücretsiz uygulamamızı cihazınıza yükleyin.</p>
-        <button class="pwa-btn" onclick="document.getElementById('pwa-prompt').classList.remove('show')">HEMEN YÜKLE</button>
+        <h2 style="color:#FFF;font-size:18px;font-weight:900;margin-bottom:8px;">Ana Ekrana Ekle</h2>
+        <p style="color:#ADB5BD;font-size:12px;font-weight:500;line-height:1.5;">Kampanyalar ve hızlı rezervasyon için ücretsiz uygulamamızı cihazınıza yükleyin.</p>
+        <button class="pwa-btn" onclick="document.getElementById('pwa-prompt').classList.remove('show')">ÜCRETSİZ YÜKLE</button>
     </div>
 
-    <!-- 1. HEADER -->
+    <!-- HEADER -->
     <header class="site-header" id="main-header">
         <div class="top-trust-bar">
             <div class="status-open"><div class="pulse-dot"></div> ŞU ANDA AÇIĞIZ / 7-24 HİZMET</div>
@@ -440,6 +400,7 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
         </div>
         <div class="header-content">
             <div class="brand-logo">REFERANS<span>.</span></div>
+            <div class="header-subtitle">Nasıl bir araba bakmıştınız? Lütfen seçiniz</div>
             <button class="mobile-filter-trigger" id="mobile-filter-btn">
                 <svg style="width:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M14,12V19.88C14.04,20.18 13.94,20.5 13.71,20.71C13.32,21.1 12.69,21.1 12.3,20.71L10.29,18.7C10.06,18.47 9.96,18.16 10,17.87V12H9.97L4.21,4.62C3.87,4.19 3.95,3.56 4.38,3.22C4.57,3.08 4.78,3 5,3V3H19V3C19.22,3 19.43,3.08 19.62,3.22C20.05,3.56 20.13,4.19 19.79,4.62L14.03,12H14Z"/></svg>
                 Filtrele & Sırala
@@ -447,9 +408,10 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
         </div>
     </header>
 
-    <!-- 2. LAYOUT WRAPPER (SIDEBAR + MAIN) -->
+    <!-- LAYOUT -->
     <div class="layout-wrapper">
         
+        <!-- SIDEBAR (DRAWER IN MOBILE) -->
         <div class="drawer-overlay" id="drawer-overlay"></div>
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-title">
@@ -457,83 +419,273 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
                 <button class="close-drawer" id="close-drawer-btn">&times;</button>
             </div>
             
-            <!-- Çıpalama Tetikleyici Buton -->
+            <!-- JS Çıpalama Tetikleyici -->
             <button class="sort-btn" id="sort-desc-btn">
                 <svg viewBox="0 0 24 24"><path d="M7 20h2V8h3L8 4 4 8h3v12zm13-8h-3v8h-2v-8h-3l4-4 4 4zm-4-8v2h4V4h-4z"/></svg>
                 Fiyatı Yüksekten Düşüğe Sırala
             </button>
 
-            <div class="filter-group">
+            <div class="filter-list">
                 <div class="filter-item active">Tüm Araçlar</div>
-                <div class="filter-item">Premium SUV</div>
-                <div class="filter-item">Sedan</div>
+                <div class="filter-item">Premium Segment</div>
+                <div class="filter-item">Ekonomi Segmenti</div>
                 <div class="filter-item">Otomatik Vites</div>
                 <div class="filter-item">Manuel Vites</div>
-                <div class="filter-item">Dizel</div>
+                <div class="filter-item">Dizel Araçlar</div>
                 <div class="filter-item">Benzin / Elektrik</div>
             </div>
         </aside>
 
+        <!-- MAIN CONTENT -->
         <main class="main-content">
             
-            <!-- 3. FIRSAT ARAÇLARI VİTRİNİ (HERO SECTION - KIRMIZI VURGULU) -->
+            <!-- FIRSAT VİTRİNİ (HERO - EN PAHALI 2 ARAÇ) -->
             <section class="hero-showcase">
                 <div class="hero-badge">Sınırlı Süreli Fırsat</div>
                 
-                <!-- Hero 1: Nissan Qashqai (En pahalı) -->
+                <!-- Hero 1: Nissan Qashqai (2300) -->
                 <article class="car-card obs-target" data-delay="0.1">
                     <div class="card-media gpu-accel">
-                        <div class="video-container" data-vid-src="https://www.w3schools.com/html/mov_bbb.mp4"><video class="video-player" muted playsinline></video></div>
+                        <video class="video-player main-vid" muted playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
                         <div class="skeleton-loader"><div class="skeleton-play"></div></div>
                     </div>
                     <div class="card-info">
-                        <!-- Premium Altın Jaguar Alanı -->
+                        <!-- Premium Jaguar: Altın/Hızlı MP4 Gelecek -->
                         <div class="jaguar-wrapper premium-jaguar"><div class="j-placeholder">JAGUAR MP4 (GOLD)</div></div>
-                        
                         <h2 class="car-title">Nissan Qashqai</h2>
+                        <div class="car-min-days">Minimum Kiralama: 2 Gün</div>
                         <div class="car-price"><span class="cur">₺</span>2.300<span class="per">/ Gün</span></div>
                         <div class="specs-grid">
-                            <div class="spec-item"><svg><path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 8.13 4 5 7.13 5 11c0 3.11 2.06 5.76 4.93 6.64.07-.31.07-.63 0-.94C7.54 15.69 6 13.53 6 11c0-3.31 2.69-6 6-6 3.03 0 5.56 2.25 5.95 5.17l1.41 3.87zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg><span>Dizel</span></div>
-                            <div class="spec-item"><svg><path d="M19.43 12.98c.04-.32.07-.64.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg><span>Manuel</span></div>
-                            <div class="spec-item"><svg><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg><span>5 Kişi</span></div>
-                            <div class="spec-item"><svg><path d="M17,6H14V4H10V6H7A2,2 0 0,0 5,8V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V8A2,2 0 0,0 17,6M16,19H8V8H16V19Z"/></svg><span>4 Bagaj</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 8.13 4 5 7.13 5 11c0 3.11 2.06 5.76 4.93 6.64.07-.31.07-.63 0-.94C7.54 15.69 6 13.53 6 11c0-3.31 2.69-6 6-6 3.03 0 5.56 2.25 5.95 5.17l1.41 3.87zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg><span>Dizel</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.43 12.98c.04-.32.07-.64.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg><span>Manuel</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg><span>5 Kişi</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M17,6H14V4H10V6H7A2,2 0 0,0 5,8V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V8A2,2 0 0,0 17,6M16,19H8V8H16V19Z"/></svg><span>4 Bagaj</span></div>
                         </div>
                         <button class="rent-btn" onclick="openForm('Nissan Qashqai', 2300)">Hemen Kirala</button>
                     </div>
                 </article>
 
-                <!-- Hero 2: Renault Megane -->
+                <!-- Hero 2: Renault Megane (2000) -->
                 <article class="car-card obs-target" data-delay="0.4">
                     <div class="card-media gpu-accel">
-                        <div class="video-container" data-vid-src="https://www.w3schools.com/html/mov_bbb.mp4"><video class="video-player" muted playsinline></video></div>
+                        <video class="video-player main-vid" muted playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
                         <div class="skeleton-loader"><div class="skeleton-play"></div></div>
                     </div>
                     <div class="card-info">
-                        <!-- Premium Altın Jaguar Alanı -->
                         <div class="jaguar-wrapper premium-jaguar"><div class="j-placeholder">JAGUAR MP4 (GOLD)</div></div>
-                        
                         <h2 class="car-title">Renault Megane</h2>
+                        <div class="car-min-days">Minimum Kiralama: 2 Gün</div>
                         <div class="car-price"><span class="cur">₺</span>2.000<span class="per">/ Gün</span></div>
                         <div class="specs-grid">
-                            <div class="spec-item"><svg><path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 8.13 4 5 7.13 5 11c0 3.11 2.06 5.76 4.93 6.64.07-.31.07-.63 0-.94C7.54 15.69 6 13.53 6 11c0-3.31 2.69-6 6-6 3.03 0 5.56 2.25 5.95 5.17l1.41 3.87zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg><span>Dizel</span></div>
-                            <div class="spec-item"><svg><path d="M19.43 12.98c.04-.32.07-.64.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg><span>Otomatik</span></div>
-                            <div class="spec-item"><svg><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg><span>5 Kişi</span></div>
-                            <div class="spec-item"><svg><path d="M17,6H14V4H10V6H7A2,2 0 0,0 5,8V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V8A2,2 0 0,0 17,6M16,19H8V8H16V19Z"/></svg><span>4 Bagaj</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 8.13 4 5 7.13 5 11c0 3.11 2.06 5.76 4.93 6.64.07-.31.07-.63 0-.94C7.54 15.69 6 13.53 6 11c0-3.31 2.69-6 6-6 3.03 0 5.56 2.25 5.95 5.17l1.41 3.87zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg><span>Dizel</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.43 12.98c.04-.32.07-.64.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg><span>Otomatik</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg><span>5 Kişi</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M17,6H14V4H10V6H7A2,2 0 0,0 5,8V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V8A2,2 0 0,0 17,6M16,19H8V8H16V19Z"/></svg><span>4 Bagaj</span></div>
                         </div>
                         <button class="rent-btn" onclick="openForm('Renault Megane', 2000)">Hemen Kirala</button>
                     </div>
                 </article>
             </section>
 
-            <!-- 4. DİNAMİK ARAÇ LİSTESİ (KARIŞIK YÜKLENİR, JS İLE SIRALANIR) -->
-            <!-- Mobilde m-full/m-half scroll-snap kuralı, PC'de pc-3/pc-2 kuralı uygulanır -->
+            <!-- ANA FİLO (KALAN 9 ARAÇ - SIFIR YER TUTUCU İLE MANUEL DİZİLİM) -->
+            <!-- Başlangıçta CSS HTML yapısıyla sıralıdır. JS ile dinamik sort edilebilir. -->
+            <!-- 3-3-2 Masaüstü, 1-1-2 Mobil yapısı için class'lar: pc-3, pc-2, m-full, m-half -->
             <section class="car-grid perspective-active" id="main-car-grid">
-                <!-- Javascript ile DOM doldurulacaktır, sıfır yer tutucu kuralı gereği tüm JSON statik koda gömülüdür -->
+                
+                <!-- Card 1: Toyota Corolla (1700) -->
+                <article class="car-card pc-3 m-full obs-target sortable-card" data-price="1700" data-delay="0.1">
+                    <div class="card-media gpu-accel">
+                        <video class="video-player main-vid" muted playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+                        <div class="skeleton-loader"><div class="skeleton-play"></div></div>
+                    </div>
+                    <div class="card-info">
+                        <div class="jaguar-wrapper premium-jaguar"><div class="j-placeholder">JAGUAR MP4 (GOLD)</div></div>
+                        <h2 class="car-title">Toyota Corolla</h2>
+                        <div class="car-min-days">Minimum Kiralama: 2 Gün</div>
+                        <div class="car-price"><span class="cur">₺</span>1.700<span class="per">/ Gün</span></div>
+                        <div class="specs-grid">
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 8.13 4 5 7.13 5 11c0 3.11 2.06 5.76 4.93 6.64.07-.31.07-.63 0-.94C7.54 15.69 6 13.53 6 11c0-3.31 2.69-6 6-6 3.03 0 5.56 2.25 5.95 5.17l1.41 3.87zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg><span>Elektrik</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.43 12.98c.04-.32.07-.64.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg><span>Otomatik</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg><span>5 Kişi</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M17,6H14V4H10V6H7A2,2 0 0,0 5,8V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V8A2,2 0 0,0 17,6M16,19H8V8H16V19Z"/></svg><span>4 Bagaj</span></div>
+                        </div>
+                        <button class="rent-btn" onclick="openForm('Toyota Corolla', 1700)">Hemen Kirala</button>
+                    </div>
+                </article>
+
+                <!-- Card 2: Kia Rio (1650) -->
+                <article class="car-card pc-3 m-full obs-target sortable-card" data-price="1650" data-delay="0.4">
+                    <div class="card-media gpu-accel">
+                        <video class="video-player main-vid" muted playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+                        <div class="skeleton-loader"><div class="skeleton-play"></div></div>
+                    </div>
+                    <div class="card-info">
+                        <!-- Standart Jaguar: Gri/Mat MP4 Gelecek -->
+                        <div class="jaguar-wrapper standard-jaguar"><div class="j-placeholder">JAGUAR MP4 (GRAY)</div></div>
+                        <h2 class="car-title">Kia Rio</h2>
+                        <div class="car-min-days">Minimum Kiralama: 2 Gün</div>
+                        <div class="car-price"><span class="cur">₺</span>1.650<span class="per">/ Gün</span></div>
+                        <div class="specs-grid">
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 8.13 4 5 7.13 5 11c0 3.11 2.06 5.76 4.93 6.64.07-.31.07-.63 0-.94C7.54 15.69 6 13.53 6 11c0-3.31 2.69-6 6-6 3.03 0 5.56 2.25 5.95 5.17l1.41 3.87zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg><span>Dizel</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.43 12.98c.04-.32.07-.64.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg><span>Manuel</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg><span>5 Kişi</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M17,6H14V4H10V6H7A2,2 0 0,0 5,8V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V8A2,2 0 0,0 17,6M16,19H8V8H16V19Z"/></svg><span>2 Bagaj</span></div>
+                        </div>
+                        <button class="rent-btn" onclick="openForm('Kia Rio', 1650)">Hemen Kirala</button>
+                    </div>
+                </article>
+
+                <!-- Card 3: Citroen C Elysee (1600) -->
+                <article class="car-card pc-3 m-full obs-target sortable-card" data-price="1600" data-delay="0.8">
+                    <div class="card-media gpu-accel">
+                        <video class="video-player main-vid" muted playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+                        <div class="skeleton-loader"><div class="skeleton-play"></div></div>
+                    </div>
+                    <div class="card-info">
+                        <div class="jaguar-wrapper standard-jaguar"><div class="j-placeholder">JAGUAR MP4 (GRAY)</div></div>
+                        <h2 class="car-title">Citroen C Elysee</h2>
+                        <div class="car-min-days">Minimum Kiralama: 2 Gün</div>
+                        <div class="car-price"><span class="cur">₺</span>1.600<span class="per">/ Gün</span></div>
+                        <div class="specs-grid">
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 8.13 4 5 7.13 5 11c0 3.11 2.06 5.76 4.93 6.64.07-.31.07-.63 0-.94C7.54 15.69 6 13.53 6 11c0-3.31 2.69-6 6-6 3.03 0 5.56 2.25 5.95 5.17l1.41 3.87zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg><span>Dizel</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.43 12.98c.04-.32.07-.64.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg><span>Manuel</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg><span>5 Kişi</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M17,6H14V4H10V6H7A2,2 0 0,0 5,8V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V8A2,2 0 0,0 17,6M16,19H8V8H16V19Z"/></svg><span>4 Bagaj</span></div>
+                        </div>
+                        <button class="rent-btn" onclick="openForm('Citroen C Elysee', 1600)">Hemen Kirala</button>
+                    </div>
+                </article>
+
+                <!-- Card 4: Honda Civic (1600) -->
+                <article class="car-card pc-3 m-full obs-target sortable-card" data-price="1600" data-delay="0.1">
+                    <div class="card-media gpu-accel">
+                        <video class="video-player main-vid" muted playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+                        <div class="skeleton-loader"><div class="skeleton-play"></div></div>
+                    </div>
+                    <div class="card-info">
+                        <div class="jaguar-wrapper standard-jaguar"><div class="j-placeholder">JAGUAR MP4 (GRAY)</div></div>
+                        <h2 class="car-title">Honda Civic</h2>
+                        <div class="car-min-days">Minimum Kiralama: 2 Gün</div>
+                        <div class="car-price"><span class="cur">₺</span>1.600<span class="per">/ Gün</span></div>
+                        <div class="specs-grid">
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 8.13 4 5 7.13 5 11c0 3.11 2.06 5.76 4.93 6.64.07-.31.07-.63 0-.94C7.54 15.69 6 13.53 6 11c0-3.31 2.69-6 6-6 3.03 0 5.56 2.25 5.95 5.17l1.41 3.87zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg><span>Benzin</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.43 12.98c.04-.32.07-.64.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg><span>Otomatik</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg><span>5 Kişi</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M17,6H14V4H10V6H7A2,2 0 0,0 5,8V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V8A2,2 0 0,0 17,6M16,19H8V8H16V19Z"/></svg><span>4 Bagaj</span></div>
+                        </div>
+                        <button class="rent-btn" onclick="openForm('Honda Civic', 1600)">Hemen Kirala</button>
+                    </div>
+                </article>
+
+                <!-- Card 5: Hyundai i20 (1600) -->
+                <article class="car-card pc-3 m-full obs-target sortable-card" data-price="1600" data-delay="0.4">
+                    <div class="card-media gpu-accel">
+                        <video class="video-player main-vid" muted playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+                        <div class="skeleton-loader"><div class="skeleton-play"></div></div>
+                    </div>
+                    <div class="card-info">
+                        <div class="jaguar-wrapper standard-jaguar"><div class="j-placeholder">JAGUAR MP4 (GRAY)</div></div>
+                        <h2 class="car-title">Hyundai İ20</h2>
+                        <div class="car-min-days">Minimum Kiralama: 2 Gün</div>
+                        <div class="car-price"><span class="cur">₺</span>1.600<span class="per">/ Gün</span></div>
+                        <div class="specs-grid">
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 8.13 4 5 7.13 5 11c0 3.11 2.06 5.76 4.93 6.64.07-.31.07-.63 0-.94C7.54 15.69 6 13.53 6 11c0-3.31 2.69-6 6-6 3.03 0 5.56 2.25 5.95 5.17l1.41 3.87zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg><span>Benzin</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.43 12.98c.04-.32.07-.64.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg><span>Otomatik</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg><span>5 Kişi</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M17,6H14V4H10V6H7A2,2 0 0,0 5,8V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V8A2,2 0 0,0 17,6M16,19H8V8H16V19Z"/></svg><span>2 Bagaj</span></div>
+                        </div>
+                        <button class="rent-btn" onclick="openForm('Hyundai i20', 1600)">Hemen Kirala</button>
+                    </div>
+                </article>
+
+                <!-- Card 6: Fiat Egea (1500) -->
+                <article class="car-card pc-3 m-full obs-target sortable-card" data-price="1500" data-delay="0.8">
+                    <div class="card-media gpu-accel">
+                        <video class="video-player main-vid" muted playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+                        <div class="skeleton-loader"><div class="skeleton-play"></div></div>
+                    </div>
+                    <div class="card-info">
+                        <div class="jaguar-wrapper standard-jaguar"><div class="j-placeholder">JAGUAR MP4 (GRAY)</div></div>
+                        <h2 class="car-title">Fiat Egea</h2>
+                        <div class="car-min-days">Minimum Kiralama: 2 Gün</div>
+                        <div class="car-price"><span class="cur">₺</span>1.500<span class="per">/ Gün</span></div>
+                        <div class="specs-grid">
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 8.13 4 5 7.13 5 11c0 3.11 2.06 5.76 4.93 6.64.07-.31.07-.63 0-.94C7.54 15.69 6 13.53 6 11c0-3.31 2.69-6 6-6 3.03 0 5.56 2.25 5.95 5.17l1.41 3.87zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg><span>Dizel</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.43 12.98c.04-.32.07-.64.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg><span>Manuel</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg><span>5 Kişi</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M17,6H14V4H10V6H7A2,2 0 0,0 5,8V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V8A2,2 0 0,0 17,6M16,19H8V8H16V19Z"/></svg><span>4 Bagaj</span></div>
+                        </div>
+                        <button class="rent-btn" onclick="openForm('Fiat Egea', 1500)">Hemen Kirala</button>
+                    </div>
+                </article>
+
+                <!-- Mobil Yarım Kart Konteyneri (İkili Dizilim) -->
+                <div class="m-half-wrap">
+                    <!-- Card 7: Peugeot 301 (1500) -->
+                    <article class="car-card pc-2 obs-target sortable-card" data-price="1500" data-delay="0.1">
+                        <div class="card-media gpu-accel">
+                            <video class="video-player main-vid" muted playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+                            <div class="skeleton-loader"><div class="skeleton-play"></div></div>
+                        </div>
+                        <div class="card-info">
+                            <div class="jaguar-wrapper standard-jaguar"><div class="j-placeholder">JAGUAR MP4</div></div>
+                            <h2 class="car-title">Peugeot 301</h2>
+                            <div class="car-min-days" style="display:none;">Min 2 Gün</div>
+                            <div class="car-price"><span class="cur">₺</span>1.500<span class="per">/ Gün</span></div>
+                            <div class="specs-grid">
+                                <div class="spec-item"><svg class="svg-icon"><path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 8.13 4 5 7.13 5 11c0 3.11 2.06 5.76 4.93 6.64.07-.31.07-.63 0-.94C7.54 15.69 6 13.53 6 11c0-3.31 2.69-6 6-6 3.03 0 5.56 2.25 5.95 5.17l1.41 3.87zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg><span>Dizel</span></div>
+                                <div class="spec-item"><svg class="svg-icon"><path d="M19.43 12.98c.04-.32.07-.64.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg><span>Manuel</span></div>
+                            </div>
+                            <button class="rent-btn" onclick="openForm('Peugeot 301', 1500)">Kirala</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 8: Renault Symbol (1500) -->
+                    <article class="car-card pc-2 obs-target sortable-card" data-price="1500" data-delay="0.4">
+                        <div class="card-media gpu-accel">
+                            <video class="video-player main-vid" muted playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+                            <div class="skeleton-loader"><div class="skeleton-play"></div></div>
+                        </div>
+                        <div class="card-info">
+                            <div class="jaguar-wrapper standard-jaguar"><div class="j-placeholder">JAGUAR MP4</div></div>
+                            <h2 class="car-title">R. Symbol</h2>
+                            <div class="car-min-days" style="display:none;">Min 2 Gün</div>
+                            <div class="car-price"><span class="cur">₺</span>1.500<span class="per">/ Gün</span></div>
+                            <div class="specs-grid">
+                                <div class="spec-item"><svg class="svg-icon"><path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 8.13 4 5 7.13 5 11c0 3.11 2.06 5.76 4.93 6.64.07-.31.07-.63 0-.94C7.54 15.69 6 13.53 6 11c0-3.31 2.69-6 6-6 3.03 0 5.56 2.25 5.95 5.17l1.41 3.87zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg><span>Dizel</span></div>
+                                <div class="spec-item"><svg class="svg-icon"><path d="M19.43 12.98c.04-.32.07-.64.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg><span>Manuel</span></div>
+                            </div>
+                            <button class="rent-btn" onclick="openForm('Renault Symbol', 1500)">Kirala</button>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Card 9: Fiat Fiorino (1500) -->
+                <article class="car-card pc-2 m-full obs-target sortable-card" data-price="1500" data-delay="0.1">
+                    <div class="card-media gpu-accel">
+                        <video class="video-player main-vid" muted playsinline data-src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+                        <div class="skeleton-loader"><div class="skeleton-play"></div></div>
+                    </div>
+                    <div class="card-info">
+                        <div class="jaguar-wrapper standard-jaguar"><div class="j-placeholder">JAGUAR MP4 (GRAY)</div></div>
+                        <h2 class="car-title">Fiat Fiorino</h2>
+                        <div class="car-min-days">Minimum Kiralama: 2 Gün</div>
+                        <div class="car-price"><span class="cur">₺</span>1.500<span class="per">/ Gün</span></div>
+                        <div class="specs-grid">
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 8.13 4 5 7.13 5 11c0 3.11 2.06 5.76 4.93 6.64.07-.31.07-.63 0-.94C7.54 15.69 6 13.53 6 11c0-3.31 2.69-6 6-6 3.03 0 5.56 2.25 5.95 5.17l1.41 3.87zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg><span>Dizel</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M19.43 12.98c.04-.32.07-.64.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg><span>Manuel</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg><span>5 Kişi</span></div>
+                            <div class="spec-item"><svg class="svg-icon"><path d="M17,6H14V4H10V6H7A2,2 0 0,0 5,8V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V8A2,2 0 0,0 17,6M16,19H8V8H16V19Z"/></svg><span>3 Bagaj</span></div>
+                        </div>
+                        <button class="rent-btn" onclick="openForm('Fiat Fiorino', 1500)">Hemen Kirala</button>
+                    </div>
+                </article>
+
             </section>
         </main>
     </div>
 
-    <!-- 5. HUKUKİ REZERVASYON MODALI (%100 KVKK SCROLL ZORUNLULUĞU) -->
+    <!-- HUKUKİ FORM MODALI (DÖNÜŞÜM HUNİSİ) -->
     <div class="modal-overlay" id="form-modal">
         <div class="modal-box">
             <button class="modal-close-btn" onclick="closeForm()">&times;</button>
@@ -548,17 +700,12 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
                 </div>
 
                 <form id="lead-form" class="rent-form" novalidate>
-                    <!-- SPAM/BOT KORUMASI: Honeypot -->
+                    <!-- SPAM/BOT KORUMASI -->
                     <input type="text" id="hp-trap" class="sr-only" tabindex="-1" autocomplete="off">
-                    
                     <h4 style="text-align:center; color:var(--brand-yellow-dark); margin-bottom:15px; font-weight:800;" id="selected-car-title">Araç Seçimi</h4>
                     
-                    <div class="input-group">
-                        <input type="text" class="custom-input" placeholder="Adınız Soyadınız" required>
-                    </div>
-                    <div class="input-group">
-                        <input type="tel" class="custom-input" placeholder="Telefon Numaranız" required>
-                    </div>
+                    <div class="input-group"><input type="text" class="custom-input" placeholder="Adınız Soyadınız" required></div>
+                    <div class="input-group"><input type="tel" class="custom-input" placeholder="Telefon Numaranız" required></div>
 
                     <span class="date-time-label">Alış Bilgisi</span>
                     <div class="date-time-grid">
@@ -574,9 +721,7 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
                     
                     <p id="error-msg"></p>
 
-                    <div class="input-group">
-                        <input type="text" class="custom-input" placeholder="Teslim Edilecek İlçe (Örn: Yeşilyurt)" required>
-                    </div>
+                    <div class="input-group"><input type="text" class="custom-input" placeholder="Teslim Edilecek İlçe (Örn: Yeşilyurt)" required></div>
 
                     <div class="contact-tabs">
                         <div class="tab-slider"></div>
@@ -593,26 +738,21 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
                 </form>
             </div>
 
-            <!-- KVKK METNİ VIEW (Aynı Modal İçinde Scroll-to-bottom zorunlu) -->
+            <!-- KVKK METNİ VIEW (Aynı Modal İçinde, Scroll Validation Zorunlu) -->
             <div id="contract-view">
-                <button class="modal-back-btn" onclick="closeKvkk()">
-                    <svg viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"/></svg>
-                </button>
+                <button class="modal-back-btn" onclick="closeKvkk()"><svg viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"/></svg></button>
                 <h3 style="text-align:center;font-weight:900;margin-bottom:15px;color:var(--text-dark);">Kiralama Sözleşmesi</h3>
                 
                 <div class="contract-scroll-area" id="contract-scroll">
                     <h4>1. TARAFLAR VE SÜRE</h4>
-                    <p>İşbu sözleşme Referans Rentecar ile aracı kiralayan müşteri arasındaki yasal hakları düzenler. Platformumuzda kiralama işlemleri operasyonel verimlilik sebebiyle <strong>minimum 2 (iki) gün</strong> üzerinden yapılmaktadır.</p>
-                    <br>
+                    <p>İşbu sözleşme Referans Rentecar ile aracı kiralayan müşteri arasındaki yasal hakları düzenler. Platformumuzda kiralama işlemleri operasyonel verimlilik sebebiyle <strong>minimum 2 (iki) gün</strong> üzerinden yapılmaktadır.</p><br>
                     <h4>2. KULLANIM ŞARTLARI VE SORUMLULUKLAR</h4>
-                    <p>Müşteri, aracı trafik kurallarına uygun, özenle kullanmayı taahhüt eder. Olası trafik cezaları, HGS geçişleri ve araca yazılan yasal ihlal bedelleri tamamen müşteriye aittir.</p>
-                    <br>
+                    <p>Müşteri, aracı trafik kurallarına uygun, özenle kullanmayı taahhüt eder. Olası trafik cezaları, HGS geçişleri ve araca yazılan yasal ihlal bedelleri tamamen müşteriye aittir.</p><br>
                     <h4>3. SİGORTA DURUMU VE KAPSAMI</h4>
-                    <p>Araçlarımız tam kapsamlı kasko altındadır. Ancak alkol, uyuşturucu etkisi altında araç kullanımı veya yasal hız sınırlarının %50 üzerinde yapılan sürat ihlalleri sonucu oluşan kazalarda kasko hakları geçersizdir.</p>
-                    <br>
+                    <p>Araçlarımız tam kapsamlı kasko altındadır. Ancak alkol, uyuşturucu etkisi altında araç kullanımı veya yasal hız sınırlarının %50 üzerinde yapılan sürat ihlalleri sonucu oluşan kazalarda kasko hakları geçersizdir.</p><br>
                     <h4>4. KVKK AYDINLATMA METNİ</h4>
                     <p>Kişisel verileriniz (Ad, Telefon, Lokasyon) hizmet sağlanması ve iletişim kurulması kapsamında işlenir. 3. şahıslarla reklam veya veri ticareti için kesinlikle paylaşılmaz.</p>
-                    <br><br><br><br><br><br><br><br><br><br>
+                    <br><br><br><br><br><br><br><br><br><br> <!-- Scroll tetikleme boşluğu -->
                 </div>
                 
                 <div class="scroll-warn" id="scroll-warn">Sözleşmeyi onaylamak için lütfen metnin en altına kadar okuyunuz/kaydırınız ↓</div>
@@ -621,12 +761,13 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
         </div>
     </div>
 
+    <!-- JAVASCRIPT (Motor Beyni) -->
     <script>
         "use strict";
 
         document.addEventListener("DOMContentLoaded", () => {
             
-            /* --- 1. GÜVENLİK (Malatya Taksi DNA) --- */
+            /* --- GÜVENLİK --- */
             document.addEventListener('contextmenu', e => e.preventDefault());
             document.addEventListener('dragstart', e => e.preventDefault());
             document.addEventListener('copy', e => { if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault(); });
@@ -634,86 +775,37 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
                 const k = e.key ? e.key.toUpperCase() : '';
                 if (k === 'F12' || (e.ctrlKey && e.shiftKey && (k === 'I' || k === 'J' || k === 'C')) || (e.ctrlKey && (k === 'U' || k === 'S'))) e.preventDefault();
             });
+            if (window.top !== window.self) window.top.location = window.self.location;
 
-            /* --- 2. ARAÇ VERİTABANI (Eksiksiz 11 Araç ve Kasa Kapasiteleri) --- */
-            // SVG Sabitleri
-            const sGas = `<svg viewBox="0 0 24 24"><path d="M19.36 10.04C18.67 6.59 15.64 4 12 4 8.13 4 5 7.13 5 11c0 3.11 2.06 5.76 4.93 6.64.07-.31.07-.63 0-.94C7.54 15.69 6 13.53 6 11c0-3.31 2.69-6 6-6 3.03 0 5.56 2.25 5.95 5.17l1.41 3.87zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>`;
-            const sGear = `<svg viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>`;
-            const sUsr = `<svg viewBox="0 0 24 24"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg>`;
-            const sBag = `<svg viewBox="0 0 24 24"><path d="M17,6H14V4H10V6H7A2,2 0 0,0 5,8V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V8A2,2 0 0,0 17,6M16,19H8V8H16V19Z"/></svg>`;
+            /* --- PRELOADER FADE --- */
+            setTimeout(() => { document.getElementById('preloader').classList.add('hide'); }, 1500);
 
-            const allCars = [
-                { id: 3, name: "Toyota Corolla", price: 1700, pStr: "1.700", fuel: "Elektrik", gear: "Otomatik", user: "5 Kişi", bag: "4 Bagaj", type: "premium" },
-                { id: 4, name: "Kia Rio", price: 1650, pStr: "1.650", fuel: "Dizel", gear: "Manuel", user: "5 Kişi", bag: "2 Bagaj", type: "standard" },
-                { id: 5, name: "Citroen C Elysee", price: 1600, pStr: "1.600", fuel: "Dizel", gear: "Manuel", user: "5 Kişi", bag: "4 Bagaj", type: "standard" },
-                { id: 6, name: "Honda Civic", price: 1600, pStr: "1.600", fuel: "Benzin", gear: "Otomatik", user: "5 Kişi", bag: "4 Bagaj", type: "standard" },
-                { id: 7, name: "Hyundai i20", price: 1600, pStr: "1.600", fuel: "Benzin", gear: "Otomatik", user: "5 Kişi", bag: "2 Bagaj", type: "standard" },
-                { id: 8, name: "Fiat Egea", price: 1500, pStr: "1.500", fuel: "Dizel", gear: "Manuel", user: "5 Kişi", bag: "4 Bagaj", type: "standard" },
-                { id: 9, name: "Peugeot 301", price: 1500, pStr: "1.500", fuel: "Dizel", gear: "Manuel", user: "5 Kişi", bag: "4 Bagaj", type: "standard" },
-                { id: 10, name: "Renault Symbol", price: 1500, pStr: "1.500", fuel: "Dizel", gear: "Manuel", user: "5 Kişi", bag: "4 Bagaj", type: "standard" },
-                { id: 11, name: "Fiat Fiorino", price: 1500, pStr: "1.500", fuel: "Dizel", gear: "Manuel", user: "5 Kişi", bag: "3 Bagaj", type: "standard" }
-            ];
-
-            const gridContainer = document.getElementById('main-car-grid');
-
-            // DOM Doldurma Fonksiyonu (1-1-2 / 3-3-2 CSS Class'larıyla)
-            function renderCars(dataArray) {
-                gridContainer.innerHTML = '';
-                dataArray.forEach((car, i) => {
-                    // Grid Sınıflarını Asimetrik Dağıtma (PC için 3lü ve 2li, Mobil için 1li ve Yarım)
-                    let gridClass = "pc-3 m-full"; // Default
-                    if (i % 5 === 3 || i % 5 === 4) gridClass = "pc-2 m-half"; // Arada bir küçük/ikili çıkar
-
-                    const article = document.createElement('article');
-                    article.className = `car-card obs-target ${gridClass}`;
-                    // Gecikme hesabı (0.1, 0.4, 0.8 döngüsü)
-                    const delay = [0.1, 0.4, 0.8][i % 3];
-                    article.setAttribute('data-delay', delay);
-                    article.setAttribute('data-price', car.price);
-
-                    article.innerHTML = `
-                        <div class="card-media gpu-accel">
-                            <div class="video-container" data-vid-src="https://www.w3schools.com/html/mov_bbb.mp4">
-                                <video class="video-player" muted playsinline></video>
-                            </div>
-                            <div class="skeleton-loader"><div class="skeleton-play"></div></div>
-                        </div>
-                        <div class="card-info">
-                            <div class="jaguar-wrapper ${car.type}-jaguar">
-                                <div class="j-placeholder">JAGUAR MP4</div>
-                            </div>
-                            <h2 class="car-title">${car.name}</h2>
-                            <div class="car-price"><span class="cur">₺</span>${car.pStr}<span class="per">/ Gün</span></div>
-                            <div class="specs-grid">
-                                <div class="spec-item">${sGas}<span>${car.fuel}</span></div>
-                                <div class="spec-item">${sGear}<span>${car.gear}</span></div>
-                                <div class="spec-item">${sUsr}<span>${car.user}</span></div>
-                                <div class="spec-item">${sBag}<span>${car.bag}</span></div>
-                            </div>
-                            <button class="rent-btn" onclick="openForm('${car.name}', ${car.price})">Hemen Kirala</button>
-                        </div>
-                    `;
-                    gridContainer.appendChild(article);
+            /* --- ÇIPALAMA (FİYATI YÜKSEKTEN DÜŞÜĞE SIRALAMA JS MANTIĞI) --- */
+            const sortBtn = document.getElementById('sort-desc-btn');
+            const carGrid = document.getElementById('main-car-grid');
+            
+            sortBtn.addEventListener('click', () => {
+                // DOM üzerindeki elemanları çek ve data-price'a göre büyükten küçüğe sırala
+                let cards = Array.from(carGrid.querySelectorAll('.sortable-card'));
+                cards.sort((a, b) => {
+                    return parseInt(b.getAttribute('data-price')) - parseInt(a.getAttribute('data-price'));
                 });
                 
-                // Observer'ı yeni elemanlara bağla
-                document.querySelectorAll('.obs-target').forEach(c => lazyObserver.observe(c));
-            }
-
-            // Sayfa yüklendiğinde karışık/mevcut sırayla yükle
-            renderCars(allCars);
-
-            /* --- 3. SIRALAMA (ÇIPALAMA MANTIĞI) --- */
-            document.getElementById('sort-desc-btn').addEventListener('click', () => {
-                // Sadece grid içindeki listeyi fiyata göre büyükten küçüğe sıralar
-                const sorted = [...allCars].sort((a, b) => b.price - a.price);
-                renderCars(sorted);
-                // Mobilde menüyü kapat
+                // Animasyon hissiyatı için opacity'yi sıfırla, tekrar append et
+                cards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.classList.remove('in-view');
+                    carGrid.appendChild(card);
+                    // Hafif gecikmeyle tekrar göster
+                    setTimeout(() => { card.classList.add('in-view'); card.style.opacity = '1'; }, index * 100);
+                });
+                
+                // Mobilde Drawer'ı otomatik kapat
                 document.getElementById('sidebar').classList.remove('open');
                 document.getElementById('drawer-overlay').classList.remove('open');
             });
 
-            /* --- 4. MOBİL ÇEKMECE MENÜSÜ --- */
+            /* --- MOBİL ÇEKMECE (DRAWER) MANTIĞI --- */
             const mobBtn = document.getElementById('mobile-filter-btn');
             const side = document.getElementById('sidebar');
             const overlay = document.getElementById('drawer-overlay');
@@ -724,18 +816,18 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
             clBtn.addEventListener('click', toggleMenu);
             overlay.addEventListener('click', toggleMenu);
 
-            /* --- 5. VİDEO LAZY LOAD & PING-PONG (Error 105 Bypass) --- */
+            /* --- VİDEO LAZY LOAD & PING-PONG (Error 105 Bypass) --- */
             const playPingPong = (vid) => {
                 vid.addEventListener('ended', () => {
                     let rewind = setInterval(() => {
                         try {
-                            vid.currentTime -= 0.08; // Akıcı geri sarım adımı
+                            vid.currentTime -= 0.08; // Akıcı geri sarım
                             if (vid.currentTime <= 0.1) {
                                 clearInterval(rewind);
                                 let p = vid.play();
-                                if(p !== undefined) p.catch(() => {});
+                                if(p !== undefined) p.catch(() => {}); // Error 105 Koruması
                             }
-                        } catch(e) { clearInterval(rewind); } // Crash olursa durdur
+                        } catch(e) { clearInterval(rewind); }
                     }, 40);
                 });
             };
@@ -744,17 +836,18 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         const card = entry.target;
+                        // CSS data-delay attribute'u ile RAM sıkışması engellendi
                         const delayMs = parseFloat(card.getAttribute('data-delay') || "0.1") * 1000;
                         
                         setTimeout(() => { card.classList.add('in-view'); }, delayMs);
                         
                         const vCont = card.querySelector('.video-container');
-                        const vid = card.querySelector('.video-player');
+                        const vid = card.querySelector('.main-vid');
                         const skel = card.querySelector('.skeleton-loader');
                         
                         if (vCont && vid && !vid.src) {
                             setTimeout(() => {
-                                vid.src = vCont.getAttribute('data-vid-src');
+                                vid.src = vid.getAttribute('data-src');
                                 vid.load();
                                 vid.addEventListener('loadeddata', () => {
                                     vCont.classList.add('loaded');
@@ -770,21 +863,17 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
                             let p = vid.play();
                             if(p !== undefined) p.catch(()=>{});
                         }
-                        
-                        // Yüklendikten sonra DOM'u yormamak için takibi kaldır
-                        // obs.unobserve(card); (Ping pong durmaması için yoruma alındı)
                     } else {
-                        // Ekranda değilse videoyu durdur RAM tasarrufu yap
-                        const vid = entry.target.querySelector('.video-player');
+                        // Ekranda değilse videoyu durdur (Performans tasarrufu)
+                        const vid = entry.target.querySelector('.main-vid');
                         if (vid && !vid.paused) vid.pause();
                     }
                 });
-            }, { rootMargin: '0px 0px 200px 0px', threshold: 0.1 });
+            }, { rootMargin: '0px 0px 150px 0px', threshold: 0.1 });
 
-            // Zaten statik olan Hero araçları için gözlemciyi başlat
             document.querySelectorAll('.obs-target').forEach(c => lazyObserver.observe(c));
 
-            /* --- 6. FORM & %100 KVKK SCROLL ALGORİTMASI --- */
+            /* --- FORM MODALI VE KVKK SCROLL ALGORİTMASI --- */
             const formModal = document.getElementById('form-modal');
             const formView = document.getElementById('form-view');
             const kvkkView = document.getElementById('contract-view');
@@ -799,20 +888,24 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
             
             let formOpenTime = 0;
 
-            window.openForm = (cName) => { 
+            window.openForm = (cName, price) => { 
                 document.getElementById('selected-car-title').innerText = "Seçilen: " + cName;
                 formOpenTime = Date.now(); 
                 formModal.classList.add('active'); 
                 document.body.style.overflow = 'hidden'; 
             };
-            window.closeForm = () => { formModal.classList.remove('active'); document.body.style.overflow = ''; closeKvkk(); };
+            window.closeForm = () => { 
+                formModal.classList.remove('active'); 
+                document.body.style.overflow = ''; 
+                closeKvkk(); 
+            };
             
             window.openKvkk = () => { formView.style.display = 'none'; kvkkView.classList.add('show'); bckBtn.style.display = 'flex'; };
             window.closeKvkk = () => { kvkkView.classList.remove('show'); setTimeout(()=>{ formView.style.display = 'block'; bckBtn.style.display = 'none'; }, 300); };
 
-            // SCROLL-TO-BOTTOM
+            // SCROLL-TO-BOTTOM VALIDATION MANTIĞI (Hukuki Koruma)
             kScroll.addEventListener('scroll', () => {
-                if (Math.abs(kScroll.scrollHeight - kScroll.scrollTop - kScroll.clientHeight) <= 10) {
+                if (Math.abs(kScroll.scrollHeight - kScroll.scrollTop - kScroll.clientHeight) <= 15) {
                     kBtn.classList.add('ready');
                     kBtn.disabled = false;
                     warnText.textContent = "Teşekkürler, onaylayabilirsiniz.";
@@ -827,7 +920,6 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
                 closeKvkk();
             });
 
-            // Tabs
             const tabs = document.querySelectorAll('.contact-tab');
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
@@ -836,14 +928,14 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
                 });
             });
 
-            // Submit, 2 Day Rule & Honeypot
+            // Form Gönderim (Honeypot, 2 Gün Şartı ve Zaman Damgası)
             document.getElementById('lead-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 errP.style.display = 'none';
                 
-                if (e && !e.isTrusted) return;
-                if (document.getElementById('hp-trap').value !== "") return;
-                if (Date.now() - formOpenTime < 2000) return;
+                if (e && !e.isTrusted) return; // Otomatik bot tıkı
+                if (document.getElementById('hp-trap').value !== "") return; // Honeypot
+                if (Date.now() - formOpenTime < 2500) return; // 2.5 saniyeden hızlı doldurdu
 
                 // Minimum 2 Gün Hesaplaması
                 const dStart = new Date(document.getElementById('date-start').value);
@@ -852,24 +944,32 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
 
                 if (diffDays < 2) {
-                    errP.innerText = "Hata: Operasyonel sebeplerle minimum kiralama süresi 2 Gündür.";
+                    errP.innerText = "Operasyonel sebeplerle minimum kiralama 2 Gündür.";
                     errP.style.display = 'block';
                     return;
                 }
 
                 if (kCheck.checked) {
                     closeForm();
-                    // Toast
+                    // Başarı Toasty (Statik)
                     const t = document.createElement('div');
                     t.className = 'toast-item show';
+                    t.style.borderLeftColor = "var(--status-green)";
                     t.innerHTML = `<div class="toast-text"><strong>Talebiniz Alındı!</strong><span>Müşteri temsilcimiz sizi arayacaktır.</span></div>`;
                     document.getElementById('toast-container').appendChild(t);
-                    setTimeout(()=>t.remove(), 4000);
+                    setTimeout(()=>t.remove(), 6000);
                     e.target.reset();
+                    
+                    // Buton ve scroll durumlarını sıfırla
+                    kCheck.checked = false;
+                    sBtn.classList.remove('enabled'); sBtn.disabled = true;
+                    kBtn.classList.remove('ready'); kBtn.disabled = true;
+                    warnText.textContent = "Sözleşmeyi onaylamak için lütfen metnin en altına kadar okuyunuz/kaydırınız ↓";
+                    warnText.classList.remove('met');
                 }
             });
 
-            /* --- 7. HEADER GİZLEME MANTIĞI --- */
+            /* --- HEADER GİZLEME MANTIĞI --- */
             let lastScroll = 0;
             const header = document.getElementById('main-header');
             window.addEventListener('scroll', () => {
@@ -879,23 +979,20 @@ ZİHİNSEL SİMÜLASYON VE DEFANSİF PROGRAMLAMA KONTROL LİSTESİ:
                 lastScroll = current;
             }, { passive: true });
 
-            /* --- 8. PWA DELAY (12sn) --- */
+            /* --- PWA (12sn Gecikme) --- */
             setTimeout(() => { document.getElementById('pwa-prompt').classList.add('show'); }, 12000);
 
-            // Toast Döngüsü
+            // Rastgele Live Toasty Bildirimleri
             setInterval(() => {
-                const names = ["Ahmet", "Mehmet", "Kaan", "Burak"];
-                const cars = ["Egea", "Megane", "Qashqai", "Civic"];
+                const n = ["Ahmet", "Mehmet", "Kaan", "Burak", "Zeynep"];
+                const c = ["Egea", "Megane", "Qashqai", "Civic", "Corolla"];
                 const t = document.createElement('div');
                 t.className = 'toast-item show';
-                t.style.borderLeftColor = "#00E676";
-                t.innerHTML = `<div class="toast-text"><strong>${names[Math.floor(Math.random()*4)]} Y. az önce kiraladı</strong><span>${cars[Math.floor(Math.random()*4)]} teslim ediliyor.</span></div>`;
+                t.innerHTML = `<div class="toast-icon"><svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M11,19.93C7.06,19.43 4,16.05 4,12C4,7.95 7.05,4.57 11,4.07V19.93M13,4.07C16.95,4.57 20,7.95 20,12C20,16.05 16.95,19.43 13,19.93V4.07Z"/></svg></div><div class="toast-text"><strong>${n[Math.floor(Math.random()*5)]} Y. az önce kiraladı</strong><span>${c[Math.floor(Math.random()*5)]} adrese teslim ediliyor.</span></div>`;
                 document.getElementById('toast-container').appendChild(t);
                 setTimeout(()=>t.remove(), 4000);
-            }, 25000);
-
-        } catch (err) { console.warn("Motor Hatası:", err); }
-    });
+            }, 30000);
+        });
     </script>
 </body>
 </html>
