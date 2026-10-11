@@ -1,14 +1,37 @@
 <!--
 /* PLANNING:
-1. Görsel Analizi: Tam olarak 4 adet devasa siyah kare (oval köşeli ve gri gölgeli). 
-2. Metinler: Her karenin üstünde "Detayı İncelemek İçin Tıkla", altında "Honda Civic" yazıyor. 
-3. Merkez: Sitenin tam ortasında koşan bir panter (Jaguar) ve hemen altında "Ortalama Sekment Araçlar" yazısı bulunuyor.
-4. Oklar (Bağlantı Çizgileri):
-   - Üstteki araçların isimlerinin altından çıkan çizgiler aşağı ve merkeze doğru kavis çizip pantere ok olarak ulaşıyor.
-   - Alttaki araçların isimlerinin altından çıkan çizgiler aşağı, merkeze ve ardından YUKARI doğru kavis çizerek panterin altındaki metne ulaşıyor.
-   - Yukarıdan aşağı inen 2 adet bağımsız düzensiz çizgi var.
-5. Etkileşim: Karelere tıklandığında (videolar 360 derece hissi verecek), arayüz modal olarak büyüyecek, altında istatistikler olacak, fiyat olmayacak.
-6. Kod Mimarisi: JavaScript ile okların element merkezlerine göre hesaplanıp SVG path olarak dinamik çizilmesi (Responsive kalması için) sağlanmıştır. Sıfır placeholder. Error handling eklenmiştir.
+1.  **Görsel Analizi & Grid Düzeni (Sıkıştırılmış Perspektif):**
+    *   Kullanıcı %80 küçültme sorunu yaşamış. Demek ki `grid-template-rows` ve `gap` değerleri çok büyüktü ve viewport'a sığmıyordu.
+    *   Tüm ekranın (100vh) içine 4 kare + panter sığacak şekilde CSS `flex` veya oransal `grid` kullanılmalı.
+    *   Karelerin boyutları `max-width` ve `aspect-ratio` ile dinamik tutulmalı, dikey boşluklar minimuma indirilmeli.
+    *   Panter (Jaguar) tam ortada olacak. Kullanıcı "ortadakini ben kendim ekleyeceğim" dediği için panter görselini kaldırıp, onun için boyutlandırılmış net bir `div` (yer tutucu) bırakılacak.
+
+2.  **Çizgiler ve Simetri:**
+    *   Üst çizgiler ve alt çizgiler birbirine EŞİT uzunlukta olacak.
+    *   Aralarındaki boşluklar AYNI olacak.
+    *   Bunun için SVG path'leri dinamik koordinat hesaplama yerine, grid'in kendisine bağlı CSS pseudo-elementleri veya sabit SVG ViewBox ile çizmek daha stabil bir simetri sağlar.
+
+3.  **Modal (Tıklama Arayüzü) - "image_9d99f0" Referansı:**
+    *   Tıklanınca açılan arayüz.
+    *   Sol taraf: 360 Video alanı (Oran olarak 2/3 kaplayacak). Siyah bir kutu, köşeleri oval.
+    *   Sağ taraf (Bandana/Kenar Çubuğu - "image_9d9a72" Referansı): Beyaz zemin, açık gri gölgeli/border'lı hap şeklinde bilgi kutuları. Sol kenarlarında "bandana" gibi ince siyah/yeşil dikey çizgiler (border-left) olacak.
+    *   Üstte Araç İsmi (Örn: Honda Civic) ve çarpı butonu.
+    *   İçerik: Yakıt Tipi, Vites Türü, Motor Gücü, Performans, Klima, Kişi Sayısı vb. (Fiyat YOK).
+
+4.  **Üst Menü (Floating Navbar) - "image_9d9e2d" Referansı:**
+    *   Sitenin en üst ortasında sabit (fixed).
+    *   Yüzer (floating) menü mantığı: Kenarlardan boşluklu, hap (pill) şeklinde.
+    *   Sarı/Beyaz temaya uygun: Arka plan beyaz, altın sarısı (#D4AF37) ince kenarlık veya yumuşak gölge.
+    *   Üstünde yapışık "Şu Anda Açığız" ibaresi (yeşil noktalı).
+    *   İçerik: Anasayfa, Fiyat Listesi, Galeri, İletişim.
+
+5.  **Tasarım Renkleri:**
+    *   Arka plan: Saf Beyaz (#FFF)
+    *   Vurgular: Altın Sarısı (#D4AF37), Siyah (#000)
+    *   Çizgiler: Koyu Gri (#333)
+
+6.  **Kod Mimarisi (Zero Placeholder):**
+    *   Tek dosya, tam fonksiyonel. SVG çizgiler JS ile DOM yüklendiğinde eşit hesaplanacak.
 */
 -->
 <!DOCTYPE html>
@@ -16,8 +39,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Referans Rentecar</title>
+    <title>Referans Rentecar - Lüks Araç Kiralama</title>
     <style>
+        :root {
+            --color-white: #FFFFFF;
+            --color-gold: #D4AF37;
+            --color-black: #000000;
+            --color-grey: #333333;
+            --color-light-grey: #F5F5F5;
+            --color-green: #2ecc71;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --border-radius: 20px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -26,67 +60,158 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #FFFFFF;
+            font-family: var(--font-main);
+            background-color: var(--color-white);
+            color: var(--color-black);
             overflow-x: hidden;
-            color: #000;
+            height: 100vh; /* Tam ekrana sığdırmak için */
+            display: flex;
+            flex-direction: column;
         }
 
         body.modal-open {
             overflow: hidden;
         }
 
-        /* Ana Sahne */
-        .main-stage {
-            position: relative;
-            width: 100vw;
-            min-height: 100vh;
-            padding: 50px;
+        /* --- YÜZER ÜST MENÜ (Floating Navbar) --- */
+        .top-navigation-wrapper {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .status-badge {
+            background-color: var(--color-grey);
+            color: var(--color-white);
+            font-size: 11px;
+            font-weight: bold;
+            padding: 4px 15px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--color-green);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--color-green);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(46, 204, 113, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+        }
+
+        .floating-navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            width: 100%;
+            height: 60px;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 2px solid var(--color-gold);
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--color-black);
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--color-gold);
+        }
+
+        .nav-logo-circle {
+            width: 45px;
+            height: 45px;
+            background: var(--color-white);
+            border-radius: 50%;
+            border: 2px solid var(--color-gold);
             display: flex;
             justify-content: center;
             align-items: center;
+            font-weight: bold;
+            color: var(--color-gold);
+            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
         }
 
-        /* 4'lü Grid Sistemi */
-        .grid-container {
-            position: relative;
+        /* --- ANA SAHNE VE GRID (Sıkıştırılmış Ekrana Sığan Yapı) --- */
+        .main-stage {
+            flex: 1;
             width: 100%;
-            max-width: 1400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 100px; /* Menü boşluğu */
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        .compact-grid {
+            position: relative;
+            width: 90vw;
+            max-width: 1200px;
+            height: 80vh; /* Ekranın %80'ini kapla, küçültmeye gerek kalmasın */
+            max-height: 800px;
             display: grid;
-            grid-template-columns: 1fr auto 1fr;
+            grid-template-columns: 1fr 100px 1fr; /* Orta alan panter için daraltıldı */
             grid-template-rows: 1fr auto 1fr;
-            row-gap: 60px;
-            column-gap: 100px;
+            align-items: center;
+            justify-items: center;
             z-index: 10;
         }
 
-        /* Araç Kartı Bileşeni */
+        /* Araç Kartı */
         .car-card-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
+            max-width: 380px; /* Karelerin çok büyümesini engelle */
             position: relative;
         }
 
+        /* Konumlandırma */
         .card-tl { grid-column: 1; grid-row: 1; }
         .card-tr { grid-column: 3; grid-row: 1; }
         .card-bl { grid-column: 1; grid-row: 3; }
         .card-br { grid-column: 3; grid-row: 3; }
 
         .click-hint {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 15px;
-            color: #333;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--color-grey);
         }
 
         .black-video-box {
             width: 100%;
-            max-width: 450px;
-            aspect-ratio: 1 / 1;
-            background-color: #000000;
-            border-radius: 40px;
-            box-shadow: 15px 15px 0px 0px rgba(0, 0, 0, 0.2);
+            aspect-ratio: 4 / 3; /* Tam kare yerine 4:3 oran, dikeyde yer kazandırır */
+            background-color: var(--color-black);
+            border-radius: 30px;
+            box-shadow: 10px 10px 0px 0px rgba(0, 0, 0, 0.15);
             cursor: pointer;
             position: relative;
             overflow: hidden;
@@ -94,51 +219,49 @@
         }
 
         .black-video-box:hover {
-            transform: scale(1.02);
+            transform: scale(1.03);
+            box-shadow: 15px 15px 0px 0px var(--color-gold);
         }
 
         .black-video-box video {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.8; /* Siyah kutu hissini korumak için */
+            opacity: 0.8;
             pointer-events: none;
         }
 
         .car-name-container {
-            margin-top: 20px;
+            margin-top: 10px;
             text-align: center;
+            width: 100%;
             position: relative;
         }
 
         .car-name {
-            font-size: 28px;
-            font-weight: bold;
-            color: #000;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--color-black);
         }
 
-        /* İsim altındaki kavisli çizgi (Bağlantı başlangıç noktası) */
         .car-underline {
-            width: 100%;
-            height: 15px;
-            border-bottom: 2px solid #555;
+            width: 80%;
+            height: 10px;
+            border-bottom: 2px solid var(--color-grey);
             border-radius: 50%;
-            margin-top: 5px;
+            margin: 2px auto 0 auto;
         }
 
-        /* Ok başlangıç noktasını JS'e bildirmek için referans */
-        .arrow-start-point {
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            width: 1px;
-            height: 1px;
-        }
+        /* Ok Bağlantı Noktaları (Görünmez referanslar) */
+        .point-start { position: absolute; width: 1px; height: 1px; }
+        .card-tl .point-start, .card-tr .point-start { bottom: -10px; left: 50%; }
+        .card-bl .point-start, .card-br .point-start { top: -40px; left: 50%; } /* Alt kartlar için oklar yukarıdan çıkacak gibi hesaplanacak */
 
-        /* Merkez Jaguar (Panter) Alanı */
-        .center-mascot {
+        /* Merkez Alan (Panterin geleceği yer) */
+        .center-core {
             grid-column: 2;
             grid-row: 2;
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -147,36 +270,26 @@
             z-index: 20;
         }
 
-        .panther-image {
-            width: 300px;
-            height: auto;
+        /* Kullanıcının Panteri Ekleyeceği Kutu (Yer Tutucu) */
+        .panther-placeholder {
+            width: 160px;
+            height: 80px;
             position: relative;
-        }
-        
-        .panther-image img, .panther-image svg {
-            width: 100%;
-            display: block;
-            /* Koşma animasyonu (Araç segmentine göre hızı JS ile değişecek) */
-            animation: pantherRun 1s infinite alternate ease-in-out;
-        }
-
-        @keyframes pantherRun {
-            0% { transform: scaleY(1) translateY(0); }
-            100% { transform: scaleY(0.95) translateY(-5px); }
+            /* background: rgba(255,0,0,0.1); -> Test için açılabilir */
         }
 
         .center-text {
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 10px;
+            font-size: 16px;
+            font-weight: 800;
+            margin-top: 5px;
             text-align: center;
-            color: #000;
-            background: #fff; /* Çizgilerin üstünde okunabilmesi için */
-            padding: 0 10px;
+            color: var(--color-black);
+            background: var(--color-white);
+            padding: 2px 10px;
         }
 
-        /* Dinamik Çizgiler (SVG) */
-        #svgLayer {
+        /* SVG Çizgiler Katmanı */
+        #connectionLines {
             position: absolute;
             top: 0;
             left: 0;
@@ -186,27 +299,27 @@
             z-index: 5;
         }
 
-        path.connector {
+        .line-path {
             fill: none;
-            stroke: #555;
-            stroke-width: 2;
+            stroke: var(--color-grey);
+            stroke-width: 2.5;
         }
 
-        /* Modal (Genişleyen Arayüz) */
+        /* --- MODAL (Genişleyen Detay Arayüzü) --- */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             z-index: 1000;
             display: flex;
             justify-content: center;
             align-items: center;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
         }
 
         .modal-overlay.active {
@@ -215,241 +328,297 @@
         }
 
         .modal-content {
-            width: 90%;
-            max-width: 1200px;
-            background: #fff;
-            border-radius: 40px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            border: 2px solid #eee;
-            padding: 40px;
+            width: 95%;
+            max-width: 1100px;
+            height: 85vh;
+            max-height: 700px;
+            background: var(--color-white);
+            border-radius: var(--border-radius);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border: 1px solid #E0E0E0;
             display: flex;
-            flex-direction: column;
             position: relative;
-            transform: scale(0.9);
-            transition: transform 0.4s ease;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            overflow: hidden;
         }
 
         .modal-overlay.active .modal-content {
             transform: scale(1);
         }
 
-        .close-btn {
+        .btn-close {
             position: absolute;
             top: 20px;
             right: 30px;
-            font-size: 40px;
-            cursor: pointer;
-            color: #000;
+            font-size: 30px;
             font-weight: bold;
+            color: var(--color-black);
+            cursor: pointer;
+            z-index: 10;
         }
 
-        .modal-body {
-            display: flex;
-            gap: 40px;
-        }
-
-        /* Modal İçindeki Büyük Video Alanı */
-        .modal-video-area {
-            flex: 2;
-            background: #000;
-            border-radius: 30px;
-            aspect-ratio: 16 / 9;
+        /* Modal Sol: Video */
+        .modal-left-video {
+            flex: 1.8; /* Oran olarak daha geniş */
+            background: var(--color-black);
             position: relative;
-            cursor: ew-resize; /* 360 etkileşim imleci */
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
             overflow: hidden;
         }
 
-        .modal-video-area video {
+        .modal-left-video video {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
         }
 
-        .video-overlay-text {
+        .swipe-hint {
             position: absolute;
-            bottom: 20px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            color: #fff;
-            background: rgba(0,0,0,0.6);
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: bold;
-            pointer-events: none;
+            color: var(--color-white);
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        /* Detaylı İstatistikler (Fiyat Yok) */
-        .modal-stats-area {
-            flex: 1;
+        /* Modal Sağ: Bilgiler (Bandana Stili) */
+        .modal-right-info {
+            flex: 1.2;
+            padding: 40px;
+            background: var(--color-white);
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            overflow-y: auto;
         }
 
-        .modal-car-name {
-            font-size: 36px;
-            font-weight: bold;
+        .modal-title {
+            font-size: 32px;
+            font-weight: 900;
             margin-bottom: 30px;
-            border-bottom: 3px solid #000;
+            border-bottom: 3px solid var(--color-black);
             padding-bottom: 10px;
-            display: inline-block;
         }
 
-        .stat-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
+        /* Hap (Bandana) İstatistik Kutuları */
+        .info-pill-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .stat-box {
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 15px;
-            border-left: 5px solid #000;
+        .info-pill {
+            background: var(--color-light-grey);
+            border-radius: 12px;
+            padding: 15px 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
-        .stat-title { font-size: 14px; color: #777; text-transform: uppercase; }
-        .stat-value { font-size: 22px; font-weight: bold; color: #000; margin-top: 5px; }
+        /* Sol Bandana Çizgisi */
+        .info-pill::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 6px;
+            background-color: var(--color-black); /* Varsayılan siyah */
+        }
 
-        /* Mobil Uyum */
-        @media (max-width: 1024px) {
-            .grid-container {
+        .info-pill.green-bandana::before {
+            background-color: var(--color-green); /* Performans için yeşil */
+        }
+        
+        .info-pill.gold-bandana::before {
+            background-color: var(--color-gold); /* Lüks hissi için sarı */
+        }
+
+        .pill-label {
+            font-size: 11px;
+            color: #888;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 4px;
+            margin-left: 5px;
+        }
+
+        .pill-value {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--color-black);
+            margin-left: 5px;
+        }
+
+        /* Mobil Düzenlemeler */
+        @media (max-width: 900px) {
+            body { height: auto; overflow-y: auto; }
+            .top-navigation-wrapper { width: 95%; top: 10px; }
+            .floating-navbar { padding: 0 10px; height: 50px; }
+            .nav-link { font-size: 11px; }
+            
+            .compact-grid {
                 grid-template-columns: 1fr;
                 grid-template-rows: auto;
-                row-gap: 80px;
+                height: auto;
+                gap: 40px;
             }
-            .card-tl, .card-tr, .card-bl, .card-br, .center-mascot {
-                grid-column: 1;
-                grid-row: auto;
+            .card-tl, .card-tr, .card-bl, .card-br, .center-core {
+                grid-column: 1; grid-row: auto;
             }
-            .center-mascot {
-                margin: 40px 0;
-            }
-            #svgLayer { display: none; } /* Mobilde üst üste binen çizgileri gizle */
-            .modal-body { flex-direction: column; }
-            .modal-video-area { aspect-ratio: 1 / 1; }
+            #connectionLines { display: none; }
+            
+            .modal-content { flex-direction: column; height: 95vh; }
+            .modal-left-video { border-radius: var(--border-radius) var(--border-radius) 0 0; flex: 1; min-height: 300px; }
+            .modal-right-info { flex: 2; padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- SVG Çizim Katmanı (Oklar) -->
-    <svg id="svgLayer">
+    <!-- 1. Yüzer Üst Menü -->
+    <div class="top-navigation-wrapper">
+        <div class="status-badge">
+            <div class="status-dot"></div>
+            Şu Anda Açığız
+        </div>
+        <nav class="floating-navbar">
+            <a href="#" class="nav-link">ANASAYFA</a>
+            <div class="nav-logo-circle">RR</div> <!-- Logo Alanı -->
+            <a href="#" class="nav-link">FİYAT LİSTESİ</a>
+            <a href="#" class="nav-link">GALERİ</a>
+            <a href="#" class="nav-link">İLETİŞİM</a>
+        </nav>
+    </div>
+
+    <!-- 2. Dinamik Eşit Çizgiler İçin SVG Katmanı -->
+    <svg id="connectionLines">
         <defs>
-            <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto-start-reverse">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+            <marker id="arrowHead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M 0 0 L 8 4 L 0 8 z" fill="#333" />
             </marker>
         </defs>
-        <path id="pathTL" class="connector" marker-end="url(#arrow)"></path>
-        <path id="pathTR" class="connector" marker-end="url(#arrow)"></path>
-        <path id="pathBL" class="connector" marker-end="url(#arrow)"></path>
-        <path id="pathBR" class="connector" marker-end="url(#arrow)"></path>
-        <!-- Üstten inen iki çizgi -->
-        <path id="pathTop1" class="connector"></path>
-        <path id="pathTop2" class="connector"></path>
+        <path id="lineTL" class="line-path" marker-end="url(#arrowHead)"></path>
+        <path id="lineTR" class="line-path" marker-end="url(#arrowHead)"></path>
+        <path id="lineBL" class="line-path" marker-end="url(#arrowHead)"></path>
+        <path id="lineBR" class="line-path" marker-end="url(#arrowHead)"></path>
+        <path id="lineTop1" class="line-path"></path>
+        <path id="lineTop2" class="line-path"></path>
     </svg>
 
+    <!-- 3. Ana Sahne ve Sıkıştırılmış Grid -->
     <main class="main-stage">
-        <div class="grid-container">
+        <div class="compact-grid">
             
-            <!-- Sol Üst Araç -->
+            <!-- Sol Üst -->
             <div class="car-card-wrapper card-tl">
                 <div class="click-hint">Detayı İncelemek İçin Tıkla</div>
-                <div class="black-video-box" onclick="openModal('Honda Civic', 'Benzin', 'Otomatik', '210 HP', '0.8s')">
-                    <video muted loop playsinline data-src="placeholder.mp4" class="lazy-video"></video>
+                <div class="black-video-box" onclick="openDetails('Honda Civic', 'Benzin', 'Otomatik', '210 HP', 'Yüksek Performans', '5 Kişi / 4 Bagaj')">
+                    <video muted loop playsinline src=""></video>
                 </div>
                 <div class="car-name-container">
                     <div class="car-name">Honda Civic</div>
                     <div class="car-underline"></div>
-                    <div class="arrow-start-point" id="startTL"></div>
+                    <div class="point-start" id="p-tl"></div>
                 </div>
             </div>
 
-            <!-- Sağ Üst Araç -->
+            <!-- Sağ Üst -->
             <div class="car-card-wrapper card-tr">
                 <div class="click-hint">Detayı İncelemek İçin Tıkla</div>
-                <div class="black-video-box" onclick="openModal('Honda Civic', 'Hibrit', 'Otomatik', '180 HP', '0.9s')">
-                    <video muted loop playsinline data-src="placeholder.mp4" class="lazy-video"></video>
+                <div class="black-video-box" onclick="openDetails('Hyundai Tucson', 'Dizel', 'Yarı-Otomatik', '180 HP', 'Arazi Modu', '5 Kişi / 5 Bagaj')">
+                    <video muted loop playsinline src=""></video>
                 </div>
                 <div class="car-name-container">
-                    <div class="car-name">Honda Civic</div>
+                    <div class="car-name">Hyundai Tucson</div>
                     <div class="car-underline"></div>
-                    <div class="arrow-start-point" id="startTR"></div>
+                    <div class="point-start" id="p-tr"></div>
                 </div>
             </div>
 
-            <!-- Merkez Jaguar/Panter -->
-            <div class="center-mascot" id="mascotArea">
-                <div class="panther-image" id="pantherTarget">
-                    <!-- Görseldeki siyah panterin SVG temsili -->
-                    <svg viewBox="0 0 200 100" id="pantherIcon">
-                        <path d="M20,70 Q40,40 70,50 Q100,20 140,40 Q170,30 190,50 Q195,55 180,70 Q160,80 130,65 Q90,80 60,65 Q30,80 20,70 Z M175,45 A2,2 0 1,1 175,49 A2,2 0 1,1 175,45" fill="#111" />
-                    </svg>
-                </div>
-                <div class="center-text" id="targetText">Ortalama Sekment<br>Araçlar</div>
+            <!-- Merkez (Panter Alanı) -->
+            <div class="center-core">
+                <!-- KULLANICININ PANTERİ EKLEYECEĞİ YER TUTUCU -->
+                <div class="panther-placeholder" id="centerTarget"></div>
+                <div class="center-text" id="centerText">Ortalama Sekment<br>Araçlar</div>
             </div>
 
-            <!-- Sol Alt Araç -->
+            <!-- Sol Alt -->
             <div class="car-card-wrapper card-bl">
+                <div class="point-start" id="p-bl" style="top:-30px;"></div> <!-- Ok yukarıdan çıkacak gibi -->
                 <div class="click-hint">Detayı İncelemek İçin Tıkla</div>
-                <div class="black-video-box" onclick="openModal('Honda Civic', 'LPG', 'Manuel', '125 HP', '1.2s')">
-                    <video muted loop playsinline data-src="placeholder.mp4" class="lazy-video"></video>
+                <div class="black-video-box" onclick="openDetails('Renault Megane', 'Elektrik', 'Otomatik', '160 HP', 'Sessiz Sürüş', '5 Kişi / 3 Bagaj')">
+                    <video muted loop playsinline src=""></video>
                 </div>
                 <div class="car-name-container">
-                    <div class="car-name">Honda Civic</div>
+                    <div class="car-name">Renault Megane</div>
                     <div class="car-underline"></div>
-                    <div class="arrow-start-point" id="startBL"></div>
                 </div>
             </div>
 
-            <!-- Sağ Alt Araç -->
+            <!-- Sağ Alt -->
             <div class="car-card-wrapper card-br">
+                <div class="point-start" id="p-br" style="top:-30px;"></div>
                 <div class="click-hint">Detayı İncelemek İçin Tıkla</div>
-                <div class="black-video-box" onclick="openModal('Honda Civic', 'Dizel', 'Otomatik', '160 HP', '1.0s')">
-                    <video muted loop playsinline data-src="placeholder.mp4" class="lazy-video"></video>
+                <div class="black-video-box" onclick="openDetails('Toyota Corolla', 'Hibrit', 'Otomatik', '140 HP', 'Ekonomik Sürüş', '5 Kişi / 4 Bagaj')">
+                    <video muted loop playsinline src=""></video>
                 </div>
                 <div class="car-name-container">
-                    <div class="car-name">Honda Civic</div>
+                    <div class="car-name">Toyota Corolla</div>
                     <div class="car-underline"></div>
-                    <div class="arrow-start-point" id="startBR"></div>
                 </div>
             </div>
 
         </div>
     </main>
 
-    <!-- Modal Alanı -->
+    <!-- 4. Modal (Genişleyen Arayüz - Bandanalı) -->
     <div class="modal-overlay" id="carModal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div class="modal-body">
-                
-                <!-- 360 Etkileşimli Video -->
-                <div class="modal-video-area" id="interactiveVideoArea">
-                    <video id="modalVideoPlayer" src="placeholder_360.mp4" muted playsinline></video>
-                    <div class="video-overlay-text">⬅ 360° İncelemek İçin Kaydır ➡</div>
+            <div class="btn-close" onclick="closeDetails()">&times;</div>
+            
+            <!-- Sol: Siyah 360 Video Kutusu -->
+            <div class="modal-left-video">
+                <video src="" muted playsinline id="modalVideo"></video>
+                <div class="swipe-hint">
+                    <span>&#8592;</span> 360° İncelemek İçin Kaydır <span>&#8594;</span>
                 </div>
+            </div>
 
-                <!-- İstatistikler -->
-                <div class="modal-stats-area">
-                    <div class="modal-car-name" id="modalCarName">Honda Civic</div>
-                    <div class="stat-grid">
-                        <div class="stat-box">
-                            <div class="stat-title">Yakıt Tipi</div>
-                            <div class="stat-value" id="modalFuel">Benzin</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-title">Vites Türü</div>
-                            <div class="stat-value" id="modalGear">Otomatik</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-title">Motor Gücü</div>
-                            <div class="stat-value" id="modalPower">210 HP</div>
-                        </div>
-                        <div class="stat-box" style="border-left-color: #2ecc71;">
-                            <div class="stat-title">Performans (Jaguar Hızı)</div>
-                            <div class="stat-value" id="modalSpeed">Yüksek</div>
-                        </div>
+            <!-- Sağ: Bandanalı İstatistikler -->
+            <div class="modal-right-info">
+                <div class="modal-title" id="mTitle">Honda Civic</div>
+                
+                <div class="info-pill-container">
+                    <div class="info-pill black-bandana">
+                        <div class="pill-label">Yakit Tipi</div>
+                        <div class="pill-value" id="mFuel">Benzin</div>
+                    </div>
+                    
+                    <div class="info-pill black-bandana">
+                        <div class="pill-label">Vites Türü</div>
+                        <div class="pill-value" id="mGear">Otomatik</div>
+                    </div>
+                    
+                    <div class="info-pill black-bandana">
+                        <div class="pill-label">Motor Gücü</div>
+                        <div class="pill-value" id="mPower">210 HP</div>
+                    </div>
+
+                    <div class="info-pill gold-bandana">
+                        <div class="pill-label">Kapasite & Özellikler</div>
+                        <div class="pill-value" id="mCapacity">5 Kişi / 4 Bagaj</div>
+                    </div>
+                    
+                    <div class="info-pill green-bandana">
+                        <div class="pill-label">Performans (Jaguar Hızı)</div>
+                        <div class="pill-value" id="mPerf">Yüksek Performans</div>
                     </div>
                 </div>
             </div>
@@ -457,120 +626,88 @@
     </div>
 
     <script>
-        /* DEFANSİF PROGRAMLAMA VE SIFIR YER TUTUCU MİMARİSİ */
-        
         document.addEventListener("DOMContentLoaded", () => {
-            initDrawLines();
-            window.addEventListener("resize", initDrawLines);
-            init360VideoScrubbing();
+            calculateExactSymmetricalLines();
+            window.addEventListener('resize', calculateExactSymmetricalLines);
         });
 
-        // 1. Dinamik Çizgi (Ok) Çizim Fonksiyonu (Görseldeki tam rotalara göre)
-        function initDrawLines() {
-            try {
-                if (window.innerWidth <= 1024) return; // Mobilde çizgileri hesaplama
+        // EŞİT VE SİMETRİK ÇİZGİ HESAPLAMASI
+        function calculateExactSymmetricalLines() {
+            if(window.innerWidth < 900) return;
 
-                const getCoords = (el) => {
-                    const rect = el.getBoundingClientRect();
-                    return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2, top: rect.top, bottom: rect.bottom, left: rect.left, right: rect.right };
-                };
+            const getC = (id) => {
+                const rect = document.getElementById(id).getBoundingClientRect();
+                return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2, left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom };
+            };
 
-                const startTL = getCoords(document.getElementById('startTL'));
-                const startTR = getCoords(document.getElementById('startTR'));
-                const startBL = getCoords(document.getElementById('startBL'));
-                const startBR = getCoords(document.getElementById('startBR'));
-                const panther = getCoords(document.getElementById('pantherTarget'));
-                const textTarget = getCoords(document.getElementById('targetText'));
+            const tl = getC('p-tl');
+            const tr = getC('p-tr');
+            const bl = getC('p-bl');
+            const br = getC('p-br');
+            const centerArea = getC('centerTarget');
+            const centerTxt = getC('centerText');
 
-                // Görseldeki Çizgi Rotaları:
-                // Sol Üst: Aşağı iner, sağa pantere gider.
-                const pathTL = `M ${startTL.x} ${startTL.y} L ${startTL.x} ${startTL.y + 40} Q ${startTL.x} ${startTL.y + 60} ${startTL.x + 20} ${startTL.y + 60} L ${panther.left - 10} ${panther.y}`;
-                document.getElementById('pathTL').setAttribute('d', pathTL);
+            // Simetri için sabit DİKEY inme mesafesi
+            const verticalDropTop = 40; 
+            const verticalDropBottom = 30;
+            const targetOffset = 15; // Panterin kenarlarından boşluk
 
-                // Sağ Üst: Aşağı iner, sola pantere gider.
-                const pathTR = `M ${startTR.x} ${startTR.y} L ${startTR.x} ${startTR.y + 40} Q ${startTR.x} ${startTR.y + 60} ${startTR.x - 20} ${startTR.y + 60} L ${panther.right + 10} ${panther.y}`;
-                document.getElementById('pathTR').setAttribute('d', pathTR);
+            // SOL ÜST: İn, kavis çiz, sağa merkeze git
+            const pathTL = `M ${tl.x} ${tl.y} 
+                            L ${tl.x} ${tl.y + verticalDropTop} 
+                            Q ${tl.x} ${tl.y + verticalDropTop + 10} ${tl.x + 10} ${tl.y + verticalDropTop + 10} 
+                            L ${centerArea.left - targetOffset} ${centerArea.y}`;
+            
+            // SAĞ ÜST: İn, kavis çiz, sola merkeze git (Tamamen Simetrik)
+            const pathTR = `M ${tr.x} ${tr.y} 
+                            L ${tr.x} ${tr.y + verticalDropTop} 
+                            Q ${tr.x} ${tr.y + verticalDropTop + 10} ${tr.x - 10} ${tr.y + verticalDropTop + 10} 
+                            L ${centerArea.right + targetOffset} ${centerArea.y}`;
 
-                // Sol Alt: Aşağı iner, merkeze gelir, YUKARI metne çıkar.
-                const pathBL = `M ${startBL.x} ${startBL.y} L ${startBL.x} ${startBL.y + 30} L ${textTarget.x - 50} ${startBL.y + 30} L ${textTarget.x - 50} ${textTarget.bottom + 10}`;
-                document.getElementById('pathBL').setAttribute('d', pathBL);
+            // SOL ALT: Yukarı çık, kavis çiz, sağa merkeze (yazının altına) git
+            const pathBL = `M ${bl.x} ${bl.y} 
+                            L ${bl.x} ${bl.y - verticalDropBottom} 
+                            Q ${bl.x} ${bl.y - verticalDropBottom - 10} ${bl.x + 10} ${bl.y - verticalDropBottom - 10} 
+                            L ${centerArea.left - targetOffset} ${centerTxt.bottom + 5}`;
 
-                // Sağ Alt: Aşağı iner, merkeze gelir, YUKARI metne çıkar.
-                const pathBR = `M ${startBR.x} ${startBR.y} L ${startBR.x} ${startBR.y + 30} L ${textTarget.x + 50} ${startBR.y + 30} L ${textTarget.x + 50} ${textTarget.bottom + 10}`;
-                document.getElementById('pathBR').setAttribute('d', pathBR);
+            // SAĞ ALT: Yukarı çık, kavis çiz, sola merkeze (yazının altına) git (Tamamen Simetrik)
+            const pathBR = `M ${br.x} ${br.y} 
+                            L ${br.x} ${br.y - verticalDropBottom} 
+                            Q ${br.x} ${br.y - verticalDropBottom - 10} ${br.x - 10} ${br.y - verticalDropBottom - 10} 
+                            L ${centerArea.right + targetOffset} ${centerTxt.bottom + 5}`;
 
-                // Üstten inen 2 bağımsız çizgi
-                const pageTopX = window.innerWidth / 2;
-                const pathTop1 = `M ${pageTopX - 10} 0 L ${pageTopX - 10} ${panther.top - 20}`;
-                const pathTop2 = `M ${pageTopX + 10} 0 L ${pageTopX + 10} ${panther.top - 20}`;
-                document.getElementById('pathTop1').setAttribute('d', pathTop1);
-                document.getElementById('pathTop2').setAttribute('d', pathTop2);
+            // Yukarıdan inen dik çizgiler
+            const midX = window.innerWidth / 2;
+            const pathTop1 = `M ${midX - 8} 0 L ${midX - 8} ${centerArea.top - 10}`;
+            const pathTop2 = `M ${midX + 8} 0 L ${midX + 8} ${centerArea.top - 10}`;
 
-            } catch (error) {
-                // Resize sırasındaki hataları yut, çökmeyi engelle
-            }
+            document.getElementById('lineTL').setAttribute('d', pathTL);
+            document.getElementById('lineTR').setAttribute('d', pathTR);
+            document.getElementById('lineBL').setAttribute('d', pathBL);
+            document.getElementById('lineBR').setAttribute('d', pathBR);
+            document.getElementById('lineTop1').setAttribute('d', pathTop1);
+            document.getElementById('lineTop2').setAttribute('d', pathTop2);
         }
 
-        // 2. Modal ve Panter Hızı Kontrolü
+        // MODAL YÖNETİMİ
         const modal = document.getElementById('carModal');
         const body = document.body;
-        const pantherIcon = document.getElementById('pantherIcon');
 
-        function openModal(name, fuel, gear, power, speed) {
-            try {
-                document.getElementById('modalCarName').innerText = name;
-                document.getElementById('modalFuel').innerText = fuel;
-                document.getElementById('modalGear').innerText = gear;
-                document.getElementById('modalPower').innerText = power;
-                
-                // Hıza göre metin güncelleme
-                const speedNum = parseFloat(speed);
-                document.getElementById('modalSpeed').innerText = speedNum < 1.0 ? "Yüksek Performans" : "Ekonomik";
+        function openDetails(title, fuel, gear, power, perf, cap) {
+            document.getElementById('mTitle').innerText = title;
+            document.getElementById('mFuel').innerText = fuel;
+            document.getElementById('mGear').innerText = gear;
+            document.getElementById('mPower').innerText = power;
+            document.getElementById('mPerf').innerText = perf;
+            document.getElementById('mCapacity').innerText = cap;
 
-                // Jaguar animasyon hızını araca göre güncelle (Kullanıcı Talebi)
-                pantherIcon.style.animationDuration = speed;
-
-                modal.classList.add('active');
-                body.classList.add('modal-open');
-            } catch (error) {}
+            modal.classList.add('active');
+            body.classList.add('modal-open');
         }
 
-        function closeModal() {
-            try {
-                modal.classList.remove('active');
-                body.classList.remove('modal-open');
-                pantherIcon.style.animationDuration = "1s"; // Varsayılana dön
-            } catch (error) {}
-        }
-
-        // 3. Etkileşimli 360 Derece Video Simülasyonu
-        function init360VideoScrubbing() {
-            try {
-                const area = document.getElementById('interactiveVideoArea');
-                const video = document.getElementById('modalVideoPlayer');
-                let isDragging = false;
-                let startX = 0;
-
-                const startDrag = (x) => { isDragging = true; startX = x; };
-                const endDrag = () => { isDragging = false; };
-                const moveDrag = (x) => {
-                    if (!isDragging || isNaN(video.duration)) return;
-                    const deltaX = x - startX;
-                    let newTime = video.currentTime + (deltaX * 0.015); // Hassasiyet çarpanı
-                    if(newTime < 0) newTime = video.duration;
-                    if(newTime > video.duration) newTime = 0;
-                    video.currentTime = newTime;
-                    startX = x;
-                };
-
-                area.addEventListener('mousedown', (e) => startDrag(e.clientX));
-                window.addEventListener('mouseup', endDrag);
-                area.addEventListener('mousemove', (e) => moveDrag(e.clientX));
-
-                area.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX));
-                window.addEventListener('touchend', endDrag);
-                area.addEventListener('touchmove', (e) => moveDrag(e.touches[0].clientX));
-            } catch (error) {}
+        function closeDetails() {
+            modal.classList.remove('active');
+            body.classList.remove('modal-open');
         }
     </script>
 </body>
