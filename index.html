@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Renecar Premium Kiralama</title>
 <style>
-    /* RESET VE TEMEL AYARLAR */
     * {
         box-sizing: border-box;
         margin: 0;
@@ -13,7 +12,7 @@
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     body {
-        background-color: #ffffff; /* Saf beyaz arkaplan zorunluluğu */
+        background-color: #ffffff;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -21,17 +20,15 @@
         overflow-x: hidden;
     }
     
-    /* ANA TAŞIYICI (1:1 Oranlı Ölçeklenebilir Tuval) */
     .canvas {
         position: relative;
         width: 100%;
-        max-width: 1000px;
-        aspect-ratio: 1 / 1;
+        max-width: 1400px;
+        aspect-ratio: 16 / 10;
         background-color: #ffffff;
         overflow: hidden;
     }
     
-    /* SVG OTOYOL OKLARI (Yamukluk Yok, Tam 90 Derece) */
     svg.arrows {
         position: absolute;
         top: 0;
@@ -43,21 +40,19 @@
     }
     path.line {
         fill: none;
-        stroke: #ffeb3b;
+        stroke: #ffd700;
         stroke-width: 4;
-        stroke-dasharray: 14, 14;
+        stroke-dasharray: 12, 12;
         animation: highwayMove 0.8s linear infinite;
-        filter: drop-shadow(0 0 4px rgba(255, 235, 59, 0.8));
     }
     @keyframes highwayMove {
-        to { stroke-dashoffset: -28; }
+        to { stroke-dashoffset: -24; }
     }
 
-    /* KUTU TAŞIYICILARI (Boyutları Devasa Büyütüldü) */
     .box-wrapper {
         position: absolute;
-        width: 36%;  /* Genişlik artırıldı */
-        height: 42%; /* Yükseklik artırıldı */
+        width: 38%;
+        height: 38%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -65,91 +60,66 @@
         z-index: 2;
     }
     
-    /* Tam Köşe Hizalamaları */
-    .tl { top: 3%; left: 3%; }
-    .tr { top: 3%; right: 3%; }
-    .bl { bottom: 3%; left: 3%; }
-    .br { bottom: 3%; right: 3%; }
+    .tl { top: 5%; left: 5%; }
+    .tr { top: 5%; right: 5%; }
+    .bl { bottom: 5%; left: 5%; }
+    .br { bottom: 5%; right: 5%; }
 
-    /* SABİT YAZILAR (Yüzme Efekti Tamamen İptal) */
     .text-top {
         font-size: 15px;
-        color: #000;
-        font-weight: 700;
-        margin-bottom: 10px;
-        letter-spacing: 0.5px;
+        color: #1A1D20;
+        font-weight: 800;
+        margin-bottom: 14px;
     }
     .text-bottom {
-        font-size: 24px;
-        color: #000;
-        font-weight: 800;
-        margin-top: 10px;
+        font-size: 22px;
+        color: #1A1D20;
+        font-weight: 900;
+        margin-top: 14px;
     }
 
-    /* SİYAH KUTULAR (Köşeler Yumuşak) */
     .box {
         width: 100%;
         flex-grow: 1;
         background-color: #000000;
-        border-radius: 40px;
+        border-radius: 45px;
         cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition: transform 0.2s ease;
         position: relative;
     }
     .box:hover {
-        transform: scale(1.03);
+        transform: scale(1.02);
     }
     
-    /* GÖLGELER (Sadece Üst ve Dışa, Yazılara Vurmaz) */
-    .box.tl-box { box-shadow: -15px -15px 0px 0px #d9d9d9; }
-    .box.tr-box { box-shadow: 15px -15px 0px 0px #d9d9d9; }
-    .box.bl-box { box-shadow: -15px -15px 0px 0px #d9d9d9; } 
-    .box.br-box { box-shadow: 15px -15px 0px 0px #d9d9d9; }
+    .box.tl-box { box-shadow: -15px -15px 0px 0px #E5E5E5; }
+    .box.tr-box { box-shadow: 15px -15px 0px 0px #E5E5E5; }
+    .box.bl-box { box-shadow: -15px -15px 0px 0px #E5E5E5; } 
+    .box.br-box { box-shadow: 15px -15px 0px 0px #E5E5E5; }
 
-    /* TIKLAMAYA TEŞVİK ROZETLERİ (Kutu Dışına Taşan Pulse Animasyonlu) */
     .click-badge {
         position: absolute;
-        top: -18px;
-        background-color: #ff3b30;
-        color: #ffffff;
-        padding: 8px 18px;
-        border-radius: 25px;
-        font-size: 13px;
+        top: -16px;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 11px;
         font-weight: 900;
+        color: #ffffff;
         display: flex;
         align-items: center;
         gap: 6px;
-        box-shadow: 0 5px 15px rgba(255, 59, 48, 0.4);
-        animation: pulseBadge 2s infinite;
         z-index: 10;
         pointer-events: none;
     }
-    
-    /* Sol kutularda sola, Sağ kutularda sağa hizalama */
-    .tl-box .click-badge, .bl-box .click-badge { left: -15px; }
-    .tr-box .click-badge, .br-box .click-badge { right: -15px; background-color: #007aff; box-shadow: 0 5px 15px rgba(0, 122, 255, 0.4); }
-
     .click-badge::before {
-        content: '';
-        width: 8px;
-        height: 8px;
-        background-color: #ffffff;
-        border-radius: 50%;
-        display: inline-block;
-        animation: blinkDot 1s infinite;
+        content: ''; width: 8px; height: 8px; background-color: #ffffff;
+        border-radius: 50%; display: inline-block; animation: blinkDot 1.5s infinite;
     }
+    
+    .badge-red { background-color: #ff3b30; box-shadow: 0 4px 10px rgba(255, 59, 48, 0.4); left: -10px; }
+    .badge-blue { background-color: #007aff; box-shadow: 0 4px 10px rgba(0, 122, 255, 0.4); right: -10px; }
 
-    @keyframes pulseBadge {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-        100% { transform: scale(1); }
-    }
-    @keyframes blinkDot {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.3; }
-    }
+    @keyframes blinkDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-    /* MERKEZ PANTER ALANI */
     .center-area {
         position: absolute;
         top: 50%;
@@ -158,192 +128,104 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 25%;
+        width: 18%;
         z-index: 3;
     }
-    .center-area img {
-        width: 100%;
-        height: auto;
-        object-fit: contain;
-    }
+    .center-area img { width: 100%; height: auto; object-fit: contain; }
     .center-text {
-        margin-top: 15px;
-        font-size: 18px;
-        font-weight: 800;
-        color: #000;
-        text-align: center;
-        line-height: 1.2;
-        background-color: #ffffff; /* Okların geçişinde okunabilir kalması için */
-        padding: 5px 10px;
+        margin-top: 10px; font-size: 15px; font-weight: 800; color: #000;
+        text-align: center; line-height: 1.3; background-color: #ffffff; padding: 4px 8px;
     }
 
-    /* MODAL ARAYÜZ (Sadece Tıklandığında Açılan Detaylar) */
     .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.75);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.8); display: none;
+        justify-content: center; align-items: center; z-index: 9999;
     }
     .modal-content {
-        background: #ffffff;
-        width: 95%;
-        max-width: 480px;
-        border-radius: 12px;
-        padding: 30px;
-        position: relative;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        overflow: hidden;
+        background: #ffffff; width: 95%; max-width: 500px;
+        border-radius: 8px; padding: 25px; position: relative;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5); overflow: hidden;
     }
     
-    /* Modal Kırmızı Fırsat Kurdelesi */
-    .ribbon-wrapper {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 120px;
-        height: 120px;
-        overflow: hidden;
-    }
+    .ribbon-wrapper { position: absolute; top: 0; right: 0; width: 110px; height: 110px; overflow: hidden; }
     .ribbon {
-        position: absolute;
-        top: 25px;
-        right: -35px;
-        width: 160px;
-        background: #cc0000;
-        color: #fff;
-        text-align: center;
-        font-size: 14px;
-        font-weight: bold;
-        padding: 6px 0;
+        position: absolute; top: 20px; right: -35px; width: 150px; background: #E60000;
+        color: #fff; text-align: center; font-size: 12px; font-weight: bold; padding: 4px 0;
         transform: rotate(45deg);
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     
-    .modal-header .category {
-        color: #e67e22;
-        font-size: 14px;
-        margin-bottom: 4px;
-        font-weight: bold;
-    }
-    .modal-header .title {
-        font-size: 26px;
-        font-weight: 900;
-        color: #000;
-    }
-    .modal-header .subtitle {
-        color: #888;
-        font-size: 16px;
-        font-weight: 600;
-    }
+    .modal-header .category { color: #e67e22; font-size: 12px; margin-bottom: 2px; font-weight: 800; }
+    .modal-header .title { font-size: 22px; font-weight: 900; color: #000; }
+    .modal-header .subtitle { color: #888; font-size: 14px; font-weight: 600; }
     
-    .modal-car-img {
-        width: 100%;
-        height: 260px;
-        object-fit: contain;
-        margin: 25px 0;
-        display: block;
-    }
+    .modal-car-img { width: 100%; height: 220px; object-fit: contain; margin: 15px 0; display: block; }
     
-    .section-title {
-        font-size: 19px;
-        font-weight: 900;
-        margin: 20px 0 12px 0;
-        color: #000;
-        border-bottom: 2px solid #f0f0f0;
-        padding-bottom: 8px;
-    }
+    .section-title { font-size: 16px; font-weight: 900; margin: 15px 0 10px 0; color: #000; border-bottom: 1px solid #f0f0f0; padding-bottom: 5px; }
+    
     .specs-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 15px 10px;
-        font-size: 15px;
-        color: #000;
-        font-weight: 600;
+        display: grid; grid-template-columns: 1fr 1fr; gap: 12px 10px; font-size: 13px; color: #1A1D20; font-weight: 700;
     }
-    .conditions-list {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        font-size: 15px;
-        color: #000;
-        font-weight: 600;
-    }
+    .spec-item { display: flex; align-items: center; gap: 8px; }
+    .spec-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+    
+    .conditions-list { display: flex; flex-direction: column; gap: 10px; font-size: 13px; color: #1A1D20; font-weight: 700; }
 </style>
 </head>
 <body>
 
 <div class="canvas">
-    <!-- SVG OKLAR (90 Derece, Kesik Çizgili, Hareketli) -->
-    <svg class="arrows" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+    <svg class="arrows" viewBox="0 0 1200 900" preserveAspectRatio="none">
         <defs>
-            <marker id="arrow" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto">
-                <polygon points="0 0, 12 4.5, 0 9" fill="#ffeb3b" />
+            <marker id="arrow" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+                <polygon points="0 0, 10 4, 0 8" fill="#ffd700" />
             </marker>
         </defs>
         
-        <!-- Sol Üst: Honda yazısının altından başlar, inip merkeze gelir -->
-        <path class="line" d="M 210 460 V 500 H 380" marker-end="url(#arrow)" />
-        
-        <!-- Sağ Üst: Honda yazısının altından başlar, inip merkeze gelir -->
-        <path class="line" d="M 790 460 V 500 H 620" marker-end="url(#arrow)" />
-        
-        <!-- Sol Alt: Honda yazısının çok altından başlar, sağa döner, metne çıkar -->
-        <path class="line" d="M 210 970 V 985 H 480 V 600" marker-end="url(#arrow)" />
-        
-        <!-- Sağ Alt: Honda yazısının çok altından başlar, sola döner, metne çıkar -->
-        <path class="line" d="M 790 970 V 985 H 520 V 600" marker-end="url(#arrow)" />
+        <path class="line" d="M 285 410 V 450 H 500" marker-end="url(#arrow)" />
+        <path class="line" d="M 915 410 V 450 H 700" marker-end="url(#arrow)" />
+        <path class="line" d="M 285 850 V 880 H 580 V 500" marker-end="url(#arrow)" />
+        <path class="line" d="M 915 850 V 880 H 620 V 500" marker-end="url(#arrow)" />
     </svg>
 
-    <!-- SOL ÜST KUTU -->
     <div class="box-wrapper tl">
         <div class="text-top">Detayı İncelemek İçin Tıkla</div>
         <div class="box tl-box">
-            <div class="click-badge">HEMEN İNCELE</div>
+            <div class="click-badge badge-red">HEMEN İNCELE</div>
         </div>
         <div class="text-bottom">Honda Civic</div>
     </div>
     
-    <!-- SAĞ ÜST KUTU -->
     <div class="box-wrapper tr">
         <div class="text-top">Detayı İncelemek İçin Tıkla</div>
         <div class="box tr-box">
-            <div class="click-badge">TIKLA & GÖR</div>
+            <div class="click-badge badge-blue">TIKLA & GÖR</div>
         </div>
         <div class="text-bottom">Honda Civic</div>
     </div>
     
-    <!-- SOL ALT KUTU -->
     <div class="box-wrapper bl">
         <div class="text-top">Detayı İncelemek İçin Tıkla</div>
         <div class="box bl-box">
-            <div class="click-badge">HEMEN İNCELE</div>
+            <div class="click-badge badge-red">HEMEN İNCELE</div>
         </div>
         <div class="text-bottom">Honda Civic</div>
     </div>
     
-    <!-- SAĞ ALT KUTU -->
     <div class="box-wrapper br">
         <div class="text-top">Detayı İncelemek İçin Tıkla</div>
         <div class="box br-box">
-            <div class="click-badge">TIKLA & GÖR</div>
+            <div class="click-badge badge-blue">TIKLA & GÖR</div>
         </div>
         <div class="text-bottom">Honda Civic</div>
     </div>
 
-    <!-- MERKEZ -->
     <div class="center-area">
-        <img src="panter.png" alt="Panter">
+        <img src="https://raw.githubusercontent.com/KULLANICI_ADIN/DEPO_ADIN/main/panter.png" alt="Panter">
         <div class="center-text">Ortalama Sekment<br>Araçlar</div>
     </div>
 </div>
 
-<!-- MODAL ARAYÜZ (Yalnızca tıklanınca açılır) -->
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal-content">
         <div class="ribbon-wrapper"><div class="ribbon">Fırsat Aracı</div></div>
@@ -353,39 +235,60 @@
             <div class="title">Hyundai Tucson <span class="subtitle">veya benzeri</span></div>
         </div>
 
-        <img src="araba.png" alt="Araç Görseli" class="modal-car-img">
+        <img src="https://raw.githubusercontent.com/KULLANICI_ADIN/DEPO_ADIN/main/araba.png" alt="Araç Görseli" class="modal-car-img">
 
         <div class="section-title">Araç Özellikleri</div>
         <div class="specs-grid">
-            <div>👥 5 Kişi</div>
-            <div>🧳 4 Bagaj</div>
-            <div>🚙 SUV/Jeep</div>
-            <div>⚙️ Yarı-Otomatik</div>
-            <div>⛽ Dizel</div>
-            <div>❄️ Klima</div>
+            <div class="spec-item">
+                <svg viewBox="0 0 24 24"><path fill="#483D8B" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                5 Kişi
+            </div>
+            <div class="spec-item">
+                <svg viewBox="0 0 24 24"><path fill="#4682B4" d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 6c0-1.1.9-2 2-2s2 .9 2 2h-4z"/></svg>
+                4 Bagaj
+            </div>
+            <div class="spec-item">
+                <svg viewBox="0 0 24 24"><path fill="#4682B4" d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+                SUV/Jeep
+            </div>
+            <div class="spec-item">
+                <svg viewBox="0 0 24 24"><path fill="#A9A9A9" d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94zM12,15.6c-1.98,0-3.6-1.62-3.6-3.6s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg>
+                Yarı-Otomatik
+            </div>
+            <div class="spec-item">
+                <svg viewBox="0 0 24 24"><path fill="#DC143C" d="M19.77 7.23l.01-.01-3.72-3.72L15 4.56l2.11 2.11C16.17 7 15.5 8.42 15.5 10c0 2.22 1.62 4.05 3.76 4.39L17 22h3l2-11V9.45c0-1.02-.45-1.98-1.23-2.22zM18.5 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM5 19h5v-5h4V6c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2v13zm4-10H7V7h2v2z"/></svg>
+                Dizel
+            </div>
+            <div class="spec-item">
+                <svg viewBox="0 0 24 24"><path fill="#87CEFA" d="M19.36 10.04L17.2 12l2.16 1.96-1.34 1.34L15.86 13.1l-.86.86v2.16l2.2 2.2-1.34 1.34-1.96-2.16L12 19.64v2.36h-1.9v-2.36l-1.96 2.16-1.34-1.34 2.2-2.2v-2.16l-.86-.86-2.16 2.2-1.34-1.34L6.8 12 4.64 10.04l1.34-1.34 2.16 2.2.86-.86V7.88L6.8 5.68 8.14 4.34 10.1 6.5l1.96-2.16V2h1.9v2.34l1.96 2.16 1.96-2.16 1.34 1.34-2.2 2.2v2.16l.86.86 2.16-2.2 1.34 1.34zM12 10.1c-1.05 0-1.9.85-1.9 1.9s.85 1.9 1.9 1.9 1.9-.85 1.9-1.9-.85-1.9-1.9-1.9z"/></svg>
+                Klima
+            </div>
         </div>
 
         <div class="section-title">Kiralama Koşulları</div>
         <div class="conditions-list">
-            <div>👤 Minimum: 21 yaş - 1 yıl ehliyet</div>
-            <div>🛡️ Bu araç için 1.500,00 ₺ teminat alınmaktadır.</div>
+            <div class="spec-item">
+                <svg viewBox="0 0 24 24"><path fill="#483D8B" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                Minimum: 21 yaş - 1 yıl ehliyet
+            </div>
+            <div class="spec-item">
+                <svg viewBox="0 0 24 24"><path fill="#1E90FF" d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                Bu araç için 1.500,00 ₺ teminat alınmaktadır.
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    // Kutu tıklama mekanizması
     const modalOverlay = document.getElementById('modalOverlay');
     const boxes = document.querySelectorAll('.box');
 
-    // Siyah kutulardan herhangi birine basıldığında arayüz açılır
     boxes.forEach(box => {
         box.addEventListener('click', () => {
             modalOverlay.style.display = 'flex';
         });
     });
 
-    // Modalın dışındaki siyah alana tıklandığında ekran kapanır
     modalOverlay.addEventListener('click', (e) => {
         if (e.target === modalOverlay) {
             modalOverlay.style.display = 'none';
