@@ -1,568 +1,327 @@
-```
-<title>Referans Rentecar | Premium Araç Kiralama</title>
-<meta name="description" content="Malatya'nın en lüks ve güvenilir araç kiralama hizmeti. Ücretsiz adres teslimatı, net fiyatlar ve 7/24 hizmet garantisi.">
-<link rel="canonical" href="[https://www.referansrentecar.com/](https://www.referansrentecar.com/)">
-
-<link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
-<link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
-<link href="[https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap](https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap)" rel="stylesheet">
-
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renecar Tasarım</title>
 <style>
-    :root {
-        --bg-main: #F4F6F8;
-        --bg-card: #FFFFFF;
-        --brand-yellow: #FFC107;
-        --brand-yellow-hover: #FFB300;
-        --text-dark: #1A1D20;
-        --text-muted: #6C757D;
-        --border-light: #E9ECEF;
-        --border-gray: #DEE2E6;
-        --input-bg: #F8F9FA;
-        
-        --radius-xl: 30px;
-        --radius-lg: 20px;
-        --radius-md: 10px;
-        
-        --shadow-card: 0 10px 25px rgba(0,0,0,0.05);
-        --shadow-hover: 0 15px 35px rgba(255,193,7,0.15);
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
     }
-
-    /* 1. RESET & SECURITY */
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; -webkit-tap-highlight-color: transparent; }
-    body, html { background-color: var(--bg-main); color: var(--text-dark); overflow-x: hidden; width: 100%; height: 100%; }
-    body { -webkit-user-select: none; user-select: none; }
-    input, textarea, select { -webkit-user-select: text; user-select: text; }
-    img, video { -webkit-user-drag: none; pointer-events: none; }
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
-
-    /* 2. HEADER & DYNAMIC FILTERS */
-    header {
-        position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-        background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--border-light); padding: 10px 0 5px 0;
-        display: flex; flex-direction: column; align-items: center;
+    body {
+        background-color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
     }
-    .logo { font-size: 22px; font-weight: 900; color: var(--text-dark); letter-spacing: -0.5px; margin-bottom: 5px; }
-    .logo span { color: var(--brand-yellow); }
-    .filter-title { font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; }
-
-    .marquee-wrapper {
-        width: 100%; overflow: hidden; white-space: nowrap; position: relative; padding-bottom: 5px;
-        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-        -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    }
-    .marquee-content { display: inline-block; animation: marquee 25s linear infinite; }
-    .marquee-wrapper:hover .marquee-content { animation-play-state: paused; }
-    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     
-    .filter-chip {
-        display: inline-block; padding: 6px 16px; margin: 0 6px;
-        border: 2px solid var(--border-light); border-radius: 25px;
-        font-size: 12px; font-weight: 800; color: var(--text-muted);
-        background: var(--bg-card); transition: all 0.3s ease; cursor: pointer;
-        pointer-events: auto;
+    /* Ana Taşıyıcı: 1000x1000 formatında tam kare ve responsive */
+    .canvas {
+        position: relative;
+        width: 100%;
+        max-width: 1000px;
+        aspect-ratio: 1 / 1;
+        background-color: #ffffff;
+        overflow: hidden;
     }
-    .filter-chip.active {
-        border-color: var(--brand-yellow); color: var(--text-dark);
-        background: var(--brand-yellow); box-shadow: 0 4px 10px rgba(255,193,7,0.3);
-        transform: scale(1.05);
+    
+    /* SVG Okların Katmanı (Otoyol Efekti) */
+    svg.arrows {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+    }
+    path.line {
+        fill: none;
+        stroke: #ffeb3b;
+        stroke-width: 4;
+        stroke-dasharray: 14, 14; /* Kesik çizgili otoyol şeridi */
+        animation: highwayMove 0.8s linear infinite;
+        filter: drop-shadow(0 0 5px rgba(255, 235, 59, 0.7));
+    }
+    @keyframes highwayMove {
+        to { stroke-dashoffset: -28; }
     }
 
-    /* MAIN SCROLL AREA */
-    .main-content {
-        padding-top: 100px; padding-bottom: 80px;
-        width: 100%; max-width: 1200px; margin: 0 auto;
+    /* Kutu Taşıyıcıları */
+    .box-wrapper {
+        position: absolute;
+        width: 28%;
+        height: 32%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 2;
+    }
+    
+    /* Kutuların Köşelere Yerleşimi */
+    .tl { top: 6%; left: 6%; }
+    .tr { top: 6%; right: 6%; }
+    .bl { bottom: 6%; left: 6%; }
+    .br { bottom: 6%; right: 6%; }
+
+    /* Sabit Metinler */
+    .text-top {
+        font-size: 15px;
+        color: #000;
+        font-weight: normal;
+        margin-bottom: 8px;
+    }
+    .text-bottom {
+        font-size: 22px;
+        color: #000;
+        font-weight: normal;
+        margin-top: 8px;
     }
 
-    /* 3. TOP ROTATOR (2-CAR SPECIAL SHOWCASE) */
-    .top-showcase {
-        width: 100%; height: auto; margin-bottom: 40px; padding: 0 15px;
+    /* Siyah Kutular ve Hover Efekti */
+    .box {
+        width: 100%;
+        flex-grow: 1;
+        background-color: #000000;
+        border-radius: 35px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
         position: relative;
     }
-    .showcase-badge {
-        text-align: center; font-size: 10px; font-weight: 900; color: var(--brand-yellow);
-        text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;
-    }
-    .showcase-grid {
-        display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
+    
+    .box:hover {
+        transform: scale(1.03);
     }
     
-    /* 4. CAR CARDS & STAIRCASE PERSPECTIVE */
-    .car-card {
-        background: var(--bg-card); border-radius: var(--radius-xl);
-        overflow: hidden; display: flex; flex-direction: column; position: relative;
-        box-shadow: var(--shadow-card); transition: transform 0.4s ease, box-shadow 0.4s ease;
-        border: 4px solid var(--bg-card); /* Oval Frame Effect */
+    /* Gölgeler (Sadece üst ve dışa doğru) */
+    .box.tl-box { box-shadow: -14px -14px 0px 0px #d9d9d9; }
+    .box.tr-box { box-shadow: 14px -14px 0px 0px #d9d9d9; }
+    .box.bl-box { box-shadow: -14px -14px 0px 0px #d9d9d9; }
+    .box.br-box { box-shadow: 14px -14px 0px 0px #d9d9d9; }
+
+    /* Merkez Panter Alanı */
+    .center-area {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 32%;
+        z-index: 3;
     }
-    .car-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); border-color: var(--brand-yellow); }
-
-    /* Staircase Logic */
-    .grid-staircase { display: flex; flex-direction: column; gap: 30px; padding: 0 15px; }
-    .row-single { width: 100%; display: flex; justify-content: center; }
-    .row-single .car-card { width: 95%; max-width: 500px; }
-    .row-double { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; transform: scale(0.95); transform-origin: top center; }
-    
-    /* Ensures image and text are visible together */
-    .card-media {
-        width: 100%; aspect-ratio: 4/3; background: var(--bg-main);
-        position: relative; overflow: hidden; border-radius: var(--radius-lg);
+    .center-area img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
     }
-    .vid-layer { width: 100%; height: 100%; object-fit: cover; transform: translateZ(0); }
-    
-    /* JAGUAR MP4 WRAPPER */
-    .jaguar-wrapper {
-        position: absolute; bottom: 10px; right: 10px; z-index: 10;
-        width: 80px; height: 40px; border-radius: 8px; overflow: hidden;
-        pointer-events: none; mix-blend-mode: multiply; /* Helps blend white bg videos */
-    }
-    .jaguar-vid { width: 100%; height: 100%; object-fit: cover; }
-
-    .card-info { padding: 15px; display: flex; flex-direction: column; align-items: center; text-align: center; }
-    .car-title { font-size: 18px; font-weight: 900; color: var(--text-dark); margin-bottom: 5px; text-transform: uppercase; }
-    .car-price { font-size: 24px; font-weight: 900; color: var(--brand-yellow); margin-bottom: 15px; display: flex; align-items: baseline; gap: 4px; }
-    .car-price span { font-size: 12px; font-weight: 700; color: var(--text-muted); }
-
-    .specs-mini { display: flex; gap: 15px; margin-bottom: 15px; justify-content: center; }
-    .spec { display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 800; color: var(--text-dark); }
-    .spec svg { width: 16px; height: 16px; fill: var(--brand-yellow); }
-
-    .rent-btn {
-        width: 100%; background: var(--brand-yellow); color: var(--text-dark);
-        padding: 12px; border: none; border-radius: var(--radius-md); font-weight: 900; font-size: 13px;
-        text-transform: uppercase; cursor: pointer; pointer-events: auto;
+    .center-text {
+        margin-top: 15px;
+        font-size: 19px;
+        color: #000;
+        text-align: center;
+        line-height: 1.3;
+        background-color: #fff;
+        padding: 5px 10px;
     }
 
-    /* 5. LEGAL FORM (KVKK) MODAL */
+    /* Tıklanınca Açılan Arayüz (Modal) */
     .modal-overlay {
-        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999;
-        background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
-        display: flex; justify-content: center; align-items: center;
-        opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 15px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
     }
-    .modal-overlay.open { opacity: 1; pointer-events: auto; }
-    
     .modal-content {
-        background: var(--bg-card); width: 100%; max-width: 500px; border-radius: var(--radius-xl);
-        padding: 25px; position: relative; max-height: 90vh; overflow-y: auto;
+        background: #ffffff;
+        width: 95%;
+        max-width: 480px;
+        border-radius: 4px;
+        padding: 25px;
+        position: relative;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        overflow: hidden;
     }
-    .close-btn, .back-btn {
-        position: absolute; top: 15px; background: none; border: none; font-size: 24px;
-        cursor: pointer; color: var(--text-dark); font-weight: 900; pointer-events: auto;
-    }
-    .close-btn { right: 20px; }
-    .back-btn { left: 20px; display: none; }
-
-    .trust-badges { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
-    .badge { background: var(--input-bg); padding: 5px 10px; border-radius: 8px; font-size: 10px; font-weight: 800; display: flex; align-items: center; gap: 5px; }
     
-    .f-title { text-align: center; font-size: 16px; font-weight: 900; margin-bottom: 20px; line-height: 1.4; }
-    .f-title span { color: var(--brand-yellow); }
-
-    .f-input {
-        width: 100%; background: var(--input-bg); border: 2px solid var(--border-light);
-        border-radius: var(--radius-md); padding: 14px; margin-bottom: 12px;
-        font-size: 13px; font-weight: 700; color: var(--text-dark); outline: none; pointer-events: auto;
+    /* Fırsat Aracı Kurdelesi */
+    .ribbon-wrapper {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 110px;
+        height: 110px;
+        overflow: hidden;
     }
-    .f-input:focus { border-color: var(--brand-yellow); }
-    .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-    .f-row .f-input { margin-bottom: 0; }
-
-    .f-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
-    .f-tab { padding: 12px; text-align: center; border-radius: var(--radius-md); font-weight: 800; font-size: 12px; cursor: pointer; border: 2px solid var(--border-light); color: var(--text-muted); pointer-events: auto; }
-    .f-tab.active { background: var(--brand-yellow); border-color: var(--brand-yellow); color: var(--text-dark); }
-
-    .f-check { display: flex; align-items: center; gap: 10px; margin: 20px 0; }
-    .f-check input { width: 20px; height: 20px; accent-color: var(--brand-yellow); pointer-events: none; }
-    .f-check label { font-size: 12px; font-weight: 700; }
-    .f-check label span { color: #0056b3; text-decoration: underline; cursor: pointer; pointer-events: auto; }
-
-    .f-submit {
-        width: 100%; padding: 16px; border: none; border-radius: var(--radius-md);
-        font-size: 14px; font-weight: 900; background: var(--brand-yellow); color: var(--text-dark);
-        cursor: pointer; pointer-events: auto; text-transform: uppercase;
+    .ribbon {
+        position: absolute;
+        top: 20px;
+        right: -35px;
+        width: 150px;
+        background: #cc0000;
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 5px 0;
+        transform: rotate(45deg);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
-    .f-submit:disabled { background: var(--border-gray); color: #999; cursor: not-allowed; }
-
-    /* KVKK VIEW */
-    #kvkk-view { display: none; }
-    .kvkk-box {
-        height: 300px; overflow-y: auto; background: var(--input-bg); padding: 15px;
-        border-radius: var(--radius-md); font-size: 11px; font-weight: 600; color: var(--text-muted);
-        line-height: 1.6; border: 2px solid var(--border-light); pointer-events: auto;
+    
+    .modal-header .category {
+        color: #e67e22;
+        font-size: 13px;
+        margin-bottom: 3px;
+        font-weight: bold;
     }
-    .kvkk-box strong { color: var(--text-dark); font-size: 12px; }
-    .scroll-warn { text-align: center; font-size: 11px; font-weight: 800; color: #dc3545; margin-top: 10px; }
-
-    /* 6. TOAST NOTIFICATIONS */
-    .live-toast {
-        position: fixed; top: 110px; right: 15px; z-index: 900;
-        background: rgba(26, 29, 32, 0.95); color: #fff; padding: 12px 20px;
-        border-radius: 50px; font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 10px;
-        transform: translateX(150%); transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    .modal-header .title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #000;
     }
-    .live-toast.show { transform: translateX(0); }
-    .live-toast span { color: var(--brand-yellow); }
-
-    /* PC Layout Adjustments */
-    @media (min-width: 992px) {
-        .showcase-grid { max-width: 800px; margin: 0 auto; }
-        .grid-staircase { flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: flex-start; }
-        .row-single { width: 45%; }
-        .row-double { width: 45%; display: flex; flex-direction: column; gap: 30px; transform: scale(0.9); }
-        .car-card:hover { transform: scale(1.02); }
+    .modal-header .subtitle {
+        color: #888;
+        font-size: 15px;
+        font-weight: normal;
+    }
+    
+    /* Araç Görseli Alanı */
+    .modal-car-img {
+        width: 100%;
+        height: 280px;
+        object-fit: contain;
+        margin: 20px 0;
+        display: block;
+    }
+    
+    .section-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 20px 0 12px 0;
+        color: #000;
+    }
+    .specs-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px 8px;
+        font-size: 14px;
+        color: #000;
+    }
+    .conditions-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 14px;
+        color: #000;
     }
 </style>
+</head>
+<body>
 
-```
+<div class="canvas">
+    <!-- SVG Koordinatları: 90 Derece Düz Oklar -->
+    <svg class="arrows" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+        <defs>
+            <marker id="arrow" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto">
+                <polygon points="0 0, 12 4.5, 0 9" fill="#ffeb3b" />
+            </marker>
+        </defs>
+        
+        <path class="line" d="M 200 390 V 470 H 340" marker-end="url(#arrow)" />
+        <path class="line" d="M 800 390 V 470 H 660" marker-end="url(#arrow)" />
+        <path class="line" d="M 200 960 V 990 H 480 V 660" marker-end="url(#arrow)" />
+        <path class="line" d="M 800 960 V 990 H 520 V 660" marker-end="url(#arrow)" />
+    </svg>
 
-```
-<!-- LIVE NOTIFICATION -->
-<div id="live-toast" class="live-toast">
-    ⚡ <span>Ahmet Y.</span> az önce kiraladı.
+    <div class="box-wrapper tl">
+        <div class="text-top">Detayı İncelemek İçin Tıkla</div>
+        <div class="box tl-box"></div>
+        <div class="text-bottom">Honda Civic</div>
+    </div>
+    
+    <div class="box-wrapper tr">
+        <div class="text-top">Detayı İncelemek İçin Tıkla</div>
+        <div class="box tr-box"></div>
+        <div class="text-bottom">Honda Civic</div>
+    </div>
+    
+    <div class="box-wrapper bl">
+        <div class="text-top">Detayı İncelemek İçin Tıkla</div>
+        <div class="box bl-box"></div>
+        <div class="text-bottom">Honda Civic</div>
+    </div>
+    
+    <div class="box-wrapper br">
+        <div class="text-top">Detayı İncelemek İçin Tıkla</div>
+        <div class="box br-box"></div>
+        <div class="text-bottom">Honda Civic</div>
+    </div>
+
+    <div class="center-area">
+        <img src="https://raw.githubusercontent.com/KULLANICI_ADIN/DEPO_ADIN/main/panter.png" alt="Panter">
+        <div class="center-text">Ortalama Sekment<br>Araçlar</div>
+    </div>
 </div>
 
-<!-- HEADER & FILTERS -->
-<header>
-    <div class="logo">REFERANS<span>.</span></div>
-    <div class="filter-title">Nasıl bir araba bakmıştınız? Lütfen seçiniz</div>
-    <div class="marquee-wrapper">
-        <div class="marquee-content" id="filter-track">
-            <!-- Doubled for seamless loop -->
-            <span class="filter-chip active">Tümü</span>
-            <span class="filter-chip">Premium</span>
-            <span class="filter-chip">Otomatik</span>
-            <span class="filter-chip">Dizel</span>
-            <span class="filter-chip">5 Kişilik</span>
-            <span class="filter-chip">Spor</span>
-            <span class="filter-chip">Tümü</span>
-            <span class="filter-chip">Premium</span>
-            <span class="filter-chip">Otomatik</span>
-            <span class="filter-chip">Dizel</span>
-            <span class="filter-chip">5 Kişilik</span>
-            <span class="filter-chip">Spor</span>
-        </div>
-    </div>
-</header>
-
-<main class="main-content">
-    <!-- TOP SHOWCASE (Separate 2-Grid) -->
-    <div class="top-showcase">
-        <div class="showcase-badge">💎 Haftanın Fırsatları</div>
-        <div class="showcase-grid">
-            
-            <article class="car-card">
-                <div class="card-media">
-                    <!-- High to Low Pricing Anchor -->
-                    <video class="vid-layer p-vid" muted playsinline data-src="[https://www.w3schools.com/html/mov_bbb.mp4](https://www.w3schools.com/html/mov_bbb.mp4)"></video>
-                    <div class="jaguar-wrapper"><video class="jaguar-vid" autoplay loop muted playsinline src="[https://www.w3schools.com/html/mov_bbb.mp4](https://www.w3schools.com/html/mov_bbb.mp4)"></video></div>
-                </div>
-                <div class="card-info">
-                    <h2 class="car-title">Range Rover Velar</h2>
-                    <div class="car-price">6.500 ₺ <span>/ Gün</span></div>
-                    <div class="specs-mini">
-                        <div class="spec"><svg viewBox="0 0 24 24"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg> 5</div>
-                        <div class="spec"><svg viewBox="0 0 24 24"><path d="M7,6H17A2,2 0 0,1 19,8V16A2,2 0 0,1 17,18H7A2,2 0 0,1 5,16V8A2,2 0 0,1 7,6M7,8V16H17V8H7M9,10H11V14H9V10M13,10H15V14H13V10Z"/></svg> Oto</div>
-                    </div>
-                    <button class="rent-btn" onclick="openForm('Range Rover Velar')">Seç</button>
-                </div>
-            </article>
-
-            <article class="car-card">
-                <div class="card-media">
-                    <video class="vid-layer p-vid" muted playsinline data-src="[https://www.w3schools.com/html/mov_bbb.mp4](https://www.w3schools.com/html/mov_bbb.mp4)"></video>
-                    <div class="jaguar-wrapper"><video class="jaguar-vid" autoplay loop muted playsinline src="[https://www.w3schools.com/html/mov_bbb.mp4](https://www.w3schools.com/html/mov_bbb.mp4)"></video></div>
-                </div>
-                <div class="card-info">
-                    <h2 class="car-title">BMW 520i</h2>
-                    <div class="car-price">5.200 ₺ <span>/ Gün</span></div>
-                    <div class="specs-mini">
-                        <div class="spec"><svg viewBox="0 0 24 24"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg> 5</div>
-                        <div class="spec"><svg viewBox="0 0 24 24"><path d="M7,6H17A2,2 0 0,1 19,8V16A2,2 0 0,1 17,18H7A2,2 0 0,1 5,16V8A2,2 0 0,1 7,6M7,8V16H17V8H7M9,10H11V14H9V10M13,10H15V14H13V10Z"/></svg> Oto</div>
-                    </div>
-                    <button class="rent-btn" onclick="openForm('BMW 520i')">Seç</button>
-                </div>
-            </article>
-
-        </div>
-    </div>
-
-    <!-- MAIN STAIRCASE GRID (1 - 2 - 1 - 2) -->
-    <div class="grid-staircase">
-        
-        <!-- SINGLE ROW -->
-        <div class="row-single">
-            <article class="car-card">
-                <div class="card-media">
-                    <video class="vid-layer m-vid" muted playsinline data-src="[https://www.w3schools.com/html/mov_bbb.mp4](https://www.w3schools.com/html/mov_bbb.mp4)"></video>
-                    <div class="jaguar-wrapper"><video class="jaguar-vid" autoplay loop muted playsinline src="[https://www.w3schools.com/html/mov_bbb.mp4](https://www.w3schools.com/html/mov_bbb.mp4)"></video></div>
-                </div>
-                <div class="card-info">
-                    <h2 class="car-title">Mercedes C200</h2>
-                    <div class="car-price">4.000 ₺ <span>/ Gün</span></div>
-                    <div class="specs-mini">
-                        <div class="spec"><svg viewBox="0 0 24 24"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg> 5</div>
-                        <div class="spec"><svg viewBox="0 0 24 24"><path d="M7,6H17A2,2 0 0,1 19,8V16A2,2 0 0,1 17,18H7A2,2 0 0,1 5,16V8A2,2 0 0,1 7,6M7,8V16H17V8H7M9,10H11V14H9V10M13,10H15V14H13V10Z"/></svg> Oto</div>
-                    </div>
-                    <button class="rent-btn" onclick="openForm('Mercedes C200')">Seç</button>
-                </div>
-            </article>
-        </div>
-
-        <!-- DOUBLE ROW (Smaller perspective) -->
-        <div class="row-double">
-            <article class="car-card">
-                <div class="card-media">
-                    <video class="vid-layer m-vid" muted playsinline data-src="[https://www.w3schools.com/html/mov_bbb.mp4](https://www.w3schools.com/html/mov_bbb.mp4)"></video>
-                    <div class="jaguar-wrapper"><video class="jaguar-vid" autoplay loop muted playsinline src="[https://www.w3schools.com/html/mov_bbb.mp4](https://www.w3schools.com/html/mov_bbb.mp4)"></video></div>
-                </div>
-                <div class="card-info">
-                    <h2 class="car-title">Peugeot 3008</h2>
-                    <div class="car-price">2.800 ₺ <span>/ Gün</span></div>
-                    <button class="rent-btn" onclick="openForm('Peugeot 3008')">Seç</button>
-                </div>
-            </article>
-            <article class="car-card">
-                <div class="card-media">
-                    <video class="vid-layer m-vid" muted playsinline data-src="[https://www.w3schools.com/html/mov_bbb.mp4](https://www.w3schools.com/html/mov_bbb.mp4)"></video>
-                    <div class="jaguar-wrapper"><video class="jaguar-vid" autoplay loop muted playsinline src="[https://www.w3schools.com/html/mov_bbb.mp4](https://www.w3schools.com/html/mov_bbb.mp4)"></video></div>
-                </div>
-                <div class="card-info">
-                    <h2 class="car-title">Opel Mokka</h2>
-                    <div class="car-price">2.500 ₺ <span>/ Gün</span></div>
-                    <button class="rent-btn" onclick="openForm('Opel Mokka')">Seç</button>
-                </div>
-            </article>
-        </div>
-
-        <!-- SINGLE ROW -->
-        <div class="row-single">
-            <article class="car-card">
-                <div class="card-media">
-                    <video class="vid-layer m-vid" muted playsinline data-src="[https://www.w3schools.com/html/mov_bbb.mp4](https://www.w3schools.com/html/mov_bbb.mp4)"></video>
-                    <div class="jaguar-wrapper"><video class="jaguar-vid" autoplay loop muted playsinline src="[https://www.w3schools.com/html/mov_bbb.mp4](https://www.w3schools.com/html/mov_bbb.mp4)"></video></div>
-                </div>
-                <div class="card-info">
-                    <h2 class="car-title">Renault Megane</h2>
-                    <div class="car-price">1.800 ₺ <span>/ Gün</span></div>
-                    <div class="specs-mini">
-                        <div class="spec"><svg viewBox="0 0 24 24"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg> 5</div>
-                        <div class="spec"><svg viewBox="0 0 24 24"><path d="M7,6H17A2,2 0 0,1 19,8V16A2,2 0 0,1 17,18H7A2,2 0 0,1 5,16V8A2,2 0 0,1 7,6M7,8V16H17V8H7M9,10H11V14H9V10M13,10H15V14H13V10Z"/></svg> Oto</div>
-                    </div>
-                    <button class="rent-btn" onclick="openForm('Renault Megane')">Seç</button>
-                </div>
-            </article>
-        </div>
-
-        <!-- DOUBLE ROW (Smaller perspective) -->
-        <div class="row-double">
-            <article class="car-card">
-                <div class="card-media">
-                    <video class="vid-layer m-vid" muted playsinline data-src="[https://www.w3schools.com/html/mov_bbb.mp4](https://www.w3schools.com/html/mov_bbb.mp4)"></video>
-                    <div class="jaguar-wrapper"><video class="jaguar-vid" autoplay loop muted playsinline src="[https://www.w3schools.com/html/mov_bbb.mp4](https://www.w3schools.com/html/mov_bbb.mp4)"></video></div>
-                </div>
-                <div class="card-info">
-                    <h2 class="car-title">Citroen C4</h2>
-                    <div class="car-price">1.500 ₺ <span>/ Gün</span></div>
-                    <button class="rent-btn" onclick="openForm('Citroen C4')">Seç</button>
-                </div>
-            </article>
-            <article class="car-card">
-                <div class="card-media">
-                    <video class="vid-layer m-vid" muted playsinline data-src="[https://www.w3schools.com/html/mov_bbb.mp4](https://www.w3schools.com/html/mov_bbb.mp4)"></video>
-                    <div class="jaguar-wrapper"><video class="jaguar-vid" autoplay loop muted playsinline src="[https://www.w3schools.com/html/mov_bbb.mp4](https://www.w3schools.com/html/mov_bbb.mp4)"></video></div>
-                </div>
-                <div class="card-info">
-                    <h2 class="car-title">Citroen C3</h2>
-                    <div class="car-price">1.200 ₺ <span>/ Gün</span></div>
-                    <button class="rent-btn" onclick="openForm('Citroen C3')">Seç</button>
-                </div>
-            </article>
-        </div>
-
-    </div>
-</main>
-
-<!-- FORM & KVKK MODAL -->
-<div id="app-modal" class="modal-overlay">
+<!-- Tıklanınca Açılan Arayüz (Modal) -->
+<div class="modal-overlay" id="modalOverlay">
     <div class="modal-content">
-        <button class="back-btn" id="mod-back" onclick="showForm()">&#8592;</button>
-        <button class="close-btn" onclick="closeAppModal()">&times;</button>
+        <div class="ribbon-wrapper"><div class="ribbon">Fırsat Aracı</div></div>
         
-        <div id="form-view">
-            <div class="trust-badges">
-                <div class="badge">💳 Kredi Kartı / Dolar</div>
-                <div class="badge">📍 Adrese Teslim</div>
-            </div>
-            <div class="f-title">Aracınız şehir içi adresinize <span>ücretsiz</span> getirilir, ekstra ücret yoktur.</div>
-            
-            <form id="r-form">
-                <input type="text" class="f-input" placeholder="Adınız Soyadınız" required>
-                <input type="tel" class="f-input" placeholder="Telefon Numaranız" required>
-                
-                <div style="font-size: 11px; font-weight: 800; margin-bottom: 5px; color: var(--text-muted);">Alış Tarihi ve Saati</div>
-                <div class="f-row">
-                    <input type="date" class="f-input" required>
-                    <input type="time" class="f-input" required>
-                </div>
-                
-                <div style="font-size: 11px; font-weight: 800; margin-bottom: 5px; color: var(--text-muted);">Teslim Tarihi ve Saati</div>
-                <div class="f-row">
-                    <input type="date" class="f-input" required>
-                    <input type="time" class="f-input" required>
-                </div>
-
-                <input type="text" class="f-input" placeholder="Teslim Edilecek İlçe (Örn: Yeşilyurt)" required>
-
-                <div class="f-tabs">
-                    <div class="f-tab active" onclick="selTab(this)">Hemen Ara</div>
-                    <div class="f-tab" onclick="selTab(this)">Sadece Mesaj At</div>
-                </div>
-
-                <div class="f-check">
-                    <input type="checkbox" id="kvkk-check" required>
-                    <label><span>Sözleşmeyi</span> okudum ve onaylıyorum.</label>
-                </div>
-
-                <button type="submit" class="f-submit" id="submit-btn" disabled>TALEBİ GÖNDER</button>
-            </form>
+        <div class="modal-header">
+            <div class="category">SUV(4x4)</div>
+            <div class="title">Hyundai Tucson <span class="subtitle">veya benzeri</span></div>
         </div>
 
-        <!-- KVKK LEGAL TEXT -->
-        <div id="kvkk-view">
-            <h3 style="font-size: 16px; font-weight: 900; text-align: center; margin-bottom: 15px;">Araç Kiralama Sözleşmesi</h3>
-            <div class="kvkk-box" id="kvkk-scroll">
-                <p><strong>1. KULLANIM:</strong> Müşteri aracı trafik kurallarına uygun kullanmalıdır.</p><br>
-                <p><strong>2. CEZALAR:</strong> Kiralama süresince kesilen trafik cezaları müşteriye aittir.</p><br>
-                <p><strong>3. SİGORTA:</strong> Alkol ve uyuşturucu etkisinde oluşan hasarlar kasko dışıdır.</p><br>
-                <p><strong>4. KVKK:</strong> Girilen telefon ve adres verileri sadece araç teslimatı için işlenir.</p>
-                <br><br><br><br><br><br><br><br><br>
-                <p style="text-align: center; color: var(--brand-yellow); font-size: 14px;"><strong>--- SÖZLEŞME SONU ---</strong></p>
-            </div>
-            <div class="scroll-warn" id="s-warn">Onaylamak için metnin sonuna kadar kaydırın.</div>
-            <button class="f-submit" id="kvkk-accept" style="margin-top: 15px;" disabled>OKUDUM, ONAYLIYORUM</button>
-        </div>
-    </div>
-</div>
+        <img src="https://raw.githubusercontent.com/KULLANICI_ADIN/DEPO_ADIN/main/araba.png" alt="Araç Görseli" class="modal-car-img">
 
-<!-- PWA PROMPT -->
-<div id="pwa-prompt" class="live-toast" style="top: auto; bottom: 20px; right: 50%; transform: translateX(50%) translateY(150%); max-width: 300px; padding: 15px; border-radius: 20px; flex-direction: column; text-align: center;">
-    <div style="font-size: 14px; margin-bottom: 5px;">📱 <span>Uygulamamızı Yükleyin</span></div>
-    <div style="font-size: 10px; color: #ccc; margin-bottom: 10px;">Kolay rezervasyon için ana ekrana ekleyin.</div>
-    <div style="display: flex; gap: 10px; width: 100%;">
-        <button style="flex: 1; padding: 8px; border-radius: 8px; border: none; background: #333; color: #fff; cursor: pointer;" onclick="document.getElementById('pwa-prompt').classList.remove('show')">Kapat</button>
-        <button style="flex: 1; padding: 8px; border-radius: 8px; border: none; background: var(--brand-yellow); color: #000; font-weight: bold; cursor: pointer;" onclick="document.getElementById('pwa-prompt').classList.remove('show')">Ekle</button>
+        <div class="section-title">Araç Özellikleri</div>
+        <div class="specs-grid">
+            <div>👥 5 Kişi</div>
+            <div>🧳 4 Bagaj</div>
+            <div>🚙 SUV/Jeep</div>
+            <div>⚙️ Yarı-Otomatik</div>
+            <div>⛽ Dizel</div>
+            <div>❄️ Klima</div>
+        </div>
+
+        <div class="section-title">Kiralama Koşulları</div>
+        <div class="conditions-list">
+            <div>👤 Minimum: 21 yaş - 1 yıl ehliyet</div>
+            <div>🛡️ Bu araç için 1.500,00 ₺ teminat alınmaktadır.</div>
+        </div>
     </div>
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        
-        // 1. FILTER CHIP SELECTION
-        document.querySelectorAll('.filter-chip').forEach(chip => {
-            chip.addEventListener('click', (e) => {
-                document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-                e.target.classList.add('active');
-            });
+    const modalOverlay = document.getElementById('modalOverlay');
+    const boxes = document.querySelectorAll('.box');
+
+    // Kutulara tıklandığında arayüzü aç
+    boxes.forEach(box => {
+        box.addEventListener('click', () => {
+            modalOverlay.style.display = 'flex';
         });
+    });
 
-        // 2. VIDEO STAGGERED LOAD & PING-PONG LOOP
-        const setupVideo = (vid, delay) => {
-            setTimeout(() => {
-                vid.src = vid.getAttribute('data-src');
-                vid.load();
-                vid.addEventListener('loadeddata', () => {
-                    vid.play().catch(e => console.log("Play prevented"));
-                    // Ping Pong logic
-                    vid.addEventListener('ended', function() {
-                        if (this.playbackRate === 1) {
-                            this.playbackRate = -1;
-                            this.play();
-                        } else {
-                            this.playbackRate = 1;
-                            this.play();
-                        }
-                    });
-                }, { once: true });
-            }, delay);
-        };
-
-        const pVids = document.querySelectorAll('.p-vid');
-        const mVids = document.querySelectorAll('.m-vid');
-        pVids.forEach((v, i) => setupVideo(v, i * 200)); // Premium load first
-        mVids.forEach((v, i) => setupVideo(v, (pVids.length * 200) + (i * 400))); // Staircase load after
-
-        // 3. TOAST NOTIFICATION
-        const toast = document.getElementById('live-toast');
-        const fakeNames = ["Mehmet K.", "Ayşe Y.", "Canan S.", "Ali R."];
-        setInterval(() => {
-            const name = fakeNames[Math.floor(Math.random() * fakeNames.length)];
-            toast.innerHTML = `⚡ <span>${name}</span> az önce kiraladı.`;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 4000);
-        }, 18000);
-
-        // 4. MODAL & KVKK LOGIC
-        const modal = document.getElementById('app-modal');
-        const fView = document.getElementById('form-view');
-        const kView = document.getElementById('kvkk-view');
-        const btnBack = document.getElementById('mod-back');
-        const check = document.getElementById('kvkk-check');
-        const subBtn = document.getElementById('submit-btn');
-        
-        window.openForm = (carName) => { modal.classList.add('open'); };
-        window.closeAppModal = () => { modal.classList.remove('open'); showForm(); };
-        
-        window.selTab = (el) => {
-            document.querySelectorAll('.f-tab').forEach(t => t.classList.remove('active'));
-            el.classList.add('active');
-        };
-
-        // Link click opens KVKK
-        document.querySelector('.f-check span').addEventListener('click', () => {
-            fView.style.display = 'none';
-            kView.style.display = 'block';
-            btnBack.style.display = 'block';
-        });
-
-        window.showForm = () => {
-            kView.style.display = 'none';
-            btnBack.style.display = 'none';
-            fView.style.display = 'block';
-        };
-
-        // Scroll to bottom validation
-        const kScroll = document.getElementById('kvkk-scroll');
-        const kAcc = document.getElementById('kvkk-accept');
-        const sWarn = document.getElementById('s-warn');
-        
-        kScroll.addEventListener('scroll', () => {
-            if (kScroll.scrollHeight - kScroll.scrollTop <= kScroll.clientHeight + 10) {
-                kAcc.disabled = false;
-                sWarn.style.display = 'none';
-            }
-        });
-
-        kAcc.addEventListener('click', () => {
-            check.checked = true;
-            subBtn.disabled = false;
-            showForm();
-        });
-
-        // Prevent direct checking of the box
-        check.addEventListener('click', (e) => { e.preventDefault(); });
-
-        document.getElementById('r-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert("Talebiniz alınmıştır, yönlendiriliyorsunuz.");
-            closeAppModal();
-        });
-
-        // 5. PWA PROMPT (Delayed)
-        setTimeout(() => {
-            document.getElementById('pwa-prompt').classList.add('show');
-        }, 15000);
-
+    // Siyah arkaplana tıklandığında arayüzü kapat ve kaldığı yere dön
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+            modalOverlay.style.display = 'none';
+        }
     });
 </script>
 
-```
+</body>
+</html>
