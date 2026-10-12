@@ -5,30 +5,64 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Renecar Premium Kiralama</title>
 <style>
+    /* RESET VE TEMEL AYARLAR */
     * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    body {
+    body, html {
         background-color: #ffffff;
+        width: 100%;
+        height: 100%;
+        overflow: hidden; /* Dış kaydırmayı kapat, iç kaydırmayı (snap) aç */
+    }
+    
+    /* AKILLI KAYDIRMA ALANI (Scroll Snap) */
+    .scroll-container {
+        width: 100%;
+        height: 100vh;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+        scroll-behavior: smooth;
+        scrollbar-width: none; 
+        -ms-overflow-style: none; 
+    }
+    .scroll-container::-webkit-scrollbar { display: none; }
+
+    .snap-section {
+        width: 100%;
+        height: 100vh;
+        scroll-snap-align: center;
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 100vh;
-        overflow-x: hidden;
+        position: relative;
     }
-    
+
+    /* TUVAL (Geniş Ekran Oranı) */
     .canvas {
         position: relative;
-        width: 100%;
-        max-width: 1400px;
-        aspect-ratio: 16 / 10;
+        width: 95%;
+        max-width: 1500px;
+        height: 95vh;
+        max-height: 900px;
         background-color: #ffffff;
-        overflow: hidden;
     }
     
+    /* ZARİF BELİRME (Fade-in Animasyonu) */
+    .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* SVG OTOYOL OKLARI (Kusursuz 90 Derece) */
     svg.arrows {
         position: absolute;
         top: 0;
@@ -45,63 +79,71 @@
         stroke-dasharray: 12, 12;
         animation: highwayMove 0.8s linear infinite;
     }
-    @keyframes highwayMove {
-        to { stroke-dashoffset: -24; }
-    }
+    @keyframes highwayMove { to { stroke-dashoffset: -24; } }
 
+    /* DEVASA DİKDÖRTGEN KUTULAR (16:9 Oranlı) */
     .box-wrapper {
         position: absolute;
-        width: 38%;
-        height: 38%;
+        width: 40%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-between;
         z-index: 2;
     }
     
-    .tl { top: 5%; left: 5%; }
-    .tr { top: 5%; right: 5%; }
-    .bl { bottom: 5%; left: 5%; }
-    .br { bottom: 5%; right: 5%; }
+    .tl { top: 3%; left: 3%; }
+    .tr { top: 3%; right: 3%; }
+    .bl { bottom: 3%; left: 3%; }
+    .br { bottom: 3%; right: 3%; }
 
+    /* SABİT YAZILAR */
     .text-top {
-        font-size: 15px;
+        font-size: 16px;
         color: #1A1D20;
         font-weight: 800;
-        margin-bottom: 14px;
+        margin-bottom: 12px;
     }
     .text-bottom {
-        font-size: 22px;
+        font-size: 24px;
         color: #1A1D20;
         font-weight: 900;
-        margin-top: 14px;
+        margin-top: 12px;
     }
 
+    /* SİYAH KUTULAR (16:9 Video Formatı) */
     .box {
         width: 100%;
-        flex-grow: 1;
+        aspect-ratio: 16 / 9;
         background-color: #000000;
-        border-radius: 45px;
+        border-radius: 20px;
         cursor: pointer;
         transition: transform 0.2s ease;
         position: relative;
+        overflow: hidden;
     }
-    .box:hover {
-        transform: scale(1.02);
-    }
+    .box:hover { transform: scale(1.02); }
     
+    .box video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 20px;
+        pointer-events: none;
+    }
+
+    /* GÖLGELER (Katı/Solid Gölge Sadece Üst ve Dışa) */
     .box.tl-box { box-shadow: -15px -15px 0px 0px #E5E5E5; }
     .box.tr-box { box-shadow: 15px -15px 0px 0px #E5E5E5; }
     .box.bl-box { box-shadow: -15px -15px 0px 0px #E5E5E5; } 
     .box.br-box { box-shadow: 15px -15px 0px 0px #E5E5E5; }
 
+    /* ROZETLER (Kutu Dışına Taşan) */
     .click-badge {
         position: absolute;
         top: -16px;
-        padding: 6px 14px;
+        padding: 6px 16px;
         border-radius: 20px;
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 900;
         color: #ffffff;
         display: flex;
@@ -117,9 +159,9 @@
     
     .badge-red { background-color: #ff3b30; box-shadow: 0 4px 10px rgba(255, 59, 48, 0.4); left: -10px; }
     .badge-blue { background-color: #007aff; box-shadow: 0 4px 10px rgba(0, 122, 255, 0.4); right: -10px; }
-
     @keyframes blinkDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
+    /* MERKEZ ALAN */
     .center-area {
         position: absolute;
         top: 50%;
@@ -128,114 +170,191 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 18%;
+        width: 16%;
         z-index: 3;
     }
     .center-area img { width: 100%; height: auto; object-fit: contain; }
     .center-text {
-        margin-top: 10px; font-size: 15px; font-weight: 800; color: #000;
+        margin-top: 10px; font-size: 16px; font-weight: 900; color: #000;
         text-align: center; line-height: 1.3; background-color: #ffffff; padding: 4px 8px;
     }
 
+    /* MODAL ARAYÜZ (Devasa Araç Görseli) */
     .modal-overlay {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.8); display: none;
+        background: rgba(0, 0, 0, 0.85); display: none;
         justify-content: center; align-items: center; z-index: 9999;
+        opacity: 0; transition: opacity 0.3s ease;
     }
+    .modal-overlay.show { opacity: 1; }
+
     .modal-content {
-        background: #ffffff; width: 95%; max-width: 500px;
-        border-radius: 8px; padding: 25px; position: relative;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.5); overflow: hidden;
+        background: #ffffff; width: 95%; max-width: 550px;
+        border-radius: 12px; padding: 30px; position: relative;
+        box-shadow: 0 10px 50px rgba(0,0,0,0.5); overflow: hidden;
     }
     
-    .ribbon-wrapper { position: absolute; top: 0; right: 0; width: 110px; height: 110px; overflow: hidden; }
+    .ribbon-wrapper { position: absolute; top: 0; right: 0; width: 120px; height: 120px; overflow: hidden; }
     .ribbon {
-        position: absolute; top: 20px; right: -35px; width: 150px; background: #E60000;
-        color: #fff; text-align: center; font-size: 12px; font-weight: bold; padding: 4px 0;
+        position: absolute; top: 25px; right: -35px; width: 160px; background: #E60000;
+        color: #fff; text-align: center; font-size: 14px; font-weight: bold; padding: 6px 0;
         transform: rotate(45deg);
     }
     
-    .modal-header .category { color: #e67e22; font-size: 12px; margin-bottom: 2px; font-weight: 800; }
-    .modal-header .title { font-size: 22px; font-weight: 900; color: #000; }
-    .modal-header .subtitle { color: #888; font-size: 14px; font-weight: 600; }
+    .modal-header .category { color: #e67e22; font-size: 14px; margin-bottom: 4px; font-weight: 800; }
+    .modal-header .title { font-size: 26px; font-weight: 900; color: #000; }
+    .modal-header .subtitle { color: #888; font-size: 16px; font-weight: 600; }
     
-    .modal-car-img { width: 100%; height: 220px; object-fit: contain; margin: 15px 0; display: block; }
+    /* DEVASA ARAÇ GÖRSELİ (Orijinalinden Bile Büyük) */
+    .modal-car-img { 
+        width: 110%;
+        margin-left: -5%;
+        height: 380px; 
+        object-fit: contain; 
+        margin-top: 20px; margin-bottom: 20px; 
+        display: block; 
+        transform: scale(1.15);
+    }
     
-    .section-title { font-size: 16px; font-weight: 900; margin: 15px 0 10px 0; color: #000; border-bottom: 1px solid #f0f0f0; padding-bottom: 5px; }
+    .section-title { font-size: 18px; font-weight: 900; margin: 20px 0 12px 0; color: #000; border-bottom: 2px solid #f0f0f0; padding-bottom: 8px; }
     
     .specs-grid {
-        display: grid; grid-template-columns: 1fr 1fr; gap: 12px 10px; font-size: 13px; color: #1A1D20; font-weight: 700;
+        display: grid; grid-template-columns: 1fr 1fr; gap: 14px 10px; font-size: 14px; color: #1A1D20; font-weight: 700;
     }
     .spec-item { display: flex; align-items: center; gap: 8px; }
-    .spec-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .spec-item svg { width: 20px; height: 20px; flex-shrink: 0; }
     
-    .conditions-list { display: flex; flex-direction: column; gap: 10px; font-size: 13px; color: #1A1D20; font-weight: 700; }
+    .conditions-list { display: flex; flex-direction: column; gap: 12px; font-size: 14px; color: #1A1D20; font-weight: 700; }
 </style>
 </head>
 <body>
 
-<div class="canvas">
-    <svg class="arrows" viewBox="0 0 1200 900" preserveAspectRatio="none">
-        <defs>
-            <marker id="arrow" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
-                <polygon points="0 0, 10 4, 0 8" fill="#ffd700" />
-            </marker>
-        </defs>
-        
-        <path class="line" d="M 285 410 V 450 H 500" marker-end="url(#arrow)" />
-        <path class="line" d="M 915 410 V 450 H 700" marker-end="url(#arrow)" />
-        <path class="line" d="M 285 850 V 880 H 580 V 500" marker-end="url(#arrow)" />
-        <path class="line" d="M 915 850 V 880 H 620 V 500" marker-end="url(#arrow)" />
-    </svg>
+<div class="scroll-container">
 
-    <div class="box-wrapper tl">
-        <div class="text-top">Detayı İncelemek İçin Tıkla</div>
-        <div class="box tl-box">
-            <div class="click-badge badge-red">HEMEN İNCELE</div>
-        </div>
-        <div class="text-bottom">Honda Civic</div>
-    </div>
-    
-    <div class="box-wrapper tr">
-        <div class="text-top">Detayı İncelemek İçin Tıkla</div>
-        <div class="box tr-box">
-            <div class="click-badge badge-blue">TIKLA & GÖR</div>
-        </div>
-        <div class="text-bottom">Honda Civic</div>
-    </div>
-    
-    <div class="box-wrapper bl">
-        <div class="text-top">Detayı İncelemek İçin Tıkla</div>
-        <div class="box bl-box">
-            <div class="click-badge badge-red">HEMEN İNCELE</div>
-        </div>
-        <div class="text-bottom">Honda Civic</div>
-    </div>
-    
-    <div class="box-wrapper br">
-        <div class="text-top">Detayı İncelemek İçin Tıkla</div>
-        <div class="box br-box">
-            <div class="click-badge badge-blue">TIKLA & GÖR</div>
-        </div>
-        <div class="text-bottom">Honda Civic</div>
-    </div>
+    <!-- BÖLÜM 1: İLK 4'LÜ ARAÇ GRUBU -->
+    <section class="snap-section">
+        <div class="canvas">
+            <svg class="arrows" viewBox="0 0 1400 900" preserveAspectRatio="none">
+                <defs>
+                    <marker id="arrow1" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+                        <polygon points="0 0, 10 4, 0 8" fill="#ffd700" />
+                    </marker>
+                </defs>
+                <path class="line" d="M 280 430 V 470 H 550" marker-end="url(#arrow1)" />
+                <path class="line" d="M 1120 430 V 470 H 850" marker-end="url(#arrow1)" />
+                <path class="line" d="M 280 860 V 885 H 620 V 520" marker-end="url(#arrow1)" />
+                <path class="line" d="M 1120 860 V 885 H 780 V 520" marker-end="url(#arrow1)" />
+            </svg>
 
-    <div class="center-area">
-        <img src="https://raw.githubusercontent.com/KULLANICI_ADIN/DEPO_ADIN/main/panter.png" alt="Panter">
-        <div class="center-text">Ortalama Sekment<br>Araçlar</div>
-    </div>
+            <div class="box-wrapper tl reveal" style="transition-delay: 0.1s;">
+                <div class="text-top">Detayı İncelemek İçin Tıkla</div>
+                <div class="box tl-box" data-car="Range Rover Velar" data-price="6.500 ₺">
+                    <div class="click-badge badge-red">HEMEN İNCELE</div>
+                    <video src="gold_jaguar.mp4" autoplay loop muted playsinline></video>
+                </div>
+                <div class="text-bottom">Range Rover Velar</div>
+            </div>
+            
+            <div class="box-wrapper tr reveal" style="transition-delay: 0.2s;">
+                <div class="text-top">Detayı İncelemek İçin Tıkla</div>
+                <div class="box tr-box" data-car="BMW 520i" data-price="5.200 ₺">
+                    <div class="click-badge badge-blue">TIKLA & GÖR</div>
+                    <video src="gold_jaguar.mp4" autoplay loop muted playsinline></video>
+                </div>
+                <div class="text-bottom">BMW 520i</div>
+            </div>
+            
+            <div class="box-wrapper bl reveal" style="transition-delay: 0.3s;">
+                <div class="text-top">Detayı İncelemek İçin Tıkla</div>
+                <div class="box bl-box" data-car="Peugeot 3008" data-price="2.800 ₺">
+                    <div class="click-badge badge-red">HEMEN İNCELE</div>
+                    <video src="jaguar.mp4" autoplay loop muted playsinline></video>
+                </div>
+                <div class="text-bottom">Peugeot 3008</div>
+            </div>
+            
+            <div class="box-wrapper br reveal" style="transition-delay: 0.4s;">
+                <div class="text-top">Detayı İncelemek İçin Tıkla</div>
+                <div class="box br-box" data-car="Opel Mokka" data-price="2.500 ₺">
+                    <div class="click-badge badge-blue">TIKLA & GÖR</div>
+                    <video src="jaguar.mp4" autoplay loop muted playsinline></video>
+                </div>
+                <div class="text-bottom">Opel Mokka</div>
+            </div>
+
+            <div class="center-area reveal" style="transition-delay: 0.5s;">
+                <img src="panter.png" alt="Panter">
+                <div class="center-text">Premium Sekment<br>Araçlar</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BÖLÜM 2: AŞAĞI KAYDIRILINCA GELEN 2. ARAÇ GRUBU (BİREBİR KOPYA) -->
+    <section class="snap-section">
+        <div class="canvas">
+            <svg class="arrows" viewBox="0 0 1400 900" preserveAspectRatio="none">
+                <path class="line" d="M 280 430 V 470 H 550" marker-end="url(#arrow1)" />
+                <path class="line" d="M 1120 430 V 470 H 850" marker-end="url(#arrow1)" />
+                <path class="line" d="M 280 860 V 885 H 620 V 520" marker-end="url(#arrow1)" />
+                <path class="line" d="M 1120 860 V 885 H 780 V 520" marker-end="url(#arrow1)" />
+            </svg>
+
+            <div class="box-wrapper tl reveal" style="transition-delay: 0.1s;">
+                <div class="text-top">Detayı İncelemek İçin Tıkla</div>
+                <div class="box tl-box" data-car="Mercedes C200" data-price="4.000 ₺">
+                    <div class="click-badge badge-red">HEMEN İNCELE</div>
+                    <video src="gold_jaguar.mp4" autoplay loop muted playsinline></video>
+                </div>
+                <div class="text-bottom">Mercedes C200</div>
+            </div>
+            
+            <div class="box-wrapper tr reveal" style="transition-delay: 0.2s;">
+                <div class="text-top">Detayı İncelemek İçin Tıkla</div>
+                <div class="box tr-box" data-car="Audi A4" data-price="3.800 ₺">
+                    <div class="click-badge badge-blue">TIKLA & GÖR</div>
+                    <video src="gold_jaguar.mp4" autoplay loop muted playsinline></video>
+                </div>
+                <div class="text-bottom">Audi A4</div>
+            </div>
+            
+            <div class="box-wrapper bl reveal" style="transition-delay: 0.3s;">
+                <div class="text-top">Detayı İncelemek İçin Tıkla</div>
+                <div class="box bl-box" data-car="Renault Megane" data-price="1.800 ₺">
+                    <div class="click-badge badge-red">HEMEN İNCELE</div>
+                    <video src="jaguar.mp4" autoplay loop muted playsinline></video>
+                </div>
+                <div class="text-bottom">Renault Megane</div>
+            </div>
+            
+            <div class="box-wrapper br reveal" style="transition-delay: 0.4s;">
+                <div class="text-top">Detayı İncelemek İçin Tıkla</div>
+                <div class="box br-box" data-car="Citroen C4" data-price="1.500 ₺">
+                    <div class="click-badge badge-blue">TIKLA & GÖR</div>
+                    <video src="jaguar.mp4" autoplay loop muted playsinline></video>
+                </div>
+                <div class="text-bottom">Citroen C4</div>
+            </div>
+
+            <div class="center-area reveal" style="transition-delay: 0.5s;">
+                <img src="panter.png" alt="Panter">
+                <div class="center-text">Ortalama Sekment<br>Araçlar</div>
+            </div>
+        </div>
+    </section>
+
 </div>
 
+<!-- MODAL ARAYÜZ (Ortak) -->
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal-content">
         <div class="ribbon-wrapper"><div class="ribbon">Fırsat Aracı</div></div>
         
         <div class="modal-header">
             <div class="category">SUV(4x4)</div>
-            <div class="title">Hyundai Tucson <span class="subtitle">veya benzeri</span></div>
+            <div class="title" id="modal-title">Araç Yükleniyor <span class="subtitle">veya benzeri</span></div>
         </div>
 
-        <img src="https://raw.githubusercontent.com/KULLANICI_ADIN/DEPO_ADIN/main/araba.png" alt="Araç Görseli" class="modal-car-img">
+        <img src="araba.png" alt="Araç Görseli" class="modal-car-img">
 
         <div class="section-title">Araç Özellikleri</div>
         <div class="specs-grid">
@@ -273,28 +392,17 @@
             </div>
             <div class="spec-item">
                 <svg viewBox="0 0 24 24"><path fill="#1E90FF" d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-                Bu araç için 1.500,00 ₺ teminat alınmaktadır.
+                Bu araç için <span id="modal-price">1.500,00 ₺</span> teminat alınmaktadır.
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    const modalOverlay = document.getElementById('modalOverlay');
-    const boxes = document.querySelectorAll('.box');
-
-    boxes.forEach(box => {
-        box.addEventListener('click', () => {
-            modalOverlay.style.display = 'flex';
-        });
-    });
-
-    modalOverlay.addEventListener('click', (e) => {
-        if (e.target === modalOverlay) {
-            modalOverlay.style.display = 'none';
-        }
-    });
-</script>
-
-</body>
-</html>
+    // ZARİF BELİRME (Fade-In Animasyonu)
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.classList.add('active');
+            } else {
+                entry
