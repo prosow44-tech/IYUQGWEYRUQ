@@ -3,23 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Renecar Tasarım</title>
+<title>Renecar Premium Kiralama</title>
 <style>
+    /* RESET VE TEMEL AYARLAR */
     * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-        font-family: Arial, sans-serif;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     body {
-        background-color: #ffffff;
+        background-color: #ffffff; /* Saf beyaz arkaplan zorunluluğu */
         display: flex;
         justify-content: center;
         align-items: center;
         min-height: 100vh;
+        overflow-x: hidden;
     }
     
-    /* Ana Taşıyıcı: 1000x1000 formatında tam kare ve responsive */
+    /* ANA TAŞIYICI (1:1 Oranlı Ölçeklenebilir Tuval) */
     .canvas {
         position: relative;
         width: 100%;
@@ -29,7 +31,7 @@
         overflow: hidden;
     }
     
-    /* SVG Okların Katmanı (Otoyol Efekti) */
+    /* SVG OTOYOL OKLARI (Yamukluk Yok, Tam 90 Derece) */
     svg.arrows {
         position: absolute;
         top: 0;
@@ -43,19 +45,19 @@
         fill: none;
         stroke: #ffeb3b;
         stroke-width: 4;
-        stroke-dasharray: 14, 14; /* Kesik çizgili otoyol şeridi */
+        stroke-dasharray: 14, 14;
         animation: highwayMove 0.8s linear infinite;
-        filter: drop-shadow(0 0 5px rgba(255, 235, 59, 0.7));
+        filter: drop-shadow(0 0 4px rgba(255, 235, 59, 0.8));
     }
     @keyframes highwayMove {
         to { stroke-dashoffset: -28; }
     }
 
-    /* Kutu Taşıyıcıları */
+    /* KUTU TAŞIYICILARI (Boyutları Devasa Büyütüldü) */
     .box-wrapper {
         position: absolute;
-        width: 28%;
-        height: 32%;
+        width: 36%;  /* Genişlik artırıldı */
+        height: 42%; /* Yükseklik artırıldı */
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -63,48 +65,91 @@
         z-index: 2;
     }
     
-    /* Kutuların Köşelere Yerleşimi */
-    .tl { top: 6%; left: 6%; }
-    .tr { top: 6%; right: 6%; }
-    .bl { bottom: 6%; left: 6%; }
-    .br { bottom: 6%; right: 6%; }
+    /* Tam Köşe Hizalamaları */
+    .tl { top: 3%; left: 3%; }
+    .tr { top: 3%; right: 3%; }
+    .bl { bottom: 3%; left: 3%; }
+    .br { bottom: 3%; right: 3%; }
 
-    /* Sabit Metinler */
+    /* SABİT YAZILAR (Yüzme Efekti Tamamen İptal) */
     .text-top {
         font-size: 15px;
         color: #000;
-        font-weight: normal;
-        margin-bottom: 8px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        letter-spacing: 0.5px;
     }
     .text-bottom {
-        font-size: 22px;
+        font-size: 24px;
         color: #000;
-        font-weight: normal;
-        margin-top: 8px;
+        font-weight: 800;
+        margin-top: 10px;
     }
 
-    /* Siyah Kutular ve Hover Efekti */
+    /* SİYAH KUTULAR (Köşeler Yumuşak) */
     .box {
         width: 100%;
         flex-grow: 1;
         background-color: #000000;
-        border-radius: 35px;
+        border-radius: 40px;
         cursor: pointer;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
         position: relative;
     }
-    
     .box:hover {
         transform: scale(1.03);
     }
     
-    /* Gölgeler (Sadece üst ve dışa doğru) */
-    .box.tl-box { box-shadow: -14px -14px 0px 0px #d9d9d9; }
-    .box.tr-box { box-shadow: 14px -14px 0px 0px #d9d9d9; }
-    .box.bl-box { box-shadow: -14px -14px 0px 0px #d9d9d9; }
-    .box.br-box { box-shadow: 14px -14px 0px 0px #d9d9d9; }
+    /* GÖLGELER (Sadece Üst ve Dışa, Yazılara Vurmaz) */
+    .box.tl-box { box-shadow: -15px -15px 0px 0px #d9d9d9; }
+    .box.tr-box { box-shadow: 15px -15px 0px 0px #d9d9d9; }
+    .box.bl-box { box-shadow: -15px -15px 0px 0px #d9d9d9; } 
+    .box.br-box { box-shadow: 15px -15px 0px 0px #d9d9d9; }
 
-    /* Merkez Panter Alanı */
+    /* TIKLAMAYA TEŞVİK ROZETLERİ (Kutu Dışına Taşan Pulse Animasyonlu) */
+    .click-badge {
+        position: absolute;
+        top: -18px;
+        background-color: #ff3b30;
+        color: #ffffff;
+        padding: 8px 18px;
+        border-radius: 25px;
+        font-size: 13px;
+        font-weight: 900;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 5px 15px rgba(255, 59, 48, 0.4);
+        animation: pulseBadge 2s infinite;
+        z-index: 10;
+        pointer-events: none;
+    }
+    
+    /* Sol kutularda sola, Sağ kutularda sağa hizalama */
+    .tl-box .click-badge, .bl-box .click-badge { left: -15px; }
+    .tr-box .click-badge, .br-box .click-badge { right: -15px; background-color: #007aff; box-shadow: 0 5px 15px rgba(0, 122, 255, 0.4); }
+
+    .click-badge::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        background-color: #ffffff;
+        border-radius: 50%;
+        display: inline-block;
+        animation: blinkDot 1s infinite;
+    }
+
+    @keyframes pulseBadge {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+    @keyframes blinkDot {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+    }
+
+    /* MERKEZ PANTER ALANI */
     .center-area {
         position: absolute;
         top: 50%;
@@ -113,7 +158,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 32%;
+        width: 25%;
         z-index: 3;
     }
     .center-area img {
@@ -123,22 +168,23 @@
     }
     .center-text {
         margin-top: 15px;
-        font-size: 19px;
+        font-size: 18px;
+        font-weight: 800;
         color: #000;
         text-align: center;
-        line-height: 1.3;
-        background-color: #fff;
+        line-height: 1.2;
+        background-color: #ffffff; /* Okların geçişinde okunabilir kalması için */
         padding: 5px 10px;
     }
 
-    /* Tıklanınca Açılan Arayüz (Modal) */
+    /* MODAL ARAYÜZ (Sadece Tıklandığında Açılan Detaylar) */
     .modal-overlay {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.7);
+        background: rgba(0, 0, 0, 0.75);
         display: none;
         justify-content: center;
         align-items: center;
@@ -148,89 +194,92 @@
         background: #ffffff;
         width: 95%;
         max-width: 480px;
-        border-radius: 4px;
-        padding: 25px;
+        border-radius: 12px;
+        padding: 30px;
         position: relative;
         box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         overflow: hidden;
     }
     
-    /* Fırsat Aracı Kurdelesi */
+    /* Modal Kırmızı Fırsat Kurdelesi */
     .ribbon-wrapper {
         position: absolute;
         top: 0;
         right: 0;
-        width: 110px;
-        height: 110px;
+        width: 120px;
+        height: 120px;
         overflow: hidden;
     }
     .ribbon {
         position: absolute;
-        top: 20px;
+        top: 25px;
         right: -35px;
-        width: 150px;
+        width: 160px;
         background: #cc0000;
         color: #fff;
         text-align: center;
         font-size: 14px;
         font-weight: bold;
-        padding: 5px 0;
+        padding: 6px 0;
         transform: rotate(45deg);
         box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     
     .modal-header .category {
         color: #e67e22;
-        font-size: 13px;
-        margin-bottom: 3px;
+        font-size: 14px;
+        margin-bottom: 4px;
         font-weight: bold;
     }
     .modal-header .title {
-        font-size: 24px;
-        font-weight: bold;
+        font-size: 26px;
+        font-weight: 900;
         color: #000;
     }
     .modal-header .subtitle {
         color: #888;
-        font-size: 15px;
-        font-weight: normal;
+        font-size: 16px;
+        font-weight: 600;
     }
     
-    /* Araç Görseli Alanı */
     .modal-car-img {
         width: 100%;
-        height: 280px;
+        height: 260px;
         object-fit: contain;
-        margin: 20px 0;
+        margin: 25px 0;
         display: block;
     }
     
     .section-title {
-        font-size: 18px;
-        font-weight: bold;
+        font-size: 19px;
+        font-weight: 900;
         margin: 20px 0 12px 0;
         color: #000;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 8px;
     }
     .specs-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 12px 8px;
-        font-size: 14px;
+        gap: 15px 10px;
+        font-size: 15px;
         color: #000;
+        font-weight: 600;
     }
     .conditions-list {
         display: flex;
         flex-direction: column;
-        gap: 10px;
-        font-size: 14px;
+        gap: 12px;
+        font-size: 15px;
         color: #000;
+        font-weight: 600;
     }
 </style>
 </head>
 <body>
 
 <div class="canvas">
-    <!-- SVG Koordinatları: 90 Derece Düz Oklar -->
+    <!-- SVG OKLAR (90 Derece, Kesik Çizgili, Hareketli) -->
     <svg class="arrows" viewBox="0 0 1000 1000" preserveAspectRatio="none">
         <defs>
             <marker id="arrow" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto">
@@ -238,43 +287,63 @@
             </marker>
         </defs>
         
-        <path class="line" d="M 200 390 V 470 H 340" marker-end="url(#arrow)" />
-        <path class="line" d="M 800 390 V 470 H 660" marker-end="url(#arrow)" />
-        <path class="line" d="M 200 960 V 990 H 480 V 660" marker-end="url(#arrow)" />
-        <path class="line" d="M 800 960 V 990 H 520 V 660" marker-end="url(#arrow)" />
+        <!-- Sol Üst: Honda yazısının altından başlar, inip merkeze gelir -->
+        <path class="line" d="M 210 460 V 500 H 380" marker-end="url(#arrow)" />
+        
+        <!-- Sağ Üst: Honda yazısının altından başlar, inip merkeze gelir -->
+        <path class="line" d="M 790 460 V 500 H 620" marker-end="url(#arrow)" />
+        
+        <!-- Sol Alt: Honda yazısının çok altından başlar, sağa döner, metne çıkar -->
+        <path class="line" d="M 210 970 V 985 H 480 V 600" marker-end="url(#arrow)" />
+        
+        <!-- Sağ Alt: Honda yazısının çok altından başlar, sola döner, metne çıkar -->
+        <path class="line" d="M 790 970 V 985 H 520 V 600" marker-end="url(#arrow)" />
     </svg>
 
+    <!-- SOL ÜST KUTU -->
     <div class="box-wrapper tl">
         <div class="text-top">Detayı İncelemek İçin Tıkla</div>
-        <div class="box tl-box"></div>
+        <div class="box tl-box">
+            <div class="click-badge">HEMEN İNCELE</div>
+        </div>
         <div class="text-bottom">Honda Civic</div>
     </div>
     
+    <!-- SAĞ ÜST KUTU -->
     <div class="box-wrapper tr">
         <div class="text-top">Detayı İncelemek İçin Tıkla</div>
-        <div class="box tr-box"></div>
+        <div class="box tr-box">
+            <div class="click-badge">TIKLA & GÖR</div>
+        </div>
         <div class="text-bottom">Honda Civic</div>
     </div>
     
+    <!-- SOL ALT KUTU -->
     <div class="box-wrapper bl">
         <div class="text-top">Detayı İncelemek İçin Tıkla</div>
-        <div class="box bl-box"></div>
+        <div class="box bl-box">
+            <div class="click-badge">HEMEN İNCELE</div>
+        </div>
         <div class="text-bottom">Honda Civic</div>
     </div>
     
+    <!-- SAĞ ALT KUTU -->
     <div class="box-wrapper br">
         <div class="text-top">Detayı İncelemek İçin Tıkla</div>
-        <div class="box br-box"></div>
+        <div class="box br-box">
+            <div class="click-badge">TIKLA & GÖR</div>
+        </div>
         <div class="text-bottom">Honda Civic</div>
     </div>
 
+    <!-- MERKEZ -->
     <div class="center-area">
-        <img src="https://raw.githubusercontent.com/KULLANICI_ADIN/DEPO_ADIN/main/panter.png" alt="Panter">
+        <img src="panter.png" alt="Panter">
         <div class="center-text">Ortalama Sekment<br>Araçlar</div>
     </div>
 </div>
 
-<!-- Tıklanınca Açılan Arayüz (Modal) -->
+<!-- MODAL ARAYÜZ (Yalnızca tıklanınca açılır) -->
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal-content">
         <div class="ribbon-wrapper"><div class="ribbon">Fırsat Aracı</div></div>
@@ -284,7 +353,7 @@
             <div class="title">Hyundai Tucson <span class="subtitle">veya benzeri</span></div>
         </div>
 
-        <img src="https://raw.githubusercontent.com/KULLANICI_ADIN/DEPO_ADIN/main/araba.png" alt="Araç Görseli" class="modal-car-img">
+        <img src="araba.png" alt="Araç Görseli" class="modal-car-img">
 
         <div class="section-title">Araç Özellikleri</div>
         <div class="specs-grid">
@@ -305,17 +374,18 @@
 </div>
 
 <script>
+    // Kutu tıklama mekanizması
     const modalOverlay = document.getElementById('modalOverlay');
     const boxes = document.querySelectorAll('.box');
 
-    // Kutulara tıklandığında arayüzü aç
+    // Siyah kutulardan herhangi birine basıldığında arayüz açılır
     boxes.forEach(box => {
         box.addEventListener('click', () => {
             modalOverlay.style.display = 'flex';
         });
     });
 
-    // Siyah arkaplana tıklandığında arayüzü kapat ve kaldığı yere dön
+    // Modalın dışındaki siyah alana tıklandığında ekran kapanır
     modalOverlay.addEventListener('click', (e) => {
         if (e.target === modalOverlay) {
             modalOverlay.style.display = 'none';
