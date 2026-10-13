@@ -2,33 +2,21 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Referans Rentecar | Kesintisiz Araç Kiralama</title>
-    <meta name="description" content="Geniş araç filomuzla uygun fiyatlı ve güvenilir araç kiralama hizmeti. Elektrikli, dizel, manuel ve otomatik seçenekleriyle hemen rezervasyon yapın.">
-    <meta name="keywords" content="araç kiralama, kiralık araba, Referans Rentecar, Fiat Egea kiralama, elektrikli araç kiralama, uygun oto kiralama">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Referans Rentecar | Kiralık Araç Filosu</title>
+    <meta name="description" content="Uygun fiyatlı ve lüks kiralık araç filosu. Hızlı rezervasyon ve güvenilir hizmet.">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- SEO JSON-LD Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "AutoRental",
-      "name": "Referans Rentecar",
-      "priceRange": "1500 TRY - 2300 TRY",
-      "description": "Geniş araç filosuyla premium ve ekonomik kiralama hizmeti.",
-      "url": "https://www.referansrentecar.com"
-    }
-    </script>
-
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+        /* === TEMEL AYARLAR === */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: #ffffff; color: #1A1D20; min-height: 100vh; overflow-x: hidden; position: relative; }
         
         .shadow-sm { box-shadow: 0 4px 15px rgba(26, 29, 32, 0.05); }
         .shadow-md { box-shadow: 0 8px 25px rgba(26, 29, 32, 0.06); }
-        .shadow-lg { box-shadow: 0 15px 40px rgba(26, 29, 32, 0.08); }
+        .shadow-lg { box-shadow: 0 15px 40px rgba(26, 29, 32, 0.1); }
 
-        .logo-container { position: absolute; top: 60px; left: 80px; z-index: 100; }
+        /* === LOGO & PWA === */
+        header { position: absolute; top: 60px; left: 80px; z-index: 100; }
         .logo { font-size: 34px; font-weight: 900; letter-spacing: -1px; margin-bottom: 40px; }
         .logo span { color: #FFC107; }
         
@@ -38,29 +26,35 @@
         .pwa-arrow { position: absolute; top: 20%; left: 50%; transform: translateX(-50%) rotate(45deg); border: solid #FFC107; border-width: 0 4px 4px 0; padding: 6px; }
         .pwa-box h3 { font-size: 17px; font-weight: 900; margin-bottom: 10px; }
         .pwa-box p { font-size: 11px; font-weight: 600; color: #6C757D; line-height: 1.5; margin-bottom: 20px; }
-        .pwa-btn { width: 100%; padding: 14px; background: #FFC107; border: none; border-radius: 8px; font-size: 14px; font-weight: 900; color: #1A1D20; cursor: pointer; }
+        .pwa-btn { width: 100%; padding: 14px; background: #FFC107; border: none; border-radius: 8px; font-size: 14px; font-weight: 900; color: #1A1D20; cursor: pointer; transition: 0.2s; }
+        .pwa-btn:hover { background: #FFCA28; transform: translateY(-2px); }
 
-        .top-capsule { position: absolute; top: 40px; left: 50%; transform: translateX(-50%); width: 800px; height: 50px; background: #F8F9FA; border: 1px solid #E9ECEF; border-radius: 25px; display: flex; align-items: center; justify-content: space-between; padding: 0 25px; z-index: 100; }
-        .status-left, .status-right { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; }
+        /* === ÜST MENÜ (GRİ KAPSÜL) === */
+        .top-capsule { position: absolute; top: 40px; left: 50%; transform: translateX(-50%); width: 800px; height: 50px; background: #F8F9FA; border: 1px solid #E9ECEF; border-radius: 25px; display: flex; align-items: center; justify-content: space-between; padding: 0 25px; z-index: 100; transition: 0.5s; }
+        .status-item { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; }
         .dot { width: 12px; height: 12px; border-radius: 50%; }
         .dot-green { background: #00E676; }
         .dot-red { background: #D32F2F; }
 
-        .neon-text { font-size: 26px; font-weight: 900; color: #FFC107; animation: neon-pulse 2s infinite alternate ease-in-out; }
+        .neon-text { font-size: 26px; font-weight: 900; color: #FFC107; animation: neon-pulse 2s infinite alternate linear; }
         @keyframes neon-pulse {
             0% { color: #FFC107; text-shadow: 0 0 5px rgba(255,193,7,0.4); }
             100% { color: #FF8F00; text-shadow: 0 0 15px rgba(255,143,0,0.8); }
         }
 
+        /* === ARAMA & FİLTRELER (TETİKLEYİCİ) === */
         .search-wrapper { position: absolute; top: 180px; left: 50%; transform: translateX(-50%); width: 1000px; text-align: center; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; z-index: 90; }
-        .search-title { font-size: 22px; font-weight: 800; margin-bottom: 30px; }
-        .search-bar { height: 70px; background: #ffffff; border: 1.5px solid #FFC107; border-radius: 35px; display: flex; align-items: center; position: relative; padding-left: 90px; padding-right: 200px; margin-bottom: 25px; transition: 0.3s; }
+        .search-title { font-size: 22px; font-weight: 800; margin-bottom: 30px; transition: 0.5s; }
+        
+        .search-bar { height: 70px; background: #ffffff; border: 1.5px solid #FFC107; border-radius: 35px; display: flex; align-items: center; position: relative; padding-left: 90px; padding-right: 220px; margin-bottom: 25px; transition: 0.3s; }
+        .search-wrapper:hover .search-bar { border-width: 2px; box-shadow: 0 0 15px rgba(255,193,7,0.2); }
         .search-placeholder { font-size: 15px; font-weight: 600; color: #6C757D; }
+        
         .avatar-circle { position: absolute; left: -10px; width: 90px; height: 90px; background: #1A1D20; border-radius: 50%; border: 2px dashed #FFC107; display: flex; align-items: center; justify-content: center; font-size: 35px; }
         .search-actions { position: absolute; right: 15px; display: flex; gap: 10px; }
-        .search-btn { padding: 12px 24px; background: #F8F9FA; border: none; border-radius: 20px; font-size: 13px; font-weight: 700; color: #1A1D20; cursor: pointer; }
+        .search-btn { padding: 12px 20px; background: #F8F9FA; border: none; border-radius: 20px; font-size: 13px; font-weight: 700; color: #1A1D20; cursor: pointer; }
 
-        .filter-row { display: flex; gap: 15px; margin-bottom: 15px; width: 100%; justify-content: space-between; }
+        .filter-row { display: flex; gap: 15px; margin-bottom: 15px; width: 100%; justify-content: space-between; transition: 0.5s; }
         .filter-row.centered { justify-content: center; }
         .filter-chip { flex: 1; padding: 14px 0; text-align: center; background: #ffffff; border: 1.5px solid #E9ECEF; border-radius: 25px; font-size: 14px; font-weight: 700; color: #6C757D; }
         .filter-chip.active { background: #FFC107; border-color: #FFC107; color: #1A1D20; font-weight: 800; }
@@ -68,160 +62,202 @@
 
         .fade-out { opacity: 0; transform: translateY(-20px); pointer-events: none; }
 
-        .right-filter-panel { position: absolute; top: 240px; right: 80px; width: 280px; background: #ffffff; border: 1px solid #F1F3F5; border-radius: 16px; padding: 25px; z-index: 100; }
+        /* === SAĞ AKILLI FİLTRE PANELİ === */
+        .right-filter-panel { position: absolute; top: 220px; right: 80px; width: 280px; background: #ffffff; border: 1px solid #F1F3F5; border-radius: 16px; padding: 25px; z-index: 100; }
         .rf-title { font-size: 17px; font-weight: 900; margin-bottom: 20px; }
         .rf-line { width: 100%; height: 2px; background: #F1F3F5; margin-bottom: 20px; }
+        
         .rf-label { font-size: 12px; font-weight: 700; color: #6C757D; margin-bottom: 10px; display: block; }
-        .rf-select { width: 100%; padding: 12px 15px; background: #FFF8E1; border: 1.5px solid #FFC107; border-radius: 8px; font-size: 13px; font-weight: 800; color: #1A1D20; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; cursor: pointer; }
+        .rf-select { width: 100%; padding: 12px 15px; background: #FFF8E1; border: 1.5px solid #FFC107; border-radius: 8px; font-size: 13px; font-weight: 800; color: #1A1D20; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; cursor: default; }
         
         .rf-radio-group { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; }
         .rf-radio { display: flex; align-items: center; gap: 10px; cursor: pointer; }
         .rf-box { width: 20px; height: 20px; border-radius: 5px; border: 1.5px solid #DEE2E6; display: flex; align-items: center; justify-content: center; }
         .rf-radio.active .rf-box { background: #FFC107; border-color: #FFC107; }
-        .rf-radio.active .rf-box::after { content: '✔'; font-size: 12px; color: #1A1D20; }
+        .rf-radio.active .rf-box::after { content: '✔'; font-size: 12px; color: #1A1D20; font-weight: bold; }
         .rf-text { font-size: 14px; font-weight: 600; color: #1A1D20; }
-        .rf-submit { width: 100%; padding: 14px; background: #FFC107; border: none; border-radius: 8px; font-size: 13px; font-weight: 900; color: #1A1D20; cursor: pointer; }
+        .rf-radio.active .rf-text { font-weight: 800; }
 
-        /* Araç Kartları (Esnek ve Yatay Kaydırılabilir Alan) */
-        .cars-container { position: absolute; top: 580px; left: 0; width: 100%; padding: 0 80px; display: flex; gap: 80px; overflow-x: auto; padding-bottom: 100px; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
-        .cars-container::-webkit-scrollbar { height: 8px; }
-        .cars-container::-webkit-scrollbar-thumb { background: #E9ECEF; border-radius: 4px; }
+        .rf-submit { width: 100%; padding: 14px; background: #1A1D20; border: none; border-radius: 8px; font-size: 13px; font-weight: 900; color: #FFC107; cursor: pointer; transition: 0.2s; }
+        .rf-submit:hover { background: #343A40; }
+
+        /* === ARAÇ KARTLARI DÜZENİ (GRID MİMARİSİ) === */
+        .cars-container { position: absolute; top: 580px; width: 100%; max-width: 1400px; left: 50%; transform: translateX(-50%); display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; padding-bottom: 120px; z-index: 10; }
         
-        .car-card { min-width: 450px; text-align: center; }
-        .car-video-container { width: 100%; height: 280px; margin-bottom: 20px; position: relative; cursor: ew-resize; background: transparent; }
+        .car-card { text-align: center; background: #ffffff; transition: 0.4s ease; }
+        .car-card.hidden { display: none; }
+        
+        /* 360 Video ve Swipe Kontrolcüsü */
+        .car-media-box { position: relative; width: 100%; height: 220px; margin-bottom: 25px; cursor: ew-resize; user-select: none; }
         .car-video { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
-        .car-hint { display: inline-block; padding: 12px 30px; background: #ffffff; border: 1.5px solid #E9ECEF; border-radius: 20px; font-size: 13px; font-weight: 700; margin-bottom: 25px; user-select: none; }
-        .car-name { font-size: 26px; font-weight: 900; letter-spacing: 0.5px; margin-bottom: 5px; }
-        .car-price { font-size: 38px; font-weight: 900; margin-bottom: 25px; }
-        .car-price span { font-size: 18px; color: #6C757D; }
-        .car-specs { display: flex; justify-content: center; gap: 15px; }
-        .spec-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; }
-        .spec-icon { width: 26px; height: 26px; background: #FFFDE7; border: 0.5px solid #FFC107; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+        
+        /* Dinamik Vites/Yazı Kontrolörü */
+        .interactive-slider-wrapper { position: relative; width: 100%; display: flex; justify-content: center; align-items: center; height: 50px; margin-bottom: 15px; cursor: pointer; }
+        
+        .car-hint-text { position: absolute; padding: 12px 30px; background: #ffffff; border: 1.5px solid #E9ECEF; border-radius: 20px; font-size: 13px; font-weight: 700; transition: opacity 0.4s ease; pointer-events: none; }
+        
+        .gear-slider { position: absolute; width: 180px; height: 36px; background: #F8F9FA; border: 1.5px solid #E9ECEF; border-radius: 18px; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease; pointer-events: auto; }
+        .gear-knob { width: 30px; height: 30px; background: #1A1D20; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #FFC107; font-size: 12px; font-weight: 900; box-shadow: 0 4px 8px rgba(0,0,0,0.2); position: absolute; left: 50%; transform: translateX(-50%); cursor: grab; }
+        .gear-arrows { display: flex; justify-content: space-between; width: 100%; padding: 0 15px; color: #adb5bd; font-size: 14px; pointer-events: none; }
+        
+        /* Döngü Animasyonu Sınıfları (JS ile eklenecek) */
+        .state-text .car-hint-text { opacity: 1; }
+        .state-text .gear-slider { opacity: 0; pointer-events: none; }
+        
+        .state-slider .car-hint-text { opacity: 0; }
+        .state-slider .gear-slider { opacity: 1; pointer-events: auto; animation: pulseSlider 1.5s infinite alternate; }
+        @keyframes pulseSlider { from { border-color: #E9ECEF; } to { border-color: #FFC107; } }
 
+        .car-name { font-size: 24px; font-weight: 900; text-transform: uppercase; margin-bottom: 5px; }
+        .car-price { font-size: 34px; font-weight: 900; margin-bottom: 20px; }
+        .car-price span { font-size: 16px; color: #6C757D; }
+        .car-specs { display: flex; justify-content: center; gap: 15px; }
+        .spec-item { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; }
+        .spec-icon { width: 24px; height: 24px; background: #FFFDE7; border: 0.5px solid #FFC107; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+
+        /* === DİJİTAL ASİSTAN MODALI === */
         .assistant-modal { position: fixed; bottom: 30px; right: 30px; width: 380px; background: #ffffff; border: 1px solid #F1F3F5; border-radius: 20px; z-index: 999; overflow: hidden; transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); opacity: 0; transform: translateY(100px) scale(0.85); pointer-events: none; }
         .assistant-modal.visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+        
         .am-header { background: #1A1D20; padding: 25px 20px 40px; text-align: center; position: relative; }
         .am-header h2 { color: #FFC107; font-size: 20px; font-weight: 900; margin-bottom: 5px; }
         .am-header p { color: #F8F9FA; font-size: 13px; font-weight: 600; }
         .close-modal { position: absolute; top: 15px; right: 15px; width: 30px; height: 30px; background: #343A40; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer; font-weight: bold; border: none; }
+        
         .am-body { padding: 0 20px 20px; text-align: center; }
         .am-avatar { width: 60px; height: 60px; background: #ffffff; border: 2px solid #FFC107; border-radius: 50%; font-size: 30px; display: flex; align-items: center; justify-content: center; margin: -30px auto 15px; position: relative; z-index: 2; }
-        .am-greeting { background: #F8F9FA; padding: 16px; border-radius: 12px; font-size: 13px; font-weight: 700; margin-bottom: 20px; }
-        .am-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
-        .am-option { padding: 18px 20px; background: #ffffff; border: 1.5px solid #FFC107; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: left; cursor: pointer; }
+        .am-greeting { background: #F8F9FA; padding: 16px; border-radius: 12px; font-size: 13px; font-weight: 700; margin-bottom: 20px; color: #1A1D20; }
+        
+        .am-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
+        .am-option { padding: 16px 20px; background: #ffffff; border: 1.5px solid #FFC107; border-radius: 12px; font-size: 13px; font-weight: 700; color: #1A1D20; text-align: left; cursor: pointer; transition: 0.2s; }
+        .am-option:hover { background: #FFF8E1; }
         .am-footer { padding: 15px; border-top: 1.5px solid #F1F3F5; font-size: 11px; font-weight: 700; color: #6C757D; text-align: center; }
 
+        /* Mobil Görünüm Optimizasyonu (Tek Sütun) */
+        @media (max-width: 1024px) {
+            .cars-container { grid-template-columns: 1fr; padding: 0 20px 100px; gap: 80px; }
+            .car-card { margin: 0 auto; width: 100%; max-width: 450px; }
+            .right-filter-panel { display: none; } /* Mobilde filtre paneli gizlenir veya alt menüye alınır */
+            .top-capsule { display: none; }
+            .search-wrapper { width: 90%; top: 120px; }
+            .search-bar { padding-left: 60px; padding-right: 15px; }
+            .avatar-circle { width: 60px; height: 60px; left: 0; font-size: 24px; }
+            .search-actions { display: none; }
+            .filter-row { overflow-x: auto; flex-wrap: nowrap; }
+            .cars-container { top: 400px; }
+        }
     </style>
 </head>
 <body>
 
-    <header class="logo-container" aria-label="Ana Başlık">
-        <h1 class="logo">REFERANS<span>.</span></h1>
-        <div class="pwa-box shadow-md" role="region" aria-label="Uygulama İndirme Paneli">
+    <!-- LOGO VE PWA -->
+    <header>
+        <div class="logo">REFERANS<span>.</span></div>
+        <div class="pwa-box shadow-md">
             <div class="pwa-icon-bg"><div class="pwa-icon-inner"><div class="pwa-arrow"></div></div></div>
             <h3>Ana Ekrana Ekle</h3>
             <p>Kampanyalar ve hızlı rezervasyon için cihazınıza yükleyin.</p>
-            <button class="pwa-btn" aria-label="Uygulamayı Yükle">HEMEN YÜKLE</button>
+            <button class="pwa-btn">HEMEN YÜKLE</button>
         </div>
     </header>
 
-    <div class="top-capsule shadow-sm" role="banner">
-        <div class="status-left"><div class="dot dot-green"></div> Şu Anda Açığız</div>
+    <!-- ÜST MENÜ (GRİ KAPSÜL) -->
+    <div class="top-capsule shadow-sm" id="top-menu">
+        <div class="status-item"><div class="dot dot-green"></div> Şu Anda Açığız</div>
         <div class="neon-text">Arabanı Sipariş Ver!</div>
-        <div class="status-right">Anında Adrese Ücretsiz Teslimat <div class="dot dot-red"></div></div>
+        <div class="status-item">Anında Adrese Ücretsiz Teslimat <div class="dot dot-red"></div></div>
     </div>
 
-    <section class="search-wrapper" id="search-section" aria-label="Araç Arama ve Filtreleme">
-        <h2 class="search-title">✨ Nasıl bir araba bakmıştınız? Lütfen seçiniz</h2>
-        <div class="search-bar shadow-md" role="button" tabindex="0">
+    <!-- ARAMA VE FİLTRELER (TETİKLEYİCİ) -->
+    <div class="search-wrapper" id="search-section">
+        <div class="search-title">✨ Nasıl bir araba bakmıştınız? Lütfen seçiniz</div>
+        <div class="search-bar shadow-md">
             <div class="avatar-circle shadow-md">🐆</div>
             <div class="search-placeholder">Dijital asistanınıza tarif edin veya bir seçenek belirleyin...</div>
             <div class="search-actions">
-                <button class="search-btn">İlan Ver</button>
+                <button class="search-btn">Kampanyalar</button>
                 <button class="search-btn">Destek</button>
             </div>
         </div>
-        <nav class="filter-row" aria-label="Kategori Filtreleri">
-            <button class="filter-chip active shadow-sm">Premium SUV</button>
-            <button class="filter-chip">Spor Cabrio</button>
-            <button class="filter-chip">Elektrikli</button>
-            <button class="filter-chip">Hibrit</button>
-            <button class="filter-chip">Geniş Aile</button>
-        </nav>
-        <nav class="filter-row centered" aria-label="Özellik Filtreleri">
-            <button class="filter-chip-sm">Otomatik</button>
-            <button class="filter-chip-sm">Dizel</button>
-            <button class="filter-chip-sm">VIP Minibüs</button>
-            <button class="filter-chip-sm">Ticari Araç</button>
-            <button class="filter-chip-sm">Lüks Sedan</button>
-        </nav>
-    </section>
-
-    <aside class="right-filter-panel shadow-md" aria-label="Gelişmiş Filtreleme">
-        <h3 class="rf-title">Gelişmiş Filtreleme</h3>
-        <div class="rf-line"></div>
-        <span class="rf-label">Sıralama Ölçütü</span>
-        <div class="rf-select" role="button" aria-haspopup="listbox">Fiyat: Yüksekten Düşüğe</div>
-        <span class="rf-label">Fiyat Aralığı (Günlük)</span>
-        <div class="rf-radio-group" role="radiogroup">
-            <div class="rf-radio active" role="radio" aria-checked="true"><div class="rf-box"></div><div class="rf-text">Tüm Araçlar</div></div>
-            <div class="rf-radio" role="radio" aria-checked="false"><div class="rf-box"></div><div class="rf-text">2000 ₺ Altı</div></div>
-            <div class="rf-radio" role="radio" aria-checked="false"><div class="rf-box"></div><div class="rf-text">1500 ₺ ve Altı</div></div>
+        <div class="filter-row" id="filters-1">
+            <div class="filter-chip active shadow-sm">Premium SUV</div>
+            <div class="filter-chip">Spor Cabrio</div>
+            <div class="filter-chip">Elektrikli</div>
+            <div class="filter-chip">Hibrit</div>
+            <div class="filter-chip">Geniş Aile</div>
         </div>
-        <button class="rf-submit">SONUÇLARI LİSTELE</button>
-    </aside>
+        <div class="filter-row centered" id="filters-2">
+            <div class="filter-chip-sm">Otomatik</div>
+            <div class="filter-chip-sm">Dizel</div>
+            <div class="filter-chip-sm">VIP Minibüs</div>
+            <div class="filter-chip-sm">Ticari Araç</div>
+            <div class="filter-chip-sm">Lüks Sedan</div>
+        </div>
+    </div>
 
-    <main class="cars-container" aria-label="Araç Filosu Listesi">
+    <!-- SAĞ AKILLI FİLTRE PANELİ -->
+    <div class="right-filter-panel shadow-md">
+        <div class="rf-title">Gelişmiş Filtreleme</div>
+        <div class="rf-line"></div>
         
-        <!-- Dinamik Araç Listesi (Örnek: Fiat Egea) -->
-        <article class="car-card">
-            <div class="car-video-container" aria-label="360 Derece Araç Görünümü">
-                <video class="car-video" src="assets/fiat-egea-360.mp4" preload="metadata" muted playsinline></video>
-            </div>
-            <div class="car-hint shadow-sm">← 360° İncelemek İçin Kaydırın →</div>
-            <h3 class="car-name">FIAT EGEA</h3>
-            <div class="car-price">1.500 ₺ <span>/ Gün</span></div>
-            <div class="car-specs">
-                <div class="spec-item"><div class="spec-icon">⛽</div> Dizel</div>
-                <div class="spec-item"><div class="spec-icon">⚙️</div> Manuel</div>
-            </div>
-        </article>
+        <span class="rf-label">Sıralama Ölçütü</span>
+        <div class="rf-select">Fiyat: Yüksekten Düşüğe</div>
 
-        <!-- Toyota Corolla -->
-        <article class="car-card">
-            <div class="car-video-container">
-                <video class="car-video" src="assets/toyota-corolla-360.mp4" preload="metadata" muted playsinline></video>
+        <span class="rf-label">Fiyat Aralığı (Günlük)</span>
+        <div class="rf-radio-group">
+            <div class="rf-radio active" data-filter="all">
+                <div class="rf-box"></div>
+                <div class="rf-text">Tüm Araçlar</div>
             </div>
-            <div class="car-hint shadow-sm">← 360° İncelemek İçin Kaydırın →</div>
-            <h3 class="car-name">TOYOTA COROLLA</h3>
-            <div class="car-price">1.700 ₺ <span>/ Gün</span></div>
+            <div class="rf-radio" data-filter="under2000">
+                <div class="rf-box"></div>
+                <div class="rf-text">2000 ₺ ve Altı</div>
+            </div>
+            <div class="rf-radio" data-filter="over2000">
+                <div class="rf-box"></div>
+                <div class="rf-text">2000 ₺ ve Üstü</div>
+            </div>
+        </div>
+        <button class="rf-submit" id="btn-filter">SONUÇLARI LİSTELE</button>
+    </div>
+
+    <!-- ARAÇ KARTLARI DÜZENİ (11 Araçlık Dinamik Liste) -->
+    <!-- data-price ve data-specs öznitelikleri JS filtrelemesi içindir -->
+    <div class="cars-container" id="cars-grid">
+        
+        <!-- 1. Honda Civic -->
+        <article class="car-card" data-price="1600" data-gear="otomatik" data-fuel="benzin">
+            <div class="car-media-box">
+                <video class="car-video" src="assets/honda-civic-360.mp4" preload="metadata" muted playsinline></video>
+            </div>
+            <div class="interactive-slider-wrapper state-text">
+                <div class="car-hint-text shadow-sm">← 360° İncelemek İçin Kaydırın →</div>
+                <div class="gear-slider">
+                    <div class="gear-arrows"><span>◀</span><span>▶</span></div>
+                    <div class="gear-knob">N</div>
+                </div>
+            </div>
+            <div class="car-name">HONDA CIVIC</div>
+            <div class="car-price">1.600 ₺ <span>/ Gün</span></div>
             <div class="car-specs">
-                <div class="spec-item"><div class="spec-icon">⚡</div> Elektrik</div>
+                <div class="spec-item"><div class="spec-icon">⛽</div> Benzin</div>
                 <div class="spec-item"><div class="spec-icon">⚙️</div> Otomatik</div>
             </div>
         </article>
 
-        <!-- Nissan Qashqai -->
-        <article class="car-card">
-            <div class="car-video-container">
-                <video class="car-video" src="assets/nissan-qashqai-360.mp4" preload="metadata" muted playsinline></video>
-            </div>
-            <div class="car-hint shadow-sm">← 360° İncelemek İçin Kaydırın →</div>
-            <h3 class="car-name">NISSAN QASHQAI</h3>
-            <div class="car-price">2.300 ₺ <span>/ Gün</span></div>
-            <div class="car-specs">
-                <div class="spec-item"><div class="spec-icon">⛽</div> Dizel</div>
-                <div class="spec-item"><div class="spec-icon">⚙️</div> Manuel</div>
-            </div>
-        </article>
-        
-        <!-- Renault Megane -->
-        <article class="car-card">
-            <div class="car-video-container">
+        <!-- 2. Renault Megane -->
+        <article class="car-card" data-price="2000" data-gear="otomatik" data-fuel="dizel">
+            <div class="car-media-box">
                 <video class="car-video" src="assets/renault-megane-360.mp4" preload="metadata" muted playsinline></video>
             </div>
-            <div class="car-hint shadow-sm">← 360° İncelemek İçin Kaydırın →</div>
-            <h3 class="car-name">RENAULT MEGANE</h3>
+            <div class="interactive-slider-wrapper state-text">
+                <div class="car-hint-text shadow-sm">← 360° İncelemek İçin Kaydırın →</div>
+                <div class="gear-slider">
+                    <div class="gear-arrows"><span>◀</span><span>▶</span></div>
+                    <div class="gear-knob">N</div>
+                </div>
+            </div>
+            <div class="car-name">RENAULT MEGANE</div>
             <div class="car-price">2.000 ₺ <span>/ Gün</span></div>
             <div class="car-specs">
                 <div class="spec-item"><div class="spec-icon">⛽</div> Dizel</div>
@@ -229,62 +265,351 @@
             </div>
         </article>
 
-    </main>
+        <!-- 3. Citroen C Elysee -->
+        <article class="car-card" data-price="1600" data-gear="manuel" data-fuel="dizel">
+            <div class="car-media-box">
+                <video class="car-video" src="assets/citroen-c-elysee-360.mp4" preload="metadata" muted playsinline></video>
+            </div>
+            <div class="interactive-slider-wrapper state-text">
+                <div class="car-hint-text shadow-sm">← 360° İncelemek İçin Kaydırın →</div>
+                <div class="gear-slider">
+                    <div class="gear-arrows"><span>◀</span><span>▶</span></div>
+                    <div class="gear-knob">N</div>
+                </div>
+            </div>
+            <div class="car-name">CITROEN C ELYSEE</div>
+            <div class="car-price">1.600 ₺ <span>/ Gün</span></div>
+            <div class="car-specs">
+                <div class="spec-item"><div class="spec-icon">⛽</div> Dizel</div>
+                <div class="spec-item"><div class="spec-icon">⚙️</div> Manuel</div>
+            </div>
+        </article>
 
-    <!-- Dijital Asistan Modalı -->
-    <dialog class="assistant-modal shadow-lg" id="digital-assistant-modal" aria-label="Yapay Zeka Dijital Asistan">
+        <!-- 4. Nissan Qashqai -->
+        <article class="car-card" data-price="2300" data-gear="manuel" data-fuel="dizel">
+            <div class="car-media-box">
+                <video class="car-video" src="assets/nissan-qashqai-360.mp4" preload="metadata" muted playsinline></video>
+            </div>
+            <div class="interactive-slider-wrapper state-text">
+                <div class="car-hint-text shadow-sm">← 360° İncelemek İçin Kaydırın →</div>
+                <div class="gear-slider">
+                    <div class="gear-arrows"><span>◀</span><span>▶</span></div>
+                    <div class="gear-knob">N</div>
+                </div>
+            </div>
+            <div class="car-name">NISSAN QASHQAI</div>
+            <div class="car-price">2.300 ₺ <span>/ Gün</span></div>
+            <div class="car-specs">
+                <div class="spec-item"><div class="spec-icon">⛽</div> Dizel</div>
+                <div class="spec-item"><div class="spec-icon">⚙️</div> Manuel</div>
+            </div>
+        </article>
+
+        <!-- 5. Toyota Corolla -->
+        <article class="car-card" data-price="1700" data-gear="otomatik" data-fuel="elektrik">
+            <div class="car-media-box">
+                <video class="car-video" src="assets/toyota-corolla-360.mp4" preload="metadata" muted playsinline></video>
+            </div>
+            <div class="interactive-slider-wrapper state-text">
+                <div class="car-hint-text shadow-sm">← 360° İncelemek İçin Kaydırın →</div>
+                <div class="gear-slider">
+                    <div class="gear-arrows"><span>◀</span><span>▶</span></div>
+                    <div class="gear-knob">N</div>
+                </div>
+            </div>
+            <div class="car-name">TOYOTA COROLLA</div>
+            <div class="car-price">1.700 ₺ <span>/ Gün</span></div>
+            <div class="car-specs">
+                <div class="spec-item"><div class="spec-icon">⚡</div> Elektrik</div>
+                <div class="spec-item"><div class="spec-icon">⚙️</div> Otomatik</div>
+            </div>
+        </article>
+
+        <!-- 6. Kia Rio -->
+        <article class="car-card" data-price="1650" data-gear="manuel" data-fuel="dizel">
+            <div class="car-media-box">
+                <video class="car-video" src="assets/kia-rio-360.mp4" preload="metadata" muted playsinline></video>
+            </div>
+            <div class="interactive-slider-wrapper state-text">
+                <div class="car-hint-text shadow-sm">← 360° İncelemek İçin Kaydırın →</div>
+                <div class="gear-slider">
+                    <div class="gear-arrows"><span>◀</span><span>▶</span></div>
+                    <div class="gear-knob">N</div>
+                </div>
+            </div>
+            <div class="car-name">KIA RIO</div>
+            <div class="car-price">1.650 ₺ <span>/ Gün</span></div>
+            <div class="car-specs">
+                <div class="spec-item"><div class="spec-icon">⛽</div> Dizel</div>
+                <div class="spec-item"><div class="spec-icon">⚙️</div> Manuel</div>
+            </div>
+        </article>
+
+        <!-- 7. Hyundai i20 -->
+        <article class="car-card" data-price="1600" data-gear="otomatik" data-fuel="benzin">
+            <div class="car-media-box">
+                <video class="car-video" src="assets/hyundai-i20-360.mp4" preload="metadata" muted playsinline></video>
+            </div>
+            <div class="interactive-slider-wrapper state-text">
+                <div class="car-hint-text shadow-sm">← 360° İncelemek İçin Kaydırın →</div>
+                <div class="gear-slider">
+                    <div class="gear-arrows"><span>◀</span><span>▶</span></div>
+                    <div class="gear-knob">N</div>
+                </div>
+            </div>
+            <div class="car-name">HYUNDAI I20</div>
+            <div class="car-price">1.600 ₺ <span>/ Gün</span></div>
+            <div class="car-specs">
+                <div class="spec-item"><div class="spec-icon">⛽</div> Benzin</div>
+                <div class="spec-item"><div class="spec-icon">⚙️</div> Otomatik</div>
+            </div>
+        </article>
+
+        <!-- 8. Fiat Egea -->
+        <article class="car-card" data-price="1500" data-gear="manuel" data-fuel="dizel">
+            <div class="car-media-box">
+                <video class="car-video" src="assets/fiat-egea-360.mp4" preload="metadata" muted playsinline></video>
+            </div>
+            <div class="interactive-slider-wrapper state-text">
+                <div class="car-hint-text shadow-sm">← 360° İncelemek İçin Kaydırın →</div>
+                <div class="gear-slider">
+                    <div class="gear-arrows"><span>◀</span><span>▶</span></div>
+                    <div class="gear-knob">N</div>
+                </div>
+            </div>
+            <div class="car-name">FIAT EGEA</div>
+            <div class="car-price">1.500 ₺ <span>/ Gün</span></div>
+            <div class="car-specs">
+                <div class="spec-item"><div class="spec-icon">⛽</div> Dizel</div>
+                <div class="spec-item"><div class="spec-icon">⚙️</div> Manuel</div>
+            </div>
+        </article>
+
+        <!-- 9. Fiat Fiorino -->
+        <article class="car-card" data-price="1500" data-gear="manuel" data-fuel="dizel">
+            <div class="car-media-box">
+                <video class="car-video" src="assets/fiat-fiorino-360.mp4" preload="metadata" muted playsinline></video>
+            </div>
+            <div class="interactive-slider-wrapper state-text">
+                <div class="car-hint-text shadow-sm">← 360° İncelemek İçin Kaydırın →</div>
+                <div class="gear-slider">
+                    <div class="gear-arrows"><span>◀</span><span>▶</span></div>
+                    <div class="gear-knob">N</div>
+                </div>
+            </div>
+            <div class="car-name">FIAT FIORINO</div>
+            <div class="car-price">1.500 ₺ <span>/ Gün</span></div>
+            <div class="car-specs">
+                <div class="spec-item"><div class="spec-icon">⛽</div> Dizel</div>
+                <div class="spec-item"><div class="spec-icon">⚙️</div> Manuel</div>
+            </div>
+        </article>
+
+        <!-- 10. Peugeot 301 -->
+        <article class="car-card" data-price="1500" data-gear="manuel" data-fuel="dizel">
+            <div class="car-media-box">
+                <video class="car-video" src="assets/peugeot-301-360.mp4" preload="metadata" muted playsinline></video>
+            </div>
+            <div class="interactive-slider-wrapper state-text">
+                <div class="car-hint-text shadow-sm">← 360° İncelemek İçin Kaydırın →</div>
+                <div class="gear-slider">
+                    <div class="gear-arrows"><span>◀</span><span>▶</span></div>
+                    <div class="gear-knob">N</div>
+                </div>
+            </div>
+            <div class="car-name">PEUGEOT 301</div>
+            <div class="car-price">1.500 ₺ <span>/ Gün</span></div>
+            <div class="car-specs">
+                <div class="spec-item"><div class="spec-icon">⛽</div> Dizel</div>
+                <div class="spec-item"><div class="spec-icon">⚙️</div> Manuel</div>
+            </div>
+        </article>
+
+        <!-- 11. Renault Symbol -->
+        <article class="car-card" data-price="1500" data-gear="manuel" data-fuel="dizel">
+            <div class="car-media-box">
+                <video class="car-video" src="assets/renault-symbol-360.mp4" preload="metadata" muted playsinline></video>
+            </div>
+            <div class="interactive-slider-wrapper state-text">
+                <div class="car-hint-text shadow-sm">← 360° İncelemek İçin Kaydırın →</div>
+                <div class="gear-slider">
+                    <div class="gear-arrows"><span>◀</span><span>▶</span></div>
+                    <div class="gear-knob">N</div>
+                </div>
+            </div>
+            <div class="car-name">RENAULT SYMBOL</div>
+            <div class="car-price">1.500 ₺ <span>/ Gün</span></div>
+            <div class="car-specs">
+                <div class="spec-item"><div class="spec-icon">⛽</div> Dizel</div>
+                <div class="spec-item"><div class="spec-icon">⚙️</div> Manuel</div>
+            </div>
+        </article>
+    </div>
+
+    <!-- DİJİTAL ASİSTAN MODALI (SAĞ ALT) -->
+    <div class="assistant-modal shadow-lg" id="digital-assistant-modal">
         <div class="am-header">
             <h2>Dijital Asistan</h2>
             <p>Size nasıl yardımcı olabilirim?</p>
-            <button class="close-modal" id="close-modal" aria-label="Asistanı Kapat">✕</button>
+            <button class="close-modal" id="close-modal">✕</button>
         </div>
         <div class="am-body">
-            <div class="am-avatar shadow-sm">🐆</div>
-            <div class="am-greeting">Merhaba! Ben Referans Jaguar 🐆</div>
-            <div class="am-options">
-                <button class="am-option shadow-sm">💰 Kiralama Ücretleri Ne Kadar?</button>
-                <button class="am-option shadow-sm">📸 1.500 ₺ Altı Araçları Listele</button>
-                <button class="am-option shadow-sm">❓ Elektrikli Otomatik Araç Var Mı?</button>
+            <div class="am-avatar shadow-md">🐆</div>
+            <div class="am-greeting" id="jaguar-message">Merhaba! Ben Referans Jaguar 🐆 İhtiyacınıza uygun aracı bulmam için bana ne istediğinizi söyleyin.</div>
+            <div class="am-options" id="ai-options-list">
+                <button class="am-option shadow-sm" onclick="triggerAI('otomatik')">⚙️ Sadece Otomatik Vitesleri Listele</button>
+                <button class="am-option shadow-sm" onclick="triggerAI('elektrik')">⚡ Elektrikli Araç Seçeneği Var Mı?</button>
+                <button class="am-option shadow-sm" onclick="triggerAI('ekonomik')">💰 En Ekonomik Araçları Göster (1500 ₺)</button>
             </div>
         </div>
         <div class="am-footer">⚡ Powered by Referans Rentecar</div>
-    </dialog>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // === TEMEL DEĞİŞKENLER ===
             const searchSection = document.getElementById('search-section');
+            const topMenu = document.getElementById('top-menu');
             const modal = document.getElementById('digital-assistant-modal');
             const closeBtn = document.getElementById('close-modal');
-            const videoContainers = document.querySelectorAll('.car-video-container');
+            const jaguarMessage = document.getElementById('jaguar-message');
+            
+            const radioGroup = document.querySelectorAll('.rf-radio');
+            const filterBtn = document.getElementById('btn-filter');
+            const cars = document.querySelectorAll('.car-card');
+            const sliders = document.querySelectorAll('.interactive-slider-wrapper');
 
-            // Asistan Açılış/Kapanış Animasyonu
+            // === 1. ASİSTAN MODALI KONTROLLERİ ===
             searchSection.addEventListener('click', () => {
                 searchSection.classList.add('fade-out');
+                topMenu.classList.add('fade-out-up');
                 modal.classList.add('visible');
-                if (typeof modal.showModal === "function" && !modal.open) { modal.showModal(); }
             });
 
             closeBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 searchSection.classList.remove('fade-out');
+                topMenu.classList.remove('fade-out-up');
                 modal.classList.remove('visible');
-                if (typeof modal.close === "function") { setTimeout(() => modal.close(), 600); }
+                // Filtreleri sıfırla
+                cars.forEach(car => car.classList.remove('hidden'));
+                jaguarMessage.innerHTML = "Merhaba! Ben Referans Jaguar 🐆 İhtiyacınıza uygun aracı bulmam için bana ne istediğinizi söyleyin.";
             });
 
-            // 360 Derece Video Fare ile Kaydırma (Scrubbing) İşlevi
-            videoContainers.forEach(container => {
-                const video = container.querySelector('.car-video');
-                
-                container.addEventListener('mousemove', (e) => {
-                    if (video.readyState >= 1) { // Video yüklendiyse
-                        const rect = container.getBoundingClientRect();
-                        const xPos = e.clientX - rect.left;
-                        const percentage = Math.max(0, Math.min(1, xPos / rect.width));
-                        // Videonun toplam süresine göre fare konumunu eşleştir
-                        video.currentTime = percentage * video.duration;
+            // === 2. DİNAMİK SAĞ FİLTRE MANTIĞI ===
+            let currentFilter = 'all';
+
+            radioGroup.forEach(radio => {
+                radio.addEventListener('click', () => {
+                    radioGroup.forEach(r => r.classList.remove('active'));
+                    radio.classList.add('active');
+                    currentFilter = radio.getAttribute('data-filter');
+                });
+            });
+
+            filterBtn.addEventListener('click', () => {
+                cars.forEach(car => {
+                    let price = parseInt(car.getAttribute('data-price'));
+                    
+                    if (currentFilter === 'all') {
+                        car.classList.remove('hidden');
+                    } else if (currentFilter === 'under2000' && price <= 2000) {
+                        car.classList.remove('hidden');
+                    } else if (currentFilter === 'over2000' && price > 2000) {
+                        car.classList.remove('hidden');
+                    } else {
+                        car.classList.add('hidden');
                     }
                 });
             });
+
+            // === 3. REFERANS JAGUAR YAPAY ZEKA SENARYOLARI ===
+            window.triggerAI = function(type) {
+                jaguarMessage.innerHTML = "<em>Düşünüyor...</em> 🐆";
+                
+                setTimeout(() => {
+                    if (type === 'otomatik') {
+                        jaguarMessage.innerHTML = "Sizin için filomuzdaki <strong>Otomatik Vitesli</strong> araçları listeledim. Honda Civic, Megane, Corolla ve i20 seçeneklerimiz mevcut.";
+                        cars.forEach(car => {
+                            if(car.getAttribute('data-gear') === 'otomatik') car.classList.remove('hidden');
+                            else car.classList.add('hidden');
+                        });
+                    } else if (type === 'elektrik') {
+                        jaguarMessage.innerHTML = "Şu an filomuzda yeni nesil teknolojiye sahip <strong>Elektrikli/Hibrit</strong> olarak sadece Toyota Corolla bulunmaktadır.";
+                        cars.forEach(car => {
+                            if(car.getAttribute('data-fuel') === 'elektrik') car.classList.remove('hidden');
+                            else car.classList.add('hidden');
+                        });
+                    } else if (type === 'ekonomik') {
+                        jaguarMessage.innerHTML = "Filomuzdaki en uygun fiyatlı araçlar günlük 1.500 ₺ ile Fiat Egea, Fiat Fiorino, Peugeot 301 ve Renault Symbol'dür.";
+                        cars.forEach(car => {
+                            if(parseInt(car.getAttribute('data-price')) === 1500) car.classList.remove('hidden');
+                            else car.classList.add('hidden');
+                        });
+                    }
+                }, 1000); // Yapay zeka bekleme animasyonu hissi
+            };
+
+            // === 4. DÖNGÜSEL 360° ANİMASYON VE ETKİLEŞİM MANTIĞI ===
+            
+            // Animasyon Döngüsünü Başlatır
+            function startSliderAnimation(wrapper) {
+                if(wrapper.classList.contains('user-interacted')) return; // Tıklanmışsa döngüyü bozma
+                
+                // 1.8 Sn yazı bekle
+                setTimeout(() => {
+                    if(wrapper.classList.contains('user-interacted')) return;
+                    wrapper.classList.remove('state-text');
+                    wrapper.classList.add('state-slider');
+                    
+                    // Vites Topuzu 2.8 saniye açık kalacak
+                    setTimeout(() => {
+                        if(wrapper.classList.contains('user-interacted')) return;
+                        wrapper.classList.remove('state-slider');
+                        wrapper.classList.add('state-text');
+                        startSliderAnimation(wrapper); // Sonsuz Döngü
+                    }, 2800);
+                }, 1800);
+            }
+
+            sliders.forEach(wrapper => {
+                // Sayfa yüklendiğinde döngüyü başlat
+                startSliderAnimation(wrapper);
+
+                // Kullanıcı Tıkladığında Animasyonu Durdur ve Vites Topuzuna Sabitle
+                wrapper.addEventListener('click', () => {
+                    wrapper.classList.add('user-interacted'); // Döngüyü kilitler
+                    wrapper.classList.remove('state-text');
+                    wrapper.classList.add('state-slider');
+                    
+                    const knob = wrapper.querySelector('.gear-knob');
+                    knob.style.background = '#FFC107'; // Fiziksel tıklandığını belli et
+                    knob.style.color = '#1A1D20';
+                });
+            });
+
+            // === 5. 360° VİDEO SCRUBBING (Gelişmiş 1.4x Hız İvmesi) ===
+            const videoContainers = document.querySelectorAll('.car-media-box');
+            
+            videoContainers.forEach(container => {
+                const video = container.querySelector('.car-video');
+                
+                // Fare container üzerinde gezerken araba döner
+                container.addEventListener('mousemove', (e) => {
+                    if (video.readyState >= 1) { // Video yüklendiyse
+                        const rect = container.getBoundingClientRect();
+                        const xPos = e.clientX - rect.left; // Farenin X konumu
+                        
+                        // İvme Çarpanı: 1.4x (Ekranın tamamını gezmeye gerek kalmadan videoyu tam turlatır)
+                        let rawPercentage = (xPos / rect.width) * 1.4;
+                        // Değeri 0 ile 1 arasında sınırla (taşırmamak için)
+                        let finalPercentage = Math.max(0, Math.min(1, rawPercentage));
+                        
+                        video.currentTime = finalPercentage * video.duration;
+                    }
+                });
+            });
+
         });
     </script>
 </body>
