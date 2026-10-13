@@ -12,13 +12,11 @@
       "@context": "https://schema.org",
       "@type": "AutoRental",
       "name": "Referans Rentecar",
-      "priceRange": "1500 TRY - 2300 TRY",
-      "description": "Fırsat ve Lüks kiralık araç seçenekleri."
+      "priceRange": "1500 TRY - 2300 TRY"
     }
     </script>
 
     <style>
-        /* === TEMEL AYARLAR === */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: #ffffff; color: #1A1D20; min-height: 100vh; overflow-x: hidden; position: relative; }
         
@@ -26,7 +24,7 @@
         .shadow-md { box-shadow: 0 8px 25px rgba(26, 29, 32, 0.06); }
         .shadow-float { box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1); }
 
-        /* === 1. LOGO & PWA === */
+        /* LOGO & PWA */
         header { position: absolute; top: 60px; left: 60px; z-index: 100; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         .logo { font-size: 34px; font-weight: 900; letter-spacing: -1px; margin-bottom: 40px; }
         .logo span { color: #FFC107; }
@@ -40,23 +38,19 @@
         .pwa-btn { width: 100%; padding: 14px; background: #FFC107; border: none; border-radius: 8px; font-size: 14px; font-weight: 900; color: #1A1D20; cursor: pointer; transition: 0.2s; }
         .pwa-btn:hover { background: #FFCA28; }
 
-        /* === 2. ÜST MENÜ (GLASSMORPHISM) === */
-        .top-capsule { position: absolute; top: 40px; left: 50%; transform: translateX(-50%); width: 850px; height: 55px; background: rgba(248, 249, 250, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(233, 236, 239, 0.8); border-radius: 30px; display: flex; align-items: center; justify-content: space-between; padding: 0 35px; z-index: 100; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        /* ÜST MENÜ */
+        .top-capsule { position: absolute; top: 40px; left: 50%; transform: translateX(-50%); width: 850px; height: 55px; background: rgba(248, 249, 250, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(233, 236, 239, 0.8); border-radius: 30px; display: flex; align-items: center; justify-content: space-between; padding: 0 35px; z-index: 100; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         .status-item { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700; }
         .dot { width: 10px; height: 10px; border-radius: 50%; }
         .dot-green { background: #00E676; box-shadow: 0 0 8px rgba(0,230,118,0.5); }
         .dot-red { background: #D32F2F; box-shadow: 0 0 8px rgba(211,47,47,0.5); }
 
         .neon-text { font-size: 26px; font-weight: 900; color: #FFC107; animation: neon-pulse 2s infinite alternate linear; }
-        @keyframes neon-pulse {
-            0% { color: #FFC107; text-shadow: 0 0 4px rgba(255,193,7,0.5); }
-            100% { color: #FF8F00; text-shadow: 0 0 10px rgba(255,143,0,0.8); }
-        }
+        @keyframes neon-pulse { 0% { text-shadow: 0 0 4px rgba(255,193,7,0.5); } 100% { color: #FF8F00; text-shadow: 0 0 10px rgba(255,143,0,0.8); } }
 
-        /* === 3. ARAMA BARI (TETİKLEYİCİ) === */
+        /* ARAMA BARI */
         .search-wrapper { position: absolute; top: 180px; left: 50%; transform: translateX(-50%); width: 1000px; text-align: center; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; z-index: 90; }
         .search-title { font-size: 22px; font-weight: 800; margin-bottom: 30px; transition: 0.5s; }
-        
         .search-bar { height: 70px; background: #ffffff; border: 1.5px solid #FFC107; border-radius: 35px; display: flex; align-items: center; position: relative; padding-left: 90px; padding-right: 220px; margin-bottom: 25px; transition: 0.3s; }
         .search-wrapper:hover .search-bar { border-width: 2px; box-shadow: 0 0 15px rgba(255,193,7,0.2); }
         .search-placeholder { font-size: 15px; font-weight: 600; color: #6C757D; }
@@ -67,23 +61,21 @@
 
         .filter-row { display: flex; gap: 15px; margin-bottom: 15px; width: 100%; justify-content: space-between; transition: 0.5s; }
         .filter-row.centered { justify-content: center; }
-        .filter-chip { flex: 1; padding: 14px 0; text-align: center; background: #ffffff; border: 1.5px solid #E9ECEF; border-radius: 25px; font-size: 14px; font-weight: 700; color: #6C757D; }
+        .filter-chip, .filter-chip-sm { padding: 14px 0; text-align: center; background: #ffffff; border: 1.5px solid #E9ECEF; border-radius: 25px; font-size: 14px; font-weight: 700; color: #6C757D; flex: 1; }
+        .filter-chip-sm { padding: 14px 30px; flex: none; }
         .filter-chip.active { background: #FFC107; border-color: #FFC107; color: #1A1D20; font-weight: 800; }
-        .filter-chip-sm { padding: 14px 30px; background: #ffffff; border: 1.5px solid #E9ECEF; border-radius: 25px; font-size: 14px; font-weight: 700; color: #6C757D; }
 
-        /* Kaybolma Animasyonları Sınıfları */
         .fade-out-up { opacity: 0 !important; transform: translate(-50%, -40px) !important; pointer-events: none !important; }
-        .fade-out { opacity: 0 !important; transform: translate(-50%, -20px) !important; pointer-events: none !important; }
         .fade-out-side { opacity: 0 !important; transform: translateX(40px) !important; pointer-events: none !important; }
 
-        /* === 4. SAĞ AKILLI FİLTRE PANELİ === */
+        /* SAĞ AKILLI FİLTRE PANELİ */
         .right-filter-panel { position: absolute; top: 220px; right: 60px; width: 280px; background: #ffffff; border: 1px solid #F1F3F5; border-radius: 16px; padding: 25px; z-index: 100; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         .rf-title { font-size: 17px; font-weight: 900; margin-bottom: 20px; }
         .rf-line { width: 100%; height: 2px; background: #F1F3F5; margin-bottom: 20px; }
         .rf-label { font-size: 12px; font-weight: 700; color: #6C757D; margin-bottom: 10px; display: block; }
         .rf-select { width: 100%; padding: 12px 15px; background: #FFF8E1; border: 1.5px solid #FFC107; border-radius: 8px; font-size: 13px; font-weight: 800; color: #1A1D20; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; cursor: default; }
         
-        .rf-radio-group { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; }
+        .rf-radio-group { display: flex; flex-direction: column; gap: 15px; margin-bottom: 10px; }
         .rf-radio { display: flex; align-items: center; gap: 10px; cursor: pointer; }
         .rf-box { width: 20px; height: 20px; border-radius: 5px; border: 1.5px solid #DEE2E6; display: flex; align-items: center; justify-content: center; }
         .rf-radio.active .rf-box { background: #FFC107; border-color: #FFC107; }
@@ -91,28 +83,24 @@
         .rf-text { font-size: 14px; font-weight: 600; color: #1A1D20; }
         .rf-radio.active .rf-text { font-weight: 800; }
 
-        .rf-submit { width: 100%; padding: 14px; background: #1A1D20; border: none; border-radius: 8px; font-size: 13px; font-weight: 900; color: #FFC107; cursor: pointer; transition: 0.2s; }
-        .rf-submit:hover { background: #343A40; }
-
-        /* === 5. ÇEREZ (COOKIE) BUTONU (SOL ALT) === */
+        /* ÇEREZ BUTONU */
         .cookie-btn { position: fixed; bottom: 30px; left: 30px; width: 50px; height: 50px; background: #1A1D20; border: 2px solid #FFC107; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; transition: 0.3s; box-shadow: 0 8px 15px rgba(0,0,0,0.2); }
         .cookie-btn:hover { transform: scale(1.1); background: #FFC107; border-color: #1A1D20; }
         .cookie-btn svg { width: 24px; height: 24px; stroke: #FFC107; fill: none; transition: 0.3s; }
         .cookie-btn:hover svg { stroke: #1A1D20; }
 
-        /* === 6. ARAÇ KARTLARI (GENİŞLETİLMİŞ GRID VE ANİMASYON) === */
+        /* ARAÇ KARTLARI */
         .cars-container { position: absolute; top: 620px; width: 100%; left: 0; padding: 0 40px 150px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 100px 40px; z-index: 10; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
-        .cars-container.lift-up { transform: translateY(-300px); }
+        .cars-container.lift-up { transform: translateY(-480px); }
         
-        .car-card { text-align: center; background: #ffffff; transition: 0.4s ease; display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 550px; margin: 0 auto; }
+        .car-card { text-align: center; background: #ffffff; display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 550px; margin: 0 auto; transition: opacity 0.3s ease, transform 0.3s ease; }
         .car-card.hidden { display: none; }
         
         .car-media-box { position: relative; width: 100%; height: 320px; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; pointer-events: none; }
         .car-video { width: 100%; height: 100%; object-fit: contain; }
         
-        /* 360° Etkileşim: 3D Baston/Oyma Vites Topuzu */
+        /* 360° JOYSTICK / VİTES */
         .slider-wrapper { position: relative; width: 280px; height: 50px; margin-bottom: 25px; display: flex; justify-content: center; align-items: center; cursor: pointer; user-select: none; }
-        
         .hint-text { position: absolute; padding: 12px 30px; background: #ffffff; border: 1.5px solid #E9ECEF; border-radius: 25px; font-size: 13px; font-weight: 700; color: #1A1D20; transition: opacity 0.5s ease; white-space: nowrap; pointer-events: none; z-index: 2; }
         
         .gear-track { position: absolute; width: 100%; height: 10px; background: #E9ECEF; border-radius: 5px; opacity: 0; transition: opacity 0.5s ease; display: flex; justify-content: space-between; align-items: center; padding: 0 15px; }
@@ -140,12 +128,11 @@
         .car-price { font-size: 40px; font-weight: 900; margin-bottom: 25px; }
         .car-price span { font-size: 18px; color: #6C757D; }
         
-        /* İkonlar: Koyu Yuvarlak, Line-art beyaz/açık gri */
         .car-specs { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         .spec-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #1A1D20; }
         .dark-icon { width: 32px; height: 32px; background: #1A1D20; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
-        /* === 7. DİJİTAL ASİSTAN (GERÇEKÇİ SOHBET ARAYÜZÜ) === */
+        /* DİJİTAL ASİSTAN */
         .assistant-modal { position: fixed; bottom: 40px; right: 40px; width: 400px; background: #ffffff; border-radius: 20px; z-index: 999; overflow: hidden; transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); opacity: 0; transform: translateY(50px) scale(0.9); pointer-events: none; box-shadow: 0 25px 60px rgba(0,0,0,0.15); border: 1px solid #E9ECEF; }
         .assistant-modal.visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
         
@@ -168,7 +155,6 @@
         .bubble.ai-bg { background: #ffffff; color: #1A1D20; border: 1px solid #E9ECEF; border-bottom-left-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
         .bubble.user-bg { background: #FFF8E1; color: #1A1D20; border: 1px solid #FFC107; border-bottom-right-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
         
-        /* Yazıyor Animasyonu */
         .typing-indicator { display: none; gap: 5px; padding: 15px 20px; background: #ffffff; border: 1px solid #E9ECEF; border-radius: 18px; border-bottom-left-radius: 4px; width: fit-content; margin-left: 46px; }
         .typing-indicator span { width: 6px; height: 6px; background: #adb5bd; border-radius: 50%; animation: typing 1s infinite alternate; }
         .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
@@ -178,52 +164,39 @@
         .am-options { padding: 15px; background: #ffffff; border-top: 1px solid #E9ECEF; display: flex; flex-direction: column; gap: 8px; }
         .am-option { padding: 15px; background: #ffffff; border: 1.5px solid #FFC107; border-radius: 12px; font-size: 13px; font-weight: 700; color: #1A1D20; text-align: left; cursor: pointer; transition: 0.2s; }
         .am-option:hover { background: #FFF8E1; transform: translateX(5px); }
-
-        @media (max-width: 1024px) {
-            .cars-container { grid-template-columns: 1fr; padding: 0 20px 100px; gap: 80px; top: 400px; }
-            .cars-container.lift-up { transform: translateY(-200px); }
-            .right-filter-panel, .top-capsule { display: none; }
-            .search-wrapper { width: 90%; top: 120px; }
-            .search-bar { padding-left: 60px; padding-right: 15px; }
-            .avatar-circle { width: 60px; height: 60px; font-size: 24px; }
-            .search-actions { display: none; }
-            .filter-row { overflow-x: auto; flex-wrap: nowrap; }
-            .assistant-modal { width: 90%; right: 5%; bottom: 20px; }
-        }
     </style>
 </head>
 <body>
 
-    <!-- 1. PWA & LOGO -->
+    <svg style="display:none;">
+        <symbol id="icon-fuel" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 22V8c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v14M11 22H3M15 4v18M15 8h4c1.1 0 2 .9 2 2v4c0 1.1-.9 2-2 2h-1l-3 4"/></symbol>
+        <symbol id="icon-ev" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+        <symbol id="icon-gear-auto" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 3"/></symbol>
+        <symbol id="icon-gear-man" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-8m0-4V2m-5 5h10M7 17h10"/></symbol>
+        <symbol id="icon-users" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+        <symbol id="icon-age" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><text x="12" y="16" font-size="12" font-weight="bold" fill="#ffffff" stroke="none" text-anchor="middle">21</text></symbol>
+    </svg>
+
     <header id="header-area">
         <div class="logo">REFERANS<span>.</span></div>
         <div class="pwa-box shadow-soft">
             <div class="pwa-icon-bg"><div class="pwa-icon-inner"><div class="pwa-arrow"></div></div></div>
             <h3>Ana Ekrana Ekle</h3>
             <p>Kampanyalar ve hızlı rezervasyon için cihazınıza yükleyin.</p>
-            <button class="pwa-btn" onclick="pwaInstall()">HEMEN YÜKLE</button>
+            <button class="pwa-btn" onclick="alert('Yükleme başlatılıyor...')">HEMEN YÜKLE</button>
         </div>
     </header>
 
-    <!-- ÇEREZ (COOKIE) BUTONU (SOL ALT) -->
-    <button class="cookie-btn" title="Çerez Ayarları">
-        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/>
-            <circle cx="8.5" cy="8.5" r=".5" fill="currentColor"/>
-            <circle cx="16" cy="12.5" r=".5" fill="currentColor"/>
-            <circle cx="12" cy="16" r=".5" fill="currentColor"/>
-            <circle cx="7.5" cy="13" r=".5" fill="currentColor"/>
-        </svg>
+    <button class="cookie-btn">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><circle cx="8.5" cy="8.5" r=".5" fill="currentColor"/><circle cx="16" cy="12.5" r=".5" fill="currentColor"/><circle cx="12" cy="16" r=".5" fill="currentColor"/><circle cx="7.5" cy="13" r=".5" fill="currentColor"/></svg>
     </button>
 
-    <!-- 2. ÜST MENÜ (GLASSMORPHISM) -->
     <div class="top-capsule shadow-soft" id="top-menu">
         <div class="status-item"><div class="dot dot-green"></div> Şu Anda Açığız</div>
         <div class="neon-text">Arabanı Sipariş Ver!</div>
         <div class="status-item">Anında Adrese Ücretsiz Teslimat <div class="dot dot-red"></div></div>
     </div>
 
-    <!-- 3. ARAMA BARI (TETİKLEYİCİ) -->
     <div class="search-wrapper" id="search-section">
         <div class="search-title">✨ Nasıl bir araba bakmıştınız? Lütfen seçiniz</div>
         <div class="search-bar shadow-soft">
@@ -246,49 +219,25 @@
         </div>
     </div>
 
-    <!-- 4. SAĞ AKILLI FİLTRE -->
     <div class="right-filter-panel shadow-soft" id="right-panel">
         <div class="rf-title">Gelişmiş Filtreleme</div>
         <div class="rf-line"></div>
         <span class="rf-label">Sıralama Ölçütü</span>
         <div class="rf-select">Fiyat: Yüksekten Düşüğe</div>
         <span class="rf-label">Fiyat Aralığı (Günlük)</span>
-        <div class="rf-radio-group">
+        <div class="rf-radio-group" id="filter-radios">
             <div class="rf-radio active" data-filter="all"><div class="rf-box"></div><div class="rf-text">Tüm Araçlar</div></div>
             <div class="rf-radio" data-filter="under2000"><div class="rf-box"></div><div class="rf-text">2000 ₺ ve Altı</div></div>
             <div class="rf-radio" data-filter="over2000"><div class="rf-box"></div><div class="rf-text">2000 ₺ ve Üstü</div></div>
         </div>
-        <button class="rf-submit" id="btn-filter">SONUÇLARI LİSTELE</button>
     </div>
 
-    <!-- 5. ARAÇ KARTLARI (TAM GENİŞLİK / FIRSAT-ÇIPA SIRALAMASI / SVG LINE-ART İKONLAR) -->
-    <!-- SVG İkon Tanımlamaları (Reusable) -->
-    <svg style="display:none;">
-        <symbol id="icon-fuel" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 22V8c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v14M11 22H3M15 4v18M15 8h4c1.1 0 2 .9 2 2v4c0 1.1-.9 2-2 2h-1l-3 4"/>
-        </symbol>
-        <symbol id="icon-ev" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-        </symbol>
-        <symbol id="icon-gear-auto" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 3"/>
-        </symbol>
-        <symbol id="icon-gear-man" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22v-8m0-4V2m-5 5h10M7 17h10"/>
-        </symbol>
-        <symbol id="icon-users" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-        </symbol>
-        <symbol id="icon-age" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/><text x="12" y="16" font-size="12" font-weight="bold" fill="#ffffff" stroke="none" text-anchor="middle">21</text>
-        </symbol>
-    </svg>
-
+    <!-- ARAÇLAR (H.264 videoları preload="auto" ile yüklenir) -->
     <div class="cars-container" id="cars-grid">
         
-        <!-- 1. Honda Civic (Fırsat) -->
+        <!-- 1. Honda Civic -->
         <article class="car-card" data-price="1600" data-gear="otomatik">
-            <div class="car-media-box"><video class="car-video" src="assets/honda-civic-360.mp4#t=0.001" preload="metadata" muted playsinline></video></div>
+            <div class="car-media-box"><video class="car-video" src="assets/honda-civic-360.mp4" preload="auto" loop muted playsinline></video></div>
             <div class="slider-wrapper state-text">
                 <div class="hint-text shadow-soft">← 360° İncelemek İçin Kaydırın →</div>
                 <div class="gear-track"></div><div class="gear-knob"><span>R</span></div>
@@ -303,9 +252,9 @@
             </div>
         </article>
 
-        <!-- 2. Renault Megane (Çıpa) -->
+        <!-- 2. Renault Megane -->
         <article class="car-card" data-price="2000" data-gear="otomatik">
-            <div class="car-media-box"><video class="car-video" src="assets/renault-megane-360.mp4#t=0.001" preload="metadata" muted playsinline></video></div>
+            <div class="car-media-box"><video class="car-video" src="assets/renault-megane-360.mp4" preload="auto" loop muted playsinline></video></div>
             <div class="slider-wrapper state-text">
                 <div class="hint-text shadow-soft">← 360° İncelemek İçin Kaydırın →</div>
                 <div class="gear-track"></div><div class="gear-knob"><span>R</span></div>
@@ -320,9 +269,9 @@
             </div>
         </article>
 
-        <!-- 3. Citroen C Elysee (Fırsat) -->
+        <!-- 3. Citroen C Elysee -->
         <article class="car-card" data-price="1600" data-gear="manuel">
-            <div class="car-media-box"><video class="car-video" src="assets/citroen-c-elysee-360.mp4#t=0.001" preload="metadata" muted playsinline></video></div>
+            <div class="car-media-box"><video class="car-video" src="assets/citroen-c-elysee-360.mp4" preload="auto" loop muted playsinline></video></div>
             <div class="slider-wrapper state-text">
                 <div class="hint-text shadow-soft">← 360° İncelemek İçin Kaydırın →</div>
                 <div class="gear-track"></div><div class="gear-knob"><span>R</span></div>
@@ -337,9 +286,9 @@
             </div>
         </article>
 
-        <!-- 4. Nissan Qashqai (Tavan Çıpa) -->
+        <!-- 4. Nissan Qashqai -->
         <article class="car-card" data-price="2300" data-gear="manuel">
-            <div class="car-media-box"><video class="car-video" src="assets/nissan-qashqai-360.mp4#t=0.001" preload="metadata" muted playsinline></video></div>
+            <div class="car-media-box"><video class="car-video" src="assets/nissan-qashqai-360.mp4" preload="auto" loop muted playsinline></video></div>
             <div class="slider-wrapper state-text">
                 <div class="hint-text shadow-soft">← 360° İncelemek İçin Kaydırın →</div>
                 <div class="gear-track"></div><div class="gear-knob"><span>R</span></div>
@@ -356,7 +305,7 @@
 
         <!-- 5. Toyota Corolla -->
         <article class="car-card" data-price="1700" data-gear="otomatik">
-            <div class="car-media-box"><video class="car-video" src="assets/toyota-corolla-360.mp4#t=0.001" preload="metadata" muted playsinline></video></div>
+            <div class="car-media-box"><video class="car-video" src="assets/toyota-corolla-360.mp4" preload="auto" loop muted playsinline></video></div>
             <div class="slider-wrapper state-text">
                 <div class="hint-text shadow-soft">← 360° İncelemek İçin Kaydırın →</div>
                 <div class="gear-track"></div><div class="gear-knob"><span>R</span></div>
@@ -373,7 +322,7 @@
 
         <!-- 6. Kia Rio -->
         <article class="car-card" data-price="1650" data-gear="manuel">
-            <div class="car-media-box"><video class="car-video" src="assets/kia-rio-360.mp4#t=0.001" preload="metadata" muted playsinline></video></div>
+            <div class="car-media-box"><video class="car-video" src="assets/kia-rio-360.mp4" preload="auto" loop muted playsinline></video></div>
             <div class="slider-wrapper state-text">
                 <div class="hint-text shadow-soft">← 360° İncelemek İçin Kaydırın →</div>
                 <div class="gear-track"></div><div class="gear-knob"><span>R</span></div>
@@ -390,7 +339,7 @@
 
         <!-- 7. Hyundai i20 -->
         <article class="car-card" data-price="1600" data-gear="otomatik">
-            <div class="car-media-box"><video class="car-video" src="assets/hyundai-i20-360.mp4#t=0.001" preload="metadata" muted playsinline></video></div>
+            <div class="car-media-box"><video class="car-video" src="assets/hyundai-i20-360.mp4" preload="auto" loop muted playsinline></video></div>
             <div class="slider-wrapper state-text">
                 <div class="hint-text shadow-soft">← 360° İncelemek İçin Kaydırın →</div>
                 <div class="gear-track"></div><div class="gear-knob"><span>R</span></div>
@@ -407,7 +356,7 @@
 
         <!-- 8. Fiat Egea -->
         <article class="car-card" data-price="1500" data-gear="manuel">
-            <div class="car-media-box"><video class="car-video" src="assets/fiat-egea-360.mp4#t=0.001" preload="metadata" muted playsinline></video></div>
+            <div class="car-media-box"><video class="car-video" src="assets/fiat-egea-360.mp4" preload="auto" loop muted playsinline></video></div>
             <div class="slider-wrapper state-text">
                 <div class="hint-text shadow-soft">← 360° İncelemek İçin Kaydırın →</div>
                 <div class="gear-track"></div><div class="gear-knob"><span>R</span></div>
@@ -424,7 +373,7 @@
 
         <!-- 9. Fiat Fiorino -->
         <article class="car-card" data-price="1500" data-gear="manuel">
-            <div class="car-media-box"><video class="car-video" src="assets/fiat-fiorino-360.mp4#t=0.001" preload="metadata" muted playsinline></video></div>
+            <div class="car-media-box"><video class="car-video" src="assets/fiat-fiorino-360.mp4" preload="auto" loop muted playsinline></video></div>
             <div class="slider-wrapper state-text">
                 <div class="hint-text shadow-soft">← 360° İncelemek İçin Kaydırın →</div>
                 <div class="gear-track"></div><div class="gear-knob"><span>R</span></div>
@@ -441,7 +390,7 @@
 
         <!-- 10. Peugeot 301 -->
         <article class="car-card" data-price="1500" data-gear="manuel">
-            <div class="car-media-box"><video class="car-video" src="assets/peugeot-301-360.mp4#t=0.001" preload="metadata" muted playsinline></video></div>
+            <div class="car-media-box"><video class="car-video" src="assets/peugeot-301-360.mp4" preload="auto" loop muted playsinline></video></div>
             <div class="slider-wrapper state-text">
                 <div class="hint-text shadow-soft">← 360° İncelemek İçin Kaydırın →</div>
                 <div class="gear-track"></div><div class="gear-knob"><span>R</span></div>
@@ -458,7 +407,7 @@
 
         <!-- 11. Renault Symbol -->
         <article class="car-card" data-price="1500" data-gear="manuel">
-            <div class="car-media-box"><video class="car-video" src="assets/renault-symbol-360.mp4#t=0.001" preload="metadata" muted playsinline></video></div>
+            <div class="car-media-box"><video class="car-video" src="assets/renault-symbol-360.mp4" preload="auto" loop muted playsinline></video></div>
             <div class="slider-wrapper state-text">
                 <div class="hint-text shadow-soft">← 360° İncelemek İçin Kaydırın →</div>
                 <div class="gear-track"></div><div class="gear-knob"><span>R</span></div>
@@ -512,12 +461,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // PWA Yükleme Uyarısı
-            window.pwaInstall = function() {
-                alert("Uygulama yükleme yönergeleri (Service Worker) aktifleştirilecek.");
-            }
-
-            // Elemanlar
             const searchSection = document.getElementById('search-section');
             const topMenu = document.getElementById('top-menu');
             const rightPanel = document.getElementById('right-panel');
@@ -526,7 +469,6 @@
             const closeBtn = document.getElementById('close-modal');
             const carsGrid = document.getElementById('cars-grid');
             
-            // Sohbet Elemanları
             const chatArea = document.getElementById('chat-area');
             const userRow = document.getElementById('user-msg-row');
             const userText = document.getElementById('user-msg-text');
@@ -535,47 +477,47 @@
             const aiText = document.getElementById('ai-response-text');
             const optionsBox = document.getElementById('ai-options');
             const cars = document.querySelectorAll('.car-card');
+            const allVideos = document.querySelectorAll('video.car-video');
+
+            // --- VİDEOLAR İÇİN ZORUNLU İLK KARE İŞLEME ---
+            allVideos.forEach(v => {
+                v.addEventListener('loadedmetadata', () => {
+                    v.currentTime = 0.1;
+                });
+            });
 
             // --- ASİSTAN AÇILIŞ (ARAÇLAR HAVAYA KALKAR) ---
             searchSection.addEventListener('click', () => {
-                // Üst Taraf Gizlenir
                 searchSection.classList.add('fade-out-up');
                 topMenu.classList.add('fade-out-up');
                 headerArea.classList.add('fade-out-side');
                 rightPanel.classList.add('fade-out-side');
                 
-                // Modal Açılır ve Araçlar Yukarı Kalkar
                 modal.classList.add('visible');
                 carsGrid.classList.add('lift-up');
             });
 
-            // --- ASİSTAN KAPANIŞ (ARAÇLAR YERİNE DÖNER) ---
+            // --- ASİSTAN KAPANIŞ ---
             closeBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                
-                // Üst Taraf Geri Gelir
                 searchSection.classList.remove('fade-out-up');
                 topMenu.classList.remove('fade-out-up');
                 headerArea.classList.remove('fade-out-side');
                 rightPanel.classList.remove('fade-out-side');
                 
-                // Modal Kapanır ve Araçlar Aşağı İner
                 modal.classList.remove('visible');
                 carsGrid.classList.remove('lift-up');
                 
-                // Sohbeti ve Filtreleri Sıfırla
-                setTimeout(resetChat, 600);
+                setTimeout(() => {
+                    userRow.style.display = 'none';
+                    aiTyping.style.display = 'none';
+                    aiRow.style.display = 'none';
+                    optionsBox.style.display = 'flex';
+                }, 600);
                 cars.forEach(car => car.classList.remove('hidden'));
             });
 
-            function resetChat() {
-                userRow.style.display = 'none';
-                aiTyping.style.display = 'none';
-                aiRow.style.display = 'none';
-                optionsBox.style.display = 'flex';
-            }
-
-            // --- YAPAY ZEKA SOHBET & FİLTRELEME SİMÜLASYONU ---
+            // --- YAPAY ZEKA SOHBET & FİLTRELEME ---
             window.triggerAI = function(type, userQuestion) {
                 optionsBox.style.display = 'none';
                 userText.innerText = userQuestion;
@@ -604,22 +546,40 @@
                         });
                     }
                     chatArea.scrollTop = chatArea.scrollHeight;
-                }, 1000); // 1 Saniye Düşünme Süresi
+                }, 1000); 
             }
 
-            // --- 360° FİZİK MOTORU & ANİMASYON DÖNGÜSÜ ---
-            const sliders = document.querySelectorAll('.slider-wrapper');
-            const maxDrag = 120; // 240px genişliğin yarısı
-            const videoDuration = 10; // Videoların saniye cinsinden tam uzunluğu
+            // --- SAĞ PANEL ANLIK (REAL-TIME) FİLTRELEME ---
+            const radioGroup = document.querySelectorAll('.rf-radio');
+            let currentFilter = 'all';
 
+            radioGroup.forEach(radio => {
+                radio.addEventListener('click', () => {
+                    radioGroup.forEach(r => r.classList.remove('active'));
+                    radio.classList.add('active');
+                    currentFilter = radio.getAttribute('data-filter');
+
+                    // Anında Filtreleme (Butonsuz)
+                    cars.forEach(car => {
+                        let price = parseInt(car.getAttribute('data-price'));
+                        if (currentFilter === 'all') car.classList.remove('hidden');
+                        else if (currentFilter === 'under2000' && price <= 2000) car.classList.remove('hidden');
+                        else if (currentFilter === 'over2000' && price >= 2000) car.classList.remove('hidden');
+                        else car.classList.add('hidden');
+                    });
+                });
+            });
+
+            // --- 360° JOYSTICK / GAZ PEDALI FİZİK MOTORU ---
+            const sliders = document.querySelectorAll('.slider-wrapper');
+            const maxDrag = 120; // Kaydırma genişliğinin yarısı
+            
             function startCycle(wrapper) {
                 if(wrapper.classList.contains('interacted')) return;
-                
                 setTimeout(() => {
                     if(wrapper.classList.contains('interacted')) return;
                     wrapper.classList.remove('state-text');
                     wrapper.classList.add('state-slider');
-                    
                     setTimeout(() => {
                         if(wrapper.classList.contains('interacted')) return;
                         wrapper.classList.remove('state-slider');
@@ -633,79 +593,72 @@
                 const knob = wrapper.querySelector('.gear-knob');
                 const video = wrapper.previousElementSibling.querySelector('video');
                 let isDragging = false;
-                let startX = 0, currentX = 0;
-                
-                startCycle(wrapper); // Animasyon döngüsünü başlat
+                let currentX = 0;
+                let animFrame;
+                let lastTime = 0;
+
+                startCycle(wrapper);
 
                 wrapper.addEventListener('mousedown', (e) => {
                     wrapper.classList.add('interacted');
                     wrapper.classList.remove('state-text');
                     wrapper.classList.add('state-slider');
-                    
                     isDragging = true;
-                    startX = e.clientX - currentX; // Kalınan yerden devam
                     knob.style.transition = 'none';
+                    
+                    lastTime = performance.now();
+                    cancelAnimationFrame(animFrame);
+                    animFrame = requestAnimationFrame(updateVideoFrame);
                 });
 
                 window.addEventListener('mousemove', (e) => {
                     if(!isDragging) return;
                     
-                    let deltaX = e.clientX - startX;
-                    
-                    // Yukarı Aşağı Titreme Hatası (Y ekseni değişimi algılanırsa)
-                    if(Math.abs(e.movementY) > 5) {
+                    let rect = wrapper.getBoundingClientRect();
+                    let centerX = rect.left + rect.width / 2;
+                    let deltaX = e.clientX - centerX;
+
+                    if(Math.abs(e.movementY) > 8) {
                         knob.classList.add('shake-error');
                         setTimeout(() => knob.classList.remove('shake-error'), 400);
                     }
 
-                    // Sınırlandırma
                     currentX = Math.max(-maxDrag, Math.min(maxDrag, deltaX));
-                    
-                    // Sağa-Sola Yatma Açısı (Max 25 derece)
                     let tilt = (currentX / maxDrag) * 25; 
-                    
                     knob.style.transform = `translateX(calc(-50% + ${currentX}px)) rotate(${tilt}deg)`;
-
-                    // 1:1 Oranlı Video İlerletme (10 Saniyelik Video İçin)
-                    if (video.readyState >= 1) {
-                        let progress = (currentX + maxDrag) / (2 * maxDrag); // 0.0 ile 1.0 arası oran
-                        video.currentTime = progress * videoDuration;
-                    }
                 });
 
                 window.addEventListener('mouseup', () => {
                     if(isDragging) {
                         isDragging = false;
-                        knob.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-                        knob.style.transform = `translateX(-50%) rotate(0deg)`; // Merkeze döner
-                        currentX = 0; // Bir sonraki tutuşta merkezden başlar
+                        currentX = 0; // Merkeze döner
+                        knob.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                        knob.style.transform = `translateX(-50%) rotate(0deg)`;
+                        cancelAnimationFrame(animFrame);
                     }
                 });
+
+                function updateVideoFrame(time) {
+                    if (!isDragging) return;
+                    
+                    let deltaTime = time - lastTime;
+                    lastTime = time;
+
+                    if (video.readyState >= 1) {
+                        let normalizedSpeed = currentX / maxDrag; 
+                        let maxSpeedMultiplier = 1.1; 
+                        let speedDelta = normalizedSpeed * maxSpeedMultiplier * (deltaTime / 1000);
+                        
+                        let newTime = video.currentTime + speedDelta;
+                        
+                        if (newTime >= video.duration) newTime = newTime % video.duration;
+                        else if (newTime <= 0) newTime = video.duration + (newTime % video.duration);
+                        
+                        video.currentTime = newTime;
+                    }
+                    animFrame = requestAnimationFrame(updateVideoFrame);
+                }
             });
-
-            // --- SAĞ PANEL AKILLI FİLTRELEME ---
-            const radioGroup = document.querySelectorAll('.rf-radio');
-            const filterBtn = document.getElementById('btn-filter');
-            let currentFilter = 'all';
-
-            radioGroup.forEach(radio => {
-                radio.addEventListener('click', () => {
-                    radioGroup.forEach(r => r.classList.remove('active'));
-                    radio.classList.add('active');
-                    currentFilter = radio.getAttribute('data-filter');
-                });
-            });
-
-            filterBtn.addEventListener('click', () => {
-                cars.forEach(car => {
-                    let price = parseInt(car.getAttribute('data-price'));
-                    if (currentFilter === 'all') car.classList.remove('hidden');
-                    else if (currentFilter === 'under2000' && price <= 2000) car.classList.remove('hidden');
-                    else if (currentFilter === 'over2000' && price >= 2000) car.classList.remove('hidden');
-                    else car.classList.add('hidden');
-                });
-            });
-
         });
     </script>
 </body>
