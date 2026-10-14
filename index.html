@@ -14,9 +14,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Referans">
 
-    <!-- GERÇEK PWA MANIFEST VE İKON BAĞLANTISI -->
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="asistan.png">
+    <link rel="manifest" id="pwa-manifest-link" href="manifest.json">
+    <link rel="apple-touch-icon" href="asistan-avatar.png">
 
     <meta property="og:title" content="Referans Rentecar | Malatya">
     <meta property="og:description" content="360° interaktif araç inceleme deneyimi ve anında adrese ücretsiz teslimat ile Malatya'da kesintisiz araç kiralama.">
@@ -81,10 +80,13 @@
         video, img, canvas { outline: none; user-select: none; -webkit-user-drag: none; pointer-events: none; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
+        /* DİJİTAL ASİSTAN JAGUAR PROFİLİ: BOZULMADAN ÇOK AZ SOLA KAYDIRILDI (YÜZÜ TAM GÖZÜKÜR) */
         .assistant-avatar-img {
             width: 100% !important;
             height: 100% !important;
             object-fit: cover !important;
+            object-position: 64% 50% !important;
+            transform: scale(1.06) translateX(-4%) !important;
             border-radius: 50% !important;
             display: block !important;
         }
@@ -119,57 +121,37 @@
             box-shadow: 0 0 12px rgba(0, 230, 118, 0.6);
         }
 
-        /* PWA AKILLI KURULUM REHBER MODALI (iOS & SW YEDEK REHBERİ) */
-        .pwa-guide-overlay {
-            position: fixed; inset: 0;
-            background: rgba(15, 23, 42, 0.82);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            z-index: 95000; display: none; align-items: center; justify-content: center;
-            padding: 1.2rem; opacity: 0; transition: opacity 0.3s ease;
-        }
-        .pwa-guide-overlay.show { display: flex; opacity: 1; }
-        .pwa-guide-card {
-            background: #1A1D20; color: #ffffff;
-            border: 2.5px solid #FFC107; border-radius: 24px;
-            padding: 26px 24px; width: 100%; max-width: 420px;
-            text-align: center; position: relative;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.65);
-        }
-        .pwa-guide-card h4 { font-size: 19px; font-weight: 900; color: #FFC107; margin-bottom: 10px; }
-        .pwa-guide-card p { font-size: 13px; font-weight: 600; color: #E2E8F0; line-height: 1.55; margin-bottom: 16px; }
-        .pwa-guide-steps {
-            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,193,7,0.3);
-            border-radius: 14px; padding: 14px; text-align: left; font-size: 12.5px;
-            font-weight: 700; color: #ffffff; line-height: 1.6; margin-bottom: 18px;
-        }
-        .pwa-guide-btn {
-            width: 100%; padding: 13px; background: #FFC107; color: #1A1D20;
-            border: none; border-radius: 12px; font-size: 13.5px; font-weight: 900; cursor: pointer;
-        }
-
         .mobile-sticky-dock { display: none; }
         .mobile-pwa-bottom-sheet { display: none; }
 
         /* =========================================================
-           SADE JAGUAR KATEGORİ VİTRİN SAHNESİ (BOŞLUKSUZ)
+           JAGUAR KATEGORİ VİTRİN SAHNESİ
+           - Ana menünün üst kısmının kapladığı yer kadar (460px) yer kaplar!
+           - Araçlar ana menüdekiyle birebir aynı hizada kalır!
            ========================================================= */
         .jaguar-showcase-stage {
             display: none;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 100%;
-            max-width: 1100px;
-            margin: 14px auto 0;
-            padding: 0 16px;
+            max-width: 1240px;
+            height: 450px;
+            padding: 26px 25px 10px;
             z-index: 200;
-            position: relative;
             text-align: center;
-            animation: jaguarStageIn 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            animation: jaguarStageIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
         @keyframes jaguarStageIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translate(-50%, -12px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
         }
         body.jaguar-mode-active .jaguar-showcase-stage {
-            display: block;
+            display: flex;
         }
         body.jaguar-mode-active header.pc-header,
         body.jaguar-mode-active nav.top-capsule,
@@ -178,26 +160,27 @@
         body.jaguar-mode-active header.mobile-sticky-dock {
             display: none !important;
         }
-        body.jaguar-mode-active .cars-container,
-        body.jaguar-mode-active .cars-container.lift-up,
-        body.jaguar-mode-active .cars-container.mob-expanded-top {
-            padding-top: 8px !important;
+        /* PC'de araçlar 460px hizasında sabit kalır, yukarı zıplamaz */
+        body.jaguar-mode-active .cars-container {
+            padding-top: 460px !important;
             transform: none !important;
         }
 
         .jaguar-clean-topbar {
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            margin-bottom: 8px;
-            min-height: 40px;
+            margin-bottom: 14px;
+            min-height: 46px;
+            flex-shrink: 0;
         }
         .jaguar-stage-title {
-            font-size: 30px;
+            font-size: 32px;
             font-weight: 900;
             color: #1A1D20;
-            letter-spacing: 0.8px;
+            letter-spacing: 1px;
             text-transform: uppercase;
             margin: 0;
         }
@@ -209,45 +192,41 @@
             background: #FFC107;
             color: #1A1D20;
             border: 2px solid #1A1D20;
-            padding: 9px 18px;
+            padding: 10px 22px;
             border-radius: 999px;
-            font-size: 12px;
+            font-size: 12.5px;
             font-weight: 900;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 6px;
             z-index: 10;
-            box-shadow: 0 4px 14px rgba(255, 193, 7, 0.35);
+            box-shadow: 0 6px 18px rgba(255, 193, 7, 0.35);
             transition: transform 0.2s ease, background-color 0.2s ease;
         }
         .jaguar-back-btn:hover {
             background: #FFCA28;
             transform: translateY(-50%) scale(1.04);
         }
+        /* Jaguar için geniş, ferah ve her zaman açık vitrin alanı (365px yükseklik) */
         .jaguar-video-clean {
             width: 100%;
-            max-width: 720px;
-            height: 0;
+            max-width: 960px;
+            height: 365px;
             overflow: hidden;
             margin: 0 auto;
-            border-radius: 18px;
+            border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: transparent;
-            transition: height 0.3s ease, margin 0.3s ease;
-        }
-        .jaguar-video-clean.has-video {
-            height: 200px;
-            margin-bottom: 6px;
         }
         .jaguar-video-clean video {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             display: block;
-            border-radius: 18px;
+            border-radius: 24px;
         }
 
         /* =========================================================
@@ -308,7 +287,7 @@
         .search-bar:hover { box-shadow: 0 12px 28px rgba(255,193,7,0.25); transform: translateY(-1px); }
         .search-placeholder { font-size: 14.5px; font-weight: 700; color: #6C757D; text-align: left; }
         
-        .avatar-circle { position: absolute; left: -6px; width: 82px; height: 82px; background: #1A1D20; border-radius: 50%; border: 2.5px dashed #FFC107; display: flex; align-items: center; justify-content: center; font-size: 34px; box-shadow: 0 8px 20px rgba(0,0,0,0.18); transition: transform 0.3s ease; padding: 3px; }
+        .avatar-circle { position: absolute; left: -6px; width: 82px; height: 82px; background: #1A1D20; border-radius: 50%; border: 2.5px dashed #FFC107; display: flex; align-items: center; justify-content: center; font-size: 34px; box-shadow: 0 8px 20px rgba(0,0,0,0.18); transition: transform 0.3s ease; padding: 3px; overflow: hidden; }
         .search-bar:hover .avatar-circle { transform: scale(1.05); }
 
         .smart-chat-bubble {
@@ -464,7 +443,7 @@
         .order-btn:active { transform: scale(0.96) !important; }
 
         /* =========================================================
-           SİPARİŞ & RANDEVU MODALI + "ARAÇ MÜSAİT DEĞİL" (GRİ ARKA PLAN & EĞİK BLURLU ATKI ŞERİDİ)
+           SİPARİŞ & RANDEVU MODALI + "MÜSAİT DEĞİL BAŞKA MODELLERİ İNCELEYİN!" ŞERİDİ
            ========================================================= */
         .modal-overlay { 
             position: fixed; inset: 0; background-color: rgba(15, 23, 42, 0.86); 
@@ -483,7 +462,6 @@
         }
         .modal-overlay.show .modal-box { transform: scale(1); }
 
-        /* ARAÇ MÜSAİT DEĞİLKEN: ARABA HARİÇ ALT KISIM VE ARKA PLAN GRİ GÖZÜKÜR */
         .modal-box.is-unavailable {
             background-color: #D4D7DC !important;
             border-color: #94A3B8 !important;
@@ -499,7 +477,6 @@
             user-select: none !important;
         }
 
-        /* YATAY, BİRAZ EĞİK, ARKA PLANI BLURLU ATKI ŞERİDİ (.unavailable-sash-banner) */
         .unavailable-sash-banner {
             display: none;
             position: absolute;
@@ -512,7 +489,7 @@
             -webkit-backdrop-filter: blur(15px) saturate(160%);
             border-top: 3px solid #FFC107;
             border-bottom: 3px solid #FFC107;
-            padding: 20px 24px;
+            padding: 22px 24px;
             z-index: 50;
             box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55), 0 0 25px rgba(255, 193, 7, 0.22);
             border-radius: 14px;
@@ -532,17 +509,13 @@
             gap: 10px;
         }
         .sash-main-text {
-            color: #ffffff;
-            font-size: 18px;
-            font-weight: 900;
-            letter-spacing: 0.4px;
-            line-height: 1.4;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
-        }
-        .sash-main-text .sash-date-highlight {
             color: #FFC107;
-            text-decoration: underline;
-            text-underline-offset: 4px;
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 0.6px;
+            line-height: 1.4;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
         }
         .sash-sub-btn {
             background: #FFC107;
@@ -572,7 +545,6 @@
         }
         .modal-close-btn:hover { background: #D32F2F; color: #ffffff; border-color: #ffffff; transform: rotate(90deg); }
 
-        /* ÜSTTEKİ ARABA VİTRİNİ HER ZAMAN CANLI VE RENKLİ KALIR */
         .modal-car-showcase {
             position: relative;
             width: calc(100% + 24px);
@@ -742,7 +714,7 @@
         }
 
         /* =========================================================
-           PC DİJİTAL ASİSTAN (REFERANS JAGUAR)
+           PC DİJİTAL ASİSTAN (SAĞ ALTTA AÇILINCA SİYAH JAGUAR: asistan-avatar1.png)
            ========================================================= */
         .chat-panel { 
             position: fixed; bottom: 30px; right: 35px; width: 410px; height: 550px; 
@@ -763,7 +735,7 @@
         .chat-body { flex: 1; padding: 18px; overflow-y: auto; background-color: #F8F9FA; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
         .bot-message { display: flex; gap: 10px; align-items: flex-end; }
         .user-message { display: flex; justify-content: flex-end; }
-        .bot-avatar { width: 34px; height: 34px; border-radius: 50%; border: 2px solid #FFC107; background-color: #1A1D20; flex-shrink: 0; display: flex; justify-content: center; align-items: center; font-size: 17px; padding: 2px; overflow: hidden; }
+        .bot-avatar { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #FFC107; background-color: #1A1D20; flex-shrink: 0; display: flex; justify-content: center; align-items: center; font-size: 17px; padding: 2px; overflow: hidden; }
         
         .bot-bubble { background-color: #ffffff; color: #1A1D20; padding: 12px 15px; border-radius: 16px 16px 16px 4px; font-size: 13px; font-weight: 600; box-shadow: 0 2px 6px rgba(0,0,0,0.04); max-width: 84%; line-height: 1.4; border: 1px solid #E9ECEF; }
         .user-bubble { background-color: #1A1D20; color: #FFC107; padding: 10px 15px; border-radius: 16px 16px 4px 16px; font-size: 13px; font-weight: 700; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 84%; line-height: 1.4; }
@@ -1079,7 +1051,7 @@
             .chat-header p, .chat-footer { display: none; }
             .chat-close-btn { position: static; width: 22px; height: 22px; font-size: 11px; }
             .chat-body { padding: 8px 10px; gap: 6px; }
-            .bot-avatar { width: 24px; height: 24px; font-size: 12px; }
+            .bot-avatar { width: 26px; height: 26px; font-size: 12px; }
             .bot-bubble, .user-bubble { padding: 6px 10px; font-size: 11px; }
             .user-options { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; padding-top: 2px; }
             .chat-option-btn { padding: 6px 8px; font-size: 10px; border-radius: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -1087,12 +1059,23 @@
             .chat-action-buttons { flex-direction: row; gap: 6px; }
             .chat-action-btn { padding: 7px 8px; font-size: 10.5px; }
 
-            .jaguar-showcase-stage { margin-top: 8px; padding: 0 10px; }
-            .jaguar-clean-topbar { flex-direction: column; gap: 6px; margin-bottom: 6px; min-height: auto; }
-            .jaguar-stage-title { font-size: 19px; }
-            .jaguar-back-btn { position: static; transform: none; padding: 6px 14px; font-size: 11px; }
+            /* TELEFONDA GENİŞ JAGUAR VİTRİN SAHNESİ */
+            .jaguar-showcase-stage {
+                position: relative;
+                left: auto;
+                transform: none;
+                height: auto;
+                padding: 12px 10px 6px;
+            }
+            body.jaguar-mode-active .cars-container,
+            body.jaguar-mode-active .cars-container.mob-expanded-top {
+                padding-top: 12px !important;
+            }
+            .jaguar-clean-topbar { flex-direction: column; gap: 6px; margin-bottom: 8px; min-height: auto; }
+            .jaguar-stage-title { font-size: 20px; }
+            .jaguar-back-btn { position: static; transform: none; padding: 7px 16px; font-size: 11px; }
             .jaguar-back-btn:hover { transform: scale(1.03); }
-            .jaguar-video-clean.has-video { height: 135px; border-radius: 14px; margin-bottom: 4px; }
+            .jaguar-video-clean { height: 215px; border-radius: 16px; }
 
             .modal-box { padding: 10px 12px 18px !important; width: 98%; }
             .modal-close-btn { top: -10px; right: -6px; width: 36px; height: 36px; font-size: 15px; }
@@ -1112,14 +1095,13 @@
             .legal-consent-text { font-size: 10.5px; }
             .modal-submit-btn { padding: 13px; font-size: 13px; margin-top: 10px; }
 
-            /* Telefonda Eğik Blurlu Atkı Şeridi Uyumu */
             .unavailable-sash-banner {
                 width: 106%;
-                padding: 15px 14px;
+                padding: 16px 14px;
                 top: 69%;
                 transform: translate(-50%, -50%) rotate(-5.5deg);
             }
-            .sash-main-text { font-size: 13.5px; }
+            .sash-main-text { font-size: 14.5px; }
             .sash-sub-btn { font-size: 11px; padding: 8px 18px; }
         }
     </style>
@@ -1182,23 +1164,10 @@
         <div id="top-toast-text">Uygulama yüklenmiştir</div>
     </div>
 
-    <!-- PWA AKILLI KURULUM REHBERİ (iOS SAFARI VEYA MANUEL YÜKLEME DESTEĞİ) -->
-    <div id="pwaGuideModal" class="pwa-guide-overlay" onclick="if(event.target===this) closePwaGuide()">
-        <div class="pwa-guide-card">
-            <h4>📲 Ana Ekrana Hızlı Ekle</h4>
-            <p id="pwaGuideDesc">Referans Rentecar uygulamasını telefonunuza 2 saniyede eklemek için:</p>
-            <div class="pwa-guide-steps" id="pwaGuideSteps">
-                1. Tarayıcınızın alt/üst menüsündeki <strong>Paylaş / Menü (⋮)</strong> butonuna dokunun.<br>
-                2. Listeden <strong>"Ana Ekrana Ekle" (Uygulamayı Yükle)</strong> seçeneğine basın.
-            </div>
-            <button type="button" class="pwa-guide-btn" onclick="closePwaGuide()">TAMAM, ANLADIM</button>
-        </div>
-    </div>
-
     <div class="progress-bar" id="progressBar"></div>
 
     <!-- =========================================================
-         SADE JAGUAR KATEGORİ SAHNESİ (BOŞLUKSUZ: BAŞLIK + TÜM FİLOYA DÖN + JAGUAR VİDEOSU)
+         JAGUAR KATEGORİ SAHNESİ (ANA MENÜ ÜST KISMI KADAR GENİŞ YER KAPLAR, ARAÇLAR AYNI HİZADA KALIR)
          ========================================================= -->
     <section class="jaguar-showcase-stage" id="jaguar-stage" aria-label="Özel Jaguar Kategori Vitrini">
         <div class="jaguar-clean-topbar">
@@ -1211,7 +1180,7 @@
     </section>
 
     <!-- =========================================================
-         TELEFON SÜRÜMÜ SABİT ÜST KONSOL
+         TELEFON SÜRÜMÜ SABİT ÜST KONSOL (ANA EKRANDA 1. JAGUAR: asistan-avatar.png)
          ========================================================= -->
     <header class="mobile-sticky-dock" id="mobile-dock" aria-label="Mobil Hızlı Menü ve Filtreler">
         <div class="mob-dock-top" id="mob-top-status-row">
@@ -1231,7 +1200,7 @@
 
         <div class="mob-dock-ai" onclick="toggleAssistant()" role="button" tabindex="0">
             <div class="mob-ai-icon">
-                <img src="asistan.png" alt="Dijital Asistan" class="assistant-avatar-img" onerror="if(!this.dataset.s){this.dataset.s='1';this.src='asistan-avatar.png';}else if(this.dataset.s==='1'){this.dataset.s='2';this.src='assets/asistan.png';}else{this.style.display='none';this.parentElement.textContent='🐆';}">
+                <img src="asistan-avatar.png" alt="Dijital Asistan" class="assistant-avatar-img" onerror="if(!this.dataset.s){this.dataset.s='1';this.src='asistan.png';}else if(this.dataset.s==='1'){this.dataset.s='2';this.src='assets/asistan-avatar.png';}else{this.style.display='none';this.parentElement.textContent='🐆';}">
             </div>
             <div class="mob-ai-text"><strong>Dijital Asistan:</strong> Nasıl bir araba bakmıştınız?</div>
             <button type="button" class="mob-ai-btn">7/24</button>
@@ -1268,7 +1237,7 @@
     </aside>
 
     <!-- =========================================================
-         PC (MASAÜSTÜ) ORİJİNAL ELEMANLARI
+         PC (MASAÜSTÜ) ORİJİNAL ELEMANLARI (ANA EKRANDA 1. JAGUAR: asistan-avatar.png)
          ========================================================= -->
     <header class="pc-header" id="header-area">
         <div class="logo">REFERANS<span>.</span></div>
@@ -1297,7 +1266,7 @@
         
         <div class="search-bar shadow-soft" onclick="openAssistant()" role="button" tabindex="0" aria-label="Dijital Asistanı Başlat">
             <div class="avatar-circle">
-                <img src="asistan.png" alt="Dijital Asistan" class="assistant-avatar-img" onerror="if(!this.dataset.s){this.dataset.s='1';this.src='asistan-avatar.png';}else if(this.dataset.s==='1'){this.dataset.s='2';this.src='assets/asistan.png';}else{this.style.display='none';this.parentElement.insertAdjacentText('afterbegin','🐆');}">
+                <img src="asistan-avatar.png" alt="Dijital Asistan" class="assistant-avatar-img" onerror="if(!this.dataset.s){this.dataset.s='1';this.src='asistan.png';}else if(this.dataset.s==='1'){this.dataset.s='2';this.src='assets/asistan-avatar.png';}else{this.style.display='none';this.parentElement.insertAdjacentText('afterbegin','🐆');}">
                 <div class="smart-chat-bubble" id="topChatBubble">Yardımcı Olabilirim 🐆</div>
             </div>
             <div class="search-placeholder">Dijital asistanınıza tarif edin veya bir seçenek belirleyin...</div>
@@ -1614,22 +1583,21 @@
     </main>
 
     <!-- =========================================================
-         SİPARİŞ VE RANDEVU MODALI + "ARAÇ MÜSAİT DEĞİL" EĞİK BLURLU ATKI ŞERİDİ
+         SİPARİŞ VE RANDEVU MODALI + TARİHSİZ "MÜSAİT DEĞİL BAŞKA MODELLERİ İNCELEYİN!" ŞERİDİ
          ========================================================= -->
     <div id="randevuModal" class="modal-overlay" onclick="if(event.target===this) closeOrderModal()" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-box" id="appointment-modal-box">
             <button onclick="closeOrderModal()" class="modal-close-btn" aria-label="Sipariş Penceresini Kapat">✕</button>
 
-            <!-- ÜSTTEKİ ARAÇ VİTRİNİ (ARAÇ MÜSAİT OLMASA BİLE NORMAL CANLI DÖNER, GRİ OLMAZ) -->
             <div class="modal-car-showcase video-skeleton" id="modal-showcase-box">
                 <video id="modal-video" aria-hidden="true" tabindex="-1" src="" playsinline muted disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas id="modal-canvas" aria-hidden="true"></canvas>
             </div>
 
-            <!-- EĞİK, ARKA PLANI BLURLU ATKI ŞERİDİ (GOOGLE TAKVİM / SCRIPT DOLU DEDİĞİNDE DEVREYE GİRER) -->
+            <!-- EĞİK, ARKA PLANI BLURLU ATKI ŞERİDİ (TARİH KISMI SİLİNDİ, SADECE METİN KALDI) -->
             <div class="unavailable-sash-banner" id="unavailableSashBanner" role="alert" aria-live="assertive">
                 <div class="sash-main-text">
-                    Araba <span class="sash-date-highlight" id="unavailDateText">19/10/2026</span> Tarihine kadar müsait değil başka modelleri inceleyin!
+                    Müsait değil başka modelleri inceleyin!
                 </div>
                 <button type="button" class="sash-sub-btn" onclick="closeOrderModal()">← Başka Modelleri İncele</button>
             </div>
@@ -1791,7 +1759,7 @@
     </div>
 
     <!-- =========================================================
-         DİJİTAL ASİSTAN
+         DİJİTAL ASİSTAN (SAĞ ALTTA AÇILINCA 2. SİYAH JAGUAR: asistan-avatar1.png)
          ========================================================= -->
     <div class="chat-panel" id="chatPanel" role="dialog" aria-label="Referans Jaguar Dijital Asistan">
         <div class="chat-header">
@@ -1802,14 +1770,14 @@
         <div class="chat-body" id="chatBody">
             <div class="bot-message">
                 <div class="bot-avatar" aria-hidden="true">
-                    <img src="asistan.png" alt="Dijital Asistan" class="assistant-avatar-img" onerror="if(!this.dataset.s){this.dataset.s='1';this.src='asistan-avatar.png';}else if(this.dataset.s==='1'){this.dataset.s='2';this.src='assets/asistan.png';}else{this.style.display='none';this.parentElement.textContent='🐆';}">
+                    <img src="asistan-avatar1.png" alt="Dijital Asistan" class="assistant-avatar-img" onerror="if(!this.dataset.s){this.dataset.s='1';this.src='assets/asistan-avatar1.png';}else if(this.dataset.s==='1'){this.dataset.s='2';this.src='asistan-avatar.png';}else{this.style.display='none';this.parentElement.textContent='🐆';}">
                 </div>
                 <div class="bot-bubble">Merhaba! Ben Referans Jaguar 🐆 Size en uygun aracı anında filtreleyebilirim.</div>
             </div>
 
             <div class="typing-indicator" id="typingIndicator" aria-hidden="true">
                 <div class="bot-avatar">
-                    <img src="asistan.png" alt="Dijital Asistan" class="assistant-avatar-img" onerror="if(!this.dataset.s){this.dataset.s='1';this.src='asistan-avatar.png';}else if(this.dataset.s==='1'){this.dataset.s='2';this.src='assets/asistan.png';}else{this.style.display='none';this.parentElement.textContent='🐆';}">
+                    <img src="asistan-avatar1.png" alt="Dijital Asistan" class="assistant-avatar-img" onerror="if(!this.dataset.s){this.dataset.s='1';this.src='assets/asistan-avatar1.png';}else if(this.dataset.s==='1'){this.dataset.s='2';this.src='asistan-avatar.png';}else{this.style.display='none';this.parentElement.textContent='🐆';}">
                 </div>
                 <div class="typing-dots-box">
                     <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
@@ -1840,48 +1808,51 @@
 
             const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzrYJVsS0yDP1twV2OFzI3rujb8GcQKtcr2lfIGQAnVbIM15tpGx3O7AfxEn3fZFB2t/exec";
 
-            // GOOGLE APPS SCRIPT DEPLOY EDİLENE KADAR TASARIMI TEST EDEBİLMEN İÇİN VARSAYILAN ÖNİZLEME HARİTASI
-            // (Google Script'ten { musait: true/false, bitisTarihi: "GG/AA/YYYY" } yanıtı geldiğinde otomatik olarak Takvim verisi geçerli olur)
+            // GOOGLE APPS SCRIPT BAĞLANANA KADAR TEST AMAÇLI DOLU ARAÇ ÖNİZLEMESİ
             const DEFAULT_BUSY_PREVIEW = {
-                "RENAULT MEGANE": "19/10/2026"
+                "RENAULT MEGANE": true
             };
 
+            // 3 JAGUAR MP4 DOSYASI BİRİNCİL OLARAK TANIMLANDI:
+            // 1. Aile -> ikili_jaguar.mp4
+            // 2. VIP -> altin_jaguar.mp4
+            // 3. Diğer tüm seçenekler -> siyah_jaguar.mp4
             const JAGUAR_THEMES = {
                 uygun: {
                     title: "Fiyat/Performans Serisi",
-                    sources: ["siyah_jaguar.mp4", "jaguar.mp4", "assets/siyah_jaguar.mp4", "assets/jaguar.mp4"]
+                    sources: ["siyah_jaguar.mp4", "assets/siyah_jaguar.mp4", "jaguar.mp4"]
                 },
                 vip: {
                     title: "VIP Prestij Serisi",
-                    sources: ["gold_jaguar.mp4", "altin_jaguar.mp4", "assets/gold_jaguar.mp4", "assets/altin_jaguar.mp4"]
+                    sources: ["altin_jaguar.mp4", "assets/altin_jaguar.mp4", "gold_jaguar.mp4"]
                 },
                 aile: {
                     title: "Geniş Aile Serisi",
-                    sources: ["aile_jaguar.mp4", "ikili_jaguar.mp4", "assets/aile_jaguar.mp4", "assets/ikili_jaguar.mp4"]
+                    sources: ["ikili_jaguar.mp4", "assets/ikili_jaguar.mp4", "aile_jaguar.mp4"]
                 },
                 ticari: {
                     title: "Ticari Araç Serisi",
-                    sources: ["siyah_jaguar.mp4", "jaguar.mp4", "assets/siyah_jaguar.mp4", "assets/jaguar.mp4"]
+                    sources: ["siyah_jaguar.mp4", "assets/siyah_jaguar.mp4", "jaguar.mp4"]
                 },
                 otomatik: {
                     title: "Otomatik Vites Serisi",
-                    sources: ["siyah_jaguar.mp4", "jaguar.mp4", "assets/siyah_jaguar.mp4", "assets/jaguar.mp4"]
+                    sources: ["siyah_jaguar.mp4", "assets/siyah_jaguar.mp4", "jaguar.mp4"]
                 },
                 manuel: {
                     title: "Manuel Vites Serisi",
-                    sources: ["siyah_jaguar.mp4", "jaguar.mp4", "assets/siyah_jaguar.mp4", "assets/jaguar.mp4"]
+                    sources: ["siyah_jaguar.mp4", "assets/siyah_jaguar.mp4", "jaguar.mp4"]
                 },
                 dizel: {
                     title: "Dizel Serisi",
-                    sources: ["siyah_jaguar.mp4", "jaguar.mp4", "assets/siyah_jaguar.mp4", "assets/jaguar.mp4"]
+                    sources: ["siyah_jaguar.mp4", "assets/siyah_jaguar.mp4", "jaguar.mp4"]
                 },
                 benzin: {
                     title: "Benzinli Serisi",
-                    sources: ["siyah_jaguar.mp4", "jaguar.mp4", "assets/siyah_jaguar.mp4", "assets/jaguar.mp4"]
+                    sources: ["siyah_jaguar.mp4", "assets/siyah_jaguar.mp4", "jaguar.mp4"]
                 },
                 hibrit: {
                     title: "Hibrit Serisi",
-                    sources: ["siyah_jaguar.mp4", "jaguar.mp4", "assets/siyah_jaguar.mp4", "assets/jaguar.mp4"]
+                    sources: ["siyah_jaguar.mp4", "assets/siyah_jaguar.mp4", "jaguar.mp4"]
                 }
             };
 
@@ -1900,7 +1871,7 @@
             let isExtractingNow = false;
             const activeExtractors = new Set();
 
-            // 1. GERÇEK PWA SERVICE WORKER KAYDI VE AKILLI KURULUM MOTORU
+            // 1. OTOMATİK PWA SERVICE WORKER KAYDI VE TEK TIKLA YÜKLEME MOTORU (REHBER POPUP KALDIRILDI!)
             if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
                 window.addEventListener('load', () => {
                     navigator.serviceWorker.register('/sw.js').catch(() => {});
@@ -1931,48 +1902,15 @@
                 showTopToast("Uygulama yüklenmiştir");
             });
 
-            window.closePwaGuide = function() {
-                const gModal = document.getElementById('pwaGuideModal');
-                if (gModal) {
-                    gModal.classList.remove('show');
-                    setTimeout(() => { gModal.style.display = 'none'; }, 300);
-                }
-            };
-
             window.triggerPWAInstall = function() {
-                // Eğer tarayıcı doğrudan yükleme penceresini hazır tutuyorsa (Android / PC Chrome & Edge) anında tetikler!
                 if (deferredPrompt) {
                     deferredPrompt.prompt();
-                    deferredPrompt.userChoice.then((choice) => {
-                        if (choice.outcome === 'accepted') {
-                            showTopToast("Uygulama yüklenmiştir");
-                        }
+                    deferredPrompt.userChoice.then(() => {
                         deferredPrompt = null;
                     });
-                    return;
                 }
-
-                // Eğer uygulama zaten kuruluysa (Standalone moddaysa)
-                if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-                    showTopToast("Uygulama cihazınızda zaten yüklü");
-                    return;
-                }
-
-                // iOS (iPhone/iPad) veya sw.js henüz yüklenmemişse kullanıcıya cihazına özel net kurulum penceresini açar
-                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-                const stepsEl = document.getElementById('pwaGuideSteps');
-                if (stepsEl) {
-                    if (isIOS) {
-                        stepsEl.innerHTML = `1. Safari alt çubuğundaki <strong>Paylaş (Yukarı Ok 📤)</strong> simgesine dokunun.<br>2. Açılan menüden <strong>"Ana Ekrana Ekle"</strong> seçeneğine basın.`;
-                    } else {
-                        stepsEl.innerHTML = `1. Tarayıcınızın sağ üst köşesindeki <strong>Menü (⋮)</strong> simgesine dokunun.<br>2. <strong>"Ana ekrana ekle"</strong> veya <strong>"Uygulamayı yükle"</strong> seçeneğine basın.`;
-                    }
-                }
-                const gModal = document.getElementById('pwaGuideModal');
-                if (gModal) {
-                    gModal.style.display = 'flex';
-                    requestAnimationFrame(() => { gModal.classList.add('show'); });
-                }
+                // Her durumda uyarı penceresi açmadan üstten 2 saniyelik yeşil tikli bildirim düşer
+                showTopToast("Uygulama yüklenmiştir");
             };
 
             window.dismissMobilePwaSheet = function() {
@@ -1980,7 +1918,7 @@
                 if (sheet) sheet.classList.add('dismissed');
             };
 
-            // 2. KATEGORİ SEÇİLİNCE SADE JAGUAR SAHNESİNİ AÇAN SİSTEM
+            // 2. KATEGORİ SEÇİLİNCE GENİŞ JAGUAR VİTRİN SAHNESİNİ AÇAN SİSTEM
             window.selectCategoryWithJaguar = function(category) {
                 if (currentCategoryFilter === category && document.body.classList.contains('jaguar-mode-active')) {
                     exitJaguarStage();
@@ -1992,13 +1930,10 @@
 
                 document.getElementById('jaguar-stage-title').innerText = theme.title;
 
-                const jBox = document.getElementById('jaguar-video-box');
                 const jVideo = document.getElementById('jaguar-stage-video');
-                jBox.classList.remove('has-video');
-
                 let srcIdx = 0;
+
                 jVideo.onloadeddata = function() {
-                    jBox.classList.add('has-video');
                     jVideo.play().catch(()=>{});
                 };
                 jVideo.onerror = function() {
@@ -2006,8 +1941,6 @@
                     if (srcIdx < theme.sources.length) {
                         jVideo.src = theme.sources[srcIdx];
                         jVideo.load();
-                    } else {
-                        jBox.classList.remove('has-video');
                     }
                 };
                 jVideo.src = theme.sources[0];
@@ -2030,9 +1963,7 @@
             window.exitJaguarStage = function() {
                 currentCategoryFilter = 'all';
                 document.body.classList.remove('jaguar-mode-active');
-                const jBox = document.getElementById('jaguar-video-box');
                 const jVideo = document.getElementById('jaguar-stage-video');
-                if (jBox) jBox.classList.remove('has-video');
                 if (jVideo) {
                     jVideo.pause();
                     jVideo.removeAttribute('src');
@@ -2621,16 +2552,14 @@
                 window.addEventListener('touchcancel', onPointerUp);
             })();
 
-            // 7. SİPARİŞ & RANDEVU MODALI + GOOGLE APPS SCRIPT "ARAÇ MÜSAİT DEĞİL" EĞİK ATKI ŞERİDİ KONTROLÜ
+            // 7. SİPARİŞ & RANDEVU MODALI + TARİHSİZ "MÜSAİT DEĞİL BAŞKA MODELLERİ İNCELEYİN!" KONTROLÜ
             let modalPingPongRAF = null;
 
-            function setModalCarAvailability(isAvailable, untilDateStr) {
+            function setModalCarAvailability(isAvailable) {
                 const modalBox = document.getElementById('appointment-modal-box');
-                const dateSpan = document.getElementById('unavailDateText');
                 if (!modalBox) return;
 
                 if (!isAvailable) {
-                    if (dateSpan && untilDateStr) dateSpan.innerText = untilDateStr;
                     modalBox.classList.add('is-unavailable');
                 } else {
                     modalBox.classList.remove('is-unavailable');
@@ -2638,23 +2567,20 @@
             }
 
             function checkCarAvailabilityFromGoogleScript(carName) {
-                // 1. Önce yerel önizleme haritasında varsa (Örn: RENAULT MEGANE -> 19/10/2026) anında gösterir
                 if (DEFAULT_BUSY_PREVIEW[carName]) {
-                    setModalCarAvailability(false, DEFAULT_BUSY_PREVIEW[carName]);
+                    setModalCarAvailability(false);
                 } else {
-                    setModalCarAvailability(true, "");
+                    setModalCarAvailability(true);
                 }
 
-                // 2. Google Apps Script'e canlı sorgu atar (?islem=aracDurum&arac=...)
-                // Script deploy edildiğinde { musait: false, bitisTarihi: "19/10/2026" } veya { musait: true } döner
                 fetch(WEB_APP_URL + "?islem=aracDurum&arac=" + encodeURIComponent(carName))
                     .then(r => r.json())
                     .then(data => {
                         if (activeModalCar !== carName) return;
                         if (data && (data.musait === false || data.durum === 'dolu')) {
-                            setModalCarAvailability(false, data.bitisTarihi || "19/10/2026");
+                            setModalCarAvailability(false);
                         } else if (data && data.musait === true) {
-                            setModalCarAvailability(true, "");
+                            setModalCarAvailability(true);
                         }
                     })
                     .catch(() => {});
@@ -2754,7 +2680,6 @@
 
                 document.getElementById('modal-car-name').innerText = `${carName} • ${priceStr} / GÜN`;
 
-                // Araç müsaitlik durumunu kontrol eder (Doluysa araba hariç gri arka plan + eğik blurlu atkı şeridi açılır)
                 checkCarAvailabilityFromGoogleScript(carName);
 
                 const modalVideo = document.getElementById('modal-video');
@@ -3024,7 +2949,7 @@
                     btn.innerHTML = 'SİPARİŞİ TAMAMLA';
                     btn.disabled = false;
                     if (res && res.durum === 'dolu') {
-                        setModalCarAvailability(false, res.bitisTarihi || "19/10/2026");
+                        setModalCarAvailability(false);
                         return;
                     }
                     if (res && res.durum === 'hata') { showErr(res.mesaj); return; }
@@ -3041,7 +2966,7 @@
                 });
             };
 
-            // 8. DİJİTAL ASİSTAN
+            // 8. DİJİTAL ASİSTAN (SAĞ ALTTA 2. SİYAH JAGUAR: asistan-avatar1.png)
             function getRandomDelay() { return Math.floor(Math.random() * (1400 - 800 + 1)) + 800; }
 
             window.toggleAssistant = function() {
@@ -3088,7 +3013,7 @@
                 const chatBody = document.getElementById('chatBody');
                 const msgDiv = document.createElement('div');
                 msgDiv.className = 'bot-message dynamic-msg';
-                msgDiv.innerHTML = `<div class="bot-avatar" aria-hidden="true"><img src="asistan.png" alt="Dijital Asistan" class="assistant-avatar-img" onerror="if(!this.dataset.s){this.dataset.s='1';this.src='asistan-avatar.png';}else if(this.dataset.s==='1'){this.dataset.s='2';this.src='assets/asistan.png';}else{this.style.display='none';this.parentElement.textContent='🐆';}"></div><div class="bot-bubble">${text}</div>`;
+                msgDiv.innerHTML = `<div class="bot-avatar" aria-hidden="true"><img src="asistan-avatar1.png" alt="Dijital Asistan" class="assistant-avatar-img" onerror="if(!this.dataset.s){this.dataset.s='1';this.src='assets/asistan-avatar1.png';}else if(this.dataset.s==='1'){this.dataset.s='2';this.src='asistan-avatar.png';}else{this.style.display='none';this.parentElement.textContent='🐆';}"></div><div class="bot-bubble">${text}</div>`;
                 chatBody.appendChild(msgDiv);
                 scrollToBottom();
             }
