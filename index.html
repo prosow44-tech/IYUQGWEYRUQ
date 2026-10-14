@@ -32,7 +32,9 @@
       "priceRange": "1500 TRY - 2300 TRY",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "Malatya",
+        "streetAddress": "Saray Mah. Beşkonaklar Caddesi 64/B",
+        "addressLocality": "Battalgazi",
+        "addressRegion": "Malatya",
         "addressCountry": "TR"
       }
     }
@@ -104,8 +106,129 @@
             box-shadow: 0 0 12px rgba(0, 230, 118, 0.6);
         }
 
-        /* MOBİL ÜST KONSOL VARSAYILAN OLARAK PC'DE GİZLİDİR */
+        /* MOBİL ELEMANLAR VARSAYILAN OLARAK PC'DE GİZLİDİR */
         .mobile-sticky-dock { display: none; }
+        .mobile-pwa-bottom-sheet { display: none; }
+
+        /* =========================================================
+           JAGUAR KATEGORİ VİTRİN SAHNESİ (KATEGORİ SEÇİLİNCE AÇILIR, ÜST MENÜ GİDER)
+           ========================================================= */
+        .jaguar-showcase-stage {
+            display: none;
+            width: 100%;
+            max-width: 1320px;
+            margin: 18px auto 0;
+            padding: 0 20px;
+            z-index: 200;
+            position: relative;
+            animation: jaguarStageIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes jaguarStageIn {
+            from { opacity: 0; transform: translateY(-25px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        body.jaguar-mode-active .jaguar-showcase-stage {
+            display: block;
+        }
+        body.jaguar-mode-active header.pc-header,
+        body.jaguar-mode-active nav.top-capsule,
+        body.jaguar-mode-active section.search-wrapper,
+        body.jaguar-mode-active aside.right-filter-panel,
+        body.jaguar-mode-active header.mobile-sticky-dock {
+            display: none !important;
+        }
+        body.jaguar-mode-active .cars-container {
+            padding-top: 30px !important;
+        }
+
+        .jaguar-stage-card {
+            background: linear-gradient(145deg, #121417 0%, #1E2227 100%);
+            border: 2.5px solid #FFC107;
+            border-radius: 28px;
+            padding: 22px 26px 24px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.28), 0 0 30px rgba(255, 193, 7, 0.15);
+            overflow: hidden;
+        }
+        .jaguar-stage-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 5;
+        }
+        .jaguar-stage-badge {
+            display: inline-block;
+            background: rgba(255, 193, 7, 0.16);
+            border: 1px solid #FFC107;
+            color: #FFC107;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            padding: 5px 16px;
+            border-radius: 999px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .jaguar-stage-title {
+            font-size: 28px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            margin-bottom: 4px;
+        }
+        .jaguar-stage-sub {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #CED4DA;
+        }
+        .jaguar-back-btn {
+            position: absolute;
+            top: 18px;
+            right: 20px;
+            background: #FFC107;
+            color: #1A1D20;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 900;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 10;
+            box-shadow: 0 6px 18px rgba(255, 193, 7, 0.35);
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        .jaguar-back-btn:hover {
+            background: #FFCA28;
+            transform: scale(1.04);
+        }
+        .jaguar-video-frame {
+            width: 100%;
+            max-width: 920px;
+            height: 290px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #0B0C0E;
+            border: 1.5px solid rgba(255, 193, 7, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .jaguar-video-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
 
         /* =========================================================
            PC (MASAÜSTÜ) ORİJİNAL TASARIMI (1:1 KORUNMUŞ MİMARİ)
@@ -124,7 +247,7 @@
         .pwa-btn:hover { background: #FFCA28; transform: translateY(-2px); }
         .pwa-btn:active { transform: scale(0.96) !important; }
 
-        /* PC ÜST KAPSÜL MENÜ (KAYISI & MALATYA) */
+        /* PC ÜST KAPSÜL MENÜ (AŞAĞI KAYDIRINCA GİZLENİR) */
         .top-capsule { 
             position: fixed; top: 22px; left: 50%; transform: translateX(-50%); 
             width: 880px; height: 62px; 
@@ -134,27 +257,30 @@
             display: flex; align-items: center; justify-content: space-between; 
             padding: 0 32px; z-index: 40010; 
             box-shadow: 0 18px 40px rgba(26, 29, 32, 0.10), 0 4px 12px rgba(26, 29, 32, 0.05);
-            transition: top 0.35s ease, box-shadow 0.35s ease;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+        }
+        .top-capsule.scroll-hidden {
+            transform: translate(-50%, -120px);
+            opacity: 0;
+            pointer-events: none;
         }
         .status-item { display: flex; align-items: center; gap: 10px; font-size: 13.5px; font-weight: 800; color: #1A1D20; z-index: 2; }
         .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
         .dot-green { background: #00E676; box-shadow: 0 0 10px rgba(0,230,118,0.8); }
-        .dot-red { background: #D32F2F; box-shadow: 0 0 10px rgba(211,47,47,0.8); }
         
         .malatya-brand { 
             position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-            display: inline-flex; align-items: center; justify-content: center; gap: 12px; 
-            background: linear-gradient(180deg, #FFFDF7 0%, #FFF3CD 100%); 
-            border: 1.5px solid #FFC107;
-            padding: 7px 24px; border-radius: 999px;
-            box-shadow: 0 4px 14px rgba(255, 193, 7, 0.22), inset 0 1px 2px #ffffff;
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px; 
+            background: transparent; 
+            border: none;
+            padding: 4px 12px;
             z-index: 3;
         }
         .malatya-text { 
             font-size: 20px; font-weight: 900; color: #1A1D20; 
             letter-spacing: 2.5px; text-transform: uppercase; line-height: 1;
         }
-        .apricot-svg { width: 26px; height: 26px; display: block; flex-shrink: 0; overflow: visible; }
+        .apricot-svg { width: 25px; height: 25px; display: block; flex-shrink: 0; overflow: visible; }
 
         /* PC ORTA ARAMA VE KATEGORİ FİLTRELERİ */
         .search-wrapper { position: absolute; top: 135px; left: 50%; transform: translateX(-50%); width: 880px; text-align: center; transition: all 0.55s cubic-bezier(0.4, 0, 0.2, 1); z-index: 90; }
@@ -217,26 +343,14 @@
         .rf-text { font-size: 13.5px; font-weight: 600; color: #1A1D20; }
         .rf-radio.active .rf-text { font-weight: 800; }
 
-        /* ÇEREZ BUTONU */
-        .cookie-btn { position: fixed; bottom: 28px; left: 28px; width: 50px; height: 50px; background: #1A1D20; border: 2px solid #FFC107; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; transition: 0.3s; box-shadow: 0 8px 20px rgba(0,0,0,0.22); }
-        .cookie-btn:hover { transform: scale(1.1); background: #FFC107; border-color: #1A1D20; }
-        .cookie-btn svg { width: 24px; height: 24px; stroke: #FFC107; fill: none; transition: 0.3s; }
-        .cookie-btn:hover svg { stroke: #1A1D20; }
-
-        .cookie-popup { position: fixed; bottom: 90px; left: 28px; width: 310px; background: #ffffff; border: 2px solid #FFC107; border-radius: 16px; padding: 18px; z-index: 1001; box-shadow: 0 15px 40px rgba(0,0,0,0.15); display: none; flex-direction: column; gap: 10px; }
-        .cookie-popup.show { display: flex; }
-        .cookie-popup h4 { font-size: 14px; font-weight: 900; color: #1A1D20; }
-        .cookie-popup p { font-size: 12px; font-weight: 600; color: #6C757D; line-height: 1.4; }
-        .cookie-accept-btn { padding: 10px; background: #1A1D20; color: #FFC107; border: none; border-radius: 8px; font-size: 12px; font-weight: 900; cursor: pointer; }
-
-        /* PC ARAÇ KARTLARI (3'LÜ ORİJİNAL MİMARİ - ARKA PLAN KUTUSU YOK, TAMAMEN ŞEFFAF STÜDYO ZEMİNİ) */
+        /* PC ARAÇ KARTLARI (3'LÜ ORİJİNAL MİMARİ + DÖNDÜRÜRKEN BÜYÜME EFEKTİ) */
         .cars-container { 
             position: relative; 
             padding: 460px 25px 140px; 
             width: 100%; 
             display: grid; grid-template-columns: repeat(3, 1fr); 
             gap: 75px 28px; z-index: 10; 
-            transition: transform 0.75s cubic-bezier(0.25, 1, 0.5, 1); 
+            transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1), padding-top 0.4s ease; 
         }
         .cars-container.lift-up { transform: translateY(-320px); }
         
@@ -248,9 +362,20 @@
             padding: 0;
             display: flex; flex-direction: column; align-items: center; 
             width: 100%; max-width: 680px; margin: 0 auto; 
-            transition: opacity 0.35s ease, transform 0.35s ease; 
+            position: relative;
+            z-index: 1;
+            transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease; 
         }
         .car-card.hidden { display: none !important; }
+
+        /* KİŞİ ARABAYI DÖNDÜRÜRKEN KART VE SAHNE BÜYÜR, BIRAKINCA ESKİ ORANINA DÖNER */
+        .car-card.interacting-zoom {
+            z-index: 60 !important;
+            transform: scale(1.12);
+        }
+        .car-card.interacting-zoom .car-media-box {
+            transform: scale(1.08);
+        }
         
         .video-skeleton {
             background-color: var(--studio-bg);
@@ -262,6 +387,7 @@
             cursor: grab; overflow: hidden; border-radius: 26px;
             background: transparent;
             touch-action: pan-y;
+            transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
             -webkit-mask-image: radial-gradient(ellipse 96% 93% at 50% 50%, #000 84%, transparent 100%);
             mask-image: radial-gradient(ellipse 96% 93% at 50% 50%, #000 84%, transparent 100%);
         }
@@ -288,7 +414,6 @@
         }
         .security-armor:active { cursor: grabbing; }
 
-        /* PC'de Orijinal Beyaz Kapsüllü 360° Rozeti, Mobilde Kısa & Arka Plansız */
         .swipe-badge {
             display: inline-flex; align-items: center; justify-content: center;
             padding: 11px 28px; margin-bottom: 16px;
@@ -311,7 +436,6 @@
         .spec-item { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 800; color: #1A1D20; white-space: nowrap; }
         .dark-icon { width: 28px; height: 28px; background: #1A1D20; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 8px rgba(26,29,32,0.15); }
 
-        /* BEYAZ ARABAYA SİYAH BUTON (.dark-btn), SİYAH ARABAYA SARI BUTON (.light-btn) */
         .order-btn { 
             padding: 18px 42px; border-radius: 30px; font-size: 14.5px; font-weight: 900; 
             cursor: pointer; border: none; transition: transform 0.236s ease, box-shadow 0.236s ease, background-color 0.236s ease; 
@@ -324,7 +448,7 @@
         .order-btn:active { transform: scale(0.96) !important; }
 
         /* =========================================================
-           SİPARİŞ & RANDEVU MODALI (DAHA DA BÜYÜTÜLMÜŞ TAM GENİŞLİK ARAÇ SAHNESİ)
+           SİPARİŞ & RANDEVU MODALI + HUKUKİ KVKK ONAY TİKİ
            ========================================================= */
         .modal-overlay { 
             position: fixed; inset: 0; background-color: rgba(15, 23, 42, 0.86); 
@@ -335,7 +459,7 @@
         .modal-overlay.show { display: flex; opacity: 1; }
         
         .modal-box { 
-            background-color: #ffffff; border-radius: 28px; padding: 14px 26px 28px !important; 
+            background-color: #ffffff; border-radius: 28px; padding: 14px 26px 26px !important; 
             width: 100%; max-width: 780px; margin: auto; position: relative; 
             box-shadow: 0 35px 70px -12px rgba(0,0,0,0.7); border: 2px solid #FFF8E1; 
             pointer-events: auto; overflow: visible !important; text-align: center;
@@ -352,7 +476,6 @@
         }
         .modal-close-btn:hover { background: #D32F2F; color: #ffffff; border-color: #ffffff; transform: rotate(90deg); }
 
-        /* DAHA DA BÜYÜTÜLMÜŞ DEVASA 360° ARAÇ VİTRİN SAHNESİ */
         .modal-car-showcase {
             position: relative;
             width: calc(100% + 24px);
@@ -404,6 +527,45 @@
         .auto-date-btn::before { content: '📅'; font-size: 12px; }
         .auto-date-btn:hover { background: #FFC107; color: #1A1D20; transform: translateY(-1px); }
 
+        /* TESLİM SAATİNİN ALTINDAKİ KVKK VE SÖZLEŞME ONAY KUTUSU (image_5c6ab9.png BİREBİR TASARIM) */
+        .legal-consent-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 12px;
+            padding: 10px 12px;
+            background: #F8FAFC;
+            border: 1.5px solid #E2E8F0;
+            border-radius: 12px;
+            text-align: left;
+        }
+        .legal-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-top: 1px;
+            accent-color: #FF8F00;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .legal-consent-text {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1A1D20;
+            line-height: 1.45;
+        }
+        .legal-link {
+            color: #F59E0B;
+            font-weight: 800;
+            text-decoration: none;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(245, 158, 11, 0.4);
+            transition: color 0.2s ease;
+        }
+        .legal-link:hover {
+            color: #D97706;
+            border-bottom-color: #D97706;
+        }
+
         .modal-submit-btn { 
             width: 100%; font-weight: 900; padding: 16px; margin-top: 14px; 
             border-radius: 14px; font-size: 15px; background: #FFC107; color: #1A1D20; 
@@ -413,7 +575,77 @@
         .modal-submit-btn:hover { background: #FFCA28; transform: translateY(-2px); }
 
         /* =========================================================
-           PC DİJİTAL ASİSTAN (REFERANS JAGUAR - PC'DE ORİJİNAL BOYUT, MOBİLDE %25)
+           ANİMASYONLU KİRALAMA SÖZLEŞMESİ VE KVKK MODALI
+           ========================================================= */
+        .contract-modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(15, 23, 42, 0.88);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            z-index: 75000;
+            display: none; align-items: center; justify-content: center;
+            padding: 1.2rem; opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+        .contract-modal-overlay.show { display: flex; opacity: 1; }
+        .contract-modal-box {
+            background: #ffffff;
+            width: 100%; max-width: 820px; max-height: 86vh;
+            border-radius: 24px;
+            border: 2.5px solid #FFC107;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.65);
+            display: flex; flex-direction: column;
+            overflow: hidden;
+            transform: translateY(30px) scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .contract-modal-overlay.show .contract-modal-box {
+            transform: translateY(0) scale(1);
+        }
+        .contract-header {
+            background: #1A1D20;
+            color: #ffffff;
+            padding: 18px 24px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 2px solid #FFC107;
+        }
+        .contract-header h3 { font-size: 17px; font-weight: 900; color: #FFC107; text-transform: uppercase; }
+        .contract-close-btn {
+            width: 34px; height: 34px; border-radius: 50%;
+            background: #343A40; color: #ffffff; border: none;
+            font-weight: 900; font-size: 15px; cursor: pointer;
+        }
+        .contract-close-btn:hover { background: #FFC107; color: #1A1D20; }
+        .contract-body {
+            padding: 22px 26px;
+            overflow-y: auto;
+            font-size: 12.5px;
+            line-height: 1.65;
+            color: #1E293B;
+            text-align: left;
+            user-select: text; -webkit-user-select: text;
+        }
+        .contract-body h4 {
+            font-size: 14px; font-weight: 900; color: #1A1D20;
+            margin: 16px 0 6px; padding-bottom: 4px;
+            border-bottom: 1.5px solid #F1F5F9;
+        }
+        .contract-body h4:first-child { margin-top: 0; }
+        .contract-body p { margin-bottom: 8px; font-weight: 500; }
+        .contract-footer {
+            padding: 14px 24px;
+            background: #F8FAFC;
+            border-top: 1px solid #E2E8F0;
+            display: flex; justify-content: flex-end; gap: 10px;
+        }
+        .contract-accept-btn {
+            background: #FFC107; color: #1A1D20; border: none;
+            padding: 11px 24px; border-radius: 10px;
+            font-size: 13px; font-weight: 900; cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255,193,7,0.3);
+        }
+
+        /* =========================================================
+           PC DİJİTAL ASİSTAN (REFERANS JAGUAR)
            ========================================================= */
         .chat-panel { 
             position: fixed; bottom: 30px; right: 35px; width: 410px; height: 550px; 
@@ -465,11 +697,7 @@
         }
 
         /* =========================================================
-           YALNIZCA TELEFON & TABLET SÜRÜMÜ (max-width: 1024px)
-           - PC Üst Elemanları Gizlenir, Sabit Kompakt Mobil Üst Konsol Açılır
-           - Yan Yana 2 Büyük Araç Modeli
-           - 360° Yazısı Arka Plansız ve Kısaltılmış ("← 360° Kaydırın →")
-           - Yapay Zeka %25 Alan Kaplar
+           TELEFON SÜRÜMÜ (max-width: 1024px) - TÜM ÖZEL TALEPLER
            ========================================================= */
         @media (max-width: 1024px) {
             header.pc-header,
@@ -479,99 +707,164 @@
                 display: none !important;
             }
 
+            /* SABİT ÜST KONSOL */
             .mobile-sticky-dock {
-                display: flex; flex-direction: column; gap: 4px;
+                display: flex; flex-direction: column; gap: 5px;
                 position: fixed; top: 0; left: 0; width: 100%;
                 z-index: 40000;
                 background: rgba(230, 230, 228, 0.96);
                 backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
                 border-bottom: 1.5px solid rgba(255, 255, 255, 0.85);
                 box-shadow: 0 6px 20px rgba(26, 29, 32, 0.06);
-                padding: 4px 8px 6px;
+                padding: 5px 8px 6px;
+                transition: padding 0.3s ease;
             }
 
+            /* 1. En Üst Satır: Aşağı Kaydırınca Kaybolur, REFERANS / RENTECAR Alt Alta, Malatya Sarı Arka Plansız, Teslimat Yeşil Işıklı */
             .mob-dock-top {
                 display: flex; align-items: center; justify-content: space-between;
-                height: 30px; background: rgba(255, 255, 255, 0.92);
+                height: 32px; background: rgba(255, 255, 255, 0.94);
                 border: 1px solid #ffffff; border-radius: 999px;
-                padding: 0 10px; position: relative;
+                padding: 0 12px; position: relative;
+                overflow: hidden;
+                max-height: 32px;
+                opacity: 1;
+                transition: max-height 0.32s ease, opacity 0.25s ease, margin 0.32s ease, border-width 0.25s ease;
             }
-            .mob-brand-left { display: flex; align-items: center; gap: 6px; }
-            .mob-logo { font-size: 14px; font-weight: 900; letter-spacing: -0.5px; color: #1A1D20; }
-            .mob-logo span { color: #FFC107; }
-            .mob-pwa-btn {
-                background: #FFC107; color: #1A1D20; border: none;
-                padding: 3px 8px; border-radius: 999px; font-size: 8.5px; font-weight: 900;
-                cursor: pointer;
+            .mobile-sticky-dock.scrolled-down .mob-dock-top {
+                max-height: 0 !important;
+                opacity: 0 !important;
+                margin-top: -5px !important;
+                border-width: 0 !important;
+                pointer-events: none;
             }
 
-            .mob-malatya-badge {
+            .mob-brand-stack {
+                display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+                line-height: 1;
+            }
+            .mob-logo-main { font-size: 11.5px; font-weight: 900; letter-spacing: -0.3px; color: #1A1D20; line-height: 1; }
+            .mob-logo-main span { color: #FFC107; }
+            .mob-logo-sub { font-size: 7.5px; font-weight: 900; letter-spacing: 1.6px; color: #495057; line-height: 1; margin-top: 1.5px; }
+
+            /* Malatya: Sarı arka plan kaldırıldı, temiz görünüm */
+            .mob-malatya-clean {
                 position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
                 display: inline-flex; align-items: center; gap: 4px;
-                background: #FFF8E1; border: 1px solid #FFC107;
-                padding: 2px 8px; border-radius: 999px;
+                background: transparent !important; border: none !important;
+                padding: 0;
             }
-            .mob-malatya-badge span { font-size: 10px; font-weight: 900; letter-spacing: 0.8px; color: #1A1D20; }
-            .mob-malatya-badge svg { width: 12px; height: 12px; }
+            .mob-malatya-clean span { font-size: 11px; font-weight: 900; letter-spacing: 1px; color: #1A1D20; }
+            .mob-malatya-clean svg { width: 13px; height: 13px; }
 
-            .mob-status-right { display: flex; align-items: center; gap: 5px; font-size: 8.5px; font-weight: 800; color: #1A1D20; }
-            .mob-status-right .dot { width: 6px; height: 6px; }
+            /* Sağ Durum: Hem Açığız hem Teslimat Yeşil Işık Yanar */
+            .mob-status-right { display: flex; align-items: center; gap: 5px; font-size: 9px; font-weight: 800; color: #1A1D20; }
+            .mob-status-right .dot { width: 6.5px; height: 6.5px; }
 
-            /* Sabit Yapay Zeka Çubuğu (Filtrenin Üstünde) */
+            /* 2. Dijital Asistan Barı: Sağ Butonda '7/24' Yazar */
             .mob-dock-ai {
-                height: 32px; background: #ffffff;
+                height: 35px; background: #ffffff;
                 border: 1.5px solid #FFC107; border-radius: 999px;
                 display: flex; align-items: center; justify-content: space-between;
-                padding: 0 5px 0 34px; position: relative; cursor: pointer;
+                padding: 0 5px 0 38px; position: relative; cursor: pointer;
+                box-shadow: 0 3px 10px rgba(255,193,7,0.15);
             }
             .mob-ai-icon {
-                position: absolute; left: 3px; width: 25px; height: 25px;
+                position: absolute; left: 4px; width: 27px; height: 27px;
                 background: #1A1D20; border-radius: 50%; border: 1.5px dashed #FFC107;
-                display: flex; align-items: center; justify-content: center; font-size: 13px;
+                display: flex; align-items: center; justify-content: center; font-size: 14px;
             }
-            .mob-ai-text { font-size: 10px; font-weight: 700; color: #495057; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .mob-ai-text { font-size: 10.5px; font-weight: 700; color: #495057; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
             .mob-ai-text strong { color: #1A1D20; font-weight: 900; }
-            .mob-ai-btn { background: #1A1D20; color: #FFC107; border: none; padding: 4px 8px; border-radius: 999px; font-size: 8.5px; font-weight: 900; flex-shrink: 0; }
+            .mob-ai-btn { background: #1A1D20; color: #FFC107; border: none; padding: 5px 12px; border-radius: 999px; font-size: 10px; font-weight: 900; flex-shrink: 0; letter-spacing: 0.5px; }
 
-            /* Sabit Yatay Filtre Çubuğu (Yapay Zekanın Altında) */
+            /* 3. Yatay Filtre Barı:
+               1. Fiyat: Yüksekten / Düşüğe (2 satır ortalı)
+               2. Uygun Araçlar
+               3. VIP Araçlar
+               4. Ticari Araç
+               5. Aile Araçlar (Sağ kenarda yarısı gözükecek şekilde kalibre edildi) */
             .mob-dock-filters {
-                display: flex; align-items: center; gap: 5px;
+                display: flex; align-items: stretch; gap: 6px;
                 overflow-x: auto; white-space: nowrap;
                 scrollbar-width: none; -ms-overflow-style: none;
                 padding: 1px 0;
             }
             .mob-dock-filters::-webkit-scrollbar { display: none; }
-            .mob-f-btn {
-                padding: 4px 9px; border-radius: 999px;
-                background: rgba(255, 255, 255, 0.92); border: 1px solid #ffffff;
-                font-size: 9.5px; font-weight: 800; color: #1A1D20;
-                cursor: pointer; flex-shrink: 0;
-            }
-            .mob-f-btn.active { background: #FFC107; border-color: #1A1D20; font-weight: 900; }
-            .mob-f-btn.sort-btn { background: #1A1D20; color: #FFC107; border-color: #FFC107; }
-            .mob-f-btn.sort-btn.active { background: #FFC107; color: #1A1D20; border-color: #1A1D20; }
 
-            /* TELEFONDA YAN YANA 2 BÜYÜK ARAÇ MODELİ (ARKA PLAN KUTUSU YOK) */
-            .cars-container {
-                padding: 106px 6px 85px !important;
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 18px 8px !important;
-                transform: none !important;
+            .mob-f-btn {
+                height: 32px;
+                padding: 0 2.9vw;
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.95); border: 1.5px solid #ffffff;
+                font-size: 3.05vw; font-weight: 800; color: #1A1D20;
+                cursor: pointer; flex-shrink: 0;
+                display: inline-flex; align-items: center; justify-content: center;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.04);
             }
+            .mob-f-btn.sort-two-line {
+                flex-direction: column;
+                line-height: 1.05;
+                padding: 2px 2.8vw;
+                background: #1A1D20; color: #FFC107; border-color: #FFC107;
+                font-size: 2.55vw;
+                text-align: center;
+            }
+            .mob-f-btn.sort-two-line span { display: block; text-align: center; }
+            .mob-f-btn.sort-two-line.active {
+                background: #FFC107; color: #1A1D20; border-color: #1A1D20;
+            }
+            .mob-f-btn.active {
+                background: #FFC107; border-color: #1A1D20; font-weight: 900;
+            }
+
+            @media (min-width: 500px) and (max-width: 1024px) {
+                .mob-f-btn { font-size: 12px; padding: 0 14px; }
+                .mob-f-btn.sort-two-line { font-size: 10px; padding: 2px 14px; }
+            }
+
+            /* TELEFONDA 1 ARABA TAM GÖZÜKÜR, 2. ARABANIN %20'Sİ ALTTAN GÖZÜKÜR, DÖNDÜRÜRKEN BÜYÜR */
+            .cars-container {
+                padding: 118px 14px 120px !important;
+                grid-template-columns: 1fr !important;
+                gap: 42px !important;
+                transform: none !important;
+                transition: padding-top 0.32s ease;
+            }
+            .cars-container.mob-expanded-top {
+                padding-top: 84px !important;
+            }
+
             .car-card {
+                width: 100% !important;
+                max-width: 520px !important;
                 background: transparent !important;
                 border: none !important;
                 box-shadow: none !important;
                 padding: 0 !important;
+                transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
             }
             .car-media-box {
-                height: auto !important;
-                aspect-ratio: 16 / 10.5;
-                margin-bottom: 2px !important;
-                border-radius: 14px;
+                width: 100% !important;
+                height: 34vh !important;
+                min-height: 225px;
+                max-height: 310px;
+                margin-bottom: 4px !important;
+                border-radius: 20px;
+                touch-action: pan-y;
+                transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
             }
             .car-video, .car-canvas {
-                transform: scale(1.30) translateY(-1%) !important;
+                transform: scale(1.28) translateY(-1%) !important;
+            }
+
+            /* Telefonda kullanıcı arabayı sağa sola çevirirken karesi büyür, boşlukları doldurur, bırakınca eski oranına döner */
+            .car-card.interacting-zoom {
+                z-index: 80 !important;
+                transform: scale(1.14) !important;
+            }
+            .car-card.interacting-zoom .car-media-box {
+                transform: scale(1.10) !important;
             }
 
             /* TELEFONDA 360° METNİ: ARKA PLANSIZ, KÜÇÜK VE KISA ("← 360° Kaydırın →") */
@@ -580,8 +873,8 @@
                 border: none !important;
                 box-shadow: none !important;
                 padding: 0 !important;
-                margin-bottom: 3px !important;
-                font-size: 9px !important;
+                margin-bottom: 4px !important;
+                font-size: 11px !important;
                 font-weight: 800 !important;
                 color: #495057 !important;
             }
@@ -593,23 +886,111 @@
             .swipe-text-pc { display: none !important; }
             .swipe-text-mob { display: inline !important; }
 
-            .car-name { font-size: 13.5px; margin-bottom: 1px; }
-            .car-price { font-size: 18px; margin-bottom: 6px; }
-            .car-price span { font-size: 10px; }
-            .car-specs { gap: 4px; margin-bottom: 8px; flex-wrap: wrap; }
-            .spec-item { font-size: 8.5px; gap: 2.5px; }
-            .dark-icon { width: 17px; height: 17px; }
-            .dark-icon svg { width: 10px; height: 10px; }
+            .car-name { font-size: 23px; margin-bottom: 2px; }
+            .car-price { font-size: 31px; margin-bottom: 10px; }
+            .car-price span { font-size: 14px; }
+            .car-specs { gap: 8px 10px; margin-bottom: 14px; flex-wrap: wrap; max-width: 360px; }
+            .spec-item { font-size: 11px; gap: 4px; }
+            .dark-icon { width: 24px; height: 24px; }
+            .dark-icon svg { width: 13px; height: 13px; }
             .order-btn {
-                padding: 9px 8px;
-                font-size: 10px;
-                width: 96%;
+                padding: 15px 28px;
+                font-size: 13.5px;
+                width: 90%;
+                max-width: 320px;
+            }
+
+            /* TELEFONDA İLK AÇILIŞTA EN ALTTA ORTADA %20 YÜKSEKLİĞİNDE KAPATILABİLİR "ANA EKRANA EKLE" KUTUSU */
+            .mobile-pwa-bottom-sheet {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                position: fixed;
+                bottom: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 94%;
+                max-width: 420px;
+                height: 20vh;
+                min-height: 135px;
+                max-height: 175px;
+                background: rgba(26, 29, 32, 0.97);
+                backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+                border: 2px solid #FFC107;
+                border-radius: 22px;
+                padding: 14px 16px;
+                z-index: 48000;
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.38);
+                transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+            }
+            .mobile-pwa-bottom-sheet.dismissed {
+                transform: translate(-50%, 140%);
+                opacity: 0;
+                pointer-events: none;
+            }
+            .mob-pwa-sheet-close {
+                position: absolute;
+                top: 8px;
+                right: 10px;
+                width: 26px;
+                height: 26px;
+                border-radius: 50%;
+                background: #343A40;
+                color: #ffffff;
+                border: 1px solid #495057;
+                font-size: 12px;
+                font-weight: 900;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .mob-pwa-sheet-icon {
+                width: 52px;
+                height: 60px;
+                background: #FFC107;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                box-shadow: 0 6px 15px rgba(255, 193, 7, 0.3);
+            }
+            .mob-pwa-sheet-content {
+                flex: 1;
+                text-align: left;
+                padding-right: 16px;
+            }
+            .mob-pwa-sheet-content h4 {
+                font-size: 14px;
+                font-weight: 900;
+                color: #FFC107;
+                margin-bottom: 3px;
+            }
+            .mob-pwa-sheet-content p {
+                font-size: 10.5px;
+                font-weight: 600;
+                color: #E9ECEF;
+                line-height: 1.35;
+                margin-bottom: 9px;
+            }
+            .mob-pwa-sheet-btn {
+                background: #FFC107;
+                color: #1A1D20;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 10px;
+                font-size: 11px;
+                font-weight: 900;
+                cursor: pointer;
+                text-transform: uppercase;
             }
 
             /* TELEFONDA %25 EKRAN KAPLAYAN KOMPAKT DİJİTAL ASİSTAN */
             .chat-panel {
                 width: 96%; right: 2%; bottom: 8px;
-                height: 25vh; min-height: 175px; max-height: 215px;
+                height: 25vh; min-height: 180px; max-height: 220px;
                 border-radius: 16px; border: 2px solid #FFC107;
             }
             .chat-header { padding: 6px 12px; display: flex; align-items: center; justify-content: space-between; }
@@ -625,24 +1006,32 @@
             .chat-action-buttons { flex-direction: row; gap: 6px; }
             .chat-action-btn { padding: 7px 8px; font-size: 10.5px; }
 
-            /* TELEFONDA DAHA BÜYÜK MODAL ARAÇ SAHNESİ */
+            /* TELEFONDA JAGUAR VİTRİN SAHNESİ */
+            .jaguar-showcase-stage { margin-top: 10px; padding: 0 10px; }
+            .jaguar-stage-card { padding: 48px 14px 16px; border-radius: 20px; }
+            .jaguar-back-btn { top: 10px; right: 10px; padding: 7px 13px; font-size: 10.5px; }
+            .jaguar-stage-title { font-size: 17px; }
+            .jaguar-stage-sub { font-size: 11px; }
+            .jaguar-video-frame { height: 195px; border-radius: 14px; }
+
+            /* TELEFONDA MODAL ARAÇ SAHNESİ */
             .modal-box { padding: 10px 12px 18px !important; width: 98%; }
             .modal-close-btn { top: -10px; right: -6px; width: 36px; height: 36px; font-size: 15px; }
             .modal-car-showcase {
                 width: calc(100% + 16px);
                 margin-left: -8px;
-                height: 275px;
+                height: 265px;
                 margin-bottom: 10px;
             }
             .modal-car-showcase video, .modal-car-showcase canvas {
-                transform: scale(1.38) translateY(-1%) !important;
+                transform: scale(1.36) translateY(-1%) !important;
             }
             .modal-title { font-size: 20px; }
             .modal-subtitle { font-size: 11.5px; margin-bottom: 10px; }
             .form-row-2 { grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
             .form-input { padding: 9px 8px; font-size: 11.5px; }
+            .legal-consent-text { font-size: 10.5px; }
             .modal-submit-btn { padding: 13px; font-size: 13px; margin-top: 10px; }
-            .cookie-btn { width: 38px; height: 38px; bottom: 12px; left: 12px; }
         }
     </style>
 </head>
@@ -707,48 +1096,81 @@
     <div class="progress-bar" id="progressBar"></div>
 
     <!-- =========================================================
-         YALNIZCA TELEFON SÜRÜMÜNDE GÖRÜNEN SABİT KOMPAKT ÜST KONSOL
+         JAGUAR KATEGORİ VİTRİN SAHNESİ (KATEGORİ SEÇİLDİĞİNDE ÜST MENÜ GİDER, EN ÜSTE JAGUAR MP4 VE BAŞLIK GELİR)
+         ========================================================= -->
+    <section class="jaguar-showcase-stage" id="jaguar-stage" aria-label="Özel Jaguar Kategori Vitrini">
+        <div class="jaguar-stage-card">
+            <button type="button" class="jaguar-back-btn" onclick="exitJaguarStage()">← Tüm Filoya Dön</button>
+            <div class="jaguar-stage-header">
+                <span class="jaguar-stage-badge" id="jaguar-stage-badge">REFERANS JAGUAR ÖZEL SERİ</span>
+                <h2 class="jaguar-stage-title" id="jaguar-stage-title">KARANLIĞIN ÇEVİK GÜCÜ: UYGUN ARAÇLAR</h2>
+                <p class="jaguar-stage-sub" id="jaguar-stage-sub">Siyah Jaguar Çevikliğinde Ekonomik ve Yüksek Performanslı Filo</p>
+            </div>
+            <div class="jaguar-video-frame">
+                <video id="jaguar-stage-video" src="" autoplay loop muted playsinline disablePictureInPicture></video>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         TELEFON SÜRÜMÜ SABİT ÜST KONSOL
          ========================================================= -->
     <header class="mobile-sticky-dock" id="mobile-dock" aria-label="Mobil Hızlı Menü ve Filtreler">
-        <div class="mob-dock-top">
-            <div class="mob-brand-left">
-                <div class="mob-logo">REFERANS<span>.</span></div>
-                <button type="button" class="mob-pwa-btn" onclick="triggerPWAInstall()">📲 YÜKLE</button>
+        <!-- 1. En Üst Satır (Aşağı kaydırınca gizlenir) -->
+        <div class="mob-dock-top" id="mob-top-status-row">
+            <div class="mob-brand-stack">
+                <div class="mob-logo-main">REFERANS<span>.</span></div>
+                <div class="mob-logo-sub">RENTECAR</div>
             </div>
-            <div class="mob-malatya-badge">
+            <div class="mob-malatya-clean">
                 <svg aria-hidden="true"><use href="#icon-apricot"></use></svg>
                 <span>MALATYA</span>
                 <svg aria-hidden="true"><use href="#icon-apricot"></use></svg>
             </div>
             <div class="mob-status-right">
-                <span class="dot dot-green"></span> Açığız • Teslimat <span class="dot dot-red"></span>
+                <span class="dot dot-green"></span> Açığız • Teslimat <span class="dot dot-green"></span>
             </div>
         </div>
 
+        <!-- 2. Sabit Dijital Asistan Satırı ('ASİSTAN' yerine '7/24' yazar) -->
         <div class="mob-dock-ai" onclick="toggleAssistant()" role="button" tabindex="0">
             <div class="mob-ai-icon">🐆</div>
             <div class="mob-ai-text"><strong>Dijital Asistan:</strong> Nasıl bir araba bakmıştınız?</div>
-            <button type="button" class="mob-ai-btn">ASİSTAN</button>
+            <button type="button" class="mob-ai-btn">7/24</button>
         </div>
 
+        <!-- 3. Sabit Yatay Filtre Satırı (1: Fiyat Yüksekten/Düşüğe alt alta, 2: Uygun Araçlar, 3: VIP Araçlar, 4: Ticari Araç, 5: Aile Araçlar sağda yarısı gözükür) -->
         <nav class="mob-dock-filters" aria-label="Mobil Yatay Filtreler">
-            <button type="button" class="mob-f-btn sort-btn" id="mobSortBtn" onclick="toggleHighToLowSort()">⇅ Fiyat: Yüksekten Düşüğe</button>
-            <button type="button" class="mob-f-btn mob-price-chip active" data-price="all" onclick="setPriceFilter('all')">Tüm Araçlar</button>
-            <button type="button" class="mob-f-btn mob-price-chip" data-price="under2000" onclick="setPriceFilter('under2000')">2000 ₺ Altı</button>
-            <button type="button" class="mob-f-btn mob-price-chip" data-price="over2000" onclick="setPriceFilter('over2000')">2000 ₺ Üstü</button>
-            <button type="button" class="mob-f-btn mob-cat-chip active" data-cat="all" onclick="quickChipFilter('all')">Tüm Filo</button>
-            <button type="button" class="mob-f-btn mob-cat-chip" data-cat="otomatik" onclick="quickChipFilter('otomatik')">Otomatik</button>
-            <button type="button" class="mob-f-btn mob-cat-chip" data-cat="manuel" onclick="quickChipFilter('manuel')">Manuel</button>
-            <button type="button" class="mob-f-btn mob-cat-chip" data-cat="dizel" onclick="quickChipFilter('dizel')">Dizel</button>
-            <button type="button" class="mob-f-btn mob-cat-chip" data-cat="benzin" onclick="quickChipFilter('benzin')">Benzin</button>
-            <button type="button" class="mob-f-btn mob-cat-chip" data-cat="elektrik" onclick="quickChipFilter('elektrik')">Elektrikli</button>
-            <button type="button" class="mob-f-btn mob-cat-chip" data-cat="suv" onclick="quickChipFilter('suv')">SUV</button>
-            <button type="button" class="mob-f-btn mob-cat-chip" data-cat="ekonomik" onclick="quickChipFilter('ekonomik')">1.500 ₺ Fırsat</button>
+            <button type="button" class="mob-f-btn sort-two-line" id="mobSortBtn" onclick="toggleHighToLowSort()">
+                <span>Fiyat: Yüksekten</span>
+                <span>Düşüğe</span>
+            </button>
+            <button type="button" class="mob-f-btn mob-cat-chip" data-cat="uygun" onclick="selectCategoryWithJaguar('uygun')">Uygun Araçlar</button>
+            <button type="button" class="mob-f-btn mob-cat-chip" data-cat="vip" onclick="selectCategoryWithJaguar('vip')">VIP Araçlar</button>
+            <button type="button" class="mob-f-btn mob-cat-chip" data-cat="ticari" onclick="selectCategoryWithJaguar('ticari')">Ticari Araç</button>
+            <button type="button" class="mob-f-btn mob-cat-chip" data-cat="aile" onclick="selectCategoryWithJaguar('aile')">Aile Araçlar</button>
+            <button type="button" class="mob-f-btn mob-cat-chip" data-cat="otomatik" onclick="selectCategoryWithJaguar('otomatik')">Otomatik</button>
+            <button type="button" class="mob-f-btn mob-cat-chip" data-cat="manuel" onclick="selectCategoryWithJaguar('manuel')">Manuel</button>
+            <button type="button" class="mob-f-btn mob-cat-chip" data-cat="dizel" onclick="selectCategoryWithJaguar('dizel')">Dizel</button>
+            <button type="button" class="mob-f-btn mob-cat-chip" data-cat="elektrik" onclick="selectCategoryWithJaguar('elektrik')">Elektrikli</button>
         </nav>
     </header>
 
+    <!-- TELEFON SÜRÜMÜ İLK AÇILIŞTA EN ALTTA ORTADA %20 YÜKSEKLİĞİNDE KAPATILABİLİR "ANA EKRANA EKLE" KUTUSU -->
+    <aside class="mobile-pwa-bottom-sheet" id="mobilePwaSheet" aria-label="Uygulamayı Ana Ekrana Ekle">
+        <button type="button" class="mob-pwa-sheet-close" onclick="dismissMobilePwaSheet()" aria-label="Kapat">✕</button>
+        <div class="mob-pwa-sheet-icon">
+            <div class="pwa-icon-inner"><div class="pwa-arrow"></div></div>
+        </div>
+        <div class="mob-pwa-sheet-content">
+            <h4>Ana Ekrana Ekle</h4>
+            <p>Kampanyalar ve hızlı 360° araç rezervasyonu için telefonunuza yükleyin.</p>
+            <button type="button" class="mob-pwa-sheet-btn" onclick="triggerPWAInstall(); dismissMobilePwaSheet();">HEMEN YÜKLE</button>
+        </div>
+    </aside>
+
     <!-- =========================================================
-         PC (MASAÜSTÜ) ORİJİNAL ELEMANLARI (1:1 ESKİ TASARIM)
+         PC (MASAÜSTÜ) ORİJİNAL ELEMANLARI
          ========================================================= -->
     <header class="pc-header" id="header-area">
         <div class="logo">REFERANS<span>.</span></div>
@@ -769,7 +1191,7 @@
             <svg class="apricot-svg" aria-hidden="true" focusable="false"><use href="#icon-apricot"></use></svg>
         </div>
 
-        <div class="status-item">Anında Adrese Ücretsiz Teslimat <div class="dot dot-red" aria-hidden="true"></div></div>
+        <div class="status-item">Anında Adrese Ücretsiz Teslimat <div class="dot dot-green" aria-hidden="true"></div></div>
     </nav>
 
     <section class="search-wrapper" id="search-section" aria-label="Dijital Asistan ve Hızlı Filtreler">
@@ -782,23 +1204,23 @@
             </div>
             <div class="search-placeholder">Dijital asistanınıza tarif edin veya bir seçenek belirleyin...</div>
             <div class="search-actions" onclick="event.stopPropagation();">
-                <button class="search-btn" onclick="quickChipFilter('ekonomik')" aria-label="Fırsat Araçlarını Listele">Fırsat Araçları</button>
+                <button class="search-btn" onclick="selectCategoryWithJaguar('uygun')" aria-label="Uygun Fırsat Araçlarını Listele">Uygun Araçlar</button>
                 <button class="search-btn" onclick="openAssistant()" aria-label="7/24 Canlı Destek">7/24 Destek</button>
             </div>
         </div>
 
         <div class="filter-row">
-            <button class="filter-chip pc-cat-chip active" data-cat="all" onclick="quickChipFilter('all')">Tüm Filo (11)</button>
-            <button class="filter-chip pc-cat-chip" data-cat="suv" onclick="quickChipFilter('suv')">Premium SUV</button>
-            <button class="filter-chip pc-cat-chip" data-cat="elektrik" onclick="quickChipFilter('elektrik')">Elektrikli</button>
-            <button class="filter-chip pc-cat-chip" data-cat="otomatik" onclick="quickChipFilter('otomatik')">Otomatik Vites</button>
-            <button class="filter-chip pc-cat-chip" data-cat="manuel" onclick="quickChipFilter('manuel')">Manuel Vites</button>
+            <button class="filter-chip pc-cat-chip" data-cat="uygun" onclick="selectCategoryWithJaguar('uygun')">Uygun Araçlar</button>
+            <button class="filter-chip pc-cat-chip" data-cat="vip" onclick="selectCategoryWithJaguar('vip')">VIP Araçlar</button>
+            <button class="filter-chip pc-cat-chip" data-cat="ticari" onclick="selectCategoryWithJaguar('ticari')">Ticari Araç</button>
+            <button class="filter-chip pc-cat-chip" data-cat="aile" onclick="selectCategoryWithJaguar('aile')">Aile Araçlar</button>
+            <button class="filter-chip pc-cat-chip" data-cat="elektrik" onclick="selectCategoryWithJaguar('elektrik')">Elektrikli</button>
         </div>
         <div class="filter-row">
-            <button class="filter-chip pc-cat-chip" data-cat="dizel" onclick="quickChipFilter('dizel')">Dizel Ekonomik</button>
-            <button class="filter-chip pc-cat-chip" data-cat="benzin" onclick="quickChipFilter('benzin')">Benzinli Sedan</button>
-            <button class="filter-chip pc-cat-chip" data-cat="ticari" onclick="quickChipFilter('ticari')">Geniş Aile / Ticari</button>
-            <button class="filter-chip pc-cat-chip" data-cat="ekonomik" onclick="quickChipFilter('ekonomik')">1.500 ₺ Fırsat Sınıfı</button>
+            <button class="filter-chip pc-cat-chip" data-cat="otomatik" onclick="selectCategoryWithJaguar('otomatik')">Otomatik Vites</button>
+            <button class="filter-chip pc-cat-chip" data-cat="manuel" onclick="selectCategoryWithJaguar('manuel')">Manuel Vites</button>
+            <button class="filter-chip pc-cat-chip" data-cat="dizel" onclick="selectCategoryWithJaguar('dizel')">Dizel Ekonomik</button>
+            <button class="filter-chip pc-cat-chip" data-cat="benzin" onclick="selectCategoryWithJaguar('benzin')">Benzinli Sedan</button>
         </div>
     </section>
 
@@ -812,38 +1234,26 @@
             <span>Fiyat: Yüksekten Düşüğe</span>
         </button>
 
-        <span class="rf-label">Fiyat Aralığı (Günlük)</span>
-        <div class="rf-radio-group" id="filter-radios" role="radiogroup" aria-label="Günlük Fiyat Filtresi">
-            <div class="rf-radio active" data-filter="all" onclick="setPriceFilter('all')" role="radio" aria-checked="true" tabindex="0">
+        <span class="rf-label">Kategori Seçimi</span>
+        <div class="rf-radio-group" id="filter-radios" role="radiogroup" aria-label="Kategori Filtresi">
+            <div class="rf-radio active" data-filter="all" onclick="exitJaguarStage()" role="radio" aria-checked="true" tabindex="0">
                 <div class="rf-box"></div>
                 <div class="rf-text">Tüm Araçlar (11)</div>
             </div>
-            <div class="rf-radio" data-filter="under2000" onclick="setPriceFilter('under2000')" role="radio" aria-checked="false" tabindex="0">
+            <div class="rf-radio" data-filter="uygun" onclick="selectCategoryWithJaguar('uygun')" role="radio" aria-checked="false" tabindex="0">
                 <div class="rf-box"></div>
-                <div class="rf-text">2000 ₺ ve Altı</div>
+                <div class="rf-text">Uygun Araçlar (Fiyat/Perf.)</div>
             </div>
-            <div class="rf-radio" data-filter="over2000" onclick="setPriceFilter('over2000')" role="radio" aria-checked="false" tabindex="0">
+            <div class="rf-radio" data-filter="vip" onclick="selectCategoryWithJaguar('vip')" role="radio" aria-checked="false" tabindex="0">
                 <div class="rf-box"></div>
-                <div class="rf-text">2000 ₺ ve Üstü</div>
+                <div class="rf-text">VIP & Lüks Araçlar</div>
+            </div>
+            <div class="rf-radio" data-filter="aile" onclick="selectCategoryWithJaguar('aile')" role="radio" aria-checked="false" tabindex="0">
+                <div class="rf-box"></div>
+                <div class="rf-text">Geniş Aile Araçları</div>
             </div>
         </div>
     </aside>
-
-    <!-- ÇEREZ (COOKIE) BUTONU -->
-    <button class="cookie-btn" onclick="toggleCookiePopup()" aria-label="Çerez Politikası ve Ayarları" title="Çerez Ayarları">
-        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/>
-            <circle cx="8.5" cy="8.5" r=".8" fill="currentColor"/>
-            <circle cx="16" cy="12.5" r=".8" fill="currentColor"/>
-            <circle cx="12" cy="16" r=".8" fill="currentColor"/>
-            <circle cx="7.5" cy="13" r=".8" fill="currentColor"/>
-        </svg>
-    </button>
-    <div class="cookie-popup" id="cookiePopup" role="dialog" aria-label="Çerez Bilgilendirmesi">
-        <h4>🍪 Çerez Tercihleri</h4>
-        <p>Size en hızlı 360° araç inceleme deneyimini sunabilmek için performans çerezlerini kullanıyoruz.</p>
-        <button class="cookie-accept-btn" onclick="toggleCookiePopup()" aria-label="Çerezleri Kabul Et">KABUL ET VE KAPAT</button>
-    </div>
 
     <!-- =========================================================
          ARAÇ FİLOSU (BEYAZ ARABAYA SİYAH BUTON, SİYAH ARABAYA SARI BUTON)
@@ -851,7 +1261,7 @@
     <main class="cars-container" id="cars-grid" aria-label="Kiralık Araç Filosu">
 
         <!-- 1. HONDA CIVIC (Beyaz Araç -> Siyah Buton) -->
-        <article class="car-card" data-order="1" data-price="1600" data-gear="otomatik" data-fuel="benzin" data-type="sedan" data-vkey="honda-civic-360.mp4">
+        <article class="car-card" data-order="1" data-price="1600" data-gear="otomatik" data-fuel="benzin" data-type="sedan" data-seg="uygun,aile" data-vkey="honda-civic-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="honda-civic-360.mp4" src="honda-civic-360.mp4" preload="auto" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas class="car-canvas" aria-hidden="true"></canvas>
@@ -874,7 +1284,7 @@
         </article>
 
         <!-- 2. RENAULT MEGANE (Siyah Araç -> Sarı Buton) -->
-        <article class="car-card" data-order="2" data-price="2000" data-gear="otomatik" data-fuel="dizel" data-type="sedan" data-vkey="renault-megane-360.mp4">
+        <article class="car-card" data-order="2" data-price="2000" data-gear="otomatik" data-fuel="dizel" data-type="sedan" data-seg="vip,aile" data-vkey="renault-megane-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="renault-megane-360.mp4" src="renault-megane-360.mp4" preload="auto" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas class="car-canvas" aria-hidden="true"></canvas>
@@ -897,7 +1307,7 @@
         </article>
 
         <!-- 3. CITROEN C ELYSEE (Beyaz Araç -> Siyah Buton) -->
-        <article class="car-card" data-order="3" data-price="1600" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-vkey="citroen-c-elysee-360.mp4">
+        <article class="car-card" data-order="3" data-price="1600" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-seg="uygun,aile" data-vkey="citroen-c-elysee-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="citroen-c-elysee-360.mp4" src="citroen-c-elysee-360.mp4" preload="auto" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas class="car-canvas" aria-hidden="true"></canvas>
@@ -920,7 +1330,7 @@
         </article>
 
         <!-- 4. NISSAN QASHQAI (Siyah Araç -> Sarı Buton) -->
-        <article class="car-card" data-order="4" data-price="2300" data-gear="manuel" data-fuel="dizel" data-type="suv" data-vkey="nissan-qashqai-360.mp4">
+        <article class="car-card" data-order="4" data-price="2300" data-gear="manuel" data-fuel="dizel" data-type="suv" data-seg="vip,aile" data-vkey="nissan-qashqai-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="nissan-qashqai-360.mp4" src="nissan-qashqai-360.mp4" preload="metadata" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas class="car-canvas" aria-hidden="true"></canvas>
@@ -943,7 +1353,7 @@
         </article>
 
         <!-- 5. TOYOTA COROLLA (Beyaz Araç -> Siyah Buton) -->
-        <article class="car-card" data-order="5" data-price="1700" data-gear="otomatik" data-fuel="elektrik" data-type="sedan" data-vkey="toyota-corolla-360.mp4">
+        <article class="car-card" data-order="5" data-price="1700" data-gear="otomatik" data-fuel="elektrik" data-type="sedan" data-seg="vip,uygun,aile" data-vkey="toyota-corolla-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="toyota-corolla-360.mp4" src="toyota-corolla-360.mp4" preload="metadata" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas class="car-canvas" aria-hidden="true"></canvas>
@@ -966,7 +1376,7 @@
         </article>
 
         <!-- 6. KIA RIO (Siyah Araç -> Sarı Buton) -->
-        <article class="car-card" data-order="6" data-price="1650" data-gear="manuel" data-fuel="dizel" data-type="hatchback" data-vkey="kia-rio-360.mp4">
+        <article class="car-card" data-order="6" data-price="1650" data-gear="manuel" data-fuel="dizel" data-type="hatchback" data-seg="uygun" data-vkey="kia-rio-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="kia-rio-360.mp4" src="kia-rio-360.mp4" preload="metadata" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas class="car-canvas" aria-hidden="true"></canvas>
@@ -989,7 +1399,7 @@
         </article>
 
         <!-- 7. HYUNDAI İ20 (Beyaz Araç -> Siyah Buton) -->
-        <article class="car-card" data-order="7" data-price="1600" data-gear="otomatik" data-fuel="benzin" data-type="hatchback" data-vkey="hyundai-i20-360.mp4">
+        <article class="car-card" data-order="7" data-price="1600" data-gear="otomatik" data-fuel="benzin" data-type="hatchback" data-seg="uygun" data-vkey="hyundai-i20-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="hyundai-i20-360.mp4" src="hyundai-i20-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas class="car-canvas" aria-hidden="true"></canvas>
@@ -1012,7 +1422,7 @@
         </article>
 
         <!-- 8. FIAT EGEA (Siyah Araç -> Sarı Buton) -->
-        <article class="car-card" data-order="8" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-vkey="fiat-egea-360.mp4">
+        <article class="car-card" data-order="8" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-seg="uygun,aile" data-vkey="fiat-egea-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="fiat-egea-360.mp4" src="fiat-egea-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas class="car-canvas" aria-hidden="true"></canvas>
@@ -1035,7 +1445,7 @@
         </article>
 
         <!-- 9. FIAT FIORINO (Beyaz Araç -> Siyah Buton) -->
-        <article class="car-card" data-order="9" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="ticari" data-vkey="fiat-fiorino-360.mp4">
+        <article class="car-card" data-order="9" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="ticari" data-seg="ticari,aile,uygun" data-vkey="fiat-fiorino-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="fiat-fiorino-360.mp4" src="fiat-fiorino-360.mp4" preload="auto" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas class="car-canvas" aria-hidden="true"></canvas>
@@ -1058,7 +1468,7 @@
         </article>
 
         <!-- 10. PEUGEOT 301 (Siyah Araç -> Sarı Buton) -->
-        <article class="car-card" data-order="10" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-vkey="peugeot-301-360.mp4">
+        <article class="car-card" data-order="10" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-seg="uygun,aile" data-vkey="peugeot-301-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="peugeot-301-360.mp4" src="peugeot-301-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas class="car-canvas" aria-hidden="true"></canvas>
@@ -1081,7 +1491,7 @@
         </article>
 
         <!-- 11. RENAULT SYMBOL (Siyah Araç -> Sarı Buton) -->
-        <article class="car-card" data-order="11" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-vkey="renault-symbol-360.mp4">
+        <article class="car-card" data-order="11" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-seg="uygun" data-vkey="renault-symbol-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="renault-symbol-360.mp4" src="renault-symbol-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas class="car-canvas" aria-hidden="true"></canvas>
@@ -1106,7 +1516,7 @@
     </main>
 
     <!-- =========================================================
-         SİPARİŞ VE RANDEVU MODALI (DAHA DA BÜYÜTÜLMÜŞ TAM GENİŞLİK 360° SAHNE)
+         SİPARİŞ VE RANDEVU MODALI (TESLİM SAATİ ALTINDA HUKUKİ KVKK TİKİ İLE)
          ========================================================= -->
     <div id="randevuModal" class="modal-overlay" onclick="if(event.target===this) closeOrderModal()" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-box" id="appointment-modal-box">
@@ -1174,8 +1584,100 @@
                     <option value="18:00">18:00</option>
                 </select>
 
+                <!-- HUKUKİ İŞLEM İÇİN TESLİM SAATİNİN HEMEN ALTINDAKİ KVKK & SÖZLEŞME ONAY TİKİ -->
+                <div class="legal-consent-wrapper">
+                    <input type="checkbox" id="fKvkkConsent" class="legal-checkbox" required aria-label="KVKK ve Kiralama Sözleşmesi Onayı">
+                    <label for="fKvkkConsent" class="legal-consent-text">
+                        KVKK gereği kişisel verilerimin işlenmesini kabul ediyorum. Detaylı bilgiye
+                        <span class="legal-link" onclick="event.preventDefault(); openContractModal('Rezervasyon & Kiralama Koşulları')">Rezervasyon &amp; Kiralama Koşulları</span> ,
+                        <span class="legal-link" onclick="event.preventDefault(); openContractModal('Kiralama Sözleşmesi')">Kiralama Sözleşmesi</span> ve
+                        <span class="legal-link" onclick="event.preventDefault(); openContractModal('KVKK Aydınlatma Metni')">KVKK Aydınlatma Metni</span>
+                        linki üzerinden ulaşabilirsiniz.
+                    </label>
+                </div>
+
                 <button type="submit" id="btn-submit" class="modal-submit-btn">SİPARİŞİ TAMAMLA</button>
             </form>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         ANİMASYONLU HUKUKİ KİRALAMA SÖZLEŞMESİ VE KVKK PENCERESİ
+         ========================================================= -->
+    <div id="contractModal" class="contract-modal-overlay" onclick="if(event.target===this) closeContractModal()" role="dialog" aria-modal="true" aria-labelledby="contractModalTitle">
+        <div class="contract-modal-box">
+            <div class="contract-header">
+                <h3 id="contractModalTitle">Kiralama Sözleşmesi (TR) &amp; KVKK Koşulları</h3>
+                <button type="button" class="contract-close-btn" onclick="closeContractModal()" aria-label="Sözleşmeyi Kapat">✕</button>
+            </div>
+            <div class="contract-body">
+                <h4>1. TARAFLAR</h4>
+                <p>Bir yanda merkez adresi <strong>Saray Mah. Beşkonaklar Caddesi 64/B Battalgazi / Malatya</strong> olan <strong>Referans Rentecar</strong> ile diğer tarafta işbu sözleşmeyi imzalayan/onaylayan gerçek veya tüzel kişi arasında işbu Motorlu Kara Nakil Aracı Kiralama Sözleşmesi Genel Koşulları imzalanmıştır.</p>
+
+                <h4>2. TANIMLAR</h4>
+                <p><strong>KİRALAYAN:</strong> Referans Rentecar (Saray Mah. Beşkonaklar Cad. 64/B Battalgazi / Malatya)<br>
+                <strong>KİRACI:</strong> İşbu sözleşmeyi imza eden/onaylayan gerçek veya tüzel kişiyi,<br>
+                <strong>KULLANICI:</strong> Kira sözleşmesi/araç teslim formunda aracı kullanacak kişi olarak belirtilen sürücüyü,<br>
+                <strong>ARAÇ:</strong> Marka, model, plaka ve sair özellikleri kira sözleşmesi ve araç teslim formunda belirtilen ve kira süresi boyunca KİRACI’ya kullandırılmak üzere kiralanan motorlu kara nakil vasıtasını,<br>
+                <strong>GENEL KOŞULLAR:</strong> İşbu Motorlu Kara Nakil Aracı Kiralama Sözleşmesi Genel Koşullarını,<br>
+                <strong>KİRA SÖZLEŞMESİ:</strong> Kiralanan aracın grup, marka, model, plaka, sair özellikleri ve kira süresi, kira bedeli, güvence kapsamı ve sair hususların düzenlendiği Motorlu Kara Nakil Aracı Kiralama Sözleşmesi’ni,<br>
+                <strong>ARAÇ TESLİM FORMU:</strong> Kiralanan aracın KİRACI’ya teslim edildiğini, teslim esnasındaki durumu ve sair hususlar ile aracın KİRALAYAN’a iadesi esnasında durumu ve sair hususların düzenlendiği formu,<br>
+                <strong>GÜNLÜK KİRA TUTARI:</strong> En fazla 24 saatlik kiralama süresi için, diğer tüm ücret ve giderler hariç KİRACI’nın ödeyeceği kira tutarını,<br>
+                <strong>AYLIK KİRA TUTARI:</strong> En fazla 30 günlük kiralama süresi için, diğer tüm ücret ve giderler hariç KİRACI’nın ödeyeceği kira tutarını ifade eder.</p>
+
+                <h4>3. KONU</h4>
+                <p>İşbu Genel Koşullar’ın konusu, kira sözleşmesi ile KİRACI’ya kullandırılmak üzere kiralanan aracın kira koşulları ve KİRACI’nın bunun karşılığında belirlenen kira ve sair bedellerinin ödenmesinin şekil ve şartları ile tarafların karşılıklı hak ve yükümlülüklerinin belirlenmesidir.</p>
+
+                <h4>4. ARACIN KULLANIMI</h4>
+                <p><strong>4.1.</strong> Kira sözleşmesi ile araç, kira süresince KİRACI’ya kiralanmış olup, KİRACI, aracı kira sözleşmesi, araç teslim formu ve işbu genel koşullarda belirtilen hususlara uygun olarak kullanmayı, kira ücreti ile kira sözleşmesi, araç teslim formu ve işbu genel koşullarda belirtilen ücretleri/bedelleri ödemeyi ve kira sözleşmesi, araç teslim formu ile işbu genel koşullarda belirtilen tüm hususları kabul ettiğini beyan ve taahhüt eder.</p>
+                <p><strong>4.2.</strong> Araç, KİRALAYAN tarafından KİRACI’ya tüm lastikleri, araca ait belgeleri, aksesuarı, teçhizatı ve avadanlıklarıyla birlikte ve periyodik bakımları tam ve eksiksiz olarak araç teslim formu ile teslim edilmiştir. KİRACI, söz konusu aracı –teslim formunda belirtilenler hariç olmak üzere- mekanik ve kaporta açısından sağlam ve iyi durumda teslim aldığını, araçta hiçbir hasar ya da kaza izi bulunmadığını kabul eder.</p>
+                <p><strong>4.3.</strong> KİRACI araç üreticisi tarafından hazırlanan araç kullanım kılavuzunun içinde yazılı hususlara uymayı, aracın kullanımında gerekli dikkat ve özeni göstermeyi ve aracın iyi durumda bulunmasını sağlamayı kabul ve taahhüt eder.</p>
+                <p><strong>4.4.</strong> KİRACI, aracı Karayolları Trafik Kanunu ve ilgili bütün yasal hükümlere uygun olarak, Türkiye Cumhuriyeti sınırları içerisinde kullanmayı kabul ve taahhüt eder. Ayrıca KİRACI, sayılanlarla sınırlı olmaksızın, aracı aşağıdaki açıklanan şekillerde kullanmayacak olup, aksi takdirde ortaya çıkan ceza ve her türlü masraftan sorumlu olacaktır: Ticari maksatla yolcu veya eşya taşınmasında; Herhangi bir vasıta vs. itmekte veya çekmekte; Gümrük mevzuatına ve diğer kanunlara aykırı maddelerin taşınmasında veya diğer gayri kanuni işlerde; Alkol veya uyuşturucu madde almış bir kişi veya ek sürücü olarak belirtilmeyen sürücü tarafından; Motorlu sporlarda (sürat tayini, yarış, ralli, sağlamlık ve hız denemeleri dahil); Araca zarar verecek şekilde ve yükleme haddini aşacak şahsi yük/eşya taşınmasında; Aracın marka ve modeli dikkate alınarak kiralama amacına uygun olmayan yer ve şartlar (dağlık arazi, kum, dere yatağı, bataklık vs.) ile olağan dışı yol şartlarında; Karayolu dışında ve tarifesiz feribotlarda; Hayvan taşımacılığında.</p>
+                <p><strong>4.5.</strong> Araç, kira sözleşmesi ve araç teslim formunda aracın grubuna göre belirtilecek olan geçerli süreye haiz sürücü belgesi ve yaş sınırı bakımından yeterliliği sağlamış olan sürücü ve/veya ek sürücü tarafından kullanılacaktır. KİRACI, kira sözleşmesi ve araç teslim formunda belirtilen ek sürücünün, kira sözleşmesi, araç teslim formu ve genel koşullara tam ve eksiksiz olarak uymasını sağlamakla yükümlüdür. Ayrıca aracın kullanımı nedeniyle vuku bulacak hasar ve zararlardan KİRACI sürücü ile birlikte müştereken ve müteselsilen sorumludur.</p>
+                <p><strong>4.6.</strong> KİRACI, araçta KİRALAYAN’ın yazılı izni olmadan hiçbir değişiklik yapmamayı kabul ve taahhüt eder. Aksi halde eski hale getirme giderlerinden ve aracın uğradığı zararlardan KİRACI sorumludur.</p>
+                <p><strong>4.7.</strong> KİRACI sağlam ve iyi durumda teslim aldığı araçta, kullanım hatası ve/veya dikkatsizlik, tedbirsizlik v.b. nedenlerle (hatalı vites değiştirilmesi nedeni ile şanzıman arızası, uyarı ışığı yandığı halde aracın kullanılmaya devam edilmesi nedeniyle oluşacak hasarlar, aracın altının vurulması suretiyle ortaya çıkan hasarlar, lastik ve jant gibi aksamlara zarar verilmesi, yakıttan kaynaklı arıza ve hasarlar vb.) oluşan her türlü mekanik ve elektrik dahil olmak üzere tüm zarar ve ziyanları ödemeyi kabul ve taahhüt eder.</p>
+                <p><strong>4.8.</strong> Aracın tüm yakıt, otopark, HGS, OGS, otoyol, köprü vs. geçiş ücretleri ile trafik para cezaları, faiz ve fer’leri KİRACI’ya ait olup, KİRACI tarafından ödenecektir. Kira süresi sona erse bile, kira süresi içinde düzenlenen her türlü cezadan KİRACI sorumludur. Ceza makbuzunun isim ve imza olmaksızın sadece plaka numarasına yazılması halinde dahi, KİRACI mevcut cezayı ödemeyi kabul eder. Kira süresi içerisinde araca düzenlenecek OGS, HGS, otoyol, köprü v.s. geçiş ve otopark ücretleri ile trafik para cezalarına ilişkin KİRALAYAN’a ulaşan ceza makbuzları KİRALAYAN tarafından ödenecek ve ödenen tutar ile var ise gecikme faizi ve ferileri, ayrıca geçiş, otopark ve/veya ceza bedelinin %25’i (KDV hariç) oranında hizmet bedeli de eklenerek KİRACI’dan tahsil edilecektir.</p>
+                <p><strong>4.9.</strong> KİRACI, araçlar üzerinde doğabilecek zararların ve KİRALAYAN’ın sözleşmeden kaynaklanacak diğer alacak ve sair haklarının teminatı olmak üzere, araç grubuna göre Kira Sözleşmesinde KİRALAYAN tarafından belirlenecek teminat bedelini araç tesliminden önce KİRALAYAN’a kredi kartı ile ödeyecek veya bloke konulmasını sağlayacaktır. Bu teminat bedeli, aracın eksiksiz ve sorunsuz olarak KİRALAYAN’a teslim yerinde ve zamanında teslim edilmesi ve KİRACI’nın herhangi bir borcunun bulunmaması halinde, aracın iade tarihinden itibaren 7 iş günü sonra iade edilecek veya blokaj kaldırılacaktır.</p>
+                <p><strong>4.10.</strong> Araç ile ilgili olarak yasalarda tanımlanan “işleten” sıfatı ile “Araç İşleten Sorumluluğu”na ilişkin tüm borç ve yükümlülükler KİRACI’ya ait olup, araçların üçüncü kişilere ve/veya motorlu taşıtlara ve/veya çevreye vereceği tüm maddi ve manevi zararlardan KİRACI tek başına sorumludur.</p>
+                <p><strong>4.11.</strong> KİRACI, kira bedelinin ödenmemesi durumunda hakkında ihtiyati haciz veya ihtiyati tedbir vs. talebinde bulunulması halinde, KİRALAYAN’ın teminat göstermesine gerek olmadığını kabul, beyan ve taahhüt eder.</p>
+                <p><strong>4.12.</strong> Araç KİRACI’ya teslim edildikten sonra KİRACI ve/veya herhangi bir 3. şahıs tarafından araç ile yasalara aykırı hareket edilmesi, aracın herhangi bir suça karışmış olması nedeniyle veya KİRACI’nın sorumlu olduğu herhangi bir nedenle, araca Resmi Makamlar tarafından el konulması halinde dahi kira sözleşmesi bütün şartları ve sonuçları ile devam eder.</p>
+                <p><strong>4.13.</strong> KİRACI, aracı, araç grubuna göre kira sözleşmesi ve/veya araç teslim formunda belirtilen kilometre sınırlamasına uygun olarak kullanmakla yükümlüdür. Sınırın aşılması durumunda kilometre aşım bedelini ödemeyi kabul eder.</p>
+                <p><strong>4.14.</strong> KİRACI, aracın kiralama sırasında deposunda mevcut bulunan akaryakıtı teslim aldığı gibi iade etmekle yükümlüdür.</p>
+                <p><strong>4.15.</strong> Kış lastiği ek ürün olarak sunulmakta olup, ücretlidir ve stoklarla sınırlıdır.</p>
+
+                <h4>5. ÜCRETLENDİRME VE ÖDEME</h4>
+                <p><strong>5.1.</strong> KİRACI, kiralanan gün sayısı üzerinden hesaplanan kiralama bedelini, talep ettiği ilave hizmet ücretlerini, sigorta prim tutarlarını, ek kira bedelini, tek yön ücretini, kilometre aşım bedelini, hasar/zarar tazmin bedellerini, otopark, HGS, OGS, otoyol, köprü geçiş ücretleri ve trafik ceza tutarlarını ödemekle yükümlüdür.</p>
+                <p><strong>5.2.</strong> Kira süresinin 1 ay veya daha kısa olması durumunda kira bedeli kira sözleşmesinin imza anında peşin olarak tahsil edilecektir. Ödemelerin gecikmesi durumunda Türkiye Cumhuriyeti Merkez Bankası avans faizi oranının iki katı tutarınca temerrüt faizi uygulanır.</p>
+                <p><strong>5.3.</strong> KİRACI, işbu kira sözleşmesi, genel koşullar ve araç teslim formundan kaynaklanan sair tüm bedellerin herhangi bir izne, hükme ve bildirime gerek olmaksızın kredi kartından tahsil edilmesini gayri kabili rücu olarak kabul eder.</p>
+
+                <h4>6. SİGORTA VE SORUMLULUK</h4>
+                <p><strong>6.1.</strong> Kiralanan aracın Motorlu Araçlar Zorunlu Mali Mesuliyet Sorumluluk Sigortası KİRALAYAN tarafından yaptırılmıştır. Limitleri aşan maddi, manevi zararlar, değer kaybı ve kazanç kaybı dahil meydana gelecek tüm sorumluluk ve yükümlülükler KİRACI’ya aittir.</p>
+                <p><strong>6.2.</strong> KİRACI, Mini Hasar, Orta Hasar, Süper Kasko ve 3. Kişilere Sorumluluk sigortalarını talep ederek bedellerini ödemiş olsa dahi; sözleşmede adı yazılı olmayan sürücü kullanımı, alkol/uyuşturucu etkisi, trafik kaza zaptı ve alkol raporunun alınmaması, belgelerin 3 gün içinde ibraz edilmemesi ve trafik yasalarına aykırı kasıtlı kullanımlarda oluşan tüm hasar ve giderleri itiraz etmeksizin karşılamayı kabul eder.</p>
+                <p><strong>6.3.</strong> KİRACI ve ek sürücüler, kaza halinde Referans Rentecar 7/24 Acil Yardım Hattını arayarak derhal bilgi vermek, aracı yerinden oynatmadan en yakın Polis veya Jandarma merkezine başvurarak kaza, hasar, hırsızlık tespit tutanağı ile birlikte alkol raporunun alınmasını sağlamak, fotoğrafları çekmek ve ilgili raporları en geç 24 saat içerisinde KİRALAYAN’a ulaştırmakla yükümlüdür.</p>
+                <p><strong>6.4 - 6.11.</strong> Güvencelerin alınmaması halinde tüm hasar, değer kaybı ve kazanç kaybı KİRACI’ya aittir. Herhangi bir hırsızlık durumunda aracın ruhsat ve anahtarlarının iade edilerek resmi tutanağın ibraz edilmesi şarttır. Araçta bırakılan eşyaların kaybından veya hasarından KİRALAYAN sorumlu değildir.</p>
+
+                <h4>7. KİRALANAN OTOMOBİLLERİN İADESİ</h4>
+                <p><strong>7.1 - 7.4.</strong> KİRACI, aracı, stepnesini, tüm lastikleri, belgeleri ve teçhizatıyla birlikte belirtilen iade adresine (Saray Mah. Beşkonaklar Cad. 64/B Battalgazi / Malatya veya kararlaştırılan teslim noktasına), belirtilen gün ve saatte eksiksiz ve hasarsız şekilde teslim edecektir. Bütün uzatmalar için KİRALAYAN’ın yazılı onayı şarttır.</p>
+                <p><strong>7.5.</strong> Aracın iade tarih ve saatinde teslim edilmemesi halinde KİRACI, ilk 1 saat ve üzeri gecikmeler için günlük kira bedelinin 1/3’ü, 2 saat ve üzeri gecikmeler için 2/3’ü, 3 saat ve üzeri gecikmelerde 1 tam günlük ücret ve 24 saat ve üzeri gecikmelerde her gün için o araca ait en yüksek günlük kira bedelini ödemekle yükümlü olacaktır.</p>
+
+                <h4>8. FESİH HAKKI, SÖZLEŞMENİN SONA ERMESİ VE CEZAİ ŞART</h4>
+                <p><strong>8.1 - 8.7.</strong> KİRALAYAN, gerek görmesi durumunda kira süresi içerisinde hiçbir ihbara, ihtara veya hükme gerek olmaksızın sözleşmeyi tek taraflı ve tazminatsız olarak feshetme hakkına sahiptir. Fesih tarihinden itibaren KİRACI en geç 3 saat içerisinde aracı KİRALAYAN’a teslim edecektir.</p>
+
+                <h4>9. DEVİR, TEMLİK, ALT KİRACI, HAPİS YASAĞI</h4>
+                <p>KİRACI, KİRALAYAN’ın yazılı onayını almadan kira sözleşmesini bir başkasına devir ve temlik edemez; aracı başkasının kullanımına tahsis edemez ve yurt dışına çıkaramaz.</p>
+
+                <h4>10. CEZAİ YÜKÜMLÜLÜK</h4>
+                <p>KİRACI, aracı süresi sonunda veya fesih halinde 3 saat içerisinde iade etmemesi halinde TCK 155. maddesi gereğince Hizmet Nedeniyle Güveni Kötüye Kullanma suçunu işlemiş olacağını bildiğini beyan eder.</p>
+
+                <h4>11. DELİL VE 12. GİZLİLİK İLKESİ (KVKK AYDINLATMA)</h4>
+                <p>Uyuşmazlıklarda KİRALAYAN’ın defter ve kayıtları HMK 193. madde anlamında kesin delildir. 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) kapsamında KİRACI, kimlik, iletişim ve rezervasyon verilerinin kiralama hizmetinin ifası, Emniyet Genel Müdürlüğü KABİS bildirimi ve müşteri iletişimi amacıyla Referans Rentecar tarafından işlenmesine ve saklanmasına muvafakat eder.</p>
+
+                <h4>13. ANLAŞMAZLIKLARIN ÇÖZÜMÜ, 14. DEĞİŞİKLİK, 15. TEBLİGAT, 16. DAMGA VERGİSİ, 17. EKLER</h4>
+                <p>Taraflar arasındaki her türlü anlaşmazlıkta yetkili mahkeme ve icra daireleri <strong>Malatya Mahkemeleri ve İcra Daireleri</strong> olacaktır. İşbu genel koşullar, kira sözleşmesi ve araç teslim formları ayrılmaz bir bütündür.</p>
+            </div>
+            <div class="contract-footer">
+                <button type="button" class="contract-accept-btn" onclick="acceptAndCloseContract()">OKUDUM, ONAYLIYORUM</button>
+            </div>
         </div>
     </div>
 
@@ -1202,10 +1704,10 @@
             </div>
 
             <div class="user-options" id="userOptionsBox">
+                <button class="chat-option-btn" onclick="handleBotOption('uygun')">🐆 Uygun (Fiyat/Performans) Araçlar</button>
+                <button class="chat-option-btn" onclick="handleBotOption('vip')">👑 VIP &amp; Lüks Araçları Göster</button>
+                <button class="chat-option-btn" onclick="handleBotOption('aile')">👨‍👩‍👧‍👦 Geniş Aile Araçlarını Sırala</button>
                 <button class="chat-option-btn" onclick="handleBotOption('otomatik')">⚙️ Otomatik Vitesli Araçları Sırala</button>
-                <button class="chat-option-btn" onclick="handleBotOption('dizel')">⛽ Dizel Ekonomik Araçları Sırala</button>
-                <button class="chat-option-btn" onclick="handleBotOption('elektrik')">⚡ Elektrikli Araç Seçeneği Var mı?</button>
-                <button class="chat-option-btn" onclick="handleBotOption('fiyat')">💰 Günlük 1.500 ₺ Fırsat Araçlarını Göster</button>
                 <button class="chat-option-btn" onclick="handleBotOption('baska')">❓ Aklıma Takılan Başka Bir Soru Var</button>
             </div>
         </div>
@@ -1219,16 +1721,74 @@
             const SEQ_TOTAL_FRAMES = 72;
             const HOLD_TURN_SPEED = 0.14;
             const STEPDOWN_BASE_SPEED = 0.14;
-            const DRAG_PIXELS_PER_TURN = 750;
-            const MAX_DRAG_STEP = 0.015;
+            // PC'de 720px, Telefonda parmakla tek çekişte zahmetsizce dönmesi için 175px!
+            const DRAG_PIXELS_PC = 720;
+            const DRAG_PIXELS_MOBILE = 175;
             const MODAL_PINGPONG_FPS = 24;
 
             const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzrYJVsS0yDP1twV2OFzI3rujb8GcQKtcr2lfIGQAnVbIM15tpGx3O7AfxEn3fZFB2t/exec";
 
+            // KATEGORİLERE ÖZEL JAGUAR VİDEO VE ÇAĞRIŞTIRICI BAŞLIK HARİTASI
+            const JAGUAR_THEMES = {
+                uygun: {
+                    badge: "SİYAH JAGUAR • FİYAT / PERFORMANS SERİSİ",
+                    title: "KARANLIĞIN ÇEVİK GÜCÜ: UYGUN ARAÇLAR",
+                    sub: "Siyah Jaguar Çevikliğinde Ekonomik, Atik ve Bütçe Dostu Filo",
+                    sources: ["siyah_jaguar.mp4", "jaguar.mp4", "assets/siyah_jaguar.mp4", "assets/jaguar.mp4"]
+                },
+                vip: {
+                    badge: "ALTIN JAGUAR • VIP & PRESTİJ SERİSİ",
+                    title: "ALTIN ÇAĞIN ASALETİ: VIP ARAÇLAR",
+                    sub: "Altın Koşan Jaguar İhtişamıyla Üst Segment Konfor ve Prestij",
+                    sources: ["gold_jaguar.mp4", "altin_jaguar.mp4", "assets/gold_jaguar.mp4", "jaguar.mp4"]
+                },
+                aile: {
+                    badge: "İKİLİ JAGUAR • GENİŞ AİLE SERİSİ",
+                    title: "BİRLİKTE DAHA GÜÇLÜ: AİLE ARAÇLARI",
+                    sub: "Yan Yana Koşan İkili Jaguar Uyumuyla Güvenli ve Geniş Hacimli Yolculuk",
+                    sources: ["ikili_jaguar.mp4", "aile_jaguar.mp4", "assets/ikili_jaguar.mp4", "jaguar.mp4"]
+                },
+                ticari: {
+                    badge: "JAGUAR GÜCÜ • TİCARİ & İŞ SERİSİ",
+                    title: "DURDURULAMAZ GÜÇ: TİCARİ ARAÇLAR",
+                    sub: "İşinizi ve Yükünüzü Zirveye Taşıyan Dayanıklı Filo",
+                    sources: ["ticari_jaguar.mp4", "jaguar.mp4", "assets/jaguar.mp4"]
+                },
+                otomatik: {
+                    badge: "JAGUAR AKICILIĞI • OTOMATİK SERİSİ",
+                    title: "KUSURSUZ AKICILIK: OTOMATİK VİTES",
+                    sub: "Şehir İçinde Yorulmadan Sürüş Keyfi Sunan Otomatik Modeller",
+                    sources: ["jaguar.mp4", "gold_jaguar.mp4", "assets/jaguar.mp4"]
+                },
+                manuel: {
+                    badge: "JAGUAR HAKİMİYETİ • MANUEL SERİSİ",
+                    title: "TAM KONTROL: MANUEL VİTES ARAÇLAR",
+                    sub: "Yol Hakimiyetini Elinde Tutmak İsteyenlere Özel Ekonomik Seri",
+                    sources: ["jaguar.mp4", "assets/jaguar.mp4"]
+                },
+                dizel: {
+                    badge: "JAGUAR MENZİLİ • DİZEL EKONOMİK SERİ",
+                    title: "UZUN MENZİLLİ GÜÇ: DİZEL ARAÇLAR",
+                    sub: "Minimum Yakıt Tüketimiyle Maksimum Mesafe Kat Eden Filo",
+                    sources: ["jaguar.mp4", "assets/jaguar.mp4"]
+                },
+                benzin: {
+                    badge: "JAGUAR PERFORMANSI • BENZİNLİ SEDAN",
+                    title: "SESSİZ VE DİNAMİK: BENZİNLİ ARAÇLAR",
+                    sub: "Yüksek Sürüş Konforu ve Atik Motor Performansı",
+                    sources: ["jaguar.mp4", "assets/jaguar.mp4"]
+                },
+                elektrik: {
+                    badge: "GELECEĞİN JAGUARI • %100 ELEKTRİK",
+                    title: "SESSİZ DEVRİM: ELEKTRİKLİ & HİBRİT",
+                    sub: "Yeni Nesil Çevreci ve Yüksek Teknolojili Sürüş Deneyimi",
+                    sources: ["gold_jaguar.mp4", "jaguar.mp4", "assets/gold_jaguar.mp4"]
+                }
+            };
+
             let randevuAcilisZamani = 0;
             let isChatOpen = false;
             let deferredPrompt = null;
-            let currentPriceFilter = 'all';
             let currentCategoryFilter = 'all';
             let isHighToLowSort = false;
             let toastTimer = null;
@@ -1238,7 +1798,7 @@
             const vaultBlobCache = new Map();
             const cleanFrameBank = new Map();
 
-            // 1. ÜSTTEN DÜŞEN 2 SANİYELİK YEŞİL TİKLİ BİLDİRİM
+            // 1. ÜSTTEN DÜŞEN 2 SANİYELİK YEŞİL TİKLİ BİLDİRİM VE MOBİL PWA KART KAPATMA
             window.showTopToast = function(message) {
                 const toast = document.getElementById('top-toast');
                 const toastText = document.getElementById('top-toast-text');
@@ -1266,11 +1826,141 @@
                 showTopToast("Uygulama yüklenmiştir");
             };
 
-            window.toggleCookiePopup = function() {
-                document.getElementById('cookiePopup').classList.toggle('show');
+            window.dismissMobilePwaSheet = function() {
+                const sheet = document.getElementById('mobilePwaSheet');
+                if (sheet) sheet.classList.add('dismissed');
             };
 
-            // 2. SIFIR BOZULMALI SIRALI KARE ÇIKARICI (YALNIZCA SEEKED ONAYINDAN SONRA SIRAYLA PUSH EDER)
+            // 2. KATEGORİ SEÇİLİNCE ÜST MENÜYÜ GİZLEYİP JAGUAR VİTRİN SAHNESİNİ AÇAN SİSTEM
+            window.selectCategoryWithJaguar = function(category) {
+                if (currentCategoryFilter === category && document.body.classList.contains('jaguar-mode-active')) {
+                    exitJaguarStage();
+                    return;
+                }
+
+                currentCategoryFilter = category;
+                const theme = JAGUAR_THEMES[category] || JAGUAR_THEMES.uygun;
+
+                document.getElementById('jaguar-stage-badge').innerText = theme.badge;
+                document.getElementById('jaguar-stage-title').innerText = theme.title;
+                document.getElementById('jaguar-stage-sub').innerText = theme.sub;
+
+                const jVideo = document.getElementById('jaguar-stage-video');
+                let srcIdx = 0;
+                jVideo.onerror = function() {
+                    srcIdx++;
+                    if (srcIdx < theme.sources.length) {
+                        jVideo.src = theme.sources[srcIdx];
+                        jVideo.load();
+                        jVideo.play().catch(()=>{});
+                    }
+                };
+                jVideo.src = theme.sources[0];
+                jVideo.load();
+                jVideo.play().catch(()=>{});
+
+                document.body.classList.add('jaguar-mode-active');
+
+                document.querySelectorAll('.pc-cat-chip, .mob-cat-chip').forEach(c => {
+                    c.classList.toggle('active', c.getAttribute('data-cat') === category);
+                });
+                document.querySelectorAll('.rf-radio').forEach(r => {
+                    r.classList.toggle('active', r.getAttribute('data-filter') === category);
+                });
+
+                applySortAndFilter();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
+            window.exitJaguarStage = function() {
+                currentCategoryFilter = 'all';
+                document.body.classList.remove('jaguar-mode-active');
+                const jVideo = document.getElementById('jaguar-stage-video');
+                if (jVideo) {
+                    jVideo.pause();
+                    jVideo.removeAttribute('src');
+                }
+                document.querySelectorAll('.pc-cat-chip, .mob-cat-chip').forEach(c => c.classList.remove('active'));
+                document.querySelectorAll('.rf-radio').forEach(r => {
+                    r.classList.toggle('active', r.getAttribute('data-filter') === 'all');
+                });
+                applySortAndFilter();
+            };
+
+            // 3. FİYAT: YÜKSEKTEN DÜŞÜĞE SIRALAMA (ÜST MENÜ HİÇBİR ŞEKİLDE GİTMEZ!)
+            window.toggleHighToLowSort = function() {
+                isHighToLowSort = !isHighToLowSort;
+                const pcBtn = document.getElementById('sortHighToLowBtn');
+                const mobBtn = document.getElementById('mobSortBtn');
+                if (pcBtn) pcBtn.classList.toggle('active', isHighToLowSort);
+                if (mobBtn) mobBtn.classList.toggle('active', isHighToLowSort);
+                applySortAndFilter();
+            };
+
+            window.applySortAndFilter = function() {
+                const grid = document.getElementById('cars-grid');
+                const cards = Array.from(grid.querySelectorAll('.car-card'));
+
+                cards.sort((a, b) => {
+                    if (isHighToLowSort) {
+                        return parseInt(b.getAttribute('data-price')) - parseInt(a.getAttribute('data-price'));
+                    } else {
+                        return parseInt(a.getAttribute('data-order')) - parseInt(b.getAttribute('data-order'));
+                    }
+                });
+
+                cards.forEach(card => {
+                    grid.appendChild(card);
+                    const price = parseInt(card.getAttribute('data-price'));
+                    const gear = card.getAttribute('data-gear');
+                    const fuel = card.getAttribute('data-fuel');
+                    const type = card.getAttribute('data-type');
+                    const seg = (card.getAttribute('data-seg') || '').split(',');
+
+                    let passCat = true;
+                    if (currentCategoryFilter === 'uygun') passCat = price <= 1700 || seg.includes('uygun');
+                    else if (currentCategoryFilter === 'vip') passCat = price >= 1700 || seg.includes('vip');
+                    else if (currentCategoryFilter === 'aile') passCat = seg.includes('aile');
+                    else if (currentCategoryFilter === 'ticari') passCat = type === 'ticari' || seg.includes('ticari');
+                    else if (currentCategoryFilter === 'otomatik') passCat = gear === 'otomatik';
+                    else if (currentCategoryFilter === 'manuel') passCat = gear === 'manuel';
+                    else if (currentCategoryFilter === 'dizel') passCat = fuel === 'dizel';
+                    else if (currentCategoryFilter === 'benzin') passCat = fuel === 'benzin';
+                    else if (currentCategoryFilter === 'elektrik') passCat = fuel === 'elektrik';
+                    else if (currentCategoryFilter === 'suv') passCat = type === 'suv';
+
+                    if (passCat) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            };
+
+            // 4. AŞAĞI KAYDIRINCA EN ÜSTTEKİ DURUM/MALATYA BARININ KAYBOLMASI VE ARABALARIN YUKARI GENİŞLEMESİ
+            window.addEventListener('scroll', () => {
+                const winScroll = window.scrollY || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+                const pBar = document.getElementById("progressBar");
+                if (pBar) pBar.style.width = scrolled + "%";
+
+                const mobDock = document.getElementById('mobile-dock');
+                const pcTopCapsule = document.getElementById('top-menu');
+                const carsGrid = document.getElementById('cars-grid');
+
+                if (winScroll > 35) {
+                    if (mobDock) mobDock.classList.add('scrolled-down');
+                    if (pcTopCapsule) pcTopCapsule.classList.add('scroll-hidden');
+                    if (carsGrid) carsGrid.classList.add('mob-expanded-top');
+                } else {
+                    if (mobDock) mobDock.classList.remove('scrolled-down');
+                    if (pcTopCapsule) pcTopCapsule.classList.remove('scroll-hidden');
+                    if (carsGrid) carsGrid.classList.remove('mob-expanded-top');
+                }
+            }, { passive: true });
+
+            // 5. SIFIR BOZULMALI SIRALI KARE ÇIKARICI
             function buildCleanOrderedFrames(fileName, validSrc) {
                 if (!fileName || !validSrc) return;
                 if (cleanFrameBank.has(fileName)) return;
@@ -1462,7 +2152,6 @@
                 const bubble = document.getElementById('topChatBubble');
                 if (bubble && !isChatOpen) bubble.classList.add('show');
 
-                // Dinamik Form Örnekleri
                 setTimeout(() => {
                     const isimler = ["Muhammed", "Hamza", "Ebubekir", "Hüseyin", "Ali", "Ömer", "Osman", "Ayşe", "Fatma", "Sümeyye", "Nurgül"];
                     let isimIndex = 0;
@@ -1486,7 +2175,6 @@
                     }, 3000);
                 }, 8000);
 
-                // PC Manyetik Buton Etkileşimi
                 document.querySelectorAll('.magnetic-btn').forEach(btn => {
                     btn.addEventListener('mousemove', e => {
                         const rect = btn.getBoundingClientRect();
@@ -1500,88 +2188,9 @@
                 });
             });
 
-            // 3. KAYDIRMA İLERLEME ÇUBUĞU
-            window.addEventListener('scroll', () => {
-                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-                const pBar = document.getElementById("progressBar");
-                if (pBar) pBar.style.width = scrolled + "%";
-            }, { passive: true });
-
-            // 4. PC VE MOBİL SENKRONİZE FİLTRE & SIRALAMA MOTORU
-            window.toggleHighToLowSort = function() {
-                isHighToLowSort = !isHighToLowSort;
-                const pcBtn = document.getElementById('sortHighToLowBtn');
-                const mobBtn = document.getElementById('mobSortBtn');
-                if (pcBtn) pcBtn.classList.toggle('active', isHighToLowSort);
-                if (mobBtn) mobBtn.classList.toggle('active', isHighToLowSort);
-                applySortAndFilter();
-            };
-
-            window.setPriceFilter = function(filterVal) {
-                currentPriceFilter = filterVal;
-                document.querySelectorAll('.rf-radio').forEach(r => {
-                    const match = r.getAttribute('data-filter') === filterVal;
-                    r.classList.toggle('active', match);
-                    r.setAttribute('aria-checked', match ? 'true' : 'false');
-                });
-                document.querySelectorAll('.mob-price-chip').forEach(c => {
-                    c.classList.toggle('active', c.getAttribute('data-price') === filterVal);
-                });
-                applySortAndFilter();
-            };
-
-            window.quickChipFilter = function(category) {
-                currentCategoryFilter = category;
-                document.querySelectorAll('.pc-cat-chip, .mob-cat-chip').forEach(c => {
-                    c.classList.toggle('active', c.getAttribute('data-cat') === category);
-                });
-                applySortAndFilter();
-            };
-
-            window.applySortAndFilter = function() {
-                const grid = document.getElementById('cars-grid');
-                const cards = Array.from(grid.querySelectorAll('.car-card'));
-
-                cards.sort((a, b) => {
-                    if (isHighToLowSort) {
-                        return parseInt(b.getAttribute('data-price')) - parseInt(a.getAttribute('data-price'));
-                    } else {
-                        return parseInt(a.getAttribute('data-order')) - parseInt(b.getAttribute('data-order'));
-                    }
-                });
-
-                cards.forEach(card => {
-                    grid.appendChild(card);
-                    const price = parseInt(card.getAttribute('data-price'));
-                    const gear = card.getAttribute('data-gear');
-                    const fuel = card.getAttribute('data-fuel');
-                    const type = card.getAttribute('data-type');
-
-                    let passPrice = true;
-                    if (currentPriceFilter === 'under2000') passPrice = price <= 2000;
-                    else if (currentPriceFilter === 'over2000') passPrice = price >= 2000;
-
-                    let passCat = true;
-                    if (currentCategoryFilter === 'otomatik') passCat = gear === 'otomatik';
-                    else if (currentCategoryFilter === 'manuel') passCat = gear === 'manuel';
-                    else if (currentCategoryFilter === 'dizel') passCat = fuel === 'dizel';
-                    else if (currentCategoryFilter === 'benzin') passCat = fuel === 'benzin';
-                    else if (currentCategoryFilter === 'elektrik') passCat = fuel === 'elektrik';
-                    else if (currentCategoryFilter === 'suv') passCat = type === 'suv';
-                    else if (currentCategoryFilter === 'ticari') passCat = type === 'ticari';
-                    else if (currentCategoryFilter === 'ekonomik') passCat = price === 1500;
-
-                    if (passPrice && passCat) {
-                        card.classList.remove('hidden');
-                    } else {
-                        card.classList.add('hidden');
-                    }
-                });
-            };
-
-            // 5. KARTLARDA 360° ÇEVİRME MOTORU (BOZULMA VE POZİSYON SIÇRAMASI YOK)
+            // 6. KARTLARDA 360° ÇEVİRME VE DÖNDÜRÜRKEN BÜYÜME (INTERACTING-ZOOM) MOTORU
+            // - Telefonda parmakla tek çekişte yağ gibi döner (175px tam tur hassasiyeti)
+            // - Çevirirken araba büyür (.interacting-zoom), bırakınca eski oranına geri döner
             (function initGlitchFreeCardSpinEngine() {
                 const cards = document.querySelectorAll('.car-card');
                 let activeCard = null;
@@ -1590,6 +2199,8 @@
                 let mode = 'none';
                 let spinDir = 1;
                 let clickHalfDir = 1;
+                let startX = 0;
+                let startY = 0;
                 let lastX = 0;
                 let lastMoveTime = 0;
                 let stepDownStartTime = 0;
@@ -1597,11 +2208,18 @@
                 let rafId = null;
                 let lastFrameTime = 0;
 
-                function onPointerDown(card, clientX) {
+                function clearZoomState() {
+                    document.querySelectorAll('.car-card.interacting-zoom').forEach(c => {
+                        c.classList.remove('interacting-zoom');
+                    });
+                }
+
+                function onPointerDown(card, clientX, clientY) {
                     if (holdDelayTimer) {
                         clearTimeout(holdDelayTimer);
                         holdDelayTimer = null;
                     }
+                    clearZoomState();
 
                     const video = card.querySelector('video.car-video');
                     const badge = card.querySelector('.swipe-badge');
@@ -1613,6 +2231,8 @@
                     activeCard = card;
                     activeBadge = badge;
                     isPointerDown = true;
+                    startX = clientX;
+                    startY = clientY || 0;
                     lastX = clientX;
                     lastMoveTime = performance.now();
 
@@ -1620,6 +2240,8 @@
                         card._angle = video.duration ? (video.currentTime / video.duration) : 0;
                     }
 
+                    // Etkileşim başladığı an arabayı büyütür
+                    activeCard.classList.add('interacting-zoom');
                     if (activeBadge) activeBadge.classList.add('spinning');
 
                     const rect = mediaBox.getBoundingClientRect();
@@ -1633,14 +2255,28 @@
                             lastFrameTime = performance.now();
                             if (!rafId) rafId = requestAnimationFrame(tickSpinLoop);
                         }
-                    }, 180);
+                    }, 170);
                 }
 
-                function onPointerMove(clientX) {
+                function onPointerMove(clientX, clientY, rawEvent) {
                     if (!isPointerDown || !activeCard) return;
 
                     const dx = clientX - lastX;
-                    if (Math.abs(dx) < 1.5) return;
+                    const totalDx = Math.abs(clientX - startX);
+                    const totalDy = clientY ? Math.abs(clientY - startY) : 0;
+
+                    // Telefonda kullanıcı dikey kaydırma yapıyorsa (sayfayı aşağı indiriyorsa) döndürmeyi iptal et
+                    if (mode === 'pending' && totalDy > 18 && totalDy > totalDx * 1.4) {
+                        onPointerUp();
+                        return;
+                    }
+
+                    if (Math.abs(dx) < 1) return;
+
+                    // Yatay döndürme yapılıyorsa mobilde sayfanın kaymasını engelle ki tüm güç arabaya geçsin
+                    if (rawEvent && rawEvent.cancelable && totalDx > totalDy) {
+                        rawEvent.preventDefault();
+                    }
 
                     if (holdDelayTimer) {
                         clearTimeout(holdDelayTimer);
@@ -1652,8 +2288,12 @@
                     mode = 'drag';
                     spinDir = dx > 0 ? 1 : -1;
 
-                    const rawDelta = dx / DRAG_PIXELS_PER_TURN;
-                    const clampedDelta = Math.max(-MAX_DRAG_STEP, Math.min(MAX_DRAG_STEP, rawDelta));
+                    const isMobile = window.innerWidth <= 1024;
+                    const pixelsPerTurn = isMobile ? DRAG_PIXELS_MOBILE : DRAG_PIXELS_PC;
+                    const maxStep = isMobile ? 0.048 : 0.015;
+
+                    const rawDelta = dx / pixelsPerTurn;
+                    const clampedDelta = Math.max(-maxStep, Math.min(maxStep, rawDelta));
                     renderCardAngle(activeCard, activeCard._angle + clampedDelta);
                 }
 
@@ -1664,6 +2304,9 @@
                     }
                     if (!isPointerDown) return;
                     isPointerDown = false;
+
+                    // Kişi etkileşimi kestiği an araba yumuşakça eski oranına geri döner
+                    clearZoomState();
 
                     const idleTime = performance.now() - lastMoveTime;
 
@@ -1684,7 +2327,8 @@
 
                     if (activeCard) {
                         if (isPointerDown && mode === 'hold') {
-                            const delta = spinDir * HOLD_TURN_SPEED * dt;
+                            const holdSpeed = window.innerWidth <= 1024 ? 0.22 : HOLD_TURN_SPEED;
+                            const delta = spinDir * holdSpeed * dt;
                             renderCardAngle(activeCard, activeCard._angle + delta);
                         } else if (!isPointerDown && mode === 'stepdown') {
                             const elapsed = now - stepDownStartTime;
@@ -1721,32 +2365,32 @@
                         el.addEventListener('mousedown', (e) => {
                             if (e.button !== 0) return;
                             e.preventDefault();
-                            onPointerDown(card, e.clientX);
+                            onPointerDown(card, e.clientX, e.clientY);
                         });
                         el.addEventListener('touchstart', (e) => {
                             if (e.touches.length > 0) {
-                                onPointerDown(card, e.touches[0].clientX);
+                                onPointerDown(card, e.touches[0].clientX, e.touches[0].clientY);
                             }
                         }, { passive: true });
                     });
                 });
 
                 window.addEventListener('mousemove', (e) => {
-                    if (isPointerDown) onPointerMove(e.clientX);
+                    if (isPointerDown) onPointerMove(e.clientX, e.clientY, e);
                 }, { passive: true });
 
                 window.addEventListener('touchmove', (e) => {
                     if (isPointerDown && e.touches.length > 0) {
-                        onPointerMove(e.touches[0].clientX);
+                        onPointerMove(e.touches[0].clientX, e.touches[0].clientY, e);
                     }
-                }, { passive: true });
+                }, { passive: false });
 
                 window.addEventListener('mouseup', onPointerUp);
                 window.addEventListener('touchend', onPointerUp);
                 window.addEventListener('touchcancel', onPointerUp);
             })();
 
-            // 6. SİPARİŞ & RANDEVU MODALI (BOŞLUKSUZ SIRALI DİZİ İLE %100 BOZULMASIZ İLERİ-GERİ PİNG-PONG)
+            // 7. SİPARİŞ & RANDEVU MODALI + HUKUKİ SÖZLEŞME MODALI
             let modalPingPongRAF = null;
 
             function startGapFreeModalPingPong(video, canvas, fileName) {
@@ -1894,6 +2538,31 @@
                 }, 400);
             };
 
+            // Animasyonlu Hukuki Sözleşme Modalı Aç/Kapat
+            window.openContractModal = function(titleText) {
+                const cModal = document.getElementById('contractModal');
+                const cTitle = document.getElementById('contractModalTitle');
+                if (cTitle && titleText) cTitle.innerText = titleText + " — Referans Rentecar";
+                if (cModal) {
+                    cModal.style.display = 'flex';
+                    requestAnimationFrame(() => { cModal.classList.add('show'); });
+                }
+            };
+
+            window.closeContractModal = function() {
+                const cModal = document.getElementById('contractModal');
+                if (cModal) {
+                    cModal.classList.remove('show');
+                    setTimeout(() => { cModal.style.display = 'none'; }, 350);
+                }
+            };
+
+            window.acceptAndCloseContract = function() {
+                const cb = document.getElementById('fKvkkConsent');
+                if (cb) cb.checked = true;
+                closeContractModal();
+            };
+
             // En Yakın Tarihi Bulucu
             window.findNearestDate = function() {
                 const btn = document.getElementById('autoDateBtn');
@@ -2036,6 +2705,7 @@
                 const paket = document.getElementById('fPaket').value;
                 const tarih = document.getElementById('fTarih').value;
                 const saat = document.getElementById('fSaat').value;
+                const kvkkCheck = document.getElementById('fKvkkConsent');
 
                 const nameRegex = /^[a-zA-ZğüşıöçĞÜŞİÖÇ\s]{3,50}$/;
                 const phoneRegex = /^05[0-9]{9}$/;
@@ -2043,6 +2713,7 @@
                 if (!nameRegex.test(isim)) return showErr('Lütfen geçerli bir ad soyad girin (sadece harf).');
                 if (!phoneRegex.test(telefon)) return showErr('Geçerli numara girin (05 ile başlayan 11 hane).');
                 if (!teslimat || !tarih || !saat) return showErr('Lütfen tüm alanları doldurun.');
+                if (kvkkCheck && !kvkkCheck.checked) return showErr('Lütfen KVKK ve Kiralama Sözleşmesi onay kutucuğunu işaretleyin.');
 
                 const btn = document.getElementById('btn-submit');
                 btn.innerHTML = 'Takvim Kontrol Ediliyor...';
@@ -2051,7 +2722,7 @@
                 fetch(WEB_APP_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ isim, telefon, hizmet: `${activeModalCar} - ${teslimat} (${paket})`, tarih, saat })
+                    body: JSON.stringify({ isim, telefon, hizmet: `${activeModalCar} - ${teslimat} (${paket}) [KVKK Onaylı]`, tarih, saat })
                 })
                 .then(r => r.json())
                 .then(res => {
@@ -2071,8 +2742,8 @@
                 });
             };
 
-            // 7. DİJİTAL ASİSTAN (PC'DE YUKARI KALDIRMALI ORİJİNAL AKIŞ, MOBİLDE %25 KOMPAKT AKIŞ)
-            function getRandomDelay() { return Math.floor(Math.random() * (1600 - 900 + 1)) + 900; }
+            // 8. DİJİTAL ASİSTAN
+            function getRandomDelay() { return Math.floor(Math.random() * (1400 - 800 + 1)) + 800; }
 
             window.toggleAssistant = function() {
                 if (isChatOpen) closeAssistant();
@@ -2083,7 +2754,7 @@
                 const bubble = document.getElementById('topChatBubble');
                 if (bubble) bubble.style.display = 'none';
 
-                if (window.innerWidth > 1024) {
+                if (window.innerWidth > 1024 && !document.body.classList.contains('jaguar-mode-active')) {
                     document.getElementById('search-section').classList.add('fade-out-up');
                     document.getElementById('right-panel').classList.add('fade-out-side');
                     document.getElementById('cars-grid').classList.add('lift-up');
@@ -2131,7 +2802,7 @@
                     userOptionsBox.style.display = window.innerWidth <= 1024 ? 'grid' : 'flex';
                     chatBody.appendChild(userOptionsBox);
                 }
-                quickChipFilter('all');
+                exitJaguarStage();
             };
 
             window.handleBotOption = function(optionType) {
@@ -2140,60 +2811,60 @@
                 const chatBody = document.getElementById('chatBody');
                 if (optionsBox) optionsBox.style.display = 'none';
 
-                if (optionType === 'otomatik') {
-                    addUserMessage("⚙️ Otomatik vitesli araçları sıralar mısın?");
+                if (optionType === 'uygun') {
+                    addUserMessage("🐆 Uygun (Fiyat/Performans) Araçlar");
                     chatBody.appendChild(typingIndicator);
                     typingIndicator.style.display = 'flex';
                     scrollToBottom();
 
                     setTimeout(() => {
                         typingIndicator.style.display = 'none';
-                        quickChipFilter('otomatik');
-                        addBotMessage("Sizin için filomuzdaki <strong>Otomatik Vitesli</strong> araçları hemen arkada sıraladım.");
+                        selectCategoryWithJaguar('uygun');
+                        addBotMessage("<strong>Siyah Jaguar Fiyat/Performans</strong> serisini yukarıda açtım.");
                         showResetActionInChat();
                     }, getRandomDelay());
                 } 
-                else if (optionType === 'dizel') {
-                    addUserMessage("⛽ Dizel ekonomik araçları sıralar mısın?");
+                else if (optionType === 'vip') {
+                    addUserMessage("👑 VIP & Lüks Araçları Göster");
                     chatBody.appendChild(typingIndicator);
                     typingIndicator.style.display = 'flex';
                     scrollToBottom();
 
                     setTimeout(() => {
                         typingIndicator.style.display = 'none';
-                        quickChipFilter('dizel');
-                        addBotMessage("Sizin için yakıt cimrisi <strong>Dizel</strong> araçlarımızı ekranınızda listeledim.");
+                        selectCategoryWithJaguar('vip');
+                        addBotMessage("<strong>Altın Jaguar VIP & Prestij</strong> serisini yukarıda listeledim.");
                         showResetActionInChat();
                     }, getRandomDelay());
                 }
-                else if (optionType === 'elektrik') {
-                    addUserMessage("⚡ Elektrikli araç seçeneği var mı?");
+                else if (optionType === 'aile') {
+                    addUserMessage("👨‍👩‍👧‍👦 Geniş Aile Araçlarını Sırala");
                     chatBody.appendChild(typingIndicator);
                     typingIndicator.style.display = 'flex';
                     scrollToBottom();
 
                     setTimeout(() => {
                         typingIndicator.style.display = 'none';
-                        quickChipFilter('elektrik');
-                        addBotMessage("Yeni nesil <strong>Elektrikli & Otomatik Toyota Corolla (1.700 ₺ / Gün)</strong> modelimiz hazırda beklemektedir.");
+                        selectCategoryWithJaguar('aile');
+                        addBotMessage("<strong>İkili Jaguar Geniş Aile</strong> serisini yukarıda sıraladım.");
                         showResetActionInChat();
                     }, getRandomDelay());
                 }
-                else if (optionType === 'fiyat') {
-                    addUserMessage("💰 Günlük 1.500 ₺ fırsat araçlarını göster.");
+                else if (optionType === 'otomatik') {
+                    addUserMessage("⚙️ Otomatik Vitesli Araçları Sırala");
                     chatBody.appendChild(typingIndicator);
                     typingIndicator.style.display = 'flex';
                     scrollToBottom();
 
                     setTimeout(() => {
                         typingIndicator.style.display = 'none';
-                        quickChipFilter('ekonomik');
-                        addBotMessage("Günlük <strong>1.500 ₺</strong> olan en ekonomik fırsat araçlarımızı sizin için sıraladım.");
+                        selectCategoryWithJaguar('otomatik');
+                        addBotMessage("<strong>Otomatik Vitesli</strong> araçlarımızı yukarıda sıraladım.");
                         showResetActionInChat();
                     }, getRandomDelay());
                 }
                 else if (optionType === 'baska') {
-                    addUserMessage("❓ Aklıma takılan başka bir soru var.");
+                    addUserMessage("❓ Başka Bir Soru");
                     const inputContainer = document.createElement('div');
                     inputContainer.className = 'chat-input-container';
                     inputContainer.innerHTML = `
@@ -2226,14 +2897,14 @@
                 const actionDiv = document.createElement('div');
                 actionDiv.className = 'chat-action-buttons';
                 actionDiv.innerHTML = `
-                    <button class="chat-action-btn" onclick="resetChatMessages()">🔄 Başka Bir Filtre Seç</button>
-                    <button class="chat-action-btn" style="background:#1A1D20; color:#FFC107;" onclick="openOrderModal('RENAULT MEGANE', 'renault-megane-360.mp4', '2.000 ₺')">📅 Hemen Sipariş Oluştur</button>
+                    <button class="chat-action-btn" onclick="resetChatMessages()">🔄 Tüm Filoya Dön</button>
+                    <button class="chat-action-btn" style="background:#1A1D20; color:#FFC107;" onclick="openOrderModal('RENAULT MEGANE', 'renault-megane-360.mp4', '2.000 ₺')">📅 Hemen Sipariş Ver</button>
                 `;
                 chatBody.appendChild(actionDiv);
                 scrollToBottom();
             }
 
-            // 8. ÇOK KATMANLI GÜVENLİK KİLİTLERİ
+            // 9. ÇOK KATMANLI GÜVENLİK KİLİTLERİ
             document.addEventListener('contextmenu', e => e.preventDefault());
             document.addEventListener('dragstart', e => e.preventDefault());
             document.addEventListener('copy', e => {
