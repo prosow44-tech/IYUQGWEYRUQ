@@ -80,7 +80,7 @@
         video, img, canvas { outline: none; user-select: none; -webkit-user-drag: none; pointer-events: none; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
-        /* DİJİTAL ASİSTAN JAGUAR PROFİLİ: BOZULMADAN ÇOK AZ SOLA KAYDIRILDI */
+        /* DİJİTAL ASİSTAN JAGUAR PROFİLİ: BOZULMADAN ÇOK AZ SOLA KAYDIRILDI (YÜZÜ TAM GÖRÜNÜR) */
         .assistant-avatar-img {
             width: 100% !important;
             height: 100% !important;
@@ -126,8 +126,8 @@
 
         /* =========================================================
            JAGUAR KATEGORİ VİTRİN SAHNESİ
-           - Beyaz video arka planı mix-blend-mode: multiply ile %100 yok edildi!
-           - Hem PC hem Telefonda tam merkezde (left:0; right:0; margin:0 auto) durur!
+           - CSS İzolasyonu (transform/filter) kaldırıldı!
+           - Gerçek Zamanlı Canvas Chroma-Key Motoru + Multiply ile beyaz arka plan %100 silinir!
            ========================================================= */
         .jaguar-showcase-stage {
             display: none;
@@ -145,11 +145,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            animation: jaguarStageIn 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-        @keyframes jaguarStageIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
         body.jaguar-mode-active .jaguar-showcase-stage {
             display: flex;
@@ -210,18 +205,17 @@
             transform: translateY(-50%) scale(1.04);
         }
 
-        /* JAGUAR VİDEO ARKA PLAN YOK EDİCİ: Beyaz arka plan site zeminiyle %100 bütünleşir */
+        /* JAGUAR VİDEO SAHNESİ: İzolasyonsuz Şeffaf Canvas + Multiply */
         .jaguar-video-clean {
             width: 100%;
             max-width: 920px;
             height: 365px;
-            overflow: hidden;
             margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: center;
             background: transparent !important;
-            mix-blend-mode: multiply;
+            position: relative;
         }
         .jaguar-video-clean video {
             width: 100%;
@@ -230,9 +224,16 @@
             display: block;
             background: transparent !important;
             mix-blend-mode: multiply;
-            filter: brightness(1.05) contrast(1.08);
-            -webkit-mask-image: radial-gradient(ellipse 92% 88% at 50% 50%, #000 76%, transparent 100%);
-            mask-image: radial-gradient(ellipse 92% 88% at 50% 50%, #000 76%, transparent 100%);
+        }
+        .jaguar-video-clean canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+            background: transparent !important;
+            pointer-events: none;
         }
 
         /* =========================================================
@@ -387,7 +388,7 @@
             display: flex; align-items: center; justify-content: center; 
             cursor: grab; overflow: hidden; border-radius: 26px;
             background: transparent;
-            touch-action: pan-y;
+            touch-action: none;
             transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
             -webkit-mask-image: radial-gradient(ellipse 96% 93% at 50% 50%, #000 84%, transparent 100%);
             mask-image: radial-gradient(ellipse 96% 93% at 50% 50%, #000 84%, transparent 100%);
@@ -411,7 +412,7 @@
         .security-armor {
             position: absolute; inset: 0; z-index: 5;
             background: transparent; cursor: grab;
-            touch-action: pan-y;
+            touch-action: none;
             user-select: none; -webkit-user-drag: none;
         }
         .security-armor:active { cursor: grabbing; }
@@ -424,6 +425,7 @@
             font-size: 12.5px; font-weight: 800; color: #1A1D20;
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
             cursor: ew-resize; user-select: none;
+            touch-action: none;
             transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
         }
         .car-card:hover .swipe-badge, .swipe-badge.spinning { border-color: #FFC107; background: #FFF8E1; transform: scale(1.03); }
@@ -908,6 +910,7 @@
                 padding: 0 !important;
                 transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
             }
+            /* Telefonda touch-action: none ile %100 kesintisiz ve takılmasız tek parmak döndürme */
             .car-media-box {
                 width: 100% !important;
                 height: 29vh !important;
@@ -915,7 +918,7 @@
                 max-height: 255px;
                 margin-bottom: 2px !important;
                 border-radius: 20px;
-                touch-action: pan-y;
+                touch-action: none !important;
                 transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
             }
             .car-video, .car-canvas {
@@ -934,11 +937,12 @@
                 background: transparent !important;
                 border: none !important;
                 box-shadow: none !important;
-                padding: 0 !important;
+                padding: 4px 10px !important;
                 margin-bottom: 3px !important;
                 font-size: 11px !important;
                 font-weight: 800 !important;
                 color: #495057 !important;
+                touch-action: none !important;
             }
             .swipe-badge.spinning {
                 background: transparent !important;
@@ -1107,7 +1111,7 @@
             .jaguar-video-clean {
                 width: 100% !important;
                 max-width: 420px !important;
-                height: 175px !important;
+                height: 185px !important;
                 margin: 0 auto !important;
             }
 
@@ -1201,7 +1205,7 @@
     <div class="progress-bar" id="progressBar"></div>
 
     <!-- =========================================================
-         JAGUAR KATEGORİ SAHNESİ (ARKA PLANI SİTEYLE %100 BÜTÜNLEŞTİRİLDİ VE TAM ORTALANDI)
+         JAGUAR KATEGORİ SAHNESİ (GERÇEK ZAMANLI CANVAS CHROMA-KEY İLE BEYAZ ARKA PLAN %100 YOK EDİLİR)
          ========================================================= -->
     <section class="jaguar-showcase-stage" id="jaguar-stage" aria-label="Özel Jaguar Kategori Vitrini">
         <div class="jaguar-clean-topbar">
@@ -1210,6 +1214,7 @@
         </div>
         <div class="jaguar-video-clean" id="jaguar-video-box">
             <video id="jaguar-stage-video" src="" autoplay loop muted playsinline disablePictureInPicture></video>
+            <canvas id="jaguar-stage-canvas" aria-hidden="true"></canvas>
         </div>
     </section>
 
@@ -1410,7 +1415,7 @@
         <!-- 3. CITROEN C ELYSEE (Beyaz Araç -> Siyah Buton) -->
         <article class="car-card" data-order="3" data-name="CITROEN C ELYSEE" data-price-str="1.600 ₺" data-price="1600" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-seg="uygun,aile" data-vkey="citroen-c-elysee-360.mp4">
             <div class="car-media-box video-skeleton">
-                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="citroen-c-elysee-360.mp4" src="citroen-c-elysee-360.mp4" preload="metadata" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="citroen-c-elysee-360.mp4" src="citroen-c-elysee-360.mp4" preload="auto" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
@@ -1433,7 +1438,7 @@
         <!-- 4. NISSAN QASHQAI (Siyah Araç -> Sarı Buton) -->
         <article class="car-card" data-order="4" data-name="NISSAN QASHQAI" data-price-str="2.300 ₺" data-price="2300" data-gear="manuel" data-fuel="dizel" data-type="suv" data-seg="vip,aile" data-vkey="nissan-qashqai-360.mp4">
             <div class="car-media-box video-skeleton">
-                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="nissan-qashqai-360.mp4" src="nissan-qashqai-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="nissan-qashqai-360.mp4" src="nissan-qashqai-360.mp4" preload="metadata" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
@@ -1456,7 +1461,7 @@
         <!-- 5. TOYOTA COROLLA (Beyaz Araç -> Siyah Buton | HİBRİT) -->
         <article class="car-card" data-order="5" data-name="TOYOTA COROLLA" data-price-str="1.700 ₺" data-price="1700" data-gear="otomatik" data-fuel="hibrit" data-type="sedan" data-seg="vip,uygun,aile" data-vkey="toyota-corolla-360.mp4">
             <div class="car-media-box video-skeleton">
-                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="toyota-corolla-360.mp4" src="toyota-corolla-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="toyota-corolla-360.mp4" src="toyota-corolla-360.mp4" preload="metadata" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
@@ -1479,7 +1484,7 @@
         <!-- 6. KIA RIO (Siyah Araç -> Sarı Buton) -->
         <article class="car-card" data-order="6" data-name="KIA RIO" data-price-str="1.650 ₺" data-price="1650" data-gear="manuel" data-fuel="dizel" data-type="hatchback" data-seg="uygun" data-vkey="kia-rio-360.mp4">
             <div class="car-media-box video-skeleton">
-                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="kia-rio-360.mp4" src="kia-rio-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="kia-rio-360.mp4" src="kia-rio-360.mp4" preload="metadata" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
@@ -1548,7 +1553,7 @@
         <!-- 9. FIAT FIORINO (Beyaz Araç -> Siyah Buton | SADECE TİCARİ VE UYGUN) -->
         <article class="car-card" data-order="9" data-name="FIAT FIORINO" data-price-str="1.500 ₺" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="ticari" data-seg="ticari,uygun" data-vkey="fiat-fiorino-360.mp4">
             <div class="car-media-box video-skeleton">
-                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="fiat-fiorino-360.mp4" src="fiat-fiorino-360.mp4" preload="metadata" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="fiat-fiorino-360.mp4" src="fiat-fiorino-360.mp4" preload="auto" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
@@ -1628,7 +1633,7 @@
                 <canvas id="modal-canvas" aria-hidden="true"></canvas>
             </div>
 
-            <!-- EĞİK, ARKA PLANI BLURLU ATKI ŞERİDİ (TARİH KISMI YOK) -->
+            <!-- EĞİK, ARKA PLANI BLURLU ATKI ŞERİDİ -->
             <div class="unavailable-sash-banner" id="unavailableSashBanner" role="alert" aria-live="assertive">
                 <div class="sash-main-text">
                     Müsait değil başka modelleri inceleyin!
@@ -1833,14 +1838,14 @@
         (function() {
             "use strict";
 
-            // MOBİLDE HAFİF VE HIZLI 54 KARE (640x360), MASAÜSTÜNDE 72 KARE (960x540)
+            // MOBİLDE HAFİF VE HIZLI 48 KARE (512x288), MASAÜSTÜNDE 72 KARE (960x540)
             const IS_MOBILE_DEVICE = window.innerWidth <= 1024;
-            const SEQ_TOTAL_FRAMES = IS_MOBILE_DEVICE ? 54 : 72;
+            const SEQ_TOTAL_FRAMES = IS_MOBILE_DEVICE ? 48 : 72;
             const HOLD_TURN_SPEED = 0.098;
             const STEPDOWN_BASE_SPEED = 0.098;
             const DRAG_PIXELS_PC = 1030;
-            // Telefonda tek parmak hareketiyle zahmetsiz ve takılmadan dönmesi için 135 piksel tam tur!
-            const DRAG_PIXELS_MOBILE = 135;
+            // Telefonda parmağı sadece ~2cm (95px) çekince yağ gibi tam tur döner!
+            const DRAG_PIXELS_MOBILE = 95;
             const MODAL_PINGPONG_FPS = 20;
 
             const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzrYJVsS0yDP1twV2OFzI3rujb8GcQKtcr2lfIGQAnVbIM15tpGx3O7AfxEn3fZFB2t/exec";
@@ -1897,7 +1902,8 @@
             let activeModalCar = 'RENAULT MEGANE';
             let lastRandomCarKey = '';
             let securityFlagged = false;
-            let isUserTouchingCar = false; // Kullanıcı araca dokunurken arka plan çıkarımını durdurur!
+            let isUserTouchingCar = false;
+            let jaguarChromaRAF = null;
 
             const cleanFrameBank = new Map();
             const extractionQueue = [];
@@ -1950,7 +1956,69 @@
                 if (sheet) sheet.classList.add('dismissed');
             };
 
-            // 2. KATEGORİ SEÇİLİNCE GENİŞ JAGUAR VİTRİN SAHNESİNİ AÇAN SİSTEM
+            // 2. GERÇEK ZAMANLI JAGUAR BEYAZ ARKA PLAN SİLİCİ (CANVAS CHROMA-KEY MOTORU)
+            function startJaguarWhiteRemovalEngine(video, canvas) {
+                if (jaguarChromaRAF) cancelAnimationFrame(jaguarChromaRAF);
+
+                const ctx = canvas.getContext('2d', { willReadFrequently: true });
+                let chromaSupported = true;
+
+                function processJaguarFrame() {
+                    if (!document.body.classList.contains('jaguar-mode-active')) return;
+
+                    if (video.readyState >= 2 && video.videoWidth > 0 && chromaSupported) {
+                        const targetW = Math.min(640, video.videoWidth);
+                        const targetH = Math.round(targetW * (video.videoHeight / video.videoWidth));
+
+                        if (canvas.width !== targetW) {
+                            canvas.width = targetW;
+                            canvas.height = targetH;
+                        }
+
+                        try {
+                            ctx.drawImage(video, 0, 0, targetW, targetH);
+                            const frameData = ctx.getImageData(0, 0, targetW, targetH);
+                            const d = frameData.data;
+
+                            // Videodaki beyaz ve beyaza yakın arka plan piksellerini yumuşak geçişle %100 şeffaf yapar!
+                            for (let i = 0, len = d.length; i < len; i += 4) {
+                                const r = d[i];
+                                const g = d[i + 1];
+                                const b = d[i + 2];
+
+                                if (r > 212 && g > 212 && b > 212) {
+                                    const maxDiff = Math.max(Math.abs(r - g), Math.abs(g - b), Math.abs(r - b));
+                                    if (maxDiff < 18) {
+                                        const avg = (r + g + b) * 0.3333;
+                                        if (avg >= 238) {
+                                            d[i + 3] = 0; // Tamamen şeffaf
+                                        } else if (avg > 212) {
+                                            // Gölge kenarlarını yumuşakça eritir
+                                            d[i + 3] = Math.round(((238 - avg) / 26) * 255);
+                                        }
+                                    }
+                                }
+                            }
+
+                            ctx.putImageData(frameData, 0, 0);
+                            if (canvas.style.display !== 'block') {
+                                canvas.style.display = 'block';
+                                video.style.opacity = '0';
+                            }
+                        } catch (e) {
+                            // Yerel file:// protokolünde güvenlik kısıtlaması olursa izolasyonsuz multiply moduna geçer
+                            chromaSupported = false;
+                            canvas.style.display = 'none';
+                            video.style.opacity = '1';
+                        }
+                    }
+
+                    jaguarChromaRAF = requestAnimationFrame(processJaguarFrame);
+                }
+
+                jaguarChromaRAF = requestAnimationFrame(processJaguarFrame);
+            }
+
             window.selectCategoryWithJaguar = function(category) {
                 if (currentCategoryFilter === category && document.body.classList.contains('jaguar-mode-active')) {
                     exitJaguarStage();
@@ -1963,10 +2031,15 @@
                 document.getElementById('jaguar-stage-title').innerText = theme.title;
 
                 const jVideo = document.getElementById('jaguar-stage-video');
+                const jCanvas = document.getElementById('jaguar-stage-canvas');
+                jCanvas.style.display = 'none';
+                jVideo.style.opacity = '1';
+
                 let srcIdx = 0;
 
                 jVideo.onloadeddata = function() {
                     jVideo.play().catch(()=>{});
+                    startJaguarWhiteRemovalEngine(jVideo, jCanvas);
                 };
                 jVideo.onerror = function() {
                     srcIdx++;
@@ -1993,11 +2066,18 @@
             };
 
             window.exitJaguarStage = function() {
+                if (jaguarChromaRAF) {
+                    cancelAnimationFrame(jaguarChromaRAF);
+                    jaguarChromaRAF = null;
+                }
                 currentCategoryFilter = 'all';
                 document.body.classList.remove('jaguar-mode-active');
                 const jVideo = document.getElementById('jaguar-stage-video');
+                const jCanvas = document.getElementById('jaguar-stage-canvas');
+                if (jCanvas) jCanvas.style.display = 'none';
                 if (jVideo) {
                     jVideo.pause();
+                    jVideo.style.opacity = '1';
                     jVideo.removeAttribute('src');
                 }
                 document.querySelectorAll('.pc-cat-chip, .mob-cat-chip').forEach(c => c.classList.remove('active'));
@@ -2079,11 +2159,13 @@
                 }
             }, { passive: true });
 
-            // 5. DOĞRUSAL İLERİ (LINEAR FORWARD) HIZLI KARE ÇIKARICI (GERİYE GOP ATLAMASI YAPMAZ, MOBİLDE 5 KAT HIZLI!)
-            function queueFrameExtraction(fileName, validSrc, highPriority) {
-                if (!fileName || !validSrc) return;
+            // 5. MOBİL VE PC İÇİN DONANIMSAL AKIŞ YAKALAMA (HARDWARE PLAY STREAM CAPTURE) + HIZLI KARE BANKASI
+            // Mobil tarayıcıların gizli videoda currentTime aramasını engellemesini aşmak için
+            // videoyu donanımsal olarak 2x hızda oynatarak (play) kareleri doğrudan yakalar!
+            function ensureBankEntry(fileName, video) {
+                if (!fileName) return null;
                 if (!cleanFrameBank.has(fileName)) {
-                    const targetW = window.innerWidth <= 1024 ? 640 : 960;
+                    const targetW = window.innerWidth <= 1024 ? 512 : 960;
                     cleanFrameBank.set(fileName, {
                         slots: new Array(SEQ_TOTAL_FRAMES).fill(null),
                         filledCount: 0,
@@ -2095,6 +2177,42 @@
                     });
                 }
                 const bank = cleanFrameBank.get(fileName);
+                if (video && video.videoWidth > 0) {
+                    const maxW = window.innerWidth <= 1024 ? 512 : 960;
+                    bank.width = Math.min(maxW, video.videoWidth);
+                    bank.height = Math.round(bank.width * (video.videoHeight / video.videoWidth));
+                }
+                return bank;
+            }
+
+            // Canlı video karesini anında ilgili açı slotuna kaydeder
+            function captureLiveVideoFrameToSlot(fileName, video) {
+                if (!fileName || !video || !video.duration || !video.videoWidth) return;
+                const bank = ensureBankEntry(fileName, video);
+                const norm = Math.max(0, Math.min(0.999, video.currentTime / video.duration));
+                const slotIdx = Math.min(SEQ_TOTAL_FRAMES - 1, Math.max(0, Math.round(norm * (SEQ_TOTAL_FRAMES - 1))));
+
+                if (!bank.slots[slotIdx]) {
+                    try {
+                        const c = document.createElement('canvas');
+                        c.width = bank.width;
+                        c.height = bank.height;
+                        c.getContext('2d').drawImage(video, 0, 0, bank.width, bank.height);
+                        bank.slots[slotIdx] = c;
+                        bank.filledCount++;
+                        if (bank.filledCount >= SEQ_TOTAL_FRAMES * 0.65) {
+                            bank.readyToUse = true;
+                        }
+                        if (bank.filledCount >= SEQ_TOTAL_FRAMES * 0.9) {
+                            bank.complete = true;
+                        }
+                    } catch (e) {}
+                }
+            }
+
+            function queueFrameExtraction(fileName, validSrc, highPriority) {
+                if (!fileName || !validSrc) return;
+                const bank = ensureBankEntry(fileName, null);
                 if (bank.complete || bank.queued) {
                     if (highPriority) {
                         const qIdx = extractionQueue.findIndex(item => item.fileName === fileName);
@@ -2133,16 +2251,21 @@
                 const offVideo = document.createElement('video');
                 offVideo.muted = true;
                 offVideo.playsInline = true;
+                offVideo.setAttribute('muted', '');
+                offVideo.setAttribute('playsinline', '');
                 offVideo.preload = 'auto';
                 offVideo.src = validSrc;
                 activeExtractors.add(offVideo);
 
                 let linearSlot = 0;
                 let watchdog = null;
+                let playCaptureTimer = null;
 
                 function finishExtraction() {
                     if (watchdog) clearTimeout(watchdog);
+                    if (playCaptureTimer) clearInterval(playCaptureTimer);
                     activeExtractors.delete(offVideo);
+                    offVideo.pause();
                     offVideo.removeAttribute('src');
                     offVideo.load();
                     isExtractingNow = false;
@@ -2151,7 +2274,7 @@
 
                 function resetWatchdog() {
                     if (watchdog) clearTimeout(watchdog);
-                    watchdog = setTimeout(finishExtraction, 4000);
+                    watchdog = setTimeout(finishExtraction, 4500);
                 }
 
                 offVideo.addEventListener('error', finishExtraction, { once: true });
@@ -2161,18 +2284,45 @@
                         finishExtraction();
                         return;
                     }
-                    const maxW = window.innerWidth <= 1024 ? 640 : 960;
+                    const maxW = window.innerWidth <= 1024 ? 512 : 960;
                     const aspect = offVideo.videoHeight / offVideo.videoWidth;
                     bank.width = Math.min(maxW, offVideo.videoWidth);
                     bank.height = Math.round(bank.width * aspect);
 
                     resetWatchdog();
-                    offVideo.currentTime = 0.005;
+
+                    // MOBİLDE DONANIMSAL PLAY STREAM YAKALAMA:
+                    // Mobil tarayıcılar play() ile donanım çözücüsünü açar ve 1.5 saniyede tüm kareleri yakalar!
+                    if (window.innerWidth <= 1024) {
+                        offVideo.playbackRate = 2.0;
+                        const playPromise = offVideo.play();
+                        if (playPromise !== undefined) {
+                            playPromise.then(() => {
+                                playCaptureTimer = setInterval(() => {
+                                    if (isUserTouchingCar) return;
+                                    resetWatchdog();
+                                    captureLiveVideoFrameToSlot(fileName, offVideo);
+                                    if (offVideo.ended || offVideo.currentTime >= offVideo.duration - 0.05 || bank.complete) {
+                                        bank.readyToUse = bank.filledCount >= 16;
+                                        bank.complete = bank.filledCount >= 24;
+                                        finishExtraction();
+                                    }
+                                }, 26);
+                            }).catch(() => {
+                                // Play izin vermezse doğrusal ileri seek moduna geçer
+                                offVideo.currentTime = 0.005;
+                            });
+                        } else {
+                            offVideo.currentTime = 0.005;
+                        }
+                    } else {
+                        offVideo.currentTime = 0.005;
+                    }
                 }, { once: true });
 
                 function triggerNextLinearSeek() {
+                    if (playCaptureTimer) return;
                     if (isUserTouchingCar) {
-                        // Kullanıcı araca dokunuyorsa arka plan çözücüsünü bekletir, kasmayı %100 engeller!
                         resetWatchdog();
                         setTimeout(triggerNextLinearSeek, 90);
                         return;
@@ -2181,13 +2331,14 @@
                         const nextTime = Math.max(0.005, Math.min(offVideo.duration - 0.015, (linearSlot / (SEQ_TOTAL_FRAMES - 1)) * (offVideo.duration - 0.015)));
                         offVideo.currentTime = nextTime;
                     } else {
-                        bank.complete = bank.filledCount >= SEQ_TOTAL_FRAMES * 0.9;
-                        bank.readyToUse = bank.complete;
+                        bank.complete = bank.filledCount >= SEQ_TOTAL_FRAMES * 0.75;
+                        bank.readyToUse = bank.filledCount >= 16;
                         finishExtraction();
                     }
                 }
 
                 offVideo.addEventListener('seeked', () => {
+                    if (playCaptureTimer) return;
                     resetWatchdog();
 
                     if (offVideo.videoWidth > 0 && !bank.slots[linearSlot]) {
@@ -2198,7 +2349,7 @@
                             c.getContext('2d').drawImage(offVideo, 0, 0, bank.width, bank.height);
                             bank.slots[linearSlot] = c;
                             bank.filledCount++;
-                            if (bank.filledCount >= SEQ_TOTAL_FRAMES * 0.85) {
+                            if (bank.filledCount >= 16) {
                                 bank.readyToUse = true;
                             }
                         } catch (e) {}
@@ -2225,7 +2376,7 @@
 
                     let chosenSlot = targetSlot;
                     if (!bank.slots[chosenSlot]) {
-                        for (let d = 1; d <= 3; d++) {
+                        for (let d = 1; d <= 6; d++) {
                             const left = (targetSlot - d + SEQ_TOTAL_FRAMES) % SEQ_TOTAL_FRAMES;
                             if (bank.slots[left]) { chosenSlot = left; break; }
                             const right = (targetSlot + d) % SEQ_TOTAL_FRAMES;
@@ -2252,11 +2403,13 @@
                     }
                 }
 
-                // Henüz önbellek tamamlanmadıysa doğrudan videodan seek-lock ile akıcı döndürür
+                // Henüz önbellek dolmadıysa telefon çözücüsünü boğmayan (45ms throttled) akıcı seek + canlı kare yakalama uygular!
                 if (video && video.duration) {
                     const targetTime = Math.max(0.01, Math.min(video.duration - 0.01, norm * video.duration));
                     card._pendingSeekTime = targetTime;
-                    if (!video.seeking) {
+                    const now = performance.now();
+                    if (!video.seeking && (!card._lastSeekStamp || now - card._lastSeekStamp > 42)) {
+                        card._lastSeekStamp = now;
                         video.currentTime = targetTime;
                     }
                 }
@@ -2286,7 +2439,7 @@
                             video.pause();
                         }
                     });
-                }, { rootMargin: '220px 0px' });
+                }, { rootMargin: '250px 0px' });
 
                 allCards.forEach((card, index) => {
                     const video = card.querySelector('video.car-video');
@@ -2296,14 +2449,18 @@
                     card._vFile = fileName;
                     card._angle = 0;
                     card._lastDrawnSlot = -1;
+                    card._lastSeekStamp = 0;
                     card._pendingSeekTime = null;
 
                     video.muted = true;
 
+                    // Her seek tamamlandığında o kareyi anında RAM'e kaydeder (Çevirdikçe hızlanır!)
                     video.addEventListener('seeked', () => {
-                        if (card._pendingSeekTime !== null && Math.abs(video.currentTime - card._pendingSeekTime) > 0.03) {
+                        captureLiveVideoFrameToSlot(fileName, video);
+                        if (card._pendingSeekTime !== null && Math.abs(video.currentTime - card._pendingSeekTime) > 0.04) {
                             const nextT = card._pendingSeekTime;
                             card._pendingSeekTime = null;
+                            card._lastSeekStamp = performance.now();
                             video.currentTime = nextT;
                         }
                     });
@@ -2322,6 +2479,7 @@
                             video.parentElement.classList.remove('video-skeleton');
                         }
 
+                        captureLiveVideoFrameToSlot(fileName, video);
                         queueFrameExtraction(fileName, video.currentSrc || video.src, index < 2);
 
                         if (!bgSampled && video.videoWidth > 0) {
@@ -2386,7 +2544,7 @@
                 });
             });
 
-            // 6. KARTLARDA RAF-SENKRONİZE 360° ÇEVİRME MOTORU (TELEFONDA TEK PARMAKLA SIFIR KASMA)
+            // 6. KARTLARDA TEK PARMAKLA SIFIR KASMA 360° ÇEVİRME MOTORU (POINTER & TOUCH BİRLEŞİK KİLİT)
             (function initGlitchFreeCardSpinEngine() {
                 const cards = document.querySelectorAll('.car-card');
                 let activeCard = null;
@@ -2395,8 +2553,6 @@
                 let mode = 'none';
                 let spinDir = 1;
                 let clickHalfDir = 1;
-                let startX = 0;
-                let startY = 0;
                 let lastX = 0;
                 let lastMoveTime = 0;
                 let stepDownStartTime = 0;
@@ -2412,7 +2568,7 @@
                     });
                 }
 
-                function onPointerDown(card, clientX, clientY) {
+                function onPointerDown(card, clientX) {
                     if (holdDelayTimer) {
                         clearTimeout(holdDelayTimer);
                         holdDelayTimer = null;
@@ -2426,14 +2582,12 @@
                     if (video.preload !== 'auto') video.preload = 'auto';
                     video.pause();
 
-                    isUserTouchingCar = true; // Arka plan çıkarımını durdur, %100 gücü parmağa ver
+                    isUserTouchingCar = true;
                     queueFrameExtraction(card._vFile, video.currentSrc || video.src, true);
 
                     activeCard = card;
                     activeBadge = badge;
                     isPointerDown = true;
-                    startX = clientX;
-                    startY = clientY || 0;
                     lastX = clientX;
                     pendingAngleDelta = 0;
                     lastMoveTime = performance.now();
@@ -2456,7 +2610,7 @@
                             lastFrameTime = performance.now();
                             if (!rafId) rafId = requestAnimationFrame(tickSpinLoop);
                         }
-                    }, 170);
+                    }, 160);
                 }
 
                 function flushPendingDragRender() {
@@ -2467,21 +2621,13 @@
                     renderCardAngle(activeCard, activeCard._angle + deltaToApply);
                 }
 
-                function onPointerMove(clientX, clientY, rawEvent) {
+                function onPointerMove(clientX, rawEvent) {
                     if (!isPointerDown || !activeCard) return;
 
                     const dx = clientX - lastX;
-                    const totalDx = Math.abs(clientX - startX);
-                    const totalDy = clientY ? Math.abs(clientY - startY) : 0;
+                    if (Math.abs(dx) < 0.4) return;
 
-                    if (mode === 'pending' && totalDy > 22 && totalDy > totalDx * 1.6) {
-                        onPointerUp();
-                        return;
-                    }
-
-                    if (Math.abs(dx) < 0.5) return;
-
-                    if (rawEvent && rawEvent.cancelable && totalDx > 4) {
+                    if (rawEvent && rawEvent.cancelable) {
                         rawEvent.preventDefault();
                     }
 
@@ -2497,13 +2643,12 @@
 
                     const isMobile = window.innerWidth <= 1024;
                     const pixelsPerTurn = isMobile ? DRAG_PIXELS_MOBILE : DRAG_PIXELS_PC;
-                    const maxStep = isMobile ? 0.085 : 0.014;
+                    const maxStep = isMobile ? 0.12 : 0.015;
 
                     const rawDelta = dx / pixelsPerTurn;
                     const clampedDelta = Math.max(-maxStep, Math.min(maxStep, rawDelta));
                     pendingAngleDelta += clampedDelta;
 
-                    // Çizimi ekran yenileme hızına (60 FPS) senkronize eder, kasmayı sıfırlar
                     if (!dragRenderRAF) {
                         dragRenderRAF = requestAnimationFrame(flushPendingDragRender);
                     }
@@ -2539,7 +2684,7 @@
 
                     if (activeCard) {
                         if (isPointerDown && mode === 'hold') {
-                            const holdSpeed = window.innerWidth <= 1024 ? 0.18 : HOLD_TURN_SPEED;
+                            const holdSpeed = window.innerWidth <= 1024 ? 0.22 : HOLD_TURN_SPEED;
                             const delta = spinDir * holdSpeed * dt;
                             renderCardAngle(activeCard, activeCard._angle + delta);
                         } else if (!isPointerDown && mode === 'stepdown') {
@@ -2552,7 +2697,7 @@
                             else multiplier = 0;
 
                             if (multiplier > 0) {
-                                const stepBase = window.innerWidth <= 1024 ? 0.16 : STEPDOWN_BASE_SPEED;
+                                const stepBase = window.innerWidth <= 1024 ? 0.18 : STEPDOWN_BASE_SPEED;
                                 const delta = spinDir * stepBase * multiplier * dt;
                                 renderCardAngle(activeCard, activeCard._angle + delta);
                             } else {
@@ -2578,23 +2723,24 @@
                         el.addEventListener('mousedown', (e) => {
                             if (e.button !== 0) return;
                             e.preventDefault();
-                            onPointerDown(card, e.clientX, e.clientY);
+                            onPointerDown(card, e.clientX);
                         });
                         el.addEventListener('touchstart', (e) => {
                             if (e.touches.length > 0) {
-                                onPointerDown(card, e.touches[0].clientX, e.touches[0].clientY);
+                                if (e.cancelable) e.preventDefault();
+                                onPointerDown(card, e.touches[0].clientX);
                             }
-                        }, { passive: true });
+                        }, { passive: false });
                     });
                 });
 
                 window.addEventListener('mousemove', (e) => {
-                    if (isPointerDown) onPointerMove(e.clientX, e.clientY, e);
+                    if (isPointerDown) onPointerMove(e.clientX, e);
                 }, { passive: true });
 
                 window.addEventListener('touchmove', (e) => {
                     if (isPointerDown && e.touches.length > 0) {
-                        onPointerMove(e.touches[0].clientX, e.touches[0].clientY, e);
+                        onPointerMove(e.touches[0].clientX, e);
                     }
                 }, { passive: false });
 
@@ -2642,7 +2788,7 @@
 
                 let bank = cleanFrameBank.get(fileName);
                 const orderedReadyFrames = (bank && bank.complete) ? bank.slots.filter(Boolean) : [];
-                const liveRecordedFrames = orderedReadyFrames.length >= SEQ_TOTAL_FRAMES * 0.85 ? orderedReadyFrames : [];
+                const liveRecordedFrames = orderedReadyFrames.length >= SEQ_TOTAL_FRAMES * 0.8 ? orderedReadyFrames : [];
                 let isRecordingFirstPass = liveRecordedFrames.length === 0;
                 let lastRecordedTime = -1;
 
@@ -2658,8 +2804,8 @@
                     video.play().catch(() => {});
                 } else {
                     video.pause();
-                    canvas.width = bank.width || 640;
-                    canvas.height = bank.height || 360;
+                    canvas.width = bank.width || 512;
+                    canvas.height = bank.height || 288;
                     canvas.style.display = 'block';
                 }
 
@@ -2672,7 +2818,7 @@
                             if (video.currentTime > lastRecordedTime + 0.035 && video.videoWidth > 0) {
                                 lastRecordedTime = video.currentTime;
                                 try {
-                                    const maxW = window.innerWidth <= 1024 ? 640 : 960;
+                                    const maxW = window.innerWidth <= 1024 ? 512 : 960;
                                     const aspect = video.videoHeight / video.videoWidth;
                                     const w = Math.min(maxW, video.videoWidth);
                                     const h = Math.round(w * aspect);
@@ -2690,7 +2836,7 @@
                                 frameCursor = Math.max(0, liveRecordedFrames.length - 1);
                                 direction = -1;
 
-                                if (liveRecordedFrames.length > 15) {
+                                if (liveRecordedFrames.length > 12) {
                                     canvas.width = liveRecordedFrames[0].width;
                                     canvas.height = liveRecordedFrames[0].height;
                                     canvas.style.display = 'block';
