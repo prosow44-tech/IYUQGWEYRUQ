@@ -319,7 +319,7 @@
         .order-btn.light-btn:hover { background: #FFCA28; box-shadow: 0 12px 28px rgba(255,193,7,0.45); }
         .order-btn:active { transform: scale(0.96) !important; }
 
-        /* 7. SİPARİŞ & RANDEVU MODALI (KÜÇÜK KARE KALDIRILDI -> DEVASA PANORAMİK 360° VİTRİN SAHNESİ) */
+        /* 7. SİPARİŞ & RANDEVU MODALI (OTOMATİK İLERİ-GERİ DÖNEN DEVASA PANORAMİK SAHNE) */
         .modal-overlay { 
             position: fixed; inset: 0; background-color: rgba(15, 23, 42, 0.86); 
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -332,21 +332,21 @@
             background-color: #ffffff; border-radius: 28px; padding: 24px 34px 32px !important; 
             width: 100%; max-width: 720px; margin: auto; position: relative; 
             box-shadow: 0 35px 70px -12px rgba(0,0,0,0.7); border: 2px solid #FFF8E1; 
-            pointer-events: auto; overflow: hidden; text-align: center;
+            pointer-events: auto; overflow: visible !important; text-align: center;
             transform: scale(0.94); transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .modal-overlay.show .modal-box { transform: scale(1); }
 
         .modal-close-btn { 
-            position: absolute; top: 18px; right: 18px; width: 44px; height: 44px; 
-            border-radius: 50%; background: rgba(255,255,255,0.92); border: 1.5px solid #E2E8F0; color: #1A1D20; 
+            position: absolute; top: -16px; right: -16px; width: 44px; height: 44px; 
+            border-radius: 50%; background: #1A1D20; border: 2.5px solid #FFC107; color: #FFC107; 
             font-weight: 900; font-size: 18px; cursor: pointer; display: flex; 
             align-items: center; justify-content: center; transition: 0.2s; z-index: 40;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
         }
-        .modal-close-btn:hover { background: #FFEBEE; color: #D32F2F; border-color: #FFCDD2; transform: rotate(90deg); }
+        .modal-close-btn:hover { background: #D32F2F; color: #ffffff; border-color: #ffffff; transform: rotate(90deg); }
 
-        /* DEVASA PANORAMİK 360° ARAÇ İNCELEME SAHNESİ (KARE DEĞİL, TAM GENİŞLİK VE BÜYÜK) */
+        /* OTOMATİK DÖNEN DEVASA PANORAMİK SAHNE (ÜZERİNDE YAZI YOK, TERTEMİZ) */
         .modal-car-showcase {
             position: relative;
             width: 100%;
@@ -356,12 +356,10 @@
             overflow: hidden;
             display: flex; align-items: center; justify-content: center;
             border: 3px solid #FFC107;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
             box-shadow: inset 0 0 25px rgba(0,0,0,0.04), 0 12px 30px rgba(0,0,0,0.08);
-            cursor: grab;
-            touch-action: pan-y;
+            pointer-events: none;
         }
-        .modal-car-showcase:active { cursor: grabbing; }
 
         .modal-car-showcase video, .modal-car-showcase canvas { 
             width: 100%; height: 100%; 
@@ -374,14 +372,6 @@
         }
         .modal-car-showcase canvas {
             position: absolute; inset: 0; z-index: 3; display: none;
-        }
-
-        .modal-360-hint {
-            position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
-            background: rgba(26, 29, 32, 0.85); color: #FFC107;
-            padding: 6px 18px; border-radius: 999px; font-size: 11px; font-weight: 800;
-            z-index: 10; pointer-events: none; letter-spacing: 0.4px;
-            border: 1px solid rgba(255, 193, 7, 0.4);
         }
 
         .modal-title { font-size: 26px; font-weight: 900; color: #1A1D20; margin-bottom: 3px; }
@@ -482,6 +472,7 @@
             .car-specs { flex-wrap: wrap; }
             .chat-panel { width: 92%; right: 4%; bottom: 20px; height: 500px; }
             .modal-box { padding: 18px 18px 25px !important; }
+            .modal-close-btn { top: 10px; right: 10px; }
             .modal-car-showcase { height: 240px; }
             .form-row-2 { grid-template-columns: 1fr; }
         }
@@ -647,7 +638,7 @@
         </div>
     </aside>
 
-    <!-- 5. ARAÇ FİLOSU (11 ARAÇ - 90 KARE EŞİTLENMİŞ SAĞ/SOL SİMETRİK HIZ MOTORU) -->
+    <!-- 5. ARAÇ FİLOSU (11 ARAÇ - YORULMADAN KONTROLLÜ ÇEVİRME & EŞİT SAĞ/SOL HIZ MOTORU) -->
     <main class="cars-container" id="cars-grid" aria-label="Kiralık Araç Filosu">
 
         <!-- 1. HONDA CIVIC -->
@@ -872,7 +863,7 @@
 
     </main>
 
-    <!-- 6. SİPARİŞ VE RANDEVU MODALI (KÜÇÜK KARE KALDIRILDI -> DEVASA PANORAMİK 360° DETAYLI VİTRİN SAHNESİ) -->
+    <!-- 6. SİPARİŞ VE RANDEVU MODALI (%100 OTOMATİK İLERİ-GERİ EŞİT HIZDA DÖNEN BÜYÜK SAHNE) -->
     <div id="randevuModal" class="modal-overlay" onclick="if(event.target===this) closeOrderModal()" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-box" id="appointment-modal-box">
             <button onclick="closeOrderModal()" class="modal-close-btn" aria-label="Sipariş Penceresini Kapat">✕</button>
@@ -880,8 +871,6 @@
             <div class="modal-car-showcase video-skeleton" id="modal-showcase-box">
                 <video id="modal-video" aria-hidden="true" tabindex="-1" src="" playsinline muted disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas id="modal-canvas" aria-hidden="true"></canvas>
-                <div class="security-armor" id="modal-armor" title="Aracı Detaylı İncelemek İçin Sağa/Sola Çevirin"></div>
-                <div class="modal-360-hint">← 360° Detaylı İnceleme Sahnesi (Çevirmek İçin Dokunun) →</div>
             </div>
 
             <h3 id="modalTitle" class="modal-title">SİPARİŞ & RANDEVU AL</h3>
@@ -981,12 +970,13 @@
         (function() {
             "use strict";
 
-            // TÜM ARAÇLAR İÇİN STANDARTLAŞTIRILMIŞ 90 KARE VE EŞİT SAĞ/SOL DÖNÜŞ HIZ SABİTLERİ
-            const FRAMES_PER_CAR = 90;
-            const HOLD_TURN_SPEED = 0.50; // Saniyede 0.50 tam tur (2 saniyede 360° - Sağ ve Sol %100 eşit ve hızlı)
-            const STEPDOWN_BASE_SPEED = 0.38; // Kaydırıp bırakınca 1.0x -> 0.9x -> 0.8x -> Ani Duruş taban hızı
-            const DRAG_PIXELS_PER_TURN = 290; // 290px çekildiğinde 1 tam tur (Sağ ve Sol %100 simetrik)
-            const MODAL_AUTO_TURN_SPEED = 0.22; // Modalda kendi kendine ileri-geri eşit dönüş hızı
+            // SAKİN, KONTROLLÜ VE YORULMADAN İNCELEME HIZ SABİTLERİ
+            const FRAMES_PER_CAR = 120;
+            const HOLD_TURN_SPEED = 0.14; // Basılı tutunca ~7.1 saniyede 1 tam tur (Sakin ve detaylı vitrin dönüşü)
+            const STEPDOWN_BASE_SPEED = 0.14; // Bırakınca 1.0x -> 0.9x -> 0.8x -> Ani Duruş hızı
+            const DRAG_PIXELS_PER_TURN = 820; // 820 pikselde 1 tam tur (Yorulmadan, milimetrik ve sakin kontrol)
+            const MAX_DRAG_STEP = 0.014; // Fare çok hızlı çekilse bile aracın fırıldak gibi dönmesini önleyen hız sınırı
+            const MODAL_PINGPONG_SPEED = 0.14; // Randevu ekranında ileri ve geri %100 eşit otomatik dönüş hızı
 
             const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzrYJVsS0yDP1twV2OFzI3rujb8GcQKtcr2lfIGQAnVbIM15tpGx3O7AfxEn3fZFB2t/exec";
 
@@ -998,13 +988,10 @@
             let isHighToLowSort = false;
             let toastTimer = null;
             let activeModalCar = 'RENAULT MEGANE';
-            let activeModalFile = 'renault-megane-360.mp4';
             let securityFlagged = false;
 
             const vaultBlobCache = new Map();
             const frameMemoryBank = new Map();
-            const extractionQueue = [];
-            let isExtracting = false;
 
             // 1. ÜSTTEN DÜŞEN 2 SANİYELİK YEŞİL TİKLİ BİLDİRİM
             window.showTopToast = function(message) {
@@ -1038,116 +1025,106 @@
                 document.getElementById('cookiePopup').classList.toggle('show');
             };
 
-            // 2. ARKA PLAN OTOMATİK 90 KARE GPU VRAM ÇIKARICI (TÜM ARAÇLARI VE SAĞ/SOL HIZLARINI EŞİTLER)
-            function enqueueVideoExtraction(fileName, sourceUrl) {
-                if (!fileName || frameMemoryBank.has(fileName)) return;
-                frameMemoryBank.set(fileName, {
-                    frames: new Array(FRAMES_PER_CAR).fill(null),
-                    readyCount: 0,
-                    ready: false,
-                    width: 0,
-                    height: 0
-                });
-                extractionQueue.push({ fileName, sourceUrl });
-                processNextExtraction();
-            }
-
-            function prioritizeVideoExtraction(fileName) {
-                const idx = extractionQueue.findIndex(item => item.fileName === fileName);
-                if (idx > 0) {
-                    const [item] = extractionQueue.splice(idx, 1);
-                    extractionQueue.unshift(item);
+            // 2. YALNIZCA GERÇEKTEN YÜKLENEN VİDEOLARI ANINDA 120 KAREYE ÖNBELLEKLEYEN MOTOR
+            function ensureBankEntry(fileName, video) {
+                if (!fileName) return null;
+                if (!frameMemoryBank.has(fileName)) {
+                    frameMemoryBank.set(fileName, {
+                        frames: new Array(FRAMES_PER_CAR).fill(null),
+                        readyCount: 0,
+                        extracting: false,
+                        width: video ? video.videoWidth : 0,
+                        height: video ? video.videoHeight : 0
+                    });
                 }
-            }
-
-            function processNextExtraction() {
-                if (isExtracting || extractionQueue.length === 0) return;
-                isExtracting = true;
-
-                const { fileName, sourceUrl } = extractionQueue.shift();
                 const bank = frameMemoryBank.get(fileName);
-                const decoder = document.createElement('video');
-                decoder.muted = true;
-                decoder.playsInline = true;
-                decoder.preload = 'auto';
-                decoder.src = vaultBlobCache.get(fileName) || sourceUrl;
-
-                let currentIdx = 0;
-                let timeoutGuard = null;
-
-                function cleanup() {
-                    if (timeoutGuard) clearTimeout(timeoutGuard);
-                    decoder.removeAttribute('src');
-                    decoder.load();
-                    isExtracting = false;
-                    processNextExtraction();
+                if (video && video.videoWidth > 0) {
+                    bank.width = video.videoWidth;
+                    bank.height = video.videoHeight;
                 }
+                return bank;
+            }
 
-                function resetGuard() {
-                    if (timeoutGuard) clearTimeout(timeoutGuard);
-                    timeoutGuard = setTimeout(cleanup, 4000);
+            function captureCurrentVideoFrame(fileName, video) {
+                if (!fileName || !video || !video.duration || !video.videoWidth) return;
+                const bank = ensureBankEntry(fileName, video);
+                const norm = Math.max(0, Math.min(0.999, video.currentTime / video.duration));
+                const idx = Math.floor(norm * FRAMES_PER_CAR);
+                if (!bank.frames[idx]) {
+                    try {
+                        const c = document.createElement('canvas');
+                        c.width = video.videoWidth;
+                        c.height = video.videoHeight;
+                        c.getContext('2d').drawImage(video, 0, 0);
+                        bank.frames[idx] = c;
+                        bank.readyCount++;
+                    } catch (e) {}
                 }
+            }
 
-                decoder.addEventListener('error', cleanup, { once: true });
+            // Yüklenmiş (404 olmayan) videoları arka planda sessizce tarayıp 120 kareyi RAM'e doldurur
+            function startBackgroundFrameWarmup(fileName, validSrc) {
+                if (!fileName || !validSrc) return;
+                const bank = ensureBankEntry(fileName, null);
+                if (bank.extracting || bank.readyCount >= FRAMES_PER_CAR * 0.9) return;
+                bank.extracting = true;
 
-                decoder.addEventListener('loadeddata', () => {
-                    if (!decoder.duration || !decoder.videoWidth) {
-                        cleanup();
-                        return;
-                    }
-                    bank.width = decoder.videoWidth;
-                    bank.height = decoder.videoHeight;
-                    resetGuard();
-                    decoder.currentTime = 0.01;
+                const hiddenVideo = document.createElement('video');
+                hiddenVideo.muted = true;
+                hiddenVideo.playsInline = true;
+                hiddenVideo.preload = 'auto';
+                hiddenVideo.src = vaultBlobCache.get(fileName) || validSrc;
+
+                let stepIdx = 0;
+
+                hiddenVideo.addEventListener('loadeddata', () => {
+                    if (!hiddenVideo.duration || !hiddenVideo.videoWidth) return;
+                    bank.width = hiddenVideo.videoWidth;
+                    bank.height = hiddenVideo.videoHeight;
+                    hiddenVideo.currentTime = 0.01;
                 }, { once: true });
 
-                decoder.addEventListener('seeked', () => {
-                    resetGuard();
-                    const storeFrame = (bitmapOrCanvas) => {
-                        if (bitmapOrCanvas && !bank.frames[currentIdx]) {
-                            bank.frames[currentIdx] = bitmapOrCanvas;
-                            bank.readyCount++;
-                        }
-                        currentIdx++;
-                        if (currentIdx < FRAMES_PER_CAR && decoder.duration) {
-                            decoder.currentTime = Math.min(decoder.duration - 0.01, (currentIdx / FRAMES_PER_CAR) * decoder.duration);
-                        } else {
-                            bank.ready = true;
-                            cleanup();
-                        }
-                    };
-
-                    if (window.createImageBitmap) {
-                        createImageBitmap(decoder).then(storeFrame).catch(() => {
-                            try {
-                                const c = document.createElement('canvas');
-                                c.width = decoder.videoWidth;
-                                c.height = decoder.videoHeight;
-                                c.getContext('2d').drawImage(decoder, 0, 0);
-                                storeFrame(c);
-                            } catch (e) { storeFrame(null); }
-                        });
-                    } else {
+                hiddenVideo.addEventListener('seeked', () => {
+                    if (!bank.frames[stepIdx] && hiddenVideo.videoWidth > 0) {
                         try {
                             const c = document.createElement('canvas');
-                            c.width = decoder.videoWidth;
-                            c.height = decoder.videoHeight;
-                            c.getContext('2d').drawImage(decoder, 0, 0);
-                            storeFrame(c);
-                        } catch (e) { storeFrame(null); }
+                            c.width = hiddenVideo.videoWidth;
+                            c.height = hiddenVideo.videoHeight;
+                            c.getContext('2d').drawImage(hiddenVideo, 0, 0);
+                            bank.frames[stepIdx] = c;
+                            bank.readyCount++;
+                        } catch (e) {}
+                    }
+                    stepIdx++;
+                    if (stepIdx < FRAMES_PER_CAR && hiddenVideo.duration) {
+                        hiddenVideo.currentTime = Math.min(hiddenVideo.duration - 0.01, (stepIdx / FRAMES_PER_CAR) * hiddenVideo.duration);
+                    } else {
+                        hiddenVideo.removeAttribute('src');
+                        hiddenVideo.load();
                     }
                 });
             }
 
-            // Açısal ilerlemeyi (0.00 -> 1.00) hem sağ hem sol yönde birebir aynı hızda çizen ortak fonksiyon
-            function renderNormalizedAngle(fileName, video, canvas, angleProgress) {
+            // Açısal konumu (0.00 -> 1.00) hem sağ hem sol yönde birebir aynı hızda çizer
+            function renderCarAngle(fileName, video, canvas, angleProgress) {
                 let norm = angleProgress % 1;
                 if (norm < 0) norm += 1;
 
                 const bank = fileName ? frameMemoryBank.get(fileName) : null;
-                const frameIdx = Math.min(FRAMES_PER_CAR - 1, Math.max(0, Math.floor(norm * FRAMES_PER_CAR)));
+                const targetIdx = Math.min(FRAMES_PER_CAR - 1, Math.max(0, Math.floor(norm * FRAMES_PER_CAR)));
 
-                if (bank && bank.frames[frameIdx] && canvas) {
+                // En yakın hazır kareyi bulur (RAM'de varsa 60 FPS anında çizer)
+                let chosenFrame = bank ? bank.frames[targetIdx] : null;
+                if (!chosenFrame && bank && bank.readyCount > 10) {
+                    for (let offset = 1; offset <= 3; offset++) {
+                        const prev = bank.frames[(targetIdx - offset + FRAMES_PER_CAR) % FRAMES_PER_CAR];
+                        if (prev) { chosenFrame = prev; break; }
+                        const next = bank.frames[(targetIdx + offset) % FRAMES_PER_CAR];
+                        if (next) { chosenFrame = next; break; }
+                    }
+                }
+
+                if (chosenFrame && canvas) {
                     const w = bank.width || video.videoWidth || 960;
                     const h = bank.height || video.videoHeight || 540;
                     if (canvas.width !== w) {
@@ -1157,27 +1134,18 @@
                     canvas.style.display = 'block';
                     const ctx = canvas.getContext('2d');
                     ctx.clearRect(0, 0, w, h);
-                    ctx.drawImage(bank.frames[frameIdx], 0, 0, w, h);
+                    ctx.drawImage(chosenFrame, 0, 0, w, h);
                     return norm;
                 }
 
-                // Henüz RAM'de olmayan kare varsa anlık yakalayıp belleğe yazar ve gösterir
+                // Henüz RAM'e alınmamışsa video üzerinden gösterir ve anında RAM'e kaydeder
                 if (video && video.duration) {
+                    if (canvas) canvas.style.display = 'none';
                     const targetTime = Math.max(0.01, Math.min(video.duration - 0.01, norm * video.duration));
                     if (!video.seeking) {
                         video.currentTime = targetTime;
                     }
-                    if (bank && !bank.frames[frameIdx] && video.videoWidth > 0) {
-                        try {
-                            const c = document.createElement('canvas');
-                            c.width = video.videoWidth;
-                            c.height = video.videoHeight;
-                            c.getContext('2d').drawImage(video, 0, 0);
-                            bank.frames[frameIdx] = c;
-                            bank.width = video.videoWidth;
-                            bank.height = video.videoHeight;
-                        } catch (e) {}
-                    }
+                    captureCurrentVideoFrame(fileName, video);
                 }
                 return norm;
             }
@@ -1202,7 +1170,7 @@
                             const currentPos = video.currentTime || 0.02;
                             video.src = blobUrl;
                             video.currentTime = currentPos;
-                            enqueueVideoExtraction(fileName, blobUrl);
+                            startBackgroundFrameWarmup(fileName, blobUrl);
                         })
                         .catch(() => {});
                 }
@@ -1233,7 +1201,7 @@
                     const fileName = card.getAttribute('data-vkey');
                     card.removeAttribute('data-vkey');
                     card._vFile = fileName;
-                    card._angle = 0; // Her aracın 0.00 - 1.00 arası açısal konumu
+                    card._angle = 0;
 
                     video.muted = true;
 
@@ -1251,8 +1219,9 @@
                             video.parentElement.classList.remove('video-skeleton');
                         }
 
-                        // Arka planda 90 kareye eşitleme kuyruğuna ekler
-                        enqueueVideoExtraction(fileName, video.currentSrc || video.src);
+                        captureCurrentVideoFrame(fileName, video);
+                        // Sadece gerçekten var olan ve yüklenen videoları arka planda 120 kareye önbellekler
+                        startBackgroundFrameWarmup(fileName, video.currentSrc || video.src);
 
                         // Videonun stüdyo arka plan rengini tüm siteye eşitler
                         if (!bgSampled && video.videoWidth > 0) {
@@ -1401,8 +1370,8 @@
                 });
             };
 
-            // 5. %100 SİMETRİK SAĞ/SOL DÖNÜŞ MOTORU (TERS SIÇRAMA YOK, TÜM ARAÇLARDA AYNI HIZ VE KARE SAYISI)
-            (function initSymmetric360Engine() {
+            // 5. SAKİN, KONTROLLÜ VE YORULMADAN İNCELEME MOTORU (SAĞ/SOL %100 EŞİT HIZ)
+            (function initControlledSymmetric360Engine() {
                 const cards = document.querySelectorAll('.car-card');
                 let activeCard = null;
                 let activeVideo = null;
@@ -1410,7 +1379,7 @@
                 let activeBadge = null;
                 let isPointerDown = false;
                 let mode = 'none'; // 'pending' | 'hold' | 'drag' | 'stepdown'
-                let spinDir = 1; // +1: Sağa, -1: Sola
+                let spinDir = 1;
                 let clickHalfDir = 1;
                 let lastX = 0;
                 let lastMoveTime = 0;
@@ -1432,7 +1401,6 @@
 
                     if (video.preload !== 'auto') video.preload = 'auto';
                     video.pause();
-                    prioritizeVideoExtraction(card._vFile);
 
                     activeCard = card;
                     activeVideo = video;
@@ -1448,20 +1416,19 @@
 
                     if (activeBadge) activeBadge.classList.add('spinning');
 
-                    // Tıklanan yarıyı kaydeder ama HEMEN DÖNDÜRMEZ (Soldan sağa çekerken önce sola gitmesini %100 engeller)
                     const rect = mediaBox.getBoundingClientRect();
                     clickHalfDir = clientX >= (rect.left + rect.width / 2) ? 1 : -1;
                     mode = 'pending';
 
-                    // Kullanıcı 140ms boyunca fareyi/parmağını kaydırmadan basılı tutarsa Hold (Basılı Tutma) dönüşü başlar
+                    // Kullanıcı fareyi/parmağını hiç kaydırmadan 180ms sabit basılı tutarsa sakin vitrin dönüşü (Hold) başlar
                     holdDelayTimer = setTimeout(() => {
                         if (isPointerDown && mode === 'pending') {
                             spinDir = clickHalfDir;
                             mode = 'hold';
                             lastFrameTime = performance.now();
-                            if (!rafId) rafId = requestAnimationFrame(tickSymmetricLoop);
+                            if (!rafId) rafId = requestAnimationFrame(tickControlledLoop);
                         }
-                    }, 140);
+                    }, 180);
                 }
 
                 function onPointerMove(clientX) {
@@ -1470,7 +1437,6 @@
                     const dx = clientX - lastX;
                     if (Math.abs(dx) < 1.5) return;
 
-                    // El hareket ettiği an 'pending' iptal edilir ve doğrudan çekilen yöne (Sağ veya Sol) eşit hızla döner
                     if (holdDelayTimer) {
                         clearTimeout(holdDelayTimer);
                         holdDelayTimer = null;
@@ -1481,12 +1447,10 @@
                     mode = 'drag';
                     spinDir = dx > 0 ? 1 : -1;
 
-                    // Sağ (+dx) ve Sol (-dx) matematiksel olarak %100 aynı açısal oranda döner
-                    const angleDelta = dx / DRAG_PIXELS_PER_TURN;
-                    activeCard._angle = renderNormalizedAngle(activeCard._vFile, activeVideo, activeCanvas, activeCard._angle + angleDelta);
-
-                    lastFrameTime = performance.now();
-                    if (!rafId) rafId = requestAnimationFrame(tickSymmetricLoop);
+                    // Kontrollü ve hız sınırlı açısal ilerleme (Aşırı hızlı dönmeyi %100 engeller)
+                    const rawDelta = dx / DRAG_PIXELS_PER_TURN;
+                    const clampedDelta = Math.max(-MAX_DRAG_STEP, Math.min(MAX_DRAG_STEP, rawDelta));
+                    activeCard._angle = renderCarAngle(activeCard._vFile, activeVideo, activeCanvas, activeCard._angle + clampedDelta);
                 }
 
                 function onPointerUp() {
@@ -1500,44 +1464,40 @@
                     const idleTime = performance.now() - lastMoveTime;
 
                     // Basılı tutma modundaysa veya kullanıcı elini durdurup bıraktıysa: ANINDA OLDUĞU KAREDE DURUR
-                    if (mode === 'hold' || mode === 'pending' || idleTime > 90) {
+                    if (mode === 'hold' || mode === 'pending' || idleTime > 80) {
                         mode = 'none';
                         if (activeBadge) activeBadge.classList.remove('spinning');
                     } else if (mode === 'drag') {
-                        // Kaydırıp bırakıldıysa: 1.0x -> 0.9x -> 0.8x -> Ani Duruş
+                        // Elini çekerken bıraktıysa: 1.0x -> 0.9x -> 0.8x -> Ani Net Duruş
                         mode = 'stepdown';
                         stepDownStartTime = performance.now();
                         lastFrameTime = performance.now();
-                        if (!rafId) rafId = requestAnimationFrame(tickSymmetricLoop);
+                        if (!rafId) rafId = requestAnimationFrame(tickControlledLoop);
                     }
                 }
 
-                function tickSymmetricLoop(now) {
+                function tickControlledLoop(now) {
                     const dt = Math.min(0.05, (now - lastFrameTime) / 1000);
                     lastFrameTime = now;
 
                     if (activeCard && activeVideo) {
-                        if (isPointerDown) {
-                            const idleMs = now - lastMoveTime;
-                            // Basılı tutuluyorsa veya çekilip basılı tutulmaya devam ediliyorsa:
-                            // Sağa (+1) ve Sola (-1) %100 aynı HOLD_TURN_SPEED hızıyla döner
-                            if (mode === 'hold' || (mode === 'drag' && idleMs > 95)) {
-                                const delta = spinDir * HOLD_TURN_SPEED * dt;
-                                activeCard._angle = renderNormalizedAngle(activeCard._vFile, activeVideo, activeCanvas, activeCard._angle + delta);
-                            }
-                        } else if (mode === 'stepdown') {
-                            // 1.0x -> 0.9x -> 0.8x -> Ani Duruş (Sağ ve Sol birebir aynı)
+                        if (isPointerDown && mode === 'hold') {
+                            // Sadece sabit basılı tutma modunda sakin vitrin hızında (0.14 tur/sn) döner
+                            const delta = spinDir * HOLD_TURN_SPEED * dt;
+                            activeCard._angle = renderCarAngle(activeCard._vFile, activeVideo, activeCanvas, activeCard._angle + delta);
+                        } else if (!isPointerDown && mode === 'stepdown') {
+                            // 1.0x -> 0.9x -> 0.8x -> Ani Duruş
                             const elapsed = now - stepDownStartTime;
                             let multiplier = 0;
 
-                            if (elapsed < 130) multiplier = 1.0;
-                            else if (elapsed < 260) multiplier = 0.9;
-                            else if (elapsed < 390) multiplier = 0.8;
+                            if (elapsed < 100) multiplier = 1.0;
+                            else if (elapsed < 200) multiplier = 0.9;
+                            else if (elapsed < 300) multiplier = 0.8;
                             else multiplier = 0;
 
                             if (multiplier > 0) {
                                 const delta = spinDir * STEPDOWN_BASE_SPEED * multiplier * dt;
-                                activeCard._angle = renderNormalizedAngle(activeCard._vFile, activeVideo, activeCanvas, activeCard._angle + delta);
+                                activeCard._angle = renderCarAngle(activeCard._vFile, activeVideo, activeCanvas, activeCard._angle + delta);
                             } else {
                                 mode = 'none';
                                 if (activeBadge) activeBadge.classList.remove('spinning');
@@ -1545,8 +1505,8 @@
                         }
                     }
 
-                    if (isPointerDown || mode === 'stepdown') {
-                        rafId = requestAnimationFrame(tickSymmetricLoop);
+                    if ((isPointerDown && mode === 'hold') || (!isPointerDown && mode === 'stepdown')) {
+                        rafId = requestAnimationFrame(tickControlledLoop);
                     } else {
                         rafId = null;
                     }
@@ -1586,89 +1546,72 @@
                 window.addEventListener('touchcancel', onPointerUp);
             })();
 
-            // 6. SİPARİŞ MODALI (DEVASA PANORAMİK SAHNE + İLERİ/GERİ EŞİT HIZLI PİNG-PONG + ELLE İNCELEME DESTEĞİ)
+            // 6. SİPARİŞ & RANDEVU MODALI (%100 OTOMATİK İLERİ VE GERİ EŞİT HIZDA DÖNEN PİNG-PONG MOTORU)
             let modalPingPongRAF = null;
-            let modalAngle = 0.02;
-            let modalDirection = 1;
-            let isModalDragging = false;
-            let modalLastX = 0;
 
-            function startModalShowcaseEngine(video, canvas, fileName) {
+            function startModalAutoPingPong(video, canvas, fileName) {
                 if (modalPingPongRAF) cancelAnimationFrame(modalPingPongRAF);
-                prioritizeVideoExtraction(fileName);
 
-                modalAngle = 0.02;
-                modalDirection = 1;
+                const bank = ensureBankEntry(fileName, video);
+                let modalAngle = 0.01;
+                let modalDirection = 1; // +1: İleri, -1: Geri (Tam tersine aynı hızda)
                 let lastTime = performance.now();
 
-                video.pause();
-                video.loop = false;
+                // Eğer ilk ileri geçişte henüz tüm kareler RAM'de değilse ileri oynarken tüm kareleri RAM'e toplar
+                const isBankReady = bank && bank.readyCount >= FRAMES_PER_CAR * 0.75;
 
-                function stepModalShowcase(now) {
+                if (!isBankReady) {
+                    canvas.style.display = 'none';
+                    video.loop = false;
+                    video.currentTime = 0.02;
+                    video.playbackRate = 0.85;
+                    video.play().catch(() => {});
+                } else {
+                    video.pause();
+                }
+
+                function stepModalPingPong(now) {
                     const dt = Math.min(0.05, (now - lastTime) / 1000);
                     lastTime = now;
 
-                    if (!isModalDragging && video.readyState >= 2) {
-                        modalAngle += modalDirection * MODAL_AUTO_TURN_SPEED * dt;
+                    if (video.readyState >= 2 && video.duration) {
+                        const dur = video.duration;
 
-                        if (modalAngle >= 0.98) {
-                            modalAngle = 0.98;
-                            modalDirection = -1;
-                        } else if (modalAngle <= 0.02) {
-                            modalAngle = 0.02;
-                            modalDirection = 1;
+                        if (modalDirection === 1 && !video.paused) {
+                            // İlk ileri geçişte videodan oynatırken her kareyi RAM'e kaydeder
+                            captureCurrentVideoFrame(fileName, video);
+                            modalAngle = video.currentTime / dur;
+
+                            if (video.currentTime >= dur - 0.06) {
+                                video.pause();
+                                modalAngle = 0.985;
+                                modalDirection = -1; // Sonuna ulaştı -> Tam tersine döner
+                            }
+                        } else {
+                            // İleri ve Geri %100 aynı hızda (MODAL_PINGPONG_SPEED) otomatik sarkaç dönüşü
+                            modalAngle += modalDirection * MODAL_PINGPONG_SPEED * dt;
+
+                            if (modalAngle >= 0.985) {
+                                modalAngle = 0.985;
+                                modalDirection = -1; // Sona geldi -> Ters yöne dön
+                            } else if (modalAngle <= 0.015) {
+                                modalAngle = 0.015;
+                                modalDirection = 1; // Başa geldi -> İleri yöne dön
+                            }
+
+                            renderCarAngle(fileName, video, canvas, modalAngle);
                         }
-
-                        renderNormalizedAngle(fileName, video, canvas, modalAngle);
                     }
 
-                    modalPingPongRAF = requestAnimationFrame(stepModalShowcase);
+                    modalPingPongRAF = requestAnimationFrame(stepModalPingPong);
                 }
 
-                modalPingPongRAF = requestAnimationFrame(stepModalShowcase);
-            }
-
-            // Modal içindeki büyük aracı da elle sağa-sola çevirip detaylı inceleme desteği
-            const modalShowcaseBox = document.getElementById('modal-showcase-box');
-            if (modalShowcaseBox) {
-                modalShowcaseBox.addEventListener('mousedown', (e) => {
-                    if (e.button !== 0) return;
-                    isModalDragging = true;
-                    modalLastX = e.clientX;
-                });
-                modalShowcaseBox.addEventListener('touchstart', (e) => {
-                    if (e.touches.length > 0) {
-                        isModalDragging = true;
-                        modalLastX = e.touches[0].clientX;
-                    }
-                }, { passive: true });
-
-                window.addEventListener('mousemove', (e) => {
-                    if (!isModalDragging) return;
-                    const dx = e.clientX - modalLastX;
-                    modalLastX = e.clientX;
-                    const modalVideo = document.getElementById('modal-video');
-                    const modalCanvas = document.getElementById('modal-canvas');
-                    modalAngle = renderNormalizedAngle(activeModalFile, modalVideo, modalCanvas, modalAngle + (dx / DRAG_PIXELS_PER_TURN));
-                }, { passive: true });
-
-                window.addEventListener('touchmove', (e) => {
-                    if (!isModalDragging || e.touches.length === 0) return;
-                    const dx = e.touches[0].clientX - modalLastX;
-                    modalLastX = e.touches[0].clientX;
-                    const modalVideo = document.getElementById('modal-video');
-                    const modalCanvas = document.getElementById('modal-canvas');
-                    modalAngle = renderNormalizedAngle(activeModalFile, modalVideo, modalCanvas, modalAngle + (dx / DRAG_PIXELS_PER_TURN));
-                }, { passive: true });
-
-                window.addEventListener('mouseup', () => { isModalDragging = false; });
-                window.addEventListener('touchend', () => { isModalDragging = false; });
+                modalPingPongRAF = requestAnimationFrame(stepModalPingPong);
             }
 
             window.openOrderModal = function(carName, videoFile, priceStr) {
                 randevuAcilisZamani = Date.now();
                 activeModalCar = carName;
-                activeModalFile = videoFile;
 
                 const errBanner = document.getElementById('errBanner');
                 if (errBanner) errBanner.style.display = 'none';
@@ -1690,7 +1633,8 @@
 
                 modalVideo.onloadeddata = function() {
                     modalVideo.parentElement.classList.remove('video-skeleton');
-                    startModalShowcaseEngine(modalVideo, modalCanvas, videoFile);
+                    startBackgroundFrameWarmup(videoFile, modalVideo.currentSrc || modalVideo.src);
+                    startModalAutoPingPong(modalVideo, modalCanvas, videoFile);
                 };
 
                 if (vaultBlobCache.has(videoFile)) {
@@ -1711,7 +1655,6 @@
                     cancelAnimationFrame(modalPingPongRAF);
                     modalPingPongRAF = null;
                 }
-                isModalDragging = false;
                 const overlay = document.getElementById('randevuModal');
                 const modalVideo = document.getElementById('modal-video');
                 const modalCanvas = document.getElementById('modal-canvas');
