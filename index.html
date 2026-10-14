@@ -126,8 +126,7 @@
 
         /* =========================================================
            JAGUAR KATEGORİ VİTRİN SAHNESİ
-           - CSS İzolasyonu (transform/filter) kaldırıldı!
-           - Gerçek Zamanlı Canvas Chroma-Key Motoru + Multiply ile beyaz arka plan %100 silinir!
+           - İzolasyonsuz Gerçek Zamanlı Canvas Chroma-Key + Multiply
            ========================================================= */
         .jaguar-showcase-stage {
             display: none;
@@ -205,7 +204,6 @@
             transform: translateY(-50%) scale(1.04);
         }
 
-        /* JAGUAR VİDEO SAHNESİ: İzolasyonsuz Şeffaf Canvas + Multiply */
         .jaguar-video-clean {
             width: 100%;
             max-width: 920px;
@@ -910,7 +908,6 @@
                 padding: 0 !important;
                 transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
             }
-            /* Telefonda touch-action: none ile %100 kesintisiz ve takılmasız tek parmak döndürme */
             .car-media-box {
                 width: 100% !important;
                 height: 29vh !important;
@@ -1838,14 +1835,14 @@
         (function() {
             "use strict";
 
-            // MOBİLDE HAFİF VE HIZLI 48 KARE (512x288), MASAÜSTÜNDE 72 KARE (960x540)
+            // HIZ VE KARE SABİTLERİ:
+            // Telefonda döndürme hızı 0.7x oranında sakinleştirildi (95px -> 135px, adım limiti -> 0.038)
             const IS_MOBILE_DEVICE = window.innerWidth <= 1024;
-            const SEQ_TOTAL_FRAMES = IS_MOBILE_DEVICE ? 48 : 72;
+            const SEQ_TOTAL_FRAMES = IS_MOBILE_DEVICE ? 54 : 72;
             const HOLD_TURN_SPEED = 0.098;
             const STEPDOWN_BASE_SPEED = 0.098;
             const DRAG_PIXELS_PC = 1030;
-            // Telefonda parmağı sadece ~2cm (95px) çekince yağ gibi tam tur döner!
-            const DRAG_PIXELS_MOBILE = 95;
+            const DRAG_PIXELS_MOBILE = 135;
             const MODAL_PINGPONG_FPS = 20;
 
             const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzrYJVsS0yDP1twV2OFzI3rujb8GcQKtcr2lfIGQAnVbIM15tpGx3O7AfxEn3fZFB2t/exec";
@@ -1980,7 +1977,6 @@
                             const frameData = ctx.getImageData(0, 0, targetW, targetH);
                             const d = frameData.data;
 
-                            // Videodaki beyaz ve beyaza yakın arka plan piksellerini yumuşak geçişle %100 şeffaf yapar!
                             for (let i = 0, len = d.length; i < len; i += 4) {
                                 const r = d[i];
                                 const g = d[i + 1];
@@ -1991,9 +1987,8 @@
                                     if (maxDiff < 18) {
                                         const avg = (r + g + b) * 0.3333;
                                         if (avg >= 238) {
-                                            d[i + 3] = 0; // Tamamen şeffaf
+                                            d[i + 3] = 0;
                                         } else if (avg > 212) {
-                                            // Gölge kenarlarını yumuşakça eritir
                                             d[i + 3] = Math.round(((238 - avg) / 26) * 255);
                                         }
                                     }
@@ -2006,7 +2001,6 @@
                                 video.style.opacity = '0';
                             }
                         } catch (e) {
-                            // Yerel file:// protokolünde güvenlik kısıtlaması olursa izolasyonsuz multiply moduna geçer
                             chromaSupported = false;
                             canvas.style.display = 'none';
                             video.style.opacity = '1';
@@ -2159,17 +2153,14 @@
                 }
             }, { passive: true });
 
-            // 5. MOBİL VE PC İÇİN DONANIMSAL AKIŞ YAKALAMA (HARDWARE PLAY STREAM CAPTURE) + HIZLI KARE BANKASI
-            // Mobil tarayıcıların gizli videoda currentTime aramasını engellemesini aşmak için
-            // videoyu donanımsal olarak 2x hızda oynatarak (play) kareleri doğrudan yakalar!
+            // 5. %100 BOŞLUKSUZ VE GPU ONAYLI SIRALI KARE BANKASI
+            // - Asla boş slot bırakmaz, asla arabanın arkasına sıçramaz ve pozisyonda sıkışmaz!
             function ensureBankEntry(fileName, video) {
                 if (!fileName) return null;
                 if (!cleanFrameBank.has(fileName)) {
                     const targetW = window.innerWidth <= 1024 ? 512 : 960;
                     cleanFrameBank.set(fileName, {
-                        slots: new Array(SEQ_TOTAL_FRAMES).fill(null),
-                        filledCount: 0,
-                        readyToUse: false,
+                        orderedFrames: [],
                         complete: false,
                         queued: false,
                         width: targetW,
@@ -2183,31 +2174,6 @@
                     bank.height = Math.round(bank.width * (video.videoHeight / video.videoWidth));
                 }
                 return bank;
-            }
-
-            // Canlı video karesini anında ilgili açı slotuna kaydeder
-            function captureLiveVideoFrameToSlot(fileName, video) {
-                if (!fileName || !video || !video.duration || !video.videoWidth) return;
-                const bank = ensureBankEntry(fileName, video);
-                const norm = Math.max(0, Math.min(0.999, video.currentTime / video.duration));
-                const slotIdx = Math.min(SEQ_TOTAL_FRAMES - 1, Math.max(0, Math.round(norm * (SEQ_TOTAL_FRAMES - 1))));
-
-                if (!bank.slots[slotIdx]) {
-                    try {
-                        const c = document.createElement('canvas');
-                        c.width = bank.width;
-                        c.height = bank.height;
-                        c.getContext('2d').drawImage(video, 0, 0, bank.width, bank.height);
-                        bank.slots[slotIdx] = c;
-                        bank.filledCount++;
-                        if (bank.filledCount >= SEQ_TOTAL_FRAMES * 0.65) {
-                            bank.readyToUse = true;
-                        }
-                        if (bank.filledCount >= SEQ_TOTAL_FRAMES * 0.9) {
-                            bank.complete = true;
-                        }
-                    } catch (e) {}
-                }
             }
 
             function queueFrameExtraction(fileName, validSrc, highPriority) {
@@ -2257,13 +2223,13 @@
                 offVideo.src = validSrc;
                 activeExtractors.add(offVideo);
 
-                let linearSlot = 0;
+                const tempFrames = [];
+                let linearStep = 0;
+                let isUnlocked = false;
                 let watchdog = null;
-                let playCaptureTimer = null;
 
                 function finishExtraction() {
                     if (watchdog) clearTimeout(watchdog);
-                    if (playCaptureTimer) clearInterval(playCaptureTimer);
                     activeExtractors.delete(offVideo);
                     offVideo.pause();
                     offVideo.removeAttribute('src');
@@ -2279,6 +2245,27 @@
 
                 offVideo.addEventListener('error', finishExtraction, { once: true });
 
+                function seekToCurrentStep() {
+                    if (!offVideo.duration) return;
+                    if (isUserTouchingCar) {
+                        // Kullanıcı araca dokunurken bekler, hiçbir kareyi atlamaz!
+                        resetWatchdog();
+                        setTimeout(seekToCurrentStep, 90);
+                        return;
+                    }
+                    if (linearStep < SEQ_TOTAL_FRAMES) {
+                        const targetT = Math.max(0.005, Math.min(offVideo.duration - 0.015, (linearStep / (SEQ_TOTAL_FRAMES - 1)) * (offVideo.duration - 0.015)));
+                        offVideo.currentTime = targetT;
+                    } else {
+                        // Tüm kareler %100 boşluksuz tamamlandığında tek seferde devreye girer!
+                        if (tempFrames.length >= SEQ_TOTAL_FRAMES * 0.95) {
+                            bank.orderedFrames = tempFrames;
+                            bank.complete = true;
+                        }
+                        finishExtraction();
+                    }
+                }
+
                 offVideo.addEventListener('loadeddata', () => {
                     if (!offVideo.duration || !offVideo.videoWidth) {
                         finishExtraction();
@@ -2291,76 +2278,45 @@
 
                     resetWatchdog();
 
-                    // MOBİLDE DONANIMSAL PLAY STREAM YAKALAMA:
-                    // Mobil tarayıcılar play() ile donanım çözücüsünü açar ve 1.5 saniyede tüm kareleri yakalar!
-                    if (window.innerWidth <= 1024) {
-                        offVideo.playbackRate = 2.0;
-                        const playPromise = offVideo.play();
-                        if (playPromise !== undefined) {
-                            playPromise.then(() => {
-                                playCaptureTimer = setInterval(() => {
-                                    if (isUserTouchingCar) return;
-                                    resetWatchdog();
-                                    captureLiveVideoFrameToSlot(fileName, offVideo);
-                                    if (offVideo.ended || offVideo.currentTime >= offVideo.duration - 0.05 || bank.complete) {
-                                        bank.readyToUse = bank.filledCount >= 16;
-                                        bank.complete = bank.filledCount >= 24;
-                                        finishExtraction();
-                                    }
-                                }, 26);
-                            }).catch(() => {
-                                // Play izin vermezse doğrusal ileri seek moduna geçer
-                                offVideo.currentTime = 0.005;
-                            });
-                        } else {
-                            offVideo.currentTime = 0.005;
-                        }
+                    // Mobil tarayıcıda donanım çözücüsünü açmak için anlık play/pause kilidi açılır, ardından 0. kareden sırayla başlanır
+                    const p = offVideo.play();
+                    if (p !== undefined) {
+                        p.then(() => {
+                            offVideo.pause();
+                            isUnlocked = true;
+                            seekToCurrentStep();
+                        }).catch(() => {
+                            isUnlocked = true;
+                            seekToCurrentStep();
+                        });
                     } else {
-                        offVideo.currentTime = 0.005;
+                        isUnlocked = true;
+                        seekToCurrentStep();
                     }
                 }, { once: true });
 
-                function triggerNextLinearSeek() {
-                    if (playCaptureTimer) return;
-                    if (isUserTouchingCar) {
-                        resetWatchdog();
-                        setTimeout(triggerNextLinearSeek, 90);
-                        return;
-                    }
-                    if (linearSlot < SEQ_TOTAL_FRAMES && offVideo.duration) {
-                        const nextTime = Math.max(0.005, Math.min(offVideo.duration - 0.015, (linearSlot / (SEQ_TOTAL_FRAMES - 1)) * (offVideo.duration - 0.015)));
-                        offVideo.currentTime = nextTime;
-                    } else {
-                        bank.complete = bank.filledCount >= SEQ_TOTAL_FRAMES * 0.75;
-                        bank.readyToUse = bank.filledCount >= 16;
-                        finishExtraction();
-                    }
-                }
-
                 offVideo.addEventListener('seeked', () => {
-                    if (playCaptureTimer) return;
+                    if (!isUnlocked) return;
                     resetWatchdog();
 
-                    if (offVideo.videoWidth > 0 && !bank.slots[linearSlot]) {
-                        try {
-                            const c = document.createElement('canvas');
-                            c.width = bank.width;
-                            c.height = bank.height;
-                            c.getContext('2d').drawImage(offVideo, 0, 0, bank.width, bank.height);
-                            bank.slots[linearSlot] = c;
-                            bank.filledCount++;
-                            if (bank.filledCount >= 16) {
-                                bank.readyToUse = true;
-                            }
-                        } catch (e) {}
-                    }
-
-                    linearSlot++;
-                    setTimeout(triggerNextLinearSeek, 4);
+                    // Mobil GPU'nun yeni kareyi tampona tam çizmesini beklemek için requestAnimationFrame kullanılır (Eski kareyi asla kaydetmez!)
+                    requestAnimationFrame(() => {
+                        if (offVideo.videoWidth > 0) {
+                            try {
+                                const c = document.createElement('canvas');
+                                c.width = bank.width;
+                                c.height = bank.height;
+                                c.getContext('2d').drawImage(offVideo, 0, 0, bank.width, bank.height);
+                                tempFrames.push(c);
+                            } catch (e) {}
+                        }
+                        linearStep++;
+                        setTimeout(seekToCurrentStep, 5);
+                    });
                 });
             }
 
-            // Kart üzerindeki aracı %100 tam turla ve sıfır kasmayla çizer
+            // Kart üzerindeki aracı %100 boşluksuz ve sıfır sıçramayla çizer
             function renderCardAngle(card, angleProgress) {
                 let norm = angleProgress % 1;
                 if (norm < 0) norm += 1;
@@ -2371,26 +2327,18 @@
                 const canvas = card.querySelector('canvas.car-canvas');
                 const bank = fileName ? cleanFrameBank.get(fileName) : null;
 
-                if (bank && bank.readyToUse && canvas) {
-                    const targetSlot = Math.min(SEQ_TOTAL_FRAMES - 1, Math.max(0, Math.round(norm * (SEQ_TOTAL_FRAMES - 1))));
+                // Yalnızca tüm kareler (%100 boşluksuz) hazır olduğunda Canvas'tan çizer (Sıkışma ve arkaya atlama %100 imkansızdır!)
+                if (bank && bank.complete && bank.orderedFrames.length > 0 && canvas) {
+                    const total = bank.orderedFrames.length;
+                    const exactIdx = Math.min(total - 1, Math.max(0, Math.round(norm * (total - 1))));
 
-                    let chosenSlot = targetSlot;
-                    if (!bank.slots[chosenSlot]) {
-                        for (let d = 1; d <= 6; d++) {
-                            const left = (targetSlot - d + SEQ_TOTAL_FRAMES) % SEQ_TOTAL_FRAMES;
-                            if (bank.slots[left]) { chosenSlot = left; break; }
-                            const right = (targetSlot + d) % SEQ_TOTAL_FRAMES;
-                            if (bank.slots[right]) { chosenSlot = right; break; }
-                        }
-                    }
-
-                    if (card._lastDrawnSlot === chosenSlot && canvas.style.display === 'block') {
+                    if (card._lastDrawnSlot === exactIdx && canvas.style.display === 'block') {
                         return;
                     }
 
-                    const frameCanvas = bank.slots[chosenSlot];
+                    const frameCanvas = bank.orderedFrames[exactIdx];
                     if (frameCanvas) {
-                        card._lastDrawnSlot = chosenSlot;
+                        card._lastDrawnSlot = exactIdx;
                         if (canvas.width !== bank.width) {
                             canvas.width = bank.width;
                             canvas.height = bank.height;
@@ -2403,12 +2351,12 @@
                     }
                 }
 
-                // Henüz önbellek dolmadıysa telefon çözücüsünü boğmayan (45ms throttled) akıcı seek + canlı kare yakalama uygular!
+                // Çıkarım tamamlanana kadar doğrudan videodan kontrollü seek-lock ile gösterir
                 if (video && video.duration) {
                     const targetTime = Math.max(0.01, Math.min(video.duration - 0.01, norm * video.duration));
                     card._pendingSeekTime = targetTime;
                     const now = performance.now();
-                    if (!video.seeking && (!card._lastSeekStamp || now - card._lastSeekStamp > 42)) {
+                    if (!video.seeking && (!card._lastSeekStamp || now - card._lastSeekStamp > 40)) {
                         card._lastSeekStamp = now;
                         video.currentTime = targetTime;
                     }
@@ -2454,9 +2402,7 @@
 
                     video.muted = true;
 
-                    // Her seek tamamlandığında o kareyi anında RAM'e kaydeder (Çevirdikçe hızlanır!)
                     video.addEventListener('seeked', () => {
-                        captureLiveVideoFrameToSlot(fileName, video);
                         if (card._pendingSeekTime !== null && Math.abs(video.currentTime - card._pendingSeekTime) > 0.04) {
                             const nextT = card._pendingSeekTime;
                             card._pendingSeekTime = null;
@@ -2479,7 +2425,6 @@
                             video.parentElement.classList.remove('video-skeleton');
                         }
 
-                        captureLiveVideoFrameToSlot(fileName, video);
                         queueFrameExtraction(fileName, video.currentSrc || video.src, index < 2);
 
                         if (!bgSampled && video.videoWidth > 0) {
@@ -2544,7 +2489,7 @@
                 });
             });
 
-            // 6. KARTLARDA TEK PARMAKLA SIFIR KASMA 360° ÇEVİRME MOTORU (POINTER & TOUCH BİRLEŞİK KİLİT)
+            // 6. KARTLARDA 0.7x HIZINDA KONTROLLÜ VE SIÇRAMASIZ 360° ÇEVİRME MOTORU
             (function initGlitchFreeCardSpinEngine() {
                 const cards = document.querySelectorAll('.car-card');
                 let activeCard = null;
@@ -2610,7 +2555,7 @@
                             lastFrameTime = performance.now();
                             if (!rafId) rafId = requestAnimationFrame(tickSpinLoop);
                         }
-                    }, 160);
+                    }, 165);
                 }
 
                 function flushPendingDragRender() {
@@ -2641,9 +2586,10 @@
                     mode = 'drag';
                     spinDir = dx > 0 ? 1 : -1;
 
+                    // Telefonda 0.7x kontrollü hız (135px tam tur, 0.038 maksimum tek adım)
                     const isMobile = window.innerWidth <= 1024;
                     const pixelsPerTurn = isMobile ? DRAG_PIXELS_MOBILE : DRAG_PIXELS_PC;
-                    const maxStep = isMobile ? 0.12 : 0.015;
+                    const maxStep = isMobile ? 0.038 : 0.014;
 
                     const rawDelta = dx / pixelsPerTurn;
                     const clampedDelta = Math.max(-maxStep, Math.min(maxStep, rawDelta));
@@ -2684,7 +2630,7 @@
 
                     if (activeCard) {
                         if (isPointerDown && mode === 'hold') {
-                            const holdSpeed = window.innerWidth <= 1024 ? 0.22 : HOLD_TURN_SPEED;
+                            const holdSpeed = window.innerWidth <= 1024 ? 0.14 : HOLD_TURN_SPEED;
                             const delta = spinDir * holdSpeed * dt;
                             renderCardAngle(activeCard, activeCard._angle + delta);
                         } else if (!isPointerDown && mode === 'stepdown') {
@@ -2697,7 +2643,7 @@
                             else multiplier = 0;
 
                             if (multiplier > 0) {
-                                const stepBase = window.innerWidth <= 1024 ? 0.18 : STEPDOWN_BASE_SPEED;
+                                const stepBase = window.innerWidth <= 1024 ? 0.12 : STEPDOWN_BASE_SPEED;
                                 const delta = spinDir * stepBase * multiplier * dt;
                                 renderCardAngle(activeCard, activeCard._angle + delta);
                             } else {
@@ -2787,8 +2733,8 @@
                 if (modalPingPongRAF) cancelAnimationFrame(modalPingPongRAF);
 
                 let bank = cleanFrameBank.get(fileName);
-                const orderedReadyFrames = (bank && bank.complete) ? bank.slots.filter(Boolean) : [];
-                const liveRecordedFrames = orderedReadyFrames.length >= SEQ_TOTAL_FRAMES * 0.8 ? orderedReadyFrames : [];
+                const orderedReadyFrames = (bank && bank.complete && bank.orderedFrames.length > 15) ? bank.orderedFrames : [];
+                const liveRecordedFrames = orderedReadyFrames.length > 0 ? orderedReadyFrames : [];
                 let isRecordingFirstPass = liveRecordedFrames.length === 0;
                 let lastRecordedTime = -1;
 
