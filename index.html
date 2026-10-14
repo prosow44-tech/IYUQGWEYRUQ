@@ -9,9 +9,14 @@
     <meta name="author" content="Referans Rentecar">
     <meta name="robots" content="index, follow, noimageindex">
     <meta name="language" content="Turkish">
-    <meta name="theme-color" content="#E6E6E4">
+    <meta name="theme-color" content="#FFC107">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Referans">
+
+    <!-- GERÇEK PWA MANIFEST VE İKON BAĞLANTISI -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="asistan.png">
 
     <meta property="og:title" content="Referans Rentecar | Malatya">
     <meta property="og:description" content="360° interaktif araç inceleme deneyimi ve anında adrese ücretsiz teslimat ile Malatya'da kesintisiz araç kiralama.">
@@ -76,7 +81,6 @@
         video, img, canvas { outline: none; user-select: none; -webkit-user-drag: none; pointer-events: none; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
-        /* DİJİTAL ASİSTAN PNG GÖRSEL UYUM SINIFI */
         .assistant-avatar-img {
             width: 100% !important;
             height: 100% !important;
@@ -115,11 +119,39 @@
             box-shadow: 0 0 12px rgba(0, 230, 118, 0.6);
         }
 
+        /* PWA AKILLI KURULUM REHBER MODALI (iOS & SW YEDEK REHBERİ) */
+        .pwa-guide-overlay {
+            position: fixed; inset: 0;
+            background: rgba(15, 23, 42, 0.82);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            z-index: 95000; display: none; align-items: center; justify-content: center;
+            padding: 1.2rem; opacity: 0; transition: opacity 0.3s ease;
+        }
+        .pwa-guide-overlay.show { display: flex; opacity: 1; }
+        .pwa-guide-card {
+            background: #1A1D20; color: #ffffff;
+            border: 2.5px solid #FFC107; border-radius: 24px;
+            padding: 26px 24px; width: 100%; max-width: 420px;
+            text-align: center; position: relative;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.65);
+        }
+        .pwa-guide-card h4 { font-size: 19px; font-weight: 900; color: #FFC107; margin-bottom: 10px; }
+        .pwa-guide-card p { font-size: 13px; font-weight: 600; color: #E2E8F0; line-height: 1.55; margin-bottom: 16px; }
+        .pwa-guide-steps {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,193,7,0.3);
+            border-radius: 14px; padding: 14px; text-align: left; font-size: 12.5px;
+            font-weight: 700; color: #ffffff; line-height: 1.6; margin-bottom: 18px;
+        }
+        .pwa-guide-btn {
+            width: 100%; padding: 13px; background: #FFC107; color: #1A1D20;
+            border: none; border-radius: 12px; font-size: 13.5px; font-weight: 900; cursor: pointer;
+        }
+
         .mobile-sticky-dock { display: none; }
         .mobile-pwa-bottom-sheet { display: none; }
 
         /* =========================================================
-           SADE JAGUAR KATEGORİ VİTRİN SAHNESİ (BOŞLUKSUZ, SIKI VE SADE)
+           SADE JAGUAR KATEGORİ VİTRİN SAHNESİ (BOŞLUKSUZ)
            ========================================================= */
         .jaguar-showcase-stage {
             display: none;
@@ -193,7 +225,6 @@
             background: #FFCA28;
             transform: translateY(-50%) scale(1.04);
         }
-        /* Jaguar videosu yüklendiğinde görünür, dosya henüz yoksa 0px yüksekliğe kapanır (devasa boşluk yapmaz!) */
         .jaguar-video-clean {
             width: 100%;
             max-width: 720px;
@@ -236,7 +267,6 @@
         .pwa-btn:hover { background: #FFCA28; transform: translateY(-2px); }
         .pwa-btn:active { transform: scale(0.96) !important; }
 
-        /* PC ÜST KAPSÜL MENÜ (AŞAĞI KAYDIRINCA GİZLENİR) */
         .top-capsule { 
             position: fixed; top: 22px; left: 50%; transform: translateX(-50%); 
             width: 880px; height: 62px; 
@@ -271,7 +301,6 @@
         }
         .apricot-svg { width: 25px; height: 25px; display: block; flex-shrink: 0; overflow: visible; }
 
-        /* PC ORTA ARAMA VE KATEGORİ FİLTRELERİ */
         .search-wrapper { position: absolute; top: 135px; left: 50%; transform: translateX(-50%); width: 880px; text-align: center; transition: all 0.55s cubic-bezier(0.4, 0, 0.2, 1); z-index: 90; }
         .search-title { font-size: 21px; font-weight: 800; margin-bottom: 22px; color: #1A1D20; }
         
@@ -305,7 +334,6 @@
         .fade-out-up { opacity: 0 !important; transform: translate(-50%, -40px) !important; pointer-events: none !important; }
         .fade-out-side { opacity: 0 !important; transform: translateX(40px) !important; pointer-events: none !important; }
 
-        /* PC SAĞ AKILLI FİLTRE PANELİ */
         .right-filter-panel { position: absolute; top: 135px; right: 45px; width: 270px; background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1.5px solid #ffffff; border-radius: 20px; padding: 24px; z-index: 100; transition: all 0.55s ease; }
         .rf-title { font-size: 16.5px; font-weight: 900; margin-bottom: 14px; color: #1A1D20; }
         .rf-line { width: 100%; height: 2px; background: #F1F3F5; margin-bottom: 16px; }
@@ -436,7 +464,7 @@
         .order-btn:active { transform: scale(0.96) !important; }
 
         /* =========================================================
-           SİPARİŞ & RANDEVU MODALI + HUKUKİ KVKK ONAY TİKİ
+           SİPARİŞ & RANDEVU MODALI + "ARAÇ MÜSAİT DEĞİL" (GRİ ARKA PLAN & EĞİK BLURLU ATKI ŞERİDİ)
            ========================================================= */
         .modal-overlay { 
             position: fixed; inset: 0; background-color: rgba(15, 23, 42, 0.86); 
@@ -451,19 +479,100 @@
             width: 100%; max-width: 780px; margin: auto; position: relative; 
             box-shadow: 0 35px 70px -12px rgba(0,0,0,0.7); border: 2px solid #FFF8E1; 
             pointer-events: auto; overflow: visible !important; text-align: center;
-            transform: scale(0.94); transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: scale(0.94); transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.35s ease;
         }
         .modal-overlay.show .modal-box { transform: scale(1); }
+
+        /* ARAÇ MÜSAİT DEĞİLKEN: ARABA HARİÇ ALT KISIM VE ARKA PLAN GRİ GÖZÜKÜR */
+        .modal-box.is-unavailable {
+            background-color: #D4D7DC !important;
+            border-color: #94A3B8 !important;
+        }
+        .modal-Lower-wrap {
+            position: relative;
+            transition: filter 0.35s ease, opacity 0.35s ease;
+        }
+        .modal-box.is-unavailable .modal-Lower-wrap {
+            filter: grayscale(100%) contrast(0.92);
+            opacity: 0.42;
+            pointer-events: none !important;
+            user-select: none !important;
+        }
+
+        /* YATAY, BİRAZ EĞİK, ARKA PLANI BLURLU ATKI ŞERİDİ (.unavailable-sash-banner) */
+        .unavailable-sash-banner {
+            display: none;
+            position: absolute;
+            top: 67%;
+            left: 50%;
+            width: 108%;
+            transform: translate(-50%, -50%) rotate(-6.5deg);
+            background: rgba(20, 23, 28, 0.84);
+            backdrop-filter: blur(15px) saturate(160%);
+            -webkit-backdrop-filter: blur(15px) saturate(160%);
+            border-top: 3px solid #FFC107;
+            border-bottom: 3px solid #FFC107;
+            padding: 20px 24px;
+            z-index: 50;
+            box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55), 0 0 25px rgba(255, 193, 7, 0.22);
+            border-radius: 14px;
+            text-align: center;
+            pointer-events: auto;
+            animation: sashPopIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        @keyframes sashPopIn {
+            from { opacity: 0; transform: translate(-50%, -50%) rotate(-6.5deg) scale(0.88); }
+            to { opacity: 1; transform: translate(-50%, -50%) rotate(-6.5deg) scale(1); }
+        }
+        .modal-box.is-unavailable .unavailable-sash-banner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .sash-main-text {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 0.4px;
+            line-height: 1.4;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+        }
+        .sash-main-text .sash-date-highlight {
+            color: #FFC107;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+        .sash-sub-btn {
+            background: #FFC107;
+            color: #1A1D20;
+            border: none;
+            padding: 9px 22px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            box-shadow: 0 6px 16px rgba(255, 193, 7, 0.4);
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        .sash-sub-btn:hover {
+            background: #FFCA28;
+            transform: scale(1.05);
+        }
 
         .modal-close-btn { 
             position: absolute; top: -15px; right: -15px; width: 44px; height: 44px; 
             border-radius: 50%; background: #1A1D20; border: 2.5px solid #FFC107; color: #FFC107; 
             font-weight: 900; font-size: 18px; cursor: pointer; display: flex; 
-            align-items: center; justify-content: center; transition: 0.2s; z-index: 40;
+            align-items: center; justify-content: center; transition: 0.2s; z-index: 60;
             box-shadow: 0 8px 20px rgba(0,0,0,0.28);
         }
         .modal-close-btn:hover { background: #D32F2F; color: #ffffff; border-color: #ffffff; transform: rotate(90deg); }
 
+        /* ÜSTTEKİ ARABA VİTRİNİ HER ZAMAN CANLI VE RENKLİ KALIR */
         .modal-car-showcase {
             position: relative;
             width: calc(100% + 24px);
@@ -477,6 +586,7 @@
             margin-bottom: 14px;
             box-shadow: inset 0 0 25px rgba(0,0,0,0.04), 0 12px 30px rgba(0,0,0,0.08);
             pointer-events: none;
+            z-index: 20;
         }
 
         .modal-car-showcase video, .modal-car-showcase canvas { 
@@ -799,7 +909,6 @@
                 .mob-f-btn.sort-two-line { font-size: 10px; padding: 2px 14px; }
             }
 
-            /* TELEFONDA 1. ARABA TAM GÖZÜKÜR, 2. ARABANIN %20'Sİ ALTTAN GÖZÜKÜR, ZÜRAFA BOŞLUĞU YOK */
             .cars-container {
                 padding: 112px 14px 120px !important;
                 grid-template-columns: 1fr !important;
@@ -874,7 +983,6 @@
                 max-width: 310px;
             }
 
-            /* TELEFONDA İLK AÇILIŞTA EN ALTTA ORTADA %20 YÜKSEKLİĞİNDE KAPATILABİLİR "ANA EKRANA EKLE" KUTUSU */
             .mobile-pwa-bottom-sheet {
                 display: flex;
                 align-items: center;
@@ -961,7 +1069,6 @@
                 text-transform: uppercase;
             }
 
-            /* TELEFONDA %25 EKRAN KAPLAYAN KOMPAKT DİJİTAL ASİSTAN */
             .chat-panel {
                 width: 96%; right: 2%; bottom: 8px;
                 height: 25vh; min-height: 185px; max-height: 225px;
@@ -980,7 +1087,6 @@
             .chat-action-buttons { flex-direction: row; gap: 6px; }
             .chat-action-btn { padding: 7px 8px; font-size: 10.5px; }
 
-            /* TELEFONDA SADE VE BOŞLUKSUZ JAGUAR VİTRİN SAHNESİ */
             .jaguar-showcase-stage { margin-top: 8px; padding: 0 10px; }
             .jaguar-clean-topbar { flex-direction: column; gap: 6px; margin-bottom: 6px; min-height: auto; }
             .jaguar-stage-title { font-size: 19px; }
@@ -988,7 +1094,6 @@
             .jaguar-back-btn:hover { transform: scale(1.03); }
             .jaguar-video-clean.has-video { height: 135px; border-radius: 14px; margin-bottom: 4px; }
 
-            /* TELEFONDA MODAL ARAÇ SAHNESİ */
             .modal-box { padding: 10px 12px 18px !important; width: 98%; }
             .modal-close-btn { top: -10px; right: -6px; width: 36px; height: 36px; font-size: 15px; }
             .modal-car-showcase {
@@ -1006,6 +1111,16 @@
             .form-input { padding: 9px 8px; font-size: 11.5px; }
             .legal-consent-text { font-size: 10.5px; }
             .modal-submit-btn { padding: 13px; font-size: 13px; margin-top: 10px; }
+
+            /* Telefonda Eğik Blurlu Atkı Şeridi Uyumu */
+            .unavailable-sash-banner {
+                width: 106%;
+                padding: 15px 14px;
+                top: 69%;
+                transform: translate(-50%, -50%) rotate(-5.5deg);
+            }
+            .sash-main-text { font-size: 13.5px; }
+            .sash-sub-btn { font-size: 11px; padding: 8px 18px; }
         }
     </style>
 </head>
@@ -1065,6 +1180,19 @@
     <div id="top-toast" class="top-toast" role="status" aria-live="assertive">
         <div class="check-icon" aria-hidden="true">✓</div>
         <div id="top-toast-text">Uygulama yüklenmiştir</div>
+    </div>
+
+    <!-- PWA AKILLI KURULUM REHBERİ (iOS SAFARI VEYA MANUEL YÜKLEME DESTEĞİ) -->
+    <div id="pwaGuideModal" class="pwa-guide-overlay" onclick="if(event.target===this) closePwaGuide()">
+        <div class="pwa-guide-card">
+            <h4>📲 Ana Ekrana Hızlı Ekle</h4>
+            <p id="pwaGuideDesc">Referans Rentecar uygulamasını telefonunuza 2 saniyede eklemek için:</p>
+            <div class="pwa-guide-steps" id="pwaGuideSteps">
+                1. Tarayıcınızın alt/üst menüsündeki <strong>Paylaş / Menü (⋮)</strong> butonuna dokunun.<br>
+                2. Listeden <strong>"Ana Ekrana Ekle" (Uygulamayı Yükle)</strong> seçeneğine basın.
+            </div>
+            <button type="button" class="pwa-guide-btn" onclick="closePwaGuide()">TAMAM, ANLADIM</button>
+        </div>
     </div>
 
     <div class="progress-bar" id="progressBar"></div>
@@ -1486,87 +1614,99 @@
     </main>
 
     <!-- =========================================================
-         SİPARİŞ VE RANDEVU MODALI
+         SİPARİŞ VE RANDEVU MODALI + "ARAÇ MÜSAİT DEĞİL" EĞİK BLURLU ATKI ŞERİDİ
          ========================================================= -->
     <div id="randevuModal" class="modal-overlay" onclick="if(event.target===this) closeOrderModal()" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-box" id="appointment-modal-box">
             <button onclick="closeOrderModal()" class="modal-close-btn" aria-label="Sipariş Penceresini Kapat">✕</button>
 
+            <!-- ÜSTTEKİ ARAÇ VİTRİNİ (ARAÇ MÜSAİT OLMASA BİLE NORMAL CANLI DÖNER, GRİ OLMAZ) -->
             <div class="modal-car-showcase video-skeleton" id="modal-showcase-box">
                 <video id="modal-video" aria-hidden="true" tabindex="-1" src="" playsinline muted disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
                 <canvas id="modal-canvas" aria-hidden="true"></canvas>
             </div>
 
-            <h3 id="modalTitle" class="modal-title">SİPARİŞ & RANDEVU AL</h3>
-            <p id="modal-car-name" class="modal-subtitle">RENAULT MEGANE • 2.000 ₺ / GÜN</p>
-
-            <div id="errBanner" class="err-banner" aria-live="assertive">
-                <span aria-hidden="true">❌</span><span id="errText">Hata</span>
+            <!-- EĞİK, ARKA PLANI BLURLU ATKI ŞERİDİ (GOOGLE TAKVİM / SCRIPT DOLU DEDİĞİNDE DEVREYE GİRER) -->
+            <div class="unavailable-sash-banner" id="unavailableSashBanner" role="alert" aria-live="assertive">
+                <div class="sash-main-text">
+                    Araba <span class="sash-date-highlight" id="unavailDateText">19/10/2026</span> Tarihine kadar müsait değil başka modelleri inceleyin!
+                </div>
+                <button type="button" class="sash-sub-btn" onclick="closeOrderModal()">← Başka Modelleri İncele</button>
             </div>
 
-            <form id="apptForm" onsubmit="submitAppt(event); return false;">
-                <input type="text" id="botTrap" name="honeypot_name" tabindex="-1" aria-hidden="true" autocomplete="off" class="sr-only">
-                <input type="url" id="websiteTrap" name="company_website" tabindex="-1" aria-hidden="true" autocomplete="off" class="sr-only">
+            <!-- ARABA HARİÇ GRİLEŞECEK ALT FORM ALANI -->
+            <div class="modal-Lower-wrap" id="modalLowerWrap">
+                <h3 id="modalTitle" class="modal-title">SİPARİŞ & RANDEVU AL</h3>
+                <p id="modal-car-name" class="modal-subtitle">RENAULT MEGANE • 2.000 ₺ / GÜN</p>
 
-                <div class="form-row-2">
-                    <input type="text" id="fIsim" placeholder="Örn: Muhammed" aria-label="Adınız Soyadınız" required class="form-input">
-                    <input type="tel" id="fTelefon" placeholder="Örn: 053X XXX XX XX" aria-label="Telefon Numaranız" required maxlength="11" oninput="this.value=this.value.replace(/[^0-9]/g,'')" class="form-input">
+                <div id="errBanner" class="err-banner" aria-live="assertive">
+                    <span aria-hidden="true">❌</span><span id="errText">Hata</span>
                 </div>
 
-                <div class="form-row-2">
-                    <select id="fTeslimat" required aria-label="Teslimat Noktası Seçiniz" class="form-input">
-                        <option value="" disabled selected>Teslimat Noktası Seçiniz</option>
-                        <option value="Adrese Ücretsiz Teslimat">Adrese Ücretsiz Teslimat</option>
-                        <option value="Malatya Merkez Şube">Malatya Merkez Şube</option>
-                        <option value="Malatya Havalimanı">Malatya Havalimanı</option>
-                        <option value="MAŞTİ Otogar">MAŞTİ Otogar</option>
+                <form id="apptForm" onsubmit="submitAppt(event); return false;">
+                    <input type="text" id="botTrap" name="honeypot_name" tabindex="-1" aria-hidden="true" autocomplete="off" class="sr-only">
+                    <input type="url" id="websiteTrap" name="company_website" tabindex="-1" aria-hidden="true" autocomplete="off" class="sr-only">
+
+                    <div class="form-row-2">
+                        <input type="text" id="fIsim" placeholder="Örn: Muhammed" aria-label="Adınız Soyadınız" required class="form-input">
+                        <input type="tel" id="fTelefon" placeholder="Örn: 053X XXX XX XX" aria-label="Telefon Numaranız" required maxlength="11" oninput="this.value=this.value.replace(/[^0-9]/g,'')" class="form-input">
+                    </div>
+
+                    <div class="form-row-2">
+                        <select id="fTeslimat" required aria-label="Teslimat Noktası Seçiniz" class="form-input">
+                            <option value="" disabled selected>Teslimat Noktası Seçiniz</option>
+                            <option value="Adrese Ücretsiz Teslimat">Adrese Ücretsiz Teslimat</option>
+                            <option value="Malatya Merkez Şube">Malatya Merkez Şube</option>
+                            <option value="Malatya Havalimanı">Malatya Havalimanı</option>
+                            <option value="MAŞTİ Otogar">MAŞTİ Otogar</option>
+                        </select>
+                        <select id="fPaket" required aria-label="Kiralama Paketi Seçiniz" class="form-input">
+                            <option value="Günlük (Tam Kasko)" selected>Günlük (Tam Kasko)</option>
+                            <option value="3+ Gün İndirimli Paket">3+ Gün İndirimli Paket</option>
+                            <option value="Haftalık VIP Paket">Haftalık VIP Paket</option>
+                            <option value="Aylık Kurumsal Paket">Aylık Kurumsal Paket</option>
+                        </select>
+                    </div>
+
+                    <div class="date-header-row">
+                        <label for="fTarih" class="date-label">
+                            TESLİM TARİHİ: <span id="dateRel" class="date-rel-badge"></span>
+                        </label>
+                        <button type="button" id="autoDateBtn" onclick="findNearestDate()" class="auto-date-btn">EN YAKIN TARİHİ SEÇ</button>
+                    </div>
+                    <input type="date" id="fTarih" aria-label="Teslimat Tarihini Seçiniz" required class="form-input" style="margin-bottom: 10px;">
+
+                    <div class="date-header-row" style="margin-top: 2px;">
+                        <label for="fSaat" class="date-label">TESLİM SAATİ:</label>
+                    </div>
+                    <select id="fSaat" aria-label="Teslimat Saatini Seçiniz" required disabled class="form-input" style="text-align: center; font-weight: 900;">
+                        <option value="" disabled selected id="fSaatDefault">Önce Tarih Seçiniz</option>
+                        <option value="09:00">09:00</option>
+                        <option value="10:00">10:00</option>
+                        <option value="11:00">11:00</option>
+                        <option value="12:00">12:00</option>
+                        <option value="13:00">13:00</option>
+                        <option value="14:00">14:00</option>
+                        <option value="15:00">15:00</option>
+                        <option value="16:00">16:00</option>
+                        <option value="17:00">17:00</option>
+                        <option value="18:00">18:00</option>
                     </select>
-                    <select id="fPaket" required aria-label="Kiralama Paketi Seçiniz" class="form-input">
-                        <option value="Günlük (Tam Kasko)" selected>Günlük (Tam Kasko)</option>
-                        <option value="3+ Gün İndirimli Paket">3+ Gün İndirimli Paket</option>
-                        <option value="Haftalık VIP Paket">Haftalık VIP Paket</option>
-                        <option value="Aylık Kurumsal Paket">Aylık Kurumsal Paket</option>
-                    </select>
-                </div>
 
-                <div class="date-header-row">
-                    <label for="fTarih" class="date-label">
-                        TESLİM TARİHİ: <span id="dateRel" class="date-rel-badge"></span>
-                    </label>
-                    <button type="button" id="autoDateBtn" onclick="findNearestDate()" class="auto-date-btn">EN YAKIN TARİHİ SEÇ</button>
-                </div>
-                <input type="date" id="fTarih" aria-label="Teslimat Tarihini Seçiniz" required class="form-input" style="margin-bottom: 10px;">
+                    <div class="legal-consent-wrapper">
+                        <input type="checkbox" id="fKvkkConsent" class="legal-checkbox" required aria-label="KVKK ve Kiralama Sözleşmesi Onayı">
+                        <label for="fKvkkConsent" class="legal-consent-text">
+                            KVKK gereği kişisel verilerimin işlenmesini kabul ediyorum. Detaylı bilgiye
+                            <span class="legal-link" onclick="event.preventDefault(); openContractModal('Rezervasyon & Kiralama Koşulları')">Rezervasyon &amp; Kiralama Koşulları</span> ,
+                            <span class="legal-link" onclick="event.preventDefault(); openContractModal('Kiralama Sözleşmesi')">Kiralama Sözleşmesi</span> ve
+                            <span class="legal-link" onclick="event.preventDefault(); openContractModal('KVKK Aydınlatma Metni')">KVKK Aydınlatma Metni</span>
+                            linki üzerinden ulaşabilirsiniz.
+                        </label>
+                    </div>
 
-                <div class="date-header-row" style="margin-top: 2px;">
-                    <label for="fSaat" class="date-label">TESLİM SAATİ:</label>
-                </div>
-                <select id="fSaat" aria-label="Teslimat Saatini Seçiniz" required disabled class="form-input" style="text-align: center; font-weight: 900;">
-                    <option value="" disabled selected id="fSaatDefault">Önce Tarih Seçiniz</option>
-                    <option value="09:00">09:00</option>
-                    <option value="10:00">10:00</option>
-                    <option value="11:00">11:00</option>
-                    <option value="12:00">12:00</option>
-                    <option value="13:00">13:00</option>
-                    <option value="14:00">14:00</option>
-                    <option value="15:00">15:00</option>
-                    <option value="16:00">16:00</option>
-                    <option value="17:00">17:00</option>
-                    <option value="18:00">18:00</option>
-                </select>
-
-                <div class="legal-consent-wrapper">
-                    <input type="checkbox" id="fKvkkConsent" class="legal-checkbox" required aria-label="KVKK ve Kiralama Sözleşmesi Onayı">
-                    <label for="fKvkkConsent" class="legal-consent-text">
-                        KVKK gereği kişisel verilerimin işlenmesini kabul ediyorum. Detaylı bilgiye
-                        <span class="legal-link" onclick="event.preventDefault(); openContractModal('Rezervasyon & Kiralama Koşulları')">Rezervasyon &amp; Kiralama Koşulları</span> ,
-                        <span class="legal-link" onclick="event.preventDefault(); openContractModal('Kiralama Sözleşmesi')">Kiralama Sözleşmesi</span> ve
-                        <span class="legal-link" onclick="event.preventDefault(); openContractModal('KVKK Aydınlatma Metni')">KVKK Aydınlatma Metni</span>
-                        linki üzerinden ulaşabilirsiniz.
-                    </label>
-                </div>
-
-                <button type="submit" id="btn-submit" class="modal-submit-btn">SİPARİŞİ TAMAMLA</button>
-            </form>
+                    <button type="submit" id="btn-submit" class="modal-submit-btn">SİPARİŞİ TAMAMLA</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -1651,7 +1791,7 @@
     </div>
 
     <!-- =========================================================
-         DİJİTAL ASİSTAN (PNG AVATAR, RASTGELE SİPARİŞ & TELEFON YÖNLENDİRMELİ)
+         DİJİTAL ASİSTAN
          ========================================================= -->
     <div class="chat-panel" id="chatPanel" role="dialog" aria-label="Referans Jaguar Dijital Asistan">
         <div class="chat-header">
@@ -1691,17 +1831,21 @@
         (function() {
             "use strict";
 
-            // HIZ SABİTLERİ: KULLANICI TALEBİYLE 1.0x'TEN 0.7x'E DÜŞÜRÜLDÜ (%30 DAHA SAKİN VE KONTROLLÜ)
             const SEQ_TOTAL_FRAMES = 72;
-            const HOLD_TURN_SPEED = 0.098;       // 0.14 * 0.7 = 0.098 tur/sn
-            const STEPDOWN_BASE_SPEED = 0.098;   // 0.14 * 0.7 = 0.098 tur/sn
-            const DRAG_PIXELS_PC = 1030;         // 720 / 0.7 = 1030px tam tur
-            const DRAG_PIXELS_MOBILE = 250;      // 175 / 0.7 = 250px tam tur
+            const HOLD_TURN_SPEED = 0.098;
+            const STEPDOWN_BASE_SPEED = 0.098;
+            const DRAG_PIXELS_PC = 1030;
+            const DRAG_PIXELS_MOBILE = 250;
             const MODAL_PINGPONG_FPS = 20;
 
             const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzrYJVsS0yDP1twV2OFzI3rujb8GcQKtcr2lfIGQAnVbIM15tpGx3O7AfxEn3fZFB2t/exec";
 
-            // 3 JAGUAR VİDEO VE SADE BAŞLIK HARİTASI
+            // GOOGLE APPS SCRIPT DEPLOY EDİLENE KADAR TASARIMI TEST EDEBİLMEN İÇİN VARSAYILAN ÖNİZLEME HARİTASI
+            // (Google Script'ten { musait: true/false, bitisTarihi: "GG/AA/YYYY" } yanıtı geldiğinde otomatik olarak Takvim verisi geçerli olur)
+            const DEFAULT_BUSY_PREVIEW = {
+                "RENAULT MEGANE": "19/10/2026"
+            };
+
             const JAGUAR_THEMES = {
                 uygun: {
                     title: "Fiyat/Performans Serisi",
@@ -1751,13 +1895,18 @@
             let lastRandomCarKey = '';
             let securityFlagged = false;
 
-            // SIFIR KASMA MİMARİSİ: Tekli Sıralı Arka Plan Kuyruğu + 2 Aşamalı (Önce 18 Ana Açı, Sonra 72 Tam Açı) Önbellek
             const cleanFrameBank = new Map();
             const extractionQueue = [];
             let isExtractingNow = false;
             const activeExtractors = new Set();
 
-            // 1. ÜSTTEN DÜŞEN 2 SANİYELİK YEŞİL TİKLİ BİLDİRİM
+            // 1. GERÇEK PWA SERVICE WORKER KAYDI VE AKILLI KURULUM MOTORU
+            if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js').catch(() => {});
+                });
+            }
+
             window.showTopToast = function(message) {
                 const toast = document.getElementById('top-toast');
                 const toastText = document.getElementById('top-toast-text');
@@ -1777,12 +1926,53 @@
                 deferredPrompt = e;
             });
 
+            window.addEventListener('appinstalled', () => {
+                deferredPrompt = null;
+                showTopToast("Uygulama yüklenmiştir");
+            });
+
+            window.closePwaGuide = function() {
+                const gModal = document.getElementById('pwaGuideModal');
+                if (gModal) {
+                    gModal.classList.remove('show');
+                    setTimeout(() => { gModal.style.display = 'none'; }, 300);
+                }
+            };
+
             window.triggerPWAInstall = function() {
+                // Eğer tarayıcı doğrudan yükleme penceresini hazır tutuyorsa (Android / PC Chrome & Edge) anında tetikler!
                 if (deferredPrompt) {
                     deferredPrompt.prompt();
-                    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+                    deferredPrompt.userChoice.then((choice) => {
+                        if (choice.outcome === 'accepted') {
+                            showTopToast("Uygulama yüklenmiştir");
+                        }
+                        deferredPrompt = null;
+                    });
+                    return;
                 }
-                showTopToast("Uygulama yüklenmiştir");
+
+                // Eğer uygulama zaten kuruluysa (Standalone moddaysa)
+                if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+                    showTopToast("Uygulama cihazınızda zaten yüklü");
+                    return;
+                }
+
+                // iOS (iPhone/iPad) veya sw.js henüz yüklenmemişse kullanıcıya cihazına özel net kurulum penceresini açar
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                const stepsEl = document.getElementById('pwaGuideSteps');
+                if (stepsEl) {
+                    if (isIOS) {
+                        stepsEl.innerHTML = `1. Safari alt çubuğundaki <strong>Paylaş (Yukarı Ok 📤)</strong> simgesine dokunun.<br>2. Açılan menüden <strong>"Ana Ekrana Ekle"</strong> seçeneğine basın.`;
+                    } else {
+                        stepsEl.innerHTML = `1. Tarayıcınızın sağ üst köşesindeki <strong>Menü (⋮)</strong> simgesine dokunun.<br>2. <strong>"Ana ekrana ekle"</strong> veya <strong>"Uygulamayı yükle"</strong> seçeneğine basın.`;
+                    }
+                }
+                const gModal = document.getElementById('pwaGuideModal');
+                if (gModal) {
+                    gModal.style.display = 'flex';
+                    requestAnimationFrame(() => { gModal.classList.add('show'); });
+                }
             };
 
             window.dismissMobilePwaSheet = function() {
@@ -1790,7 +1980,7 @@
                 if (sheet) sheet.classList.add('dismissed');
             };
 
-            // 2. KATEGORİ SEÇİLİNCE SADE JAGUAR SAHNESİNİ AÇAN SİSTEM (ZÜRAFA BOŞLUĞU ÖNLEYİCİ)
+            // 2. KATEGORİ SEÇİLİNCE SADE JAGUAR SAHNESİNİ AÇAN SİSTEM
             window.selectCategoryWithJaguar = function(category) {
                 if (currentCategoryFilter === category && document.body.classList.contains('jaguar-mode-active')) {
                     exitJaguarStage();
@@ -1817,7 +2007,6 @@
                         jVideo.src = theme.sources[srcIdx];
                         jVideo.load();
                     } else {
-                        // Video dosyası henüz yüklenmemişse kutu 0px kalır, asla boşluk yapmaz!
                         jBox.classList.remove('has-video');
                     }
                 };
@@ -1928,9 +2117,6 @@
             }, { passive: true });
 
             // 5. SIFIR KASMA YAPAN 2-AŞAMALI (PROGRESSIVE) TEKLİ KUYRUK MOTORU
-            // - Aynı anda 11 videoyu çözüp siteyi dondurmaz; tek tek sırayla ve 12ms nefes payı bırakarak çözer.
-            // - Önce 18 ana açıyı (0, 4, 8... 68) 0.35 saniyede alır -> İlk saniyeden itibaren tam 360° tur kasmadan döner!
-            // - Ardından ara açıları doldurarak 72 kareye tamamlar.
             const PROGRESSIVE_ORDER = (function() {
                 const order = [];
                 const visited = new Set();
@@ -2021,7 +2207,6 @@
                         finishExtraction();
                         return;
                     }
-                    // qHD (960px genişlik) optimizasyonu: Ana thread'i dondurmaz, 4 kat hızlı çizer!
                     const aspect = offVideo.videoHeight / offVideo.videoWidth;
                     bank.width = Math.min(960, offVideo.videoWidth);
                     bank.height = Math.round(bank.width * aspect);
@@ -2044,7 +2229,7 @@
                             bank.slots[slotIdx] = c;
                             bank.filledCount++;
                             if (bank.filledCount >= 18) {
-                                bank.pass1Ready = true; // İlk 18 ana açı (360° tam tur) sadece 0.35 saniyede hazır!
+                                bank.pass1Ready = true;
                             }
                         } catch (e) {}
                     }
@@ -2053,7 +2238,6 @@
                     if (orderCursor < PROGRESSIVE_ORDER.length && offVideo.duration) {
                         const nextSlot = PROGRESSIVE_ORDER[orderCursor];
                         const nextTime = Math.max(0.005, Math.min(offVideo.duration - 0.015, (nextSlot / (SEQ_TOTAL_FRAMES - 1)) * (offVideo.duration - 0.015)));
-                        // Main Thread'in kasmaması için her kare arasında tarayıcıya nefes payı verir
                         setTimeout(() => {
                             if (offVideo.duration) offVideo.currentTime = nextTime;
                         }, 6);
@@ -2064,7 +2248,6 @@
                 });
             }
 
-            // Kart üzerindeki aracı %100 tam turla ve sıfır kasmayla çizer
             function renderCardAngle(card, angleProgress) {
                 let norm = angleProgress % 1;
                 if (norm < 0) norm += 1;
@@ -2075,11 +2258,9 @@
                 const canvas = card.querySelector('canvas.car-canvas');
                 const bank = fileName ? cleanFrameBank.get(fileName) : null;
 
-                // Pass-1 (18 ana açı - 0.35sn) veya tam 72 açı hazırsa anında RAM'den 60 FPS çizer!
                 if (bank && bank.pass1Ready && canvas) {
                     const targetSlot = Math.min(SEQ_TOTAL_FRAMES - 1, Math.max(0, Math.round(norm * (SEQ_TOTAL_FRAMES - 1))));
 
-                    // En yakın dolu açıyı bulur (Pass-1'de 4'er adımlı, Pass-2 bittiğinde birebir)
                     let chosenSlot = targetSlot;
                     if (!bank.slots[chosenSlot]) {
                         for (let d = 1; d <= 4; d++) {
@@ -2090,7 +2271,6 @@
                         }
                     }
 
-                    // Gereksiz yeniden çizimi engeller (Aynı karedeyse GPU'yu yormaz)
                     if (card._lastDrawnSlot === chosenSlot && canvas.style.display === 'block') {
                         return;
                     }
@@ -2110,7 +2290,6 @@
                     }
                 }
 
-                // Henüz ilk 0.35 saniye içindeyse videoyu öncelik kuyruğunun en başına alır ve seek-lock ile gösterir
                 if (video && video.duration) {
                     queueFrameExtraction(fileName, video.currentSrc || video.src, true);
                     const targetTime = Math.max(0.01, Math.min(video.duration - 0.01, norm * video.duration));
@@ -2130,7 +2309,6 @@
                     trapEl.addEventListener('click', () => { securityFlagged = true; });
                 }
 
-                // Sadece ekrana giren veya yaklaşan videoları sırayla önbelleğe alır (İlk açılış kasmasını %100 bitirir)
                 const videoObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         const card = entry.target;
@@ -2182,7 +2360,6 @@
                             video.parentElement.classList.remove('video-skeleton');
                         }
 
-                        // İlk 2 görünür aracı öncelikli olarak tekli kuyruğa ekler
                         queueFrameExtraction(fileName, video.currentSrc || video.src, index < 2);
 
                         if (!bgSampled && video.videoWidth > 0) {
@@ -2247,7 +2424,7 @@
                 });
             });
 
-            // 6. KARTLARDA 0.7x HIZINDA KONTROLLÜ 360° ÇEVİRME VE DÖNDÜRÜRKEN BÜYÜME MOTORU
+            // 6. KARTLARDA 0.7x HIZINDA KONTROLLÜ 360° ÇEVİRME MOTORU
             (function initGlitchFreeCardSpinEngine() {
                 const cards = document.querySelectorAll('.car-card');
                 let activeCard = null;
@@ -2343,7 +2520,6 @@
                     mode = 'drag';
                     spinDir = dx > 0 ? 1 : -1;
 
-                    // 0.7x Hız Kalibrasyonu
                     const isMobile = window.innerWidth <= 1024;
                     const pixelsPerTurn = isMobile ? DRAG_PIXELS_MOBILE : DRAG_PIXELS_PC;
                     const maxStep = isMobile ? 0.032 : 0.011;
@@ -2445,8 +2621,44 @@
                 window.addEventListener('touchcancel', onPointerUp);
             })();
 
-            // 7. SİPARİŞ & RANDEVU MODALI (%100 TAM TUR PİNG-PONG MOTORU)
+            // 7. SİPARİŞ & RANDEVU MODALI + GOOGLE APPS SCRIPT "ARAÇ MÜSAİT DEĞİL" EĞİK ATKI ŞERİDİ KONTROLÜ
             let modalPingPongRAF = null;
+
+            function setModalCarAvailability(isAvailable, untilDateStr) {
+                const modalBox = document.getElementById('appointment-modal-box');
+                const dateSpan = document.getElementById('unavailDateText');
+                if (!modalBox) return;
+
+                if (!isAvailable) {
+                    if (dateSpan && untilDateStr) dateSpan.innerText = untilDateStr;
+                    modalBox.classList.add('is-unavailable');
+                } else {
+                    modalBox.classList.remove('is-unavailable');
+                }
+            }
+
+            function checkCarAvailabilityFromGoogleScript(carName) {
+                // 1. Önce yerel önizleme haritasında varsa (Örn: RENAULT MEGANE -> 19/10/2026) anında gösterir
+                if (DEFAULT_BUSY_PREVIEW[carName]) {
+                    setModalCarAvailability(false, DEFAULT_BUSY_PREVIEW[carName]);
+                } else {
+                    setModalCarAvailability(true, "");
+                }
+
+                // 2. Google Apps Script'e canlı sorgu atar (?islem=aracDurum&arac=...)
+                // Script deploy edildiğinde { musait: false, bitisTarihi: "19/10/2026" } veya { musait: true } döner
+                fetch(WEB_APP_URL + "?islem=aracDurum&arac=" + encodeURIComponent(carName))
+                    .then(r => r.json())
+                    .then(data => {
+                        if (activeModalCar !== carName) return;
+                        if (data && (data.musait === false || data.durum === 'dolu')) {
+                            setModalCarAvailability(false, data.bitisTarihi || "19/10/2026");
+                        } else if (data && data.musait === true) {
+                            setModalCarAvailability(true, "");
+                        }
+                    })
+                    .catch(() => {});
+            }
 
             function startGapFreeModalPingPong(video, canvas, fileName) {
                 if (modalPingPongRAF) cancelAnimationFrame(modalPingPongRAF);
@@ -2542,6 +2754,9 @@
 
                 document.getElementById('modal-car-name').innerText = `${carName} • ${priceStr} / GÜN`;
 
+                // Araç müsaitlik durumunu kontrol eder (Doluysa araba hariç gri arka plan + eğik blurlu atkı şeridi açılır)
+                checkCarAvailabilityFromGoogleScript(carName);
+
                 const modalVideo = document.getElementById('modal-video');
                 const modalCanvas = document.getElementById('modal-canvas');
                 modalVideo.parentElement.classList.add('video-skeleton');
@@ -2583,9 +2798,9 @@
                 const chosen = candidates[Math.floor(Math.random() * candidates.length)];
                 lastRandomCarKey = chosen._vFile;
 
-                const cName = chosen.getAttribute('data-name') || 'RENAULT MEGANE';
-                const cPrice = chosen.getAttribute('data-price-str') || '2.000 ₺';
-                const cFile = chosen._vFile || 'renault-megane-360.mp4';
+                const cName = chosen.getAttribute('data-name') || 'HONDA CIVIC';
+                const cPrice = chosen.getAttribute('data-price-str') || '1.600 ₺';
+                const cFile = chosen._vFile || 'honda-civic-360.mp4';
 
                 openOrderModal(cName, cFile, cPrice);
             };
@@ -2639,7 +2854,7 @@
                 btn.innerHTML = "Aranıyor...";
                 btn.style.pointerEvents = "none";
 
-                fetch(WEB_APP_URL + "?islem=enYakinTarih")
+                fetch(WEB_APP_URL + "?islem=enYakinTarih&arac=" + encodeURIComponent(activeModalCar))
                 .then(response => response.json())
                 .then(data => {
                     if (data && data.tarih) {
@@ -2707,7 +2922,7 @@
                     saatSelect.disabled = false;
                     saatSelect.options[0].text = "Dolu saatler kontrol ediliyor...";
 
-                    fetch(WEB_APP_URL + "?islem=saatSorgula&tarih=" + val)
+                    fetch(WEB_APP_URL + "?islem=saatSorgula&tarih=" + val + "&arac=" + encodeURIComponent(activeModalCar))
                     .then(response => response.json())
                     .then(doluSaatler => {
                         saatSelect.options[0].text = "Saat Seçiniz";
@@ -2746,6 +2961,9 @@
             window.submitAppt = function(event) {
                 if (event && !event.isTrusted) return;
                 if (securityFlagged) return;
+
+                const modalBox = document.getElementById('appointment-modal-box');
+                if (modalBox && modalBox.classList.contains('is-unavailable')) return;
 
                 const botTrap = document.getElementById('botTrap');
                 const websiteTrap = document.getElementById('websiteTrap');
@@ -2790,12 +3008,25 @@
                 fetch(WEB_APP_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ isim, telefon, hizmet: `${activeModalCar} - ${teslimat} (${paket}) [KVKK Onaylı]`, tarih, saat })
+                    body: JSON.stringify({
+                        isim,
+                        telefon,
+                        arac: activeModalCar,
+                        paket,
+                        teslimat,
+                        hizmet: `${activeModalCar} - ${teslimat} (${paket}) [KVKK Onaylı]`,
+                        tarih,
+                        saat
+                    })
                 })
                 .then(r => r.json())
                 .then(res => {
                     btn.innerHTML = 'SİPARİŞİ TAMAMLA';
                     btn.disabled = false;
+                    if (res && res.durum === 'dolu') {
+                        setModalCarAvailability(false, res.bitisTarihi || "19/10/2026");
+                        return;
+                    }
                     if (res && res.durum === 'hata') { showErr(res.mesaj); return; }
                     closeOrderModal();
                     showTopToast("Sipariş ve randevunuz oluşturulmuştur");
