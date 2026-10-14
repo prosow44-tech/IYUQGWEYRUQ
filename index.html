@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Referans Rentecar | Malatya VIP Araç Kiralama</title>
     <meta name="description" content="Malatya'nın en geniş ve güvenilir araç kiralama filosu. Günlük 1.500 ₺'den başlayan fiyatlarla dizel, benzinli, elektrikli, otomatik ve manuel kiralık araçlar. Anında adrese ücretsiz teslimat.">
-    <meta name="keywords" content="Malatya araç kiralama, Malatya rent a car, Referans Rentecar, Malatya oto kiralama, Malatya havalimanı araç kiralama, uygun fiyatlı araç kiralama Malatya, kiralık Fiat Egea Malatya, kiralık Honda Civic Malatya, kiralık Renault Megane Malatya, kiralık Nissan Qashqai Malatya, kiralık Toyota Corolla Malatya, Malatya günlük kiralık araba, Malatya otomatik vites araç kiralama, Malatya dizel araç kiralama, Malatya VIP araç kiralama">
+    <meta name="keywords" content="Malatya araç kiralama, Malatya rent a car, Referans Rentecar, Malatya oto kiralama, Malatya havalimanı araç kiralama, uygun fiyatlı araç kiralama Malatya, kiralık Fiat Egea Malatya, kiralık Honda Civic Malatya, kiralık Renault Megane Malatya, kiralık Nissan Qashqai Malatya, kiralık Toyota Corolla Malatya">
     <meta name="author" content="Referans Rentecar">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, noimageindex">
     <meta name="language" content="Turkish">
-    <meta name="theme-color" content="#E7E7E5">
+    <meta name="theme-color" content="#E6E6E4">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-
-    <!-- LCP HIZLANDIRICI: İlk görünür videolar öncelikli hazırlanır -->
-    <link rel="preload" as="video" href="renault-megane-360.mp4" fetchpriority="high">
 
     <meta property="og:title" content="Referans Rentecar | Malatya">
     <meta property="og:description" content="360° interaktif araç inceleme deneyimi ve anında adrese ücretsiz teslimat ile Malatya'da kesintisiz araç kiralama.">
@@ -43,7 +40,7 @@
 
     <style>
         :root {
-            --studio-bg: #E7E7E5;
+            --studio-bg: #E6E6E4;
         }
 
         ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -66,16 +63,15 @@
             min-height: 100vh;
             overflow-x: hidden; overflow-y: auto; overscroll-behavior-y: none;
             -webkit-font-smoothing: antialiased;
-            user-select: none;
+            user-select: none; -webkit-user-select: none;
             position: relative;
-            transition: background-color 0.4s ease;
+            transition: background-color 0.35s ease;
         }
 
-        input, select, textarea { user-select: text; outline: none; font-family: 'Montserrat', sans-serif; }
-        video, img { outline: none; user-select: none; -webkit-user-drag: none; }
+        input, select, textarea { user-select: text; -webkit-user-select: text; outline: none; font-family: 'Montserrat', sans-serif; }
+        video, img, canvas { outline: none; user-select: none; -webkit-user-drag: none; pointer-events: none; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
-        /* İLERLEME ÇUBUĞU (TBT DOSTU) */
         .progress-bar { 
             position: fixed; top: 0; left: 0; height: 3px; background-color: #FFC107; 
             width: 0%; z-index: 50000; pointer-events: none; transition: width 0.1s ease-out; 
@@ -107,7 +103,7 @@
         }
 
         /* 1. SOL ÜST: LOGO & PWA KUTUSU */
-        header { position: absolute; top: 45px; left: 50px; z-index: 100; transition: all 0.5s ease; }
+        header { position: absolute; top: 45px; left: 45px; z-index: 100; transition: all 0.5s ease; }
         .logo { font-size: 34px; font-weight: 900; letter-spacing: -1px; margin-bottom: 28px; color: #1A1D20; }
         .logo span { color: #FFC107; }
         
@@ -143,7 +139,6 @@
         .dot-green { background: #00E676; box-shadow: 0 0 10px rgba(0,230,118,0.8); }
         .dot-red { background: #D32F2F; box-shadow: 0 0 10px rgba(211,47,47,0.8); }
         
-        /* Tam Merkezde Kilitli Malatya Rozeti */
         .malatya-brand { 
             position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
             display: inline-flex; align-items: center; justify-content: center; gap: 12px; 
@@ -193,8 +188,8 @@
         .fade-out-up { opacity: 0 !important; transform: translate(-50%, -40px) !important; pointer-events: none !important; }
         .fade-out-side { opacity: 0 !important; transform: translateX(40px) !important; pointer-events: none !important; }
 
-        /* 4. SAĞ AKILLI FİLTRE PANELİ (SIRALAMA ÖLÇÜTÜ TAMAMEN BUTON HALİNDE) */
-        .right-filter-panel { position: absolute; top: 135px; right: 50px; width: 270px; background: rgba(255, 255, 255, 0.94); border: 1.5px solid #ffffff; border-radius: 20px; padding: 24px; z-index: 100; transition: all 0.55s ease; }
+        /* 4. SAĞ AKILLI FİLTRE PANELİ */
+        .right-filter-panel { position: absolute; top: 135px; right: 45px; width: 270px; background: rgba(255, 255, 255, 0.94); border: 1.5px solid #ffffff; border-radius: 20px; padding: 24px; z-index: 100; transition: all 0.55s ease; }
         @media (min-width: 769px) {
             .right-filter-panel { backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
         }
@@ -235,13 +230,13 @@
         .cookie-popup p { font-size: 12px; font-weight: 600; color: #6C757D; line-height: 1.4; }
         .cookie-accept-btn { padding: 10px; background: #1A1D20; color: #FFC107; border: none; border-radius: 8px; font-size: 12px; font-weight: 900; cursor: pointer; }
 
-        /* 6. ARAÇ KARTLARI VE VİDEO İSKELET SİSTEMİ */
+        /* 6. ARAÇ KARTLARI (GENİŞLETİLMİŞ VİDEO SAHNESİ + KESİLMEDEN %100 SIĞAN ARAÇLAR) */
         .cars-container { 
             position: relative; 
-            padding: 465px 40px 140px; 
+            padding: 465px 25px 140px; 
             width: 100%; 
             display: grid; grid-template-columns: repeat(3, 1fr); 
-            gap: 85px 35px; z-index: 10; 
+            gap: 80px 24px; z-index: 10; 
             transition: transform 0.75s cubic-bezier(0.25, 1, 0.5, 1); 
         }
         .cars-container.lift-up { transform: translateY(-320px); }
@@ -249,50 +244,57 @@
         .car-card { 
             text-align: center; background: transparent; 
             display: flex; flex-direction: column; align-items: center; 
-            width: 100%; max-width: 620px; margin: 0 auto; 
+            width: 100%; max-width: 680px; margin: 0 auto; 
             transition: opacity 0.35s ease, transform 0.35s ease; 
         }
         .car-card.hidden { display: none !important; }
         
         .video-skeleton {
-            background: linear-gradient(90deg, rgba(255,255,255,0.2) 25%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.2) 75%);
+            background: linear-gradient(90deg, rgba(255,255,255,0.18) 25%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0.18) 75%);
             background-size: 200% 100%;
         }
 
+        /* BÜYÜTÜLMÜŞ VİDEO ALANI - YAKINLAŞTIRMA YOK (object-fit: contain) */
         .car-media-box { 
-            position: relative; width: 100%; height: 390px; margin-bottom: 12px; 
+            position: relative; width: 100%; height: 430px; margin-bottom: 10px; 
             display: flex; align-items: center; justify-content: center; 
-            cursor: grab; overflow: hidden; border-radius: 24px;
+            cursor: ew-resize; overflow: hidden; border-radius: 26px;
             background-color: var(--studio-bg);
-            -webkit-mask-image: radial-gradient(ellipse 92% 88% at 50% 50%, #000 78%, transparent 100%);
-            mask-image: radial-gradient(ellipse 92% 88% at 50% 50%, #000 78%, transparent 100%);
+            touch-action: pan-y;
         }
         .car-media-box:active { cursor: grabbing; }
         
-        .car-video { 
-            width: 100%; height: 100%; object-fit: cover; 
-            transform: scale(1.28) translateZ(0);
-            will-change: transform;
+        .car-video, .car-canvas { 
+            width: 100%; height: 100%; 
+            object-fit: contain !important; 
+            transform: none !important;
             opacity: 1 !important;
             display: block;
             pointer-events: none;
-            transition: transform 0.35s ease;
+            background-color: var(--studio-bg);
         }
-        .car-card:hover .car-video {
-            transform: scale(1.33) translateZ(0);
+        .car-canvas {
+            position: absolute; inset: 0; z-index: 2; display: none;
+        }
+
+        /* Şeffaf Zırh Katmanı (Video Çalınmasını ve Sağ Tık/Sürüklemeyi Engeller) */
+        .security-armor {
+            position: absolute; inset: 0; z-index: 5;
+            background: transparent; cursor: ew-resize;
+            user-select: none; -webkit-user-drag: none;
         }
 
         .swipe-badge {
             display: inline-flex; align-items: center; justify-content: center;
-            padding: 11px 28px; margin-bottom: 18px;
+            padding: 11px 28px; margin-bottom: 16px;
             background: rgba(255, 255, 255, 0.94);
             border: 1.5px solid #ffffff; border-radius: 999px;
             font-size: 12.5px; font-weight: 800; color: #1A1D20;
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
             cursor: ew-resize; user-select: none;
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
         }
-        .car-card:hover .swipe-badge { border-color: #FFC107; transform: scale(1.03); }
+        .car-card:hover .swipe-badge, .swipe-badge.spinning { border-color: #FFC107; background: #FFF8E1; transform: scale(1.03); }
         
         .car-name { font-size: 28px; font-weight: 900; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px; color: #1A1D20; }
         .car-price { font-size: 40px; font-weight: 900; margin-bottom: 20px; color: #1A1D20; }
@@ -313,17 +315,17 @@
         .order-btn.light-btn:hover { background: #FFCA28; box-shadow: 0 12px 28px rgba(255,193,7,0.45); }
         .order-btn:active { transform: scale(0.96) !important; }
 
-        /* 7. SİPARİŞ & RANDEVU MODALI (BÜYÜK KARE ARAÇ KUTUSU + PİNG-PONG VİDEO) */
+        /* 7. SİPARİŞ & RANDEVU MODALI (STÜDYO RENKLİ BÜYÜK KARE ARAÇ KUTUSU + PİNG-PONG VİDEO) */
         .modal-overlay { 
             position: fixed; inset: 0; background-color: rgba(15, 23, 42, 0.85); 
             backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             z-index: 60000; display: none; align-items: flex-start; justify-content: center; 
-            padding: 6rem 1rem 2rem; opacity: 0; transition: opacity 0.4s ease; overflow-y: auto; 
+            padding: 7.5rem 1rem 2rem; opacity: 0; transition: opacity 0.4s ease; overflow-y: auto; 
         }
         .modal-overlay.show { display: flex; opacity: 1; }
         
         .modal-box { 
-            background-color: #ffffff; border-radius: 26px; padding: 135px 38px 36px !important; 
+            background-color: #ffffff; border-radius: 26px; padding: 155px 38px 36px !important; 
             width: 100%; max-width: 580px; margin: auto; position: relative; 
             box-shadow: 0 30px 60px -12px rgba(0,0,0,0.65); border: 2px solid #FFF8E1; 
             pointer-events: auto; overflow: visible !important; text-align: center;
@@ -339,18 +341,24 @@
         }
         .modal-close-btn:hover { background: #FFEBEE; color: #D32F2F; transform: rotate(90deg); }
 
-        /* KARE BOYUTUNA GETİRİLMİŞ VE BÜYÜTÜLMÜŞ ÜST ARAÇ VİDEO KUTUSU */
+        /* 280x280 BÜYÜK KARE KUTU - ARKA PLAN VİDEO STÜDYO RENGİYLE BİREBİR AYNI VE ARAÇ TAM SIĞAR */
         .modal-car-floating {
-            position: absolute; top: -125px; left: 50%; transform: translateX(-50%);
-            width: 245px; height: 245px; aspect-ratio: 1 / 1;
-            border-radius: 28px; background: var(--studio-bg);
+            position: absolute; top: -140px; left: 50%; transform: translateX(-50%);
+            width: 280px; height: 280px; aspect-ratio: 1 / 1;
+            border-radius: 30px; background-color: var(--studio-bg);
             overflow: hidden; display: flex; align-items: center; justify-content: center;
             border: 4px solid #FFC107; z-index: 20;
-            box-shadow: 0 0 0 5px rgba(255,255,255,0.75), 0 18px 40px rgba(0,0,0,0.45);
+            box-shadow: 0 0 0 6px rgba(255,255,255,0.85), 0 20px 45px rgba(0,0,0,0.45);
         }
-        .modal-car-floating video { 
-            width: 100%; height: 100%; object-fit: cover; 
-            transform: scale(1.38); pointer-events: none;
+        .modal-car-floating video, .modal-car-floating canvas { 
+            width: 100%; height: 100%; 
+            object-fit: contain !important; 
+            transform: none !important;
+            background-color: var(--studio-bg);
+            pointer-events: none;
+        }
+        .modal-car-floating canvas {
+            position: absolute; inset: 0; z-index: 3; display: none;
         }
 
         .modal-title { font-size: 27px; font-weight: 900; color: #1A1D20; margin-bottom: 4px; }
@@ -445,33 +453,33 @@
             .avatar-circle { width: 64px; height: 64px; font-size: 28px; left: -4px; }
             .search-actions { display: none; }
             .right-filter-panel { position: relative; top: 45px; right: auto; left: 50%; transform: translateX(-50%); width: 94%; }
-            .cars-container { padding: 70px 20px 110px; grid-template-columns: 1fr; gap: 65px; }
+            .cars-container { padding: 70px 15px 110px; grid-template-columns: 1fr; gap: 65px; }
             .cars-container.lift-up { transform: translateY(-180px); }
+            .car-media-box { height: 320px; }
             .car-specs { flex-wrap: wrap; }
             .chat-panel { width: 92%; right: 4%; bottom: 20px; height: 500px; }
-            .modal-box { padding: 115px 20px 25px !important; margin-top: 90px; }
-            .modal-car-floating { width: 200px; height: 200px; top: -105px; }
+            .modal-box { padding: 130px 20px 25px !important; margin-top: 90px; }
+            .modal-car-floating { width: 230px; height: 230px; top: -115px; }
             .form-row-2 { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-<body id="main-body">
+<body id="main-body" oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
+
+    <!-- SAHTE VİDEO TUZAĞI (HONEYPOT STREAM TRAP - BOT VE SCRAPER YAKALAYICI) -->
+    <div class="sr-only" aria-hidden="true" id="honeypot-media-trap">
+        <video src="assets/decoy-honeypot-stream-trap.mp4" preload="none"></video>
+        <a href="assets/decoy-honeypot-archive.zip" tabindex="-1" rel="nofollow">Download All 360 Assets</a>
+    </div>
 
     <!-- VEKTÖREL İKON KÜTÜPHANESİ (SOLID KAYISI + SİYAH DAİRE İÇİ BEYAZ İKONLAR) -->
     <svg style="position:absolute; width:0; height:0; overflow:hidden;" aria-hidden="true" focusable="false">
-        <!-- Tam Görünür Katmanlı Malatya Kayısısı Vektörü (display:none hatasından arındırıldı) -->
         <symbol id="icon-apricot" viewBox="0 0 36 36">
-            <!-- Sap -->
             <path d="M18 8 Q17 3 14 2" stroke="#5D4037" stroke-width="2.4" stroke-linecap="round" fill="none"/>
-            <!-- Yeşil Yaprak -->
             <path d="M18 7 C22 1, 30 2, 29 8 C25 10, 20 9, 18 7 Z" fill="#2E7D32"/>
-            <!-- Kayısı Ana Gövde (Turuncu-Altın) -->
             <circle cx="18" cy="21" r="12.5" fill="#FF9800"/>
-            <!-- Sağ Yanak Gölgesi -->
             <path d="M18 8.5 A12.5 12.5 0 0 1 18 33.5 C21 27, 21 15, 18 8.5 Z" fill="#F57C00"/>
-            <!-- Sol Yanak Parlaması -->
             <ellipse cx="13.5" cy="16.5" rx="3.2" ry="5" transform="rotate(-20 13.5 16.5)" fill="#FFE082" opacity="0.75"/>
-            <!-- Kayısı Orta Boğum Çizgisi -->
             <path d="M18 8.5 C13.5 15, 13.5 27, 18 33.5" stroke="#D84315" stroke-width="1.8" stroke-linecap="round" fill="none"/>
         </symbol>
 
@@ -616,13 +624,15 @@
         </div>
     </aside>
 
-    <!-- 5. ARAÇ FİLOSU (11 ARAÇ - AKILLI ÖNYÜKLEME & LERP 360° MOTORU) -->
+    <!-- 5. ARAÇ FİLOSU (11 ARAÇ - BÜYÜTÜLMÜŞ VİDEO KUTUSU, %100 TAM SIĞAN ARAÇLAR, 1.1x SABİT HIZ) -->
     <main class="cars-container" id="cars-grid" aria-label="Kiralık Araç Filosu">
 
         <!-- 1. HONDA CIVIC -->
-        <article class="car-card" data-order="1" data-price="1600" data-gear="otomatik" data-fuel="benzin" data-type="sedan">
+        <article class="car-card" data-order="1" data-price="1600" data-gear="otomatik" data-fuel="benzin" data-type="sedan" data-vkey="honda-civic-360.mp4">
             <div class="car-media-box video-skeleton">
-                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="honda-civic-360.mp4" src="honda-civic-360.mp4" preload="metadata" loop muted playsinline></video>
+                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="honda-civic-360.mp4" src="honda-civic-360.mp4" preload="auto" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
+                <div class="security-armor" title="360° Döndürmek İçin Basılı Tutun"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Honda Civic 360 Derece Döndür">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">HONDA CIVIC</h3>
@@ -638,9 +648,11 @@
         </article>
 
         <!-- 2. RENAULT MEGANE -->
-        <article class="car-card" data-order="2" data-price="2000" data-gear="otomatik" data-fuel="dizel" data-type="sedan">
+        <article class="car-card" data-order="2" data-price="2000" data-gear="otomatik" data-fuel="dizel" data-type="sedan" data-vkey="renault-megane-360.mp4">
             <div class="car-media-box video-skeleton">
-                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="renault-megane-360.mp4" src="renault-megane-360.mp4" preload="auto" loop muted playsinline></video>
+                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="renault-megane-360.mp4" src="renault-megane-360.mp4" preload="auto" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
+                <div class="security-armor" title="360° Döndürmek İçin Basılı Tutun"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Renault Megane 360 Derece Döndür">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">RENAULT MEGANE</h3>
@@ -656,9 +668,11 @@
         </article>
 
         <!-- 3. CITROEN C ELYSEE -->
-        <article class="car-card" data-order="3" data-price="1600" data-gear="manuel" data-fuel="dizel" data-type="sedan">
+        <article class="car-card" data-order="3" data-price="1600" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-vkey="citroen-c-elysee-360.mp4">
             <div class="car-media-box video-skeleton">
-                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="citroen-c-elysee-360.mp4" src="citroen-c-elysee-360.mp4" preload="metadata" loop muted playsinline></video>
+                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="citroen-c-elysee-360.mp4" src="citroen-c-elysee-360.mp4" preload="auto" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
+                <div class="security-armor" title="360° Döndürmek İçin Basılı Tutun"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Citroen C Elysee 360 Derece Döndür">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">CITROEN C ELYSEE</h3>
@@ -674,9 +688,11 @@
         </article>
 
         <!-- 4. NISSAN QASHQAI -->
-        <article class="car-card" data-order="4" data-price="2300" data-gear="manuel" data-fuel="dizel" data-type="suv">
+        <article class="car-card" data-order="4" data-price="2300" data-gear="manuel" data-fuel="dizel" data-type="suv" data-vkey="nissan-qashqai-360.mp4">
             <div class="car-media-box video-skeleton">
-                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="nissan-qashqai-360.mp4" src="nissan-qashqai-360.mp4" preload="none" loop muted playsinline></video>
+                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="nissan-qashqai-360.mp4" src="nissan-qashqai-360.mp4" preload="metadata" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
+                <div class="security-armor" title="360° Döndürmek İçin Basılı Tutun"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Nissan Qashqai 360 Derece Döndür">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">NISSAN QASHQAI</h3>
@@ -692,9 +708,11 @@
         </article>
 
         <!-- 5. TOYOTA COROLLA -->
-        <article class="car-card" data-order="5" data-price="1700" data-gear="otomatik" data-fuel="elektrik" data-type="sedan">
+        <article class="car-card" data-order="5" data-price="1700" data-gear="otomatik" data-fuel="elektrik" data-type="sedan" data-vkey="toyota-corolla-360.mp4">
             <div class="car-media-box video-skeleton">
-                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="toyota-corolla-360.mp4" src="toyota-corolla-360.mp4" preload="none" loop muted playsinline></video>
+                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="toyota-corolla-360.mp4" src="toyota-corolla-360.mp4" preload="metadata" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
+                <div class="security-armor" title="360° Döndürmek İçin Basılı Tutun"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Toyota Corolla 360 Derece Döndür">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">TOYOTA COROLLA</h3>
@@ -710,9 +728,11 @@
         </article>
 
         <!-- 6. KIA RIO -->
-        <article class="car-card" data-order="6" data-price="1650" data-gear="manuel" data-fuel="dizel" data-type="hatchback">
+        <article class="car-card" data-order="6" data-price="1650" data-gear="manuel" data-fuel="dizel" data-type="hatchback" data-vkey="kia-rio-360.mp4">
             <div class="car-media-box video-skeleton">
-                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="kia-rio-360.mp4" src="kia-rio-360.mp4" preload="none" loop muted playsinline></video>
+                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="kia-rio-360.mp4" src="kia-rio-360.mp4" preload="metadata" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
+                <div class="security-armor" title="360° Döndürmek İçin Basılı Tutun"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Kia Rio 360 Derece Döndür">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">KIA RIO</h3>
@@ -728,9 +748,11 @@
         </article>
 
         <!-- 7. HYUNDAI İ20 -->
-        <article class="car-card" data-order="7" data-price="1600" data-gear="otomatik" data-fuel="benzin" data-type="hatchback">
+        <article class="car-card" data-order="7" data-price="1600" data-gear="otomatik" data-fuel="benzin" data-type="hatchback" data-vkey="hyundai-i20-360.mp4">
             <div class="car-media-box video-skeleton">
-                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="hyundai-i20-360.mp4" src="hyundai-i20-360.mp4" preload="none" loop muted playsinline></video>
+                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="hyundai-i20-360.mp4" src="hyundai-i20-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
+                <div class="security-armor" title="360° Döndürmek İçin Basılı Tutun"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Hyundai i20 360 Derece Döndür">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">HYUNDAI İ20</h3>
@@ -746,9 +768,11 @@
         </article>
 
         <!-- 8. FIAT EGEA -->
-        <article class="car-card" data-order="8" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan">
+        <article class="car-card" data-order="8" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-vkey="fiat-egea-360.mp4">
             <div class="car-media-box video-skeleton">
-                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="fiat-egea-360.mp4" src="fiat-egea-360.mp4" preload="none" loop muted playsinline></video>
+                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="fiat-egea-360.mp4" src="fiat-egea-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
+                <div class="security-armor" title="360° Döndürmek İçin Basılı Tutun"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Fiat Egea 360 Derece Döndür">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">FIAT EGEA</h3>
@@ -764,9 +788,11 @@
         </article>
 
         <!-- 9. FIAT FIORINO -->
-        <article class="car-card" data-order="9" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="ticari">
+        <article class="car-card" data-order="9" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="ticari" data-vkey="fiat-fiorino-360.mp4">
             <div class="car-media-box video-skeleton">
-                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="fiat-fiorino-360.mp4" src="fiat-fiorino-360.mp4" preload="auto" loop muted playsinline></video>
+                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="fiat-fiorino-360.mp4" src="fiat-fiorino-360.mp4" preload="auto" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
+                <div class="security-armor" title="360° Döndürmek İçin Basılı Tutun"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Fiat Fiorino 360 Derece Döndür">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">FIAT FIORINO</h3>
@@ -782,9 +808,11 @@
         </article>
 
         <!-- 10. PEUGEOT 301 -->
-        <article class="car-card" data-order="10" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan">
+        <article class="car-card" data-order="10" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-vkey="peugeot-301-360.mp4">
             <div class="car-media-box video-skeleton">
-                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="peugeot-301-360.mp4" src="peugeot-301-360.mp4" preload="none" loop muted playsinline></video>
+                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="peugeot-301-360.mp4" src="peugeot-301-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
+                <div class="security-armor" title="360° Döndürmek İçin Basılı Tutun"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Peugeot 301 360 Derece Döndür">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">PEUGEOT 301</h3>
@@ -800,9 +828,11 @@
         </article>
 
         <!-- 11. RENAULT SYMBOL -->
-        <article class="car-card" data-order="11" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan">
+        <article class="car-card" data-order="11" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-vkey="renault-symbol-360.mp4">
             <div class="car-media-box video-skeleton">
-                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="renault-symbol-360.mp4" src="renault-symbol-360.mp4" preload="none" loop muted playsinline></video>
+                <video aria-hidden="true" tabindex="-1" class="car-video" data-src="renault-symbol-360.mp4" src="renault-symbol-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
+                <div class="security-armor" title="360° Döndürmek İçin Basılı Tutun"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Renault Symbol 360 Derece Döndür">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">RENAULT SYMBOL</h3>
@@ -819,14 +849,15 @@
 
     </main>
 
-    <!-- 6. SİPARİŞ VE RANDEVU MODALI (BÜYÜK KARE ARAÇ KUTUSU & İLERİ-GERİ PİNG-PONG VİDEO) -->
+    <!-- 6. SİPARİŞ VE RANDEVU MODALI (280x280 STÜDYO RENKLİ KARE KUTU & 1.1x CANVAS PİNG-PONG VİDEO) -->
     <div id="randevuModal" class="modal-overlay" onclick="if(event.target===this) closeOrderModal()" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-box" id="appointment-modal-box">
             <button onclick="closeOrderModal()" class="modal-close-btn" aria-label="Sipariş Penceresini Kapat">✕</button>
 
             <div class="modal-car-floating video-skeleton">
-                <!-- Loop kapalıdır; son kareye gelince Ping-Pong motoru videoyu tersine (geriye) doğru oynatır -->
-                <video id="modal-video" aria-hidden="true" tabindex="-1" src="" playsinline muted></video>
+                <video id="modal-video" aria-hidden="true" tabindex="-1" src="" playsinline muted disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas id="modal-canvas" aria-hidden="true"></canvas>
+                <div class="security-armor"></div>
             </div>
 
             <h3 id="modalTitle" class="modal-title">SİPARİŞ & RANDEVU AL</h3>
@@ -837,7 +868,9 @@
             </div>
 
             <form id="apptForm" onsubmit="submitAppt(event); return false;">
-                <input type="text" id="botTrap" tabindex="-1" aria-hidden="true" autocomplete="off" class="sr-only">
+                <!-- ÇİFT KATMANLI HONEYPOT BOT TUZAĞI -->
+                <input type="text" id="botTrap" name="honeypot_name" tabindex="-1" aria-hidden="true" autocomplete="off" class="sr-only">
+                <input type="url" id="websiteTrap" name="company_website" tabindex="-1" aria-hidden="true" autocomplete="off" class="sr-only">
 
                 <div class="form-row-2">
                     <input type="text" id="fIsim" placeholder="Örn: Muhammed" aria-label="Adınız Soyadınız" required class="form-input">
@@ -922,775 +955,985 @@
     </div>
 
     <script>
-        let randevuAcilisZamani = 0;
-        let isChatOpen = false;
-        let deferredPrompt = null;
-        let currentPriceFilter = 'all';
-        let currentCategoryFilter = 'all';
-        let isHighToLowSort = false;
-        let toastTimer = null;
-        let activeModalCar = 'RENAULT MEGANE';
-        let pingPongRAF = null;
+        (function() {
+            "use strict";
 
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzrYJVsS0yDP1twV2OFzI3rujb8GcQKtcr2lfIGQAnVbIM15tpGx3O7AfxEn3fZFB2t/exec";
+            const TARGET_SPEED = 1.1; // Sabit 1.1x Dönüş Hızı
+            const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzrYJVsS0yDP1twV2OFzI3rujb8GcQKtcr2lfIGQAnVbIM15tpGx3O7AfxEn3fZFB2t/exec";
 
-        // 1. ÜSTTEN DÜŞEN 2 SANİYELİK YEŞİL TİKLİ BİLDİRİM (PWA & SİPARİŞ ONAYI)
-        window.showTopToast = function(message) {
-            const toast = document.getElementById('top-toast');
-            const toastText = document.getElementById('top-toast-text');
-            if (!toast || !toastText) return;
+            let randevuAcilisZamani = 0;
+            let isChatOpen = false;
+            let deferredPrompt = null;
+            let currentPriceFilter = 'all';
+            let currentCategoryFilter = 'all';
+            let isHighToLowSort = false;
+            let toastTimer = null;
+            let activeModalCar = 'RENAULT MEGANE';
+            let securityFlagged = false;
 
-            toastText.innerText = message;
-            toast.classList.add('show');
+            // Şifreli Bellek İçi Video Kaynak Haritası (DOM'dan silinen adresler burada korunur)
+            const vaultBlobCache = new Map();
+            const frameMemoryBank = new Map();
 
-            if (toastTimer) clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2000);
-        };
+            // 1. ÜSTTEN DÜŞEN 2 SANİYELİK YEŞİL TİKLİ BİLDİRİM
+            window.showTopToast = function(message) {
+                const toast = document.getElementById('top-toast');
+                const toastText = document.getElementById('top-toast-text');
+                if (!toast || !toastText) return;
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-        });
+                toastText.innerText = message;
+                toast.classList.add('show');
 
-        window.triggerPWAInstall = function() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-            }
-            showTopToast("Uygulama yüklenmiştir");
-        };
-
-        window.toggleCookiePopup = function() {
-            document.getElementById('cookiePopup').classList.toggle('show');
-        };
-
-        // 2. AKILLI ÖNYÜKLEME (INTERSECTION OBSERVER), VİDEO İSKELETİ VE STÜDYO ARKA PLAN EŞİTLEME
-        document.addEventListener("DOMContentLoaded", function() {
-            const allVideos = document.querySelectorAll('video.car-video');
-            let bgSampled = false;
-
-            const videoObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    const video = entry.target;
-                    if (entry.isIntersecting) {
-                        if (video.preload === 'none') {
-                            video.preload = 'auto';
-                        }
-                    } else {
-                        video.pause();
-                    }
-                });
-            }, { rootMargin: '200px 0px' });
-
-            allVideos.forEach(video => {
-                video.muted = true;
-                const fileName = video.getAttribute('data-src');
-
-                // Kök dizinde yoksa otomatik olarak assets/ klasörünü dener
-                video.addEventListener('error', function handleVideoErr() {
-                    if (!video.getAttribute('src').includes('assets/')) {
-                        video.src = 'assets/' + fileName;
-                        video.load();
-                    }
-                }, { once: true });
-
-                video.addEventListener('loadeddata', () => {
-                    video.currentTime = 0.05;
-                    if (video.parentElement.classList.contains('video-skeleton')) {
-                        video.parentElement.classList.remove('video-skeleton');
-                    }
-
-                    // Videonun arka plan rengini otomatik okuyup tüm siteye uygular
-                    if (!bgSampled && video.videoWidth > 0) {
-                        try {
-                            const canvas = document.createElement('canvas');
-                            canvas.width = 16;
-                            canvas.height = 16;
-                            const ctx = canvas.getContext('2d');
-                            ctx.drawImage(video, 0, 0, 16, 16);
-                            const p = ctx.getImageData(2, 2, 1, 1).data;
-                            if (p[3] > 0 && p[0] > 180 && p[1] > 180 && p[2] > 180) {
-                                document.documentElement.style.setProperty('--studio-bg', `rgb(${p[0]}, ${p[1]}, ${p[2]})`);
-                                bgSampled = true;
-                            }
-                        } catch (e) {}
-                    }
-                });
-
-                videoObserver.observe(video);
-            });
-
-            // Akıllı Asistan Balonu
-            const bubble = document.getElementById('topChatBubble');
-            if (bubble && !isChatOpen) bubble.classList.add('show');
-
-            // TBT SIFIRLAYICI: 8 Saniye Gecikmeli Dinamik Form Örnekleri
-            setTimeout(() => {
-                const isimler = ["Muhammed", "Hamza", "Ebubekir", "Hüseyin", "Ali", "Ömer", "Osman", "Ayşe", "Fatma", "Sümeyye", "Nurgül"];
-                let isimIndex = 0;
-                setInterval(() => {
-                    const fIsim = document.getElementById('fIsim');
-                    if (fIsim && fIsim.value === '') {
-                        isimIndex = (isimIndex + 1) % isimler.length;
-                        fIsim.placeholder = "Örn: " + isimler[isimIndex];
-                    }
-                }, 3000);
-
-                const saatler = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
-                let saatIndex = 0;
-                setInterval(() => {
-                    const fSaatDefault = document.getElementById('fSaatDefault');
-                    const fSaat = document.getElementById('fSaat');
-                    if (fSaatDefault && fSaat && fSaat.disabled) {
-                        saatIndex = (saatIndex + 1) % saatler.length;
-                        fSaatDefault.text = "Önce Tarih Seçiniz (Örn: " + saatler[saatIndex] + ")";
-                    }
-                }, 3000);
-            }, 8000);
-
-            // Manyetik Buton Etkileşimi
-            document.querySelectorAll('.magnetic-btn').forEach(btn => {
-                btn.addEventListener('mousemove', e => {
-                    const rect = btn.getBoundingClientRect();
-                    const x = e.clientX - rect.left - rect.width / 2;
-                    const y = e.clientY - rect.top - rect.height / 2;
-                    btn.style.transform = `translate(${x * 0.14}px, ${y * 0.14}px) scale(1.04)`;
-                });
-                btn.addEventListener('mouseleave', () => {
-                    btn.style.transform = 'translate(0px, 0px) scale(1)';
-                });
-            });
-        });
-
-        // 3. KAYDIRMA İLERLEME ÇUBUĞU (PASSIVE LISTENER)
-        window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-            const pBar = document.getElementById("progressBar");
-            if (pBar) pBar.style.width = scrolled + "%";
-        }, { passive: true });
-
-        // 4. ANLIK FİLTRELEME VE "FİYAT: YÜKSEKTEN DÜŞÜĞE" BUTON MANTIĞI
-        window.toggleHighToLowSort = function() {
-            const btn = document.getElementById('sortHighToLowBtn');
-            isHighToLowSort = !isHighToLowSort;
-            btn.classList.toggle('active', isHighToLowSort);
-            applySortAndFilter();
-        };
-
-        const radioGroup = document.querySelectorAll('.rf-radio');
-        radioGroup.forEach(radio => {
-            radio.addEventListener('click', () => {
-                radioGroup.forEach(r => {
-                    r.classList.remove('active');
-                    r.setAttribute('aria-checked', 'false');
-                });
-                radio.classList.add('active');
-                radio.setAttribute('aria-checked', 'true');
-                currentPriceFilter = radio.getAttribute('data-filter');
-                applySortAndFilter();
-            });
-        });
-
-        window.quickChipFilter = function(category, btnEl) {
-            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-            if (btnEl && btnEl.classList.contains('filter-chip')) {
-                btnEl.classList.add('active');
-            }
-            currentCategoryFilter = category;
-            applySortAndFilter();
-        };
-
-        window.applySortAndFilter = function() {
-            const grid = document.getElementById('cars-grid');
-            const cards = Array.from(grid.querySelectorAll('.car-card'));
-
-            cards.sort((a, b) => {
-                if (isHighToLowSort) {
-                    return parseInt(b.getAttribute('data-price')) - parseInt(a.getAttribute('data-price'));
-                } else {
-                    return parseInt(a.getAttribute('data-order')) - parseInt(b.getAttribute('data-order'));
-                }
-            });
-
-            cards.forEach(card => {
-                grid.appendChild(card);
-                const price = parseInt(card.getAttribute('data-price'));
-                const gear = card.getAttribute('data-gear');
-                const fuel = card.getAttribute('data-fuel');
-                const type = card.getAttribute('data-type');
-
-                let passPrice = true;
-                if (currentPriceFilter === 'under2000') passPrice = price <= 2000;
-                else if (currentPriceFilter === 'over2000') passPrice = price >= 2000;
-
-                let passCat = true;
-                if (currentCategoryFilter === 'otomatik') passCat = gear === 'otomatik';
-                else if (currentCategoryFilter === 'manuel') passCat = gear === 'manuel';
-                else if (currentCategoryFilter === 'dizel') passCat = fuel === 'dizel';
-                else if (currentCategoryFilter === 'benzin') passCat = fuel === 'benzin';
-                else if (currentCategoryFilter === 'elektrik') passCat = fuel === 'elektrik';
-                else if (currentCategoryFilter === 'suv') passCat = type === 'suv';
-                else if (currentCategoryFilter === 'ticari') passCat = type === 'ticari';
-                else if (currentCategoryFilter === 'ekonomik') passCat = price === 1500;
-
-                if (passPrice && passCat) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
-        };
-
-        // 5. LERP (SÜRTÜNME VE İVME DESTEKLİ) YÜKSEK KALİTELİ 360° DÖNDÜRME MOTORU
-        (function initSmoothLerp360Engine() {
-            const cards = document.querySelectorAll('.car-card');
-            let activeVideo = null;
-            let isDragging = false;
-            let lastX = 0;
-            let velocity = 0;
-            let lerpRAF = null;
-
-            function startDrag(video, clientX) {
-                if (video.preload !== 'auto') video.preload = 'auto';
-                video.pause();
-                activeVideo = video;
-                isDragging = true;
-                lastX = clientX;
-                velocity = 0;
-                if (!lerpRAF) lerpRAF = requestAnimationFrame(updateInertia);
-            }
-
-            function moveDrag(clientX) {
-                if (!isDragging || !activeVideo) return;
-                const dx = clientX - lastX;
-                lastX = clientX;
-                velocity = dx * 0.0045;
-            }
-
-            function stopDrag() {
-                isDragging = false;
-            }
-
-            function updateInertia() {
-                if (activeVideo && activeVideo.duration) {
-                    if (Math.abs(velocity) > 0.0004) {
-                        if (!activeVideo.seeking) {
-                            let nextTime = activeVideo.currentTime + velocity;
-                            if (nextTime >= activeVideo.duration) nextTime %= activeVideo.duration;
-                            if (nextTime < 0) nextTime = activeVideo.duration + (nextTime % activeVideo.duration);
-                            if (!isNaN(nextTime)) activeVideo.currentTime = nextTime;
-                        }
-                        if (!isDragging) {
-                            velocity *= 0.88; // Süzülerek yavaşlama katsayısı
-                        }
-                        lerpRAF = requestAnimationFrame(updateInertia);
-                        return;
-                    }
-                }
-                if (isDragging) {
-                    lerpRAF = requestAnimationFrame(updateInertia);
-                } else {
-                    lerpRAF = null;
-                }
-            }
-
-            cards.forEach(card => {
-                const mediaBox = card.querySelector('.car-media-box');
-                const badge = card.querySelector('.swipe-badge');
-                const video = card.querySelector('video');
-
-                [mediaBox, badge].forEach(el => {
-                    if (!el) return;
-                    el.addEventListener('mousedown', (e) => {
-                        e.preventDefault();
-                        startDrag(video, e.clientX);
-                    });
-                    el.addEventListener('touchstart', (e) => {
-                        if (e.touches.length > 0) {
-                            startDrag(video, e.touches[0].clientX);
-                        }
-                    }, { passive: true });
-                });
-            });
-
-            window.addEventListener('mousemove', (e) => {
-                if (isDragging) moveDrag(e.clientX);
-            }, { passive: true });
-
-            window.addEventListener('touchmove', (e) => {
-                if (isDragging && e.touches.length > 0) {
-                    moveDrag(e.touches[0].clientX);
-                }
-            }, { passive: true });
-
-            window.addEventListener('mouseup', stopDrag);
-            window.addEventListener('touchend', stopDrag);
-        })();
-
-        // 6. SİPARİŞ MODALI VE ÜST VİDEO İLERİ-GERİ (PİNG-PONG / BOOMERANG) MOTORU
-        function startModalPingPong(video) {
-            if (pingPongRAF) cancelAnimationFrame(pingPongRAF);
-            let direction = 1; // 1: İleri oynat, -1: Geriye sar
-            let lastFrameTime = performance.now();
-
-            video.loop = false;
-            video.currentTime = 0.05;
-            video.play().catch(() => {});
-
-            function tickPingPong(now) {
-                const dt = (now - lastFrameTime) / 1000;
-                lastFrameTime = now;
-
-                if (video.readyState >= 2 && video.duration) {
-                    if (direction === 1) {
-                        if (video.paused && video.currentTime < video.duration - 0.12) {
-                            video.play().catch(() => {});
-                        }
-                        // Video sonuna ulaştığında durdur ve geriye sarmayı başlat
-                        if (video.currentTime >= video.duration - 0.12) {
-                            video.pause();
-                            direction = -1;
-                        }
-                    } else {
-                        // Geriye doğru akıcı sarma
-                        if (!video.seeking) {
-                            let prevTime = video.currentTime - (dt * 0.95);
-                            if (prevTime <= 0.08) {
-                                prevTime = 0.08;
-                                direction = 1;
-                                video.play().catch(() => {});
-                            }
-                            video.currentTime = prevTime;
-                        }
-                    }
-                }
-                pingPongRAF = requestAnimationFrame(tickPingPong);
-            }
-
-            pingPongRAF = requestAnimationFrame(tickPingPong);
-        }
-
-        window.openOrderModal = function(carName, videoFile, priceStr) {
-            randevuAcilisZamani = Date.now();
-            activeModalCar = carName;
-
-            const errBanner = document.getElementById('errBanner');
-            if (errBanner) errBanner.style.display = 'none';
-
-            document.getElementById('modal-car-name').innerText = `${carName} • ${priceStr} / GÜN`;
-
-            const modalVideo = document.getElementById('modal-video');
-            modalVideo.parentElement.classList.add('video-skeleton');
-
-            modalVideo.onerror = function() {
-                if (!modalVideo.src.includes('assets/')) {
-                    modalVideo.src = 'assets/' + videoFile;
-                    modalVideo.load();
-                }
-            };
-            modalVideo.onloadeddata = function() {
-                modalVideo.parentElement.classList.remove('video-skeleton');
-                startModalPingPong(modalVideo);
+                if (toastTimer) clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
             };
 
-            modalVideo.src = videoFile;
-            modalVideo.load();
-
-            const overlay = document.getElementById('randevuModal');
-            overlay.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            requestAnimationFrame(() => { overlay.classList.add('show'); });
-        };
-
-        window.closeOrderModal = function() {
-            if (pingPongRAF) {
-                cancelAnimationFrame(pingPongRAF);
-                pingPongRAF = null;
-            }
-            const overlay = document.getElementById('randevuModal');
-            const modalVideo = document.getElementById('modal-video');
-            overlay.classList.remove('show');
-            document.body.style.overflow = '';
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                modalVideo.pause();
-                modalVideo.removeAttribute('src');
-            }, 400);
-        };
-
-        // En Yakın Tarihi Bulucu (Google Apps Script + Yerel Fallback)
-        window.findNearestDate = function() {
-            const btn = document.getElementById('autoDateBtn');
-            const tarihInput = document.getElementById('fTarih');
-            const originalText = "EN YAKIN TARİHİ SEÇ";
-            btn.innerHTML = "Aranıyor...";
-            btn.style.pointerEvents = "none";
-
-            fetch(WEB_APP_URL + "?islem=enYakinTarih")
-            .then(response => response.json())
-            .then(data => {
-                if (data && data.tarih) {
-                    tarihInput.value = data.tarih;
-                    tarihInput.dispatchEvent(new Event('change'));
-                    btn.innerHTML = "✓ Bulundu";
-                } else {
-                    throw new Error("Fallback");
-                }
-                setTimeout(() => { btn.innerHTML = originalText; btn.style.pointerEvents = "auto"; }, 2200);
-            })
-            .catch(() => {
-                const now = new Date();
-                if (now.getHours() >= 18) now.setDate(now.getDate() + 1);
-                const y = now.getFullYear();
-                const m = String(now.getMonth() + 1).padStart(2, '0');
-                const d = String(now.getDate()).padStart(2, '0');
-                tarihInput.value = `${y}-${m}-${d}`;
-                tarihInput.dispatchEvent(new Event('change'));
-                btn.innerHTML = "✓ Bulundu";
-                setTimeout(() => { btn.innerHTML = originalText; btn.style.pointerEvents = "auto"; }, 2200);
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
             });
-        };
 
-        const fTarih = document.getElementById('fTarih');
-        if (fTarih) {
-            const today = new Date();
-            const todayStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-            fTarih.min = todayStr;
+            window.triggerPWAInstall = function() {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+                }
+                showTopToast("Uygulama yüklenmiştir");
+            };
 
-            fTarih.addEventListener('change', function() {
-                const val = this.value;
-                const saatSelect = document.getElementById('fSaat');
-                const rel = document.getElementById('dateRel');
+            window.toggleCookiePopup = function() {
+                document.getElementById('cookiePopup').classList.toggle('show');
+            };
 
-                if (!val) {
-                    if (rel) rel.textContent = '';
-                    saatSelect.options[0].text = "Önce Tarih Seçiniz";
-                    saatSelect.disabled = true;
+            // 2. BLOB URL GİZLEME (ANTI-THEFT) VE VİDEO ARKA PLAN RENGİ EŞİTLEME
+            function secureVideoAsset(video, fileName) {
+                if (!fileName) return;
+
+                // DOM üzerindeki açık dosya yollarını siler (İncele ekranında görünmesini engeller)
+                video.removeAttribute('data-src');
+
+                if (vaultBlobCache.has(fileName)) {
+                    video.src = vaultBlobCache.get(fileName);
                     return;
                 }
 
-                const chosen = new Date(val); chosen.setHours(0,0,0,0);
-                const now0 = new Date(); now0.setHours(0,0,0,0);
-                const diffDays = Math.round((chosen - now0) / 86400000);
+                // Sunucu ortamında (http/https) dosyayı Blob olarak çekip gerçek URL'yi gizler
+                if (location.protocol.startsWith('http')) {
+                    fetch(fileName)
+                        .then(r => {
+                            if (!r.ok) return fetch('assets/' + fileName);
+                            return r;
+                        })
+                        .then(r => r.ok ? r.blob() : Promise.reject())
+                        .then(blob => {
+                            const blobUrl = URL.createObjectURL(blob);
+                            vaultBlobCache.set(fileName, blobUrl);
+                            video.src = blobUrl;
+                        })
+                        .catch(() => {});
+                }
+            }
 
-                if (rel) {
-                    rel.textContent = diffDays === 0 ? '(Bugün)' : diffDays === 1 ? '(Yarın)' : diffDays > 1 ? '(' + diffDays + ' gün sonra)' : '';
+            // Video karelerini RAM'e kaydeden yardımcı fonksiyon (Geriye 1.1x hızda sıfır takılmayla dönmesi için)
+            function recordFrameToBank(fileName, video) {
+                if (!fileName || !video.videoWidth || !video.duration) return;
+                if (!frameMemoryBank.has(fileName)) {
+                    frameMemoryBank.set(fileName, { frames: [], complete: false, lastBucket: -1 });
+                }
+                const bank = frameMemoryBank.get(fileName);
+                if (bank.complete) return;
+
+                const totalBuckets = Math.min(180, Math.floor(video.duration * 24));
+                const bucketIdx = Math.floor((video.currentTime / video.duration) * totalBuckets);
+
+                if (bucketIdx !== bank.lastBucket && !bank.frames[bucketIdx]) {
+                    bank.lastBucket = bucketIdx;
+                    try {
+                        const offCanvas = document.createElement('canvas');
+                        offCanvas.width = video.videoWidth;
+                        offCanvas.height = video.videoHeight;
+                        offCanvas.getContext('2d').drawImage(video, 0, 0);
+                        bank.frames[bucketIdx] = offCanvas;
+
+                        let filled = 0;
+                        for (let i = 0; i < totalBuckets; i++) {
+                            if (bank.frames[i]) filled++;
+                        }
+                        if (filled >= totalBuckets * 0.92) {
+                            bank.complete = true;
+                        }
+                    } catch (e) {}
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function() {
+                const allCards = document.querySelectorAll('.car-card');
+                let bgSampled = false;
+
+                // Honeypot Medya Tuzağı Dinleyicisi
+                const trapEl = document.getElementById('honeypot-media-trap');
+                if (trapEl) {
+                    trapEl.addEventListener('click', () => { securityFlagged = true; });
                 }
 
-                const anlikZaman = new Date();
-                const suAnkiSaatStr = String(anlikZaman.getHours()).padStart(2, '0') + ":" + String(anlikZaman.getMinutes()).padStart(2, '0');
+                const videoObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const video = entry.target;
+                        if (entry.isIntersecting) {
+                            if (video.preload === 'none') video.preload = 'auto';
+                        } else {
+                            video.pause();
+                        }
+                    });
+                }, { rootMargin: '250px 0px' });
 
-                for (let i = 1; i < saatSelect.options.length; i++) {
-                    const optVal = saatSelect.options[i].value;
-                    saatSelect.options[i].disabled = false;
-                    saatSelect.options[i].text = optVal;
+                allCards.forEach(card => {
+                    const video = card.querySelector('video.car-video');
+                    const fileName = card.getAttribute('data-vkey');
+                    card.removeAttribute('data-vkey');
+                    card._vFile = fileName;
 
-                    if (val === todayStr && optVal <= suAnkiSaatStr) {
-                        saatSelect.options[i].disabled = true;
-                        saatSelect.options[i].text = optVal + ' (GEÇTİ)';
-                    }
-                }
+                    video.muted = true;
+                    video.defaultPlaybackRate = TARGET_SPEED;
+                    video.playbackRate = TARGET_SPEED;
 
-                saatSelect.disabled = false;
-                saatSelect.options[0].text = "Dolu saatler kontrol ediliyor...";
+                    video.addEventListener('error', function handleVideoErr() {
+                        const currentSrc = video.getAttribute('src') || '';
+                        if (!currentSrc.includes('assets/') && !currentSrc.startsWith('blob:')) {
+                            video.src = 'assets/' + fileName;
+                            video.load();
+                        }
+                    }, { once: true });
 
-                fetch(WEB_APP_URL + "?islem=saatSorgula&tarih=" + val)
-                .then(response => response.json())
-                .then(doluSaatler => {
-                    saatSelect.options[0].text = "Saat Seçiniz";
-                    if (doluSaatler && doluSaatler.length > 0) {
-                        doluSaatler.forEach(item => {
-                            let parts = (typeof item === 'string') ? item.split('|') : [];
-                            let rSaat = parts[0] || item.saat || item;
-                            let rIsim = parts[1] || item.isim || "";
+                    video.addEventListener('loadeddata', () => {
+                        if (video.currentTime === 0) video.currentTime = 0.04;
+                        if (video.parentElement.classList.contains('video-skeleton')) {
+                            video.parentElement.classList.remove('video-skeleton');
+                        }
 
-                            for (let i = 1; i < saatSelect.options.length; i++) {
-                                if (saatSelect.options[i].value === rSaat) {
-                                    saatSelect.options[i].disabled = true;
-                                    let maskText = "";
-                                    if (rIsim) {
-                                        let ad = rIsim.trim().split(' ')[0];
-                                        if (ad.length > 2) {
-                                            maskText = ` - ${ad.charAt(0)}${"*".repeat(ad.length - 2)}${ad.charAt(ad.length - 1)}`;
-                                        } else if (ad.length === 2) {
-                                            maskText = ` - ${ad.charAt(0)}*`;
-                                        } else {
-                                            maskText = ` - ${ad}`;
-                                        }
-                                    }
-                                    saatSelect.options[i].text = `${rSaat} (DOLU${maskText.toUpperCase()})`;
+                        // İlk yüklenen videonun stüdyo arka plan rengini örnekleyip tüm siteye ve modal kare kutusuna uygular
+                        if (!bgSampled && video.videoWidth > 0) {
+                            try {
+                                const sampleCanvas = document.createElement('canvas');
+                                sampleCanvas.width = 16;
+                                sampleCanvas.height = 16;
+                                const ctx = sampleCanvas.getContext('2d');
+                                ctx.drawImage(video, 0, 0, 16, 16);
+                                const p = ctx.getImageData(2, 2, 1, 1).data;
+                                if (p[3] > 0 && p[0] > 170 && p[1] > 170 && p[2] > 170) {
+                                    document.documentElement.style.setProperty('--studio-bg', `rgb(${p[0]}, ${p[1]}, ${p[2]})`);
+                                    bgSampled = true;
                                 }
-                            }
-                        });
-                    }
-                })
-                .catch(() => {
-                    saatSelect.options[0].text = "Saat Seçiniz";
+                            } catch (e) {}
+                        }
+                    });
+
+                    secureVideoAsset(video, fileName);
+                    videoObserver.observe(video);
+                });
+
+                const bubble = document.getElementById('topChatBubble');
+                if (bubble && !isChatOpen) bubble.classList.add('show');
+
+                // TBT SIFIRLAYICI: 8 Saniye Gecikmeli Dinamik Form Örnekleri
+                setTimeout(() => {
+                    const isimler = ["Muhammed", "Hamza", "Ebubekir", "Hüseyin", "Ali", "Ömer", "Osman", "Ayşe", "Fatma", "Sümeyye", "Nurgül"];
+                    let isimIndex = 0;
+                    setInterval(() => {
+                        const fIsim = document.getElementById('fIsim');
+                        if (fIsim && fIsim.value === '') {
+                            isimIndex = (isimIndex + 1) % isimler.length;
+                            fIsim.placeholder = "Örn: " + isimler[isimIndex];
+                        }
+                    }, 3000);
+
+                    const saatler = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
+                    let saatIndex = 0;
+                    setInterval(() => {
+                        const fSaatDefault = document.getElementById('fSaatDefault');
+                        const fSaat = document.getElementById('fSaat');
+                        if (fSaatDefault && fSaat && fSaat.disabled) {
+                            saatIndex = (saatIndex + 1) % saatler.length;
+                            fSaatDefault.text = "Önce Tarih Seçiniz (Örn: " + saatler[saatIndex] + ")";
+                        }
+                    }, 3000);
+                }, 8000);
+
+                // Manyetik Buton Etkileşimi
+                document.querySelectorAll('.magnetic-btn').forEach(btn => {
+                    btn.addEventListener('mousemove', e => {
+                        const rect = btn.getBoundingClientRect();
+                        const x = e.clientX - rect.left - rect.width / 2;
+                        const y = e.clientY - rect.top - rect.height / 2;
+                        btn.style.transform = `translate(${x * 0.14}px, ${y * 0.14}px) scale(1.04)`;
+                    });
+                    btn.addEventListener('mouseleave', () => {
+                        btn.style.transform = 'translate(0px, 0px) scale(1)';
+                    });
                 });
             });
-        }
 
-        // Anti-Bot Korumalı Form Gönderimi
-        window.submitAppt = function(event) {
-            if (event && !event.isTrusted) return;
+            // 3. KAYDIRMA İLERLEME ÇUBUĞU
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+                const pBar = document.getElementById("progressBar");
+                if (pBar) pBar.style.width = scrolled + "%";
+            }, { passive: true });
 
-            const botTrap = document.getElementById('botTrap');
-            if (botTrap && botTrap.value !== '') return;
-
-            const err = document.getElementById('errBanner');
-            const errText = document.getElementById('errText');
-            if (err) err.style.display = 'none';
-
-            function showErr(msg) {
-                if (errText) errText.innerHTML = msg;
-                if (err) err.style.display = 'flex';
-            }
-
-            if (Date.now() - randevuAcilisZamani < 1500) {
-                return showErr("İşleminiz şüpheli şekilde hızlı gerçekleşti. Lütfen insan hızıyla doldurunuz.");
-            }
-
-            const isim = document.getElementById('fIsim').value.trim();
-            const telefon = document.getElementById('fTelefon').value.trim();
-            const teslimat = document.getElementById('fTeslimat').value;
-            const paket = document.getElementById('fPaket').value;
-            const tarih = document.getElementById('fTarih').value;
-            const saat = document.getElementById('fSaat').value;
-
-            const nameRegex = /^[a-zA-ZğüşıöçĞÜŞİÖÇ\s]{3,50}$/;
-            const phoneRegex = /^05[0-9]{9}$/;
-
-            if (!nameRegex.test(isim)) return showErr('Lütfen geçerli bir ad soyad girin (sadece harf).');
-            if (!phoneRegex.test(telefon)) return showErr('Geçerli numara girin (05 ile başlayan 11 hane).');
-            if (!teslimat || !tarih || !saat) return showErr('Lütfen tüm alanları doldurun.');
-
-            const btn = document.getElementById('btn-submit');
-            btn.innerHTML = 'Takvim Kontrol Ediliyor...';
-            btn.disabled = true;
-
-            fetch(WEB_APP_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ isim, telefon, hizmet: `${activeModalCar} - ${teslimat} (${paket})`, tarih, saat })
-            })
-            .then(r => r.json())
-            .then(res => {
-                btn.innerHTML = 'SİPARİŞİ TAMAMLA';
-                btn.disabled = false;
-                if (res && res.durum === 'hata') { showErr(res.mesaj); return; }
-                closeOrderModal();
-                showTopToast("Sipariş ve randevunuz oluşturulmuştur");
-                document.getElementById('apptForm').reset();
-            })
-            .catch(() => {
-                btn.innerHTML = 'SİPARİŞİ TAMAMLA';
-                btn.disabled = false;
-                closeOrderModal();
-                showTopToast("Sipariş ve randevunuz oluşturulmuştur");
-                document.getElementById('apptForm').reset();
-            });
-        };
-
-        // 7. DİJİTAL ASİSTAN (REFERANS JAGUAR)
-        function getRandomDelay() { return Math.floor(Math.random() * (2200 - 1300 + 1)) + 1300; }
-
-        window.openAssistant = function() {
-            const bubble = document.getElementById('topChatBubble');
-            if (bubble) bubble.style.display = 'none';
-            document.getElementById('search-section').classList.add('fade-out-up');
-            document.getElementById('right-panel').classList.add('fade-out-side');
-            document.getElementById('cars-grid').classList.add('lift-up');
-            document.getElementById('chatPanel').classList.add('show');
-            isChatOpen = true;
-        };
-
-        window.closeAssistant = function() {
-            document.getElementById('search-section').classList.remove('fade-out-up');
-            document.getElementById('right-panel').classList.remove('fade-out-side');
-            document.getElementById('cars-grid').classList.remove('lift-up');
-            document.getElementById('chatPanel').classList.remove('show');
-            isChatOpen = false;
-
-            setTimeout(() => {
-                resetChatMessages();
-                currentCategoryFilter = 'all';
-                currentPriceFilter = 'all';
+            // 4. ANLIK FİLTRELEME VE "FİYAT: YÜKSEKTEN DÜŞÜĞE" BUTON MANTIĞI
+            window.toggleHighToLowSort = function() {
+                const btn = document.getElementById('sortHighToLowBtn');
+                isHighToLowSort = !isHighToLowSort;
+                btn.classList.toggle('active', isHighToLowSort);
                 applySortAndFilter();
-            }, 450);
-        };
+            };
 
-        function scrollToBottom() {
-            const chatBody = document.getElementById('chatBody');
-            if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
-        }
-
-        function addUserMessage(text) {
-            const chatBody = document.getElementById('chatBody');
-            const msgDiv = document.createElement('div');
-            msgDiv.className = 'user-message dynamic-msg';
-            msgDiv.innerHTML = `<div class="user-bubble">${text}</div>`;
-            chatBody.appendChild(msgDiv);
-            scrollToBottom();
-        }
-
-        function addBotMessage(text) {
-            const chatBody = document.getElementById('chatBody');
-            const msgDiv = document.createElement('div');
-            msgDiv.className = 'bot-message dynamic-msg';
-            msgDiv.innerHTML = `<div class="bot-avatar" aria-hidden="true">🐆</div><div class="bot-bubble">${text}</div>`;
-            chatBody.appendChild(msgDiv);
-            scrollToBottom();
-        }
-
-        function resetChatMessages() {
-            const chatBody = document.getElementById('chatBody');
-            const userOptionsBox = document.getElementById('userOptionsBox');
-            chatBody.querySelectorAll('.dynamic-msg, .chat-action-buttons, .chat-input-container').forEach(el => el.remove());
-            if (userOptionsBox) {
-                userOptionsBox.style.display = 'flex';
-                chatBody.appendChild(userOptionsBox);
-            }
-        }
-
-        window.handleBotOption = function(optionType) {
-            const optionsBox = document.getElementById('userOptionsBox');
-            const typingIndicator = document.getElementById('typingIndicator');
-            const chatBody = document.getElementById('chatBody');
-            if (optionsBox) optionsBox.style.display = 'none';
-
-            if (optionType === 'otomatik') {
-                addUserMessage("⚙️ Otomatik vitesli araçları sıralar mısın?");
-                chatBody.appendChild(typingIndicator);
-                typingIndicator.style.display = 'flex';
-                scrollToBottom();
-
-                setTimeout(() => {
-                    typingIndicator.style.display = 'none';
-                    currentCategoryFilter = 'otomatik';
+            const radioGroup = document.querySelectorAll('.rf-radio');
+            radioGroup.forEach(radio => {
+                radio.addEventListener('click', () => {
+                    radioGroup.forEach(r => {
+                        r.classList.remove('active');
+                        r.setAttribute('aria-checked', 'false');
+                    });
+                    radio.classList.add('active');
+                    radio.setAttribute('aria-checked', 'true');
+                    currentPriceFilter = radio.getAttribute('data-filter');
                     applySortAndFilter();
-                    addBotMessage("Sizin için filomuzdaki <strong>Otomatik Vitesli</strong> araçları (Honda Civic, Renault Megane, Toyota Corolla ve Hyundai i20) hemen arkada sıraladım.");
-                    showResetActionInChat();
-                }, getRandomDelay());
-            } 
-            else if (optionType === 'dizel') {
-                addUserMessage("⛽ Dizel ekonomik araçları sıralar mısın?");
-                chatBody.appendChild(typingIndicator);
-                typingIndicator.style.display = 'flex';
-                scrollToBottom();
+                });
+            });
 
-                setTimeout(() => {
-                    typingIndicator.style.display = 'none';
-                    currentCategoryFilter = 'dizel';
-                    applySortAndFilter();
-                    addBotMessage("Sizin için yakıt cimrisi <strong>Dizel</strong> araçlarımızı ekranınızda listeledim.");
-                    showResetActionInChat();
-                }, getRandomDelay());
+            window.quickChipFilter = function(category, btnEl) {
+                document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+                if (btnEl && btnEl.classList.contains('filter-chip')) {
+                    btnEl.classList.add('active');
+                }
+                currentCategoryFilter = category;
+                applySortAndFilter();
+            };
+
+            window.applySortAndFilter = function() {
+                const grid = document.getElementById('cars-grid');
+                const cards = Array.from(grid.querySelectorAll('.car-card'));
+
+                cards.sort((a, b) => {
+                    if (isHighToLowSort) {
+                        return parseInt(b.getAttribute('data-price')) - parseInt(a.getAttribute('data-price'));
+                    } else {
+                        return parseInt(a.getAttribute('data-order')) - parseInt(b.getAttribute('data-order'));
+                    }
+                });
+
+                cards.forEach(card => {
+                    grid.appendChild(card);
+                    const price = parseInt(card.getAttribute('data-price'));
+                    const gear = card.getAttribute('data-gear');
+                    const fuel = card.getAttribute('data-fuel');
+                    const type = card.getAttribute('data-type');
+
+                    let passPrice = true;
+                    if (currentPriceFilter === 'under2000') passPrice = price <= 2000;
+                    else if (currentPriceFilter === 'over2000') passPrice = price >= 2000;
+
+                    let passCat = true;
+                    if (currentCategoryFilter === 'otomatik') passCat = gear === 'otomatik';
+                    else if (currentCategoryFilter === 'manuel') passCat = gear === 'manuel';
+                    else if (currentCategoryFilter === 'dizel') passCat = fuel === 'dizel';
+                    else if (currentCategoryFilter === 'benzin') passCat = fuel === 'benzin';
+                    else if (currentCategoryFilter === 'elektrik') passCat = fuel === 'elektrik';
+                    else if (currentCategoryFilter === 'suv') passCat = type === 'suv';
+                    else if (currentCategoryFilter === 'ticari') passCat = type === 'ticari';
+                    else if (currentCategoryFilter === 'ekonomik') passCat = price === 1500;
+
+                    if (passPrice && passCat) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            };
+
+            // 5. KESİNTİSİZ SABİT 1.1x HIZDA DÖNEN 360° MOTORU (BASILI TUTUNCA SÜREKLİ DÖNER, BIRAKINCA DURUR)
+            (function initContinuous11xSpinEngine() {
+                const cards = document.querySelectorAll('.car-card');
+                let activeCard = null;
+                let activeVideo = null;
+                let activeCanvas = null;
+                let activeBadge = null;
+                let spinDirection = 0; // 1: Sağa (İleri 1.1x), -1: Sola (Geri 1.1x), 0: Dur
+                let startClientX = 0;
+                let spinRAF = null;
+                let lastSpinTime = 0;
+                let virtualTime = 0;
+
+                function beginSpin(card, clientX) {
+                    const video = card.querySelector('video.car-video');
+                    const canvas = card.querySelector('canvas.car-canvas');
+                    const badge = card.querySelector('.swipe-badge');
+                    const mediaBox = card.querySelector('.car-media-box');
+
+                    if (video.preload !== 'auto') video.preload = 'auto';
+
+                    activeCard = card;
+                    activeVideo = video;
+                    activeCanvas = canvas;
+                    activeBadge = badge;
+                    startClientX = clientX;
+                    virtualTime = video.currentTime || 0;
+
+                    if (activeBadge) activeBadge.classList.add('spinning');
+
+                    // İlk tıklanan nokta merkezin sağındaysa sağa (1), solundaysa sola (-1) 1.1x hızla başlatır
+                    const rect = mediaBox.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    setSpinDirection(clientX >= centerX ? 1 : -1);
+
+                    lastSpinTime = performance.now();
+                    if (!spinRAF) spinRAF = requestAnimationFrame(loopSpin);
+                }
+
+                function updateSpinByPointer(clientX) {
+                    if (!activeCard || !activeVideo) return;
+                    const dx = clientX - startClientX;
+                    // Kullanıcı fareyi/parmağını sağa veya sola çektiğinde yönü anında o tarafa kilitler
+                    if (Math.abs(dx) > 6) {
+                        setSpinDirection(dx > 0 ? 1 : -1);
+                    }
+                }
+
+                function setSpinDirection(dir) {
+                    if (spinDirection === dir) return;
+                    spinDirection = dir;
+
+                    if (!activeVideo) return;
+
+                    if (spinDirection === 1) {
+                        // İleri 1.1x: Doğrudan donanımsal native 1.1x oynatma
+                        if (activeCanvas) activeCanvas.style.display = 'none';
+                        activeVideo.currentTime = virtualTime;
+                        activeVideo.playbackRate = TARGET_SPEED;
+                        activeVideo.play().catch(() => {});
+                    } else if (spinDirection === -1) {
+                        // Geri 1.1x: Native ileri oynatmayı durdurup 1.1x geri sarma moduna geçer
+                        virtualTime = activeVideo.currentTime;
+                        activeVideo.pause();
+                    }
+                }
+
+                function endSpin() {
+                    if (!activeVideo) return;
+                    activeVideo.pause();
+                    if (activeCanvas) activeCanvas.style.display = 'none';
+                    if (activeBadge) activeBadge.classList.remove('spinning');
+                    spinDirection = 0;
+                    activeCard = null;
+                    activeVideo = null;
+                    activeCanvas = null;
+                    activeBadge = null;
+                    if (spinRAF) {
+                        cancelAnimationFrame(spinRAF);
+                        spinRAF = null;
+                    }
+                }
+
+                function loopSpin(now) {
+                    if (!activeVideo || spinDirection === 0) return;
+
+                    const dt = Math.min(0.05, (now - lastSpinTime) / 1000);
+                    lastSpinTime = now;
+                    const fileName = activeCard ? activeCard._vFile : null;
+
+                    if (activeVideo.readyState >= 2 && activeVideo.duration) {
+                        const dur = activeVideo.duration;
+
+                        if (spinDirection === 1) {
+                            // İleri dönerken kareleri RAM'e kaydeder ve sona gelirse kesintisiz başa sarar
+                            recordFrameToBank(fileName, activeVideo);
+                            if (activeVideo.currentTime >= dur - 0.08) {
+                                activeVideo.currentTime = 0.02;
+                                activeVideo.play().catch(() => {});
+                            }
+                            virtualTime = activeVideo.currentTime;
+                        } else if (spinDirection === -1) {
+                            // Geriye doğru tam 1.1x hızında sarar
+                            virtualTime -= (dt * TARGET_SPEED);
+                            if (virtualTime <= 0.02) virtualTime = dur - 0.04;
+
+                            const bank = fileName ? frameMemoryBank.get(fileName) : null;
+                            const totalBuckets = Math.min(180, Math.floor(dur * 24));
+                            const bucketIdx = Math.floor((virtualTime / dur) * totalBuckets);
+
+                            if (bank && bank.frames[bucketIdx] && activeCanvas) {
+                                // Kare RAM'de varsa 60 FPS Canvas üzerinden sıfır takılmayla çizer
+                                if (activeCanvas.width !== activeVideo.videoWidth) {
+                                    activeCanvas.width = activeVideo.videoWidth;
+                                    activeCanvas.height = activeVideo.videoHeight;
+                                }
+                                activeCanvas.style.display = 'block';
+                                activeCanvas.getContext('2d').drawImage(bank.frames[bucketIdx], 0, 0);
+                            } else {
+                                if (activeCanvas) activeCanvas.style.display = 'none';
+                                if (!activeVideo.seeking) {
+                                    activeVideo.currentTime = virtualTime;
+                                }
+                            }
+                        }
+                    }
+
+                    spinRAF = requestAnimationFrame(loopSpin);
+                }
+
+                cards.forEach(card => {
+                    const mediaBox = card.querySelector('.car-media-box');
+                    const badge = card.querySelector('.swipe-badge');
+
+                    [mediaBox, badge].forEach(el => {
+                        if (!el) return;
+                        el.addEventListener('mousedown', (e) => {
+                            if (e.button !== 0) return;
+                            e.preventDefault();
+                            beginSpin(card, e.clientX);
+                        });
+                        el.addEventListener('touchstart', (e) => {
+                            if (e.touches.length > 0) {
+                                beginSpin(card, e.touches[0].clientX);
+                            }
+                        }, { passive: true });
+                    });
+                });
+
+                window.addEventListener('mousemove', (e) => {
+                    if (spinDirection !== 0) updateSpinByPointer(e.clientX);
+                }, { passive: true });
+
+                window.addEventListener('touchmove', (e) => {
+                    if (spinDirection !== 0 && e.touches.length > 0) {
+                        updateSpinByPointer(e.touches[0].clientX);
+                    }
+                }, { passive: true });
+
+                window.addEventListener('mouseup', endSpin);
+                window.addEventListener('touchend', endSpin);
+                window.addEventListener('touchcancel', endSpin);
+            })();
+
+            // 6. SİPARİŞ MODALI (280x280 KARE KUTU & İLERİ-GERİ 1.1x EŞİT HIZLI PİNG-PONG VİDEO MOTORU)
+            let modalPingPongRAF = null;
+
+            function startModalPingPongEngine(video, canvas, fileName) {
+                if (modalPingPongRAF) cancelAnimationFrame(modalPingPongRAF);
+
+                let direction = 1; // 1: İleri 1.1x, -1: Geri 1.1x
+                let lastTime = performance.now();
+                let virtualTime = 0.04;
+
+                canvas.style.display = 'none';
+                video.loop = false;
+                video.currentTime = 0.04;
+                video.playbackRate = TARGET_SPEED;
+                video.play().catch(() => {});
+
+                function stepModalPingPong(now) {
+                    const dt = Math.min(0.05, (now - lastTime) / 1000);
+                    lastTime = now;
+
+                    if (video.readyState >= 2 && video.duration) {
+                        const dur = video.duration;
+
+                        if (direction === 1) {
+                            // İleri oynarken tüm kareleri RAM'e kaydeder
+                            recordFrameToBank(fileName, video);
+                            virtualTime = video.currentTime;
+
+                            if (video.paused && video.currentTime < dur - 0.1) {
+                                video.play().catch(() => {});
+                            }
+
+                            // Video sonuna ulaştığında tam tersi yöne (Geri 1.1x) döner
+                            if (video.currentTime >= dur - 0.1) {
+                                video.pause();
+                                virtualTime = dur - 0.1;
+                                direction = -1;
+                            }
+                        } else {
+                            // Geriye doğru 1.1x hızında (ileri hızla birebir aynı hızda) oynatır
+                            virtualTime -= (dt * TARGET_SPEED);
+
+                            const bank = frameMemoryBank.get(fileName);
+                            const totalBuckets = Math.min(180, Math.floor(dur * 24));
+                            const bucketIdx = Math.max(0, Math.floor((virtualTime / dur) * totalBuckets));
+
+                            if (bank && bank.frames[bucketIdx]) {
+                                if (canvas.width !== video.videoWidth) {
+                                    canvas.width = video.videoWidth;
+                                    canvas.height = video.videoHeight;
+                                }
+                                canvas.style.display = 'block';
+                                canvas.getContext('2d').drawImage(bank.frames[bucketIdx], 0, 0);
+                            } else if (!video.seeking) {
+                                canvas.style.display = 'none';
+                                video.currentTime = Math.max(0.04, virtualTime);
+                            }
+
+                            // Başa ulaştığında tekrar ileri 1.1x oynatmaya geçer
+                            if (virtualTime <= 0.06) {
+                                virtualTime = 0.06;
+                                direction = 1;
+                                canvas.style.display = 'none';
+                                video.currentTime = 0.06;
+                                video.playbackRate = TARGET_SPEED;
+                                video.play().catch(() => {});
+                            }
+                        }
+                    }
+
+                    modalPingPongRAF = requestAnimationFrame(stepModalPingPong);
+                }
+
+                modalPingPongRAF = requestAnimationFrame(stepModalPingPong);
             }
-            else if (optionType === 'elektrik') {
-                addUserMessage("⚡ Elektrikli araç seçeneği var mı?");
-                chatBody.appendChild(typingIndicator);
-                typingIndicator.style.display = 'flex';
-                scrollToBottom();
 
+            window.openOrderModal = function(carName, videoFile, priceStr) {
+                randevuAcilisZamani = Date.now();
+                activeModalCar = carName;
+
+                const errBanner = document.getElementById('errBanner');
+                if (errBanner) errBanner.style.display = 'none';
+
+                document.getElementById('modal-car-name').innerText = `${carName} • ${priceStr} / GÜN`;
+
+                const modalVideo = document.getElementById('modal-video');
+                const modalCanvas = document.getElementById('modal-canvas');
+                modalVideo.parentElement.classList.add('video-skeleton');
+                modalCanvas.style.display = 'none';
+
+                modalVideo.onerror = function() {
+                    const cSrc = modalVideo.getAttribute('src') || '';
+                    if (!cSrc.includes('assets/') && !cSrc.startsWith('blob:')) {
+                        modalVideo.src = 'assets/' + videoFile;
+                        modalVideo.load();
+                    }
+                };
+
+                modalVideo.onloadeddata = function() {
+                    modalVideo.parentElement.classList.remove('video-skeleton');
+                    startModalPingPongEngine(modalVideo, modalCanvas, videoFile);
+                };
+
+                if (vaultBlobCache.has(videoFile)) {
+                    modalVideo.src = vaultBlobCache.get(videoFile);
+                } else {
+                    modalVideo.src = videoFile;
+                }
+                modalVideo.load();
+
+                const overlay = document.getElementById('randevuModal');
+                overlay.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                requestAnimationFrame(() => { overlay.classList.add('show'); });
+            };
+
+            window.closeOrderModal = function() {
+                if (modalPingPongRAF) {
+                    cancelAnimationFrame(modalPingPongRAF);
+                    modalPingPongRAF = null;
+                }
+                const overlay = document.getElementById('randevuModal');
+                const modalVideo = document.getElementById('modal-video');
+                const modalCanvas = document.getElementById('modal-canvas');
+                overlay.classList.remove('show');
+                document.body.style.overflow = '';
                 setTimeout(() => {
-                    typingIndicator.style.display = 'none';
-                    currentCategoryFilter = 'elektrik';
-                    applySortAndFilter();
-                    addBotMessage("Filomuzda yeni nesil <strong>Elektrikli & Otomatik</strong> olarak <strong>Toyota Corolla (1.700 ₺ / Gün)</strong> modelimiz hazırda beklemektedir.");
-                    showResetActionInChat();
-                }, getRandomDelay());
+                    overlay.style.display = 'none';
+                    modalVideo.pause();
+                    modalCanvas.style.display = 'none';
+                    modalVideo.removeAttribute('src');
+                }, 400);
+            };
+
+            // En Yakın Tarihi Bulucu
+            window.findNearestDate = function() {
+                const btn = document.getElementById('autoDateBtn');
+                const tarihInput = document.getElementById('fTarih');
+                const originalText = "EN YAKIN TARİHİ SEÇ";
+                btn.innerHTML = "Aranıyor...";
+                btn.style.pointerEvents = "none";
+
+                fetch(WEB_APP_URL + "?islem=enYakinTarih")
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.tarih) {
+                        tarihInput.value = data.tarih;
+                        tarihInput.dispatchEvent(new Event('change'));
+                        btn.innerHTML = "✓ Bulundu";
+                    } else {
+                        throw new Error("Fallback");
+                    }
+                    setTimeout(() => { btn.innerHTML = originalText; btn.style.pointerEvents = "auto"; }, 2200);
+                })
+                .catch(() => {
+                    const now = new Date();
+                    if (now.getHours() >= 18) now.setDate(now.getDate() + 1);
+                    const y = now.getFullYear();
+                    const m = String(now.getMonth() + 1).padStart(2, '0');
+                    const d = String(now.getDate()).padStart(2, '0');
+                    tarihInput.value = `${y}-${m}-${d}`;
+                    tarihInput.dispatchEvent(new Event('change'));
+                    btn.innerHTML = "✓ Bulundu";
+                    setTimeout(() => { btn.innerHTML = originalText; btn.style.pointerEvents = "auto"; }, 2200);
+                });
+            };
+
+            const fTarih = document.getElementById('fTarih');
+            if (fTarih) {
+                const today = new Date();
+                const todayStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+                fTarih.min = todayStr;
+
+                fTarih.addEventListener('change', function() {
+                    const val = this.value;
+                    const saatSelect = document.getElementById('fSaat');
+                    const rel = document.getElementById('dateRel');
+
+                    if (!val) {
+                        if (rel) rel.textContent = '';
+                        saatSelect.options[0].text = "Önce Tarih Seçiniz";
+                        saatSelect.disabled = true;
+                        return;
+                    }
+
+                    const chosen = new Date(val); chosen.setHours(0,0,0,0);
+                    const now0 = new Date(); now0.setHours(0,0,0,0);
+                    const diffDays = Math.round((chosen - now0) / 86400000);
+
+                    if (rel) {
+                        rel.textContent = diffDays === 0 ? '(Bugün)' : diffDays === 1 ? '(Yarın)' : diffDays > 1 ? '(' + diffDays + ' gün sonra)' : '';
+                    }
+
+                    const anlikZaman = new Date();
+                    const suAnkiSaatStr = String(anlikZaman.getHours()).padStart(2, '0') + ":" + String(anlikZaman.getMinutes()).padStart(2, '0');
+
+                    for (let i = 1; i < saatSelect.options.length; i++) {
+                        const optVal = saatSelect.options[i].value;
+                        saatSelect.options[i].disabled = false;
+                        saatSelect.options[i].text = optVal;
+
+                        if (val === todayStr && optVal <= suAnkiSaatStr) {
+                            saatSelect.options[i].disabled = true;
+                            saatSelect.options[i].text = optVal + ' (GEÇTİ)';
+                        }
+                    }
+
+                    saatSelect.disabled = false;
+                    saatSelect.options[0].text = "Dolu saatler kontrol ediliyor...";
+
+                    fetch(WEB_APP_URL + "?islem=saatSorgula&tarih=" + val)
+                    .then(response => response.json())
+                    .then(doluSaatler => {
+                        saatSelect.options[0].text = "Saat Seçiniz";
+                        if (doluSaatler && doluSaatler.length > 0) {
+                            doluSaatler.forEach(item => {
+                                let parts = (typeof item === 'string') ? item.split('|') : [];
+                                let rSaat = parts[0] || item.saat || item;
+                                let rIsim = parts[1] || item.isim || "";
+
+                                for (let i = 1; i < saatSelect.options.length; i++) {
+                                    if (saatSelect.options[i].value === rSaat) {
+                                        saatSelect.options[i].disabled = true;
+                                        let maskText = "";
+                                        if (rIsim) {
+                                            let ad = rIsim.trim().split(' ')[0];
+                                            if (ad.length > 2) {
+                                                maskText = ` - ${ad.charAt(0)}${"*".repeat(ad.length - 2)}${ad.charAt(ad.length - 1)}`;
+                                            } else if (ad.length === 2) {
+                                                maskText = ` - ${ad.charAt(0)}*`;
+                                            } else {
+                                                maskText = ` - ${ad}`;
+                                            }
+                                        }
+                                        saatSelect.options[i].text = `${rSaat} (DOLU${maskText.toUpperCase()})`;
+                                    }
+                                }
+                            });
+                        }
+                    })
+                    .catch(() => {
+                        saatSelect.options[0].text = "Saat Seçiniz";
+                    });
+                });
             }
-            else if (optionType === 'fiyat') {
-                addUserMessage("💰 Günlük 1.500 ₺ fırsat araçlarını göster.");
-                chatBody.appendChild(typingIndicator);
-                typingIndicator.style.display = 'flex';
-                scrollToBottom();
+
+            // Çift Honeypot ve Anti-Bot Korumalı Form Gönderimi
+            window.submitAppt = function(event) {
+                if (event && !event.isTrusted) return;
+                if (securityFlagged) return;
+
+                const botTrap = document.getElementById('botTrap');
+                const websiteTrap = document.getElementById('websiteTrap');
+                if ((botTrap && botTrap.value !== '') || (websiteTrap && websiteTrap.value !== '')) {
+                    securityFlagged = true;
+                    return;
+                }
+
+                const err = document.getElementById('errBanner');
+                const errText = document.getElementById('errText');
+                if (err) err.style.display = 'none';
+
+                function showErr(msg) {
+                    if (errText) errText.innerHTML = msg;
+                    if (err) err.style.display = 'flex';
+                }
+
+                if (Date.now() - randevuAcilisZamani < 1500) {
+                    return showErr("İşleminiz şüpheli şekilde hızlı gerçekleşti. Lütfen insan hızıyla doldurunuz.");
+                }
+
+                const isim = document.getElementById('fIsim').value.trim();
+                const telefon = document.getElementById('fTelefon').value.trim();
+                const teslimat = document.getElementById('fTeslimat').value;
+                const paket = document.getElementById('fPaket').value;
+                const tarih = document.getElementById('fTarih').value;
+                const saat = document.getElementById('fSaat').value;
+
+                const nameRegex = /^[a-zA-ZğüşıöçĞÜŞİÖÇ\s]{3,50}$/;
+                const phoneRegex = /^05[0-9]{9}$/;
+
+                if (!nameRegex.test(isim)) return showErr('Lütfen geçerli bir ad soyad girin (sadece harf).');
+                if (!phoneRegex.test(telefon)) return showErr('Geçerli numara girin (05 ile başlayan 11 hane).');
+                if (!teslimat || !tarih || !saat) return showErr('Lütfen tüm alanları doldurun.');
+
+                const btn = document.getElementById('btn-submit');
+                btn.innerHTML = 'Takvim Kontrol Ediliyor...';
+                btn.disabled = true;
+
+                fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ isim, telefon, hizmet: `${activeModalCar} - ${teslimat} (${paket})`, tarih, saat })
+                })
+                .then(r => r.json())
+                .then(res => {
+                    btn.innerHTML = 'SİPARİŞİ TAMAMLA';
+                    btn.disabled = false;
+                    if (res && res.durum === 'hata') { showErr(res.mesaj); return; }
+                    closeOrderModal();
+                    showTopToast("Sipariş ve randevunuz oluşturulmuştur");
+                    document.getElementById('apptForm').reset();
+                })
+                .catch(() => {
+                    btn.innerHTML = 'SİPARİŞİ TAMAMLA';
+                    btn.disabled = false;
+                    closeOrderModal();
+                    showTopToast("Sipariş ve randevunuz oluşturulmuştur");
+                    document.getElementById('apptForm').reset();
+                });
+            };
+
+            // 7. DİJİTAL ASİSTAN (REFERANS JAGUAR)
+            function getRandomDelay() { return Math.floor(Math.random() * (2100 - 1200 + 1)) + 1200; }
+
+            window.openAssistant = function() {
+                const bubble = document.getElementById('topChatBubble');
+                if (bubble) bubble.style.display = 'none';
+                document.getElementById('search-section').classList.add('fade-out-up');
+                document.getElementById('right-panel').classList.add('fade-out-side');
+                document.getElementById('cars-grid').classList.add('lift-up');
+                document.getElementById('chatPanel').classList.add('show');
+                isChatOpen = true;
+            };
+
+            window.closeAssistant = function() {
+                document.getElementById('search-section').classList.remove('fade-out-up');
+                document.getElementById('right-panel').classList.remove('fade-out-side');
+                document.getElementById('cars-grid').classList.remove('lift-up');
+                document.getElementById('chatPanel').classList.remove('show');
+                isChatOpen = false;
 
                 setTimeout(() => {
-                    typingIndicator.style.display = 'none';
-                    currentCategoryFilter = 'ekonomik';
+                    resetChatMessages();
+                    currentCategoryFilter = 'all';
+                    currentPriceFilter = 'all';
                     applySortAndFilter();
-                    addBotMessage("Günlük <strong>1.500 ₺</strong> olan en ekonomik fırsat araçlarımızı (Fiat Egea, Fiat Fiorino, Peugeot 301 ve Renault Symbol) sizin için sıraladım.");
-                    showResetActionInChat();
-                }, getRandomDelay());
+                }, 450);
+            };
+
+            function scrollToBottom() {
+                const chatBody = document.getElementById('chatBody');
+                if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
             }
-            else if (optionType === 'baska') {
-                addUserMessage("❓ Aklıma takılan başka bir soru var.");
-                chatBody.appendChild(typingIndicator);
-                typingIndicator.style.display = 'flex';
+
+            function addUserMessage(text) {
+                const chatBody = document.getElementById('chatBody');
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'user-message dynamic-msg';
+                msgDiv.innerHTML = `<div class="user-bubble">${text}</div>`;
+                chatBody.appendChild(msgDiv);
                 scrollToBottom();
+            }
 
-                setTimeout(() => {
-                    typingIndicator.style.display = 'none';
-                    addBotMessage("Hangi konu hakkında yardıma ihtiyacınız var? Aşağıya yazabilirsiniz:");
+            function addBotMessage(text) {
+                const chatBody = document.getElementById('chatBody');
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'bot-message dynamic-msg';
+                msgDiv.innerHTML = `<div class="bot-avatar" aria-hidden="true">🐆</div><div class="bot-bubble">${text}</div>`;
+                chatBody.appendChild(msgDiv);
+                scrollToBottom();
+            }
 
-                    const inputContainer = document.createElement('div');
-                    inputContainer.className = 'chat-input-container';
-                    inputContainer.innerHTML = `
-                        <input type="text" class="chat-text-input" placeholder="Sorunuzu buraya yazın..." aria-label="Sorunuzu girin">
-                        <button type="button" class="chat-send-btn" aria-label="Mesajı Gönder">Gönder</button>
-                    `;
-                    chatBody.appendChild(inputContainer);
+            window.resetChatMessages = function() {
+                const chatBody = document.getElementById('chatBody');
+                const userOptionsBox = document.getElementById('userOptionsBox');
+                chatBody.querySelectorAll('.dynamic-msg, .chat-action-buttons, .chat-input-container').forEach(el => el.remove());
+                if (userOptionsBox) {
+                    userOptionsBox.style.display = 'flex';
+                    chatBody.appendChild(userOptionsBox);
+                }
+            };
+
+            window.handleBotOption = function(optionType) {
+                const optionsBox = document.getElementById('userOptionsBox');
+                const typingIndicator = document.getElementById('typingIndicator');
+                const chatBody = document.getElementById('chatBody');
+                if (optionsBox) optionsBox.style.display = 'none';
+
+                if (optionType === 'otomatik') {
+                    addUserMessage("⚙️ Otomatik vitesli araçları sıralar mısın?");
+                    chatBody.appendChild(typingIndicator);
+                    typingIndicator.style.display = 'flex';
                     scrollToBottom();
 
-                    const inputEl = inputContainer.querySelector('input');
-                    const btnEl = inputContainer.querySelector('button');
-                    inputEl.focus();
+                    setTimeout(() => {
+                        typingIndicator.style.display = 'none';
+                        currentCategoryFilter = 'otomatik';
+                        applySortAndFilter();
+                        addBotMessage("Sizin için filomuzdaki <strong>Otomatik Vitesli</strong> araçları (Honda Civic, Renault Megane, Toyota Corolla ve Hyundai i20) hemen arkada sıraladım.");
+                        showResetActionInChat();
+                    }, getRandomDelay());
+                } 
+                else if (optionType === 'dizel') {
+                    addUserMessage("⛽ Dizel ekonomik araçları sıralar mısın?");
+                    chatBody.appendChild(typingIndicator);
+                    typingIndicator.style.display = 'flex';
+                    scrollToBottom();
 
-                    const handleSend = () => {
-                        const val = inputEl.value.trim();
-                        if (!val) return;
-                        inputContainer.remove();
-                        addUserMessage(val);
-                        chatBody.appendChild(typingIndicator);
-                        typingIndicator.style.display = 'flex';
+                    setTimeout(() => {
+                        typingIndicator.style.display = 'none';
+                        currentCategoryFilter = 'dizel';
+                        applySortAndFilter();
+                        addBotMessage("Sizin için yakıt cimrisi <strong>Dizel</strong> araçlarımızı ekranınızda listeledim.");
+                        showResetActionInChat();
+                    }, getRandomDelay());
+                }
+                else if (optionType === 'elektrik') {
+                    addUserMessage("⚡ Elektrikli araç seçeneği var mı?");
+                    chatBody.appendChild(typingIndicator);
+                    typingIndicator.style.display = 'flex';
+                    scrollToBottom();
+
+                    setTimeout(() => {
+                        typingIndicator.style.display = 'none';
+                        currentCategoryFilter = 'elektrik';
+                        applySortAndFilter();
+                        addBotMessage("Filomuzda yeni nesil <strong>Elektrikli & Otomatik</strong> olarak <strong>Toyota Corolla (1.700 ₺ / Gün)</strong> modelimiz hazırda beklemektedir.");
+                        showResetActionInChat();
+                    }, getRandomDelay());
+                }
+                else if (optionType === 'fiyat') {
+                    addUserMessage("💰 Günlük 1.500 ₺ fırsat araçlarını göster.");
+                    chatBody.appendChild(typingIndicator);
+                    typingIndicator.style.display = 'flex';
+                    scrollToBottom();
+
+                    setTimeout(() => {
+                        typingIndicator.style.display = 'none';
+                        currentCategoryFilter = 'ekonomik';
+                        applySortAndFilter();
+                        addBotMessage("Günlük <strong>1.500 ₺</strong> olan en ekonomik fırsat araçlarımızı (Fiat Egea, Fiat Fiorino, Peugeot 301 ve Renault Symbol) sizin için sıraladım.");
+                        showResetActionInChat();
+                    }, getRandomDelay());
+                }
+                else if (optionType === 'baska') {
+                    addUserMessage("❓ Aklıma takılan başka bir soru var.");
+                    chatBody.appendChild(typingIndicator);
+                    typingIndicator.style.display = 'flex';
+                    scrollToBottom();
+
+                    setTimeout(() => {
+                        typingIndicator.style.display = 'none';
+                        addBotMessage("Hangi konu hakkında yardıma ihtiyacınız var? Aşağıya yazabilirsiniz:");
+
+                        const inputContainer = document.createElement('div');
+                        inputContainer.className = 'chat-input-container';
+                        inputContainer.innerHTML = `
+                            <input type="text" class="chat-text-input" placeholder="Sorunuzu buraya yazın..." aria-label="Sorunuzu girin">
+                            <button type="button" class="chat-send-btn" aria-label="Mesajı Gönder">Gönder</button>
+                        `;
+                        chatBody.appendChild(inputContainer);
                         scrollToBottom();
 
-                        setTimeout(() => {
-                            typingIndicator.style.display = 'none';
-                            addBotMessage("Tüm araçlarımızda <strong>Tam Kasko</strong>, <strong>Minimum 21 Yaş</strong> kuralı ve <strong>Malatya içi Ücretsiz Adrese Teslimat</strong> mevcuttur.");
-                            showResetActionInChat();
-                        }, getRandomDelay());
-                    };
+                        const inputEl = inputContainer.querySelector('input');
+                        const btnEl = inputContainer.querySelector('button');
+                        inputEl.focus();
 
-                    btnEl.onclick = handleSend;
-                    inputEl.addEventListener('keyup', (e) => { if (e.key === 'Enter') handleSend(); });
-                }, 1100);
+                        const handleSend = () => {
+                            const val = inputEl.value.trim();
+                            if (!val) return;
+                            inputContainer.remove();
+                            addUserMessage(val);
+                            chatBody.appendChild(typingIndicator);
+                            typingIndicator.style.display = 'flex';
+                            scrollToBottom();
+
+                            setTimeout(() => {
+                                typingIndicator.style.display = 'none';
+                                addBotMessage("Tüm araçlarımızda <strong>Tam Kasko</strong>, <strong>Minimum 21 Yaş</strong> kuralı ve <strong>Malatya içi Ücretsiz Adrese Teslimat</strong> mevcuttur.");
+                                showResetActionInChat();
+                            }, getRandomDelay());
+                        };
+
+                        btnEl.onclick = handleSend;
+                        inputEl.addEventListener('keyup', (e) => { if (e.key === 'Enter') handleSend(); });
+                    }, 1100);
+                }
+            };
+
+            function showResetActionInChat() {
+                const chatBody = document.getElementById('chatBody');
+                const actionDiv = document.createElement('div');
+                actionDiv.className = 'chat-action-buttons';
+                actionDiv.innerHTML = `
+                    <button class="chat-action-btn" onclick="resetChatMessages()">🔄 Başka Bir Filtre Seç</button>
+                    <button class="chat-action-btn" style="background:#1A1D20; color:#FFC107;" onclick="openOrderModal('RENAULT MEGANE', 'renault-megane-360.mp4', '2.000 ₺')">📅 Hemen Sipariş Oluştur</button>
+                `;
+                chatBody.appendChild(actionDiv);
+                scrollToBottom();
             }
-        };
 
-        function showResetActionInChat() {
-            const chatBody = document.getElementById('chatBody');
-            const actionDiv = document.createElement('div');
-            actionDiv.className = 'chat-action-buttons';
-            actionDiv.innerHTML = `
-                <button class="chat-action-btn" onclick="resetChatMessages()">🔄 Başka Bir Filtre Seç</button>
-                <button class="chat-action-btn" style="background:#1A1D20; color:#FFC107;" onclick="openOrderModal('RENAULT MEGANE', 'renault-megane-360.mp4', '2.000 ₺')">📅 Hemen Sipariş Oluştur</button>
-            `;
-            chatBody.appendChild(actionDiv);
-            scrollToBottom();
-        }
+            // 8. ÇOK KATMANLI GÜVENLİK KİLİTLERİ (SAĞ TIK, F12, CTRL+S, CTRL+U, SÜRÜKLEME, IFRAME KORUMASI)
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            document.addEventListener('dragstart', e => e.preventDefault());
+            document.addEventListener('copy', e => {
+                if (!['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) e.preventDefault();
+            });
+            document.addEventListener('keydown', e => {
+                const k = e.key ? e.key.toUpperCase() : '';
+                if (
+                    k === 'F12' ||
+                    (e.ctrlKey && e.shiftKey && ['I', 'J', 'C', 'K'].includes(k)) ||
+                    (e.ctrlKey && ['U', 'S', 'P'].includes(k))
+                ) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
 
-        // 8. GÜVENLİK KİLİTLERİ (SAĞ TIK, F12, CTRL+U, KOPYALAMA VE IFRAME KORUMASI)
-        document.addEventListener('contextmenu', e => {
-            if (!['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) e.preventDefault();
-        });
-        document.addEventListener('keydown', e => {
-            const k = e.key ? e.key.toUpperCase() : '';
-            if (k === 'F12' || (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(k)) || (e.ctrlKey && k === 'U')) {
-                e.preventDefault();
+            if (window.top !== window.self) {
+                window.top.location = window.self.location;
             }
-        });
-        document.addEventListener('copy', e => {
-            if (!['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) e.preventDefault();
-        });
-        if (window.top !== window.self) {
-            window.top.location = window.self.location;
-        }
+        })();
     </script>
 </body>
 </html>
