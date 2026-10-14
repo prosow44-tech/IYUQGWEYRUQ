@@ -1,22 +1,16 @@
 <!DOCTYPE html>
-<html lang="tr" class="scroll-smooth">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>Referans Rentecar | Malatya Lüks ve Ekonomik Araç Kiralama</title>
     <meta name="description" content="Malatya'nın en geniş ve güvenilir araç kiralama filosu. Günlük 1.500 ₺'den başlayan fiyatlarla dizel, benzinli, elektrikli, otomatik ve manuel kiralık araçlar. Anında adrese ücretsiz teslimat.">
-    <meta name="keywords" content="Malatya araç kiralama, Malatya rent a car, Referans Rentecar, Malatya oto kiralama, Malatya havalimanı araç kiralama, uygun fiyatlı araç kiralama Malatya, kiralık Fiat Egea Malatya, kiralık Honda Civic Malatya, kiralık Renault Megane Malatya, kiralık Nissan Qashqai Malatya, kiralık Toyota Corolla Malatya, Malatya günlük kiralık araba, Malatya otomatik vites araç kiralama, Malatya dizel araç kiralama, Malatya VIP araç kiralama">
+    <meta name="keywords" content="Malatya araç kiralama, Malatya rent a car, Referans Rentecar, Malatya oto kiralama, Malatya havalimanı araç kiralama, uygun fiyatlı araç kiralama Malatya, kiralık Fiat Egea Malatya, kiralık Honda Civic Malatya, kiralık Renault Megane Malatya, kiralık Nissan Qashqai Malatya, kiralık Toyota Corolla Malatya">
     <meta name="author" content="Referans Rentecar">
     <meta name="robots" content="index, follow">
-    <meta name="language" content="Turkish">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#E8E8E6">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-
-    <meta property="og:title" content="Referans Rentecar | Malatya Araç Kiralama">
-    <meta property="og:description" content="360° interaktif araç inceleme deneyimi ve anında adrese ücretsiz teslimat ile Malatya'da kesintisiz araç kiralama.">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="tr_TR">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,42 +27,33 @@
         "@type": "PostalAddress",
         "addressLocality": "Malatya",
         "addressCountry": "TR"
-      },
-      "makesOffer": [
-        { "@type": "Offer", "itemOffered": { "@type": "Car", "name": "Honda Civic" }, "price": "1600", "priceCurrency": "TRY" },
-        { "@type": "Offer", "itemOffered": { "@type": "Car", "name": "Renault Megane" }, "price": "2000", "priceCurrency": "TRY" },
-        { "@type": "Offer", "itemOffered": { "@type": "Car", "name": "Citroen C Elysee" }, "price": "1600", "priceCurrency": "TRY" },
-        { "@type": "Offer", "itemOffered": { "@type": "Car", "name": "Nissan Qashqai" }, "price": "2300", "priceCurrency": "TRY" },
-        { "@type": "Offer", "itemOffered": { "@type": "Car", "name": "Toyota Corolla" }, "price": "1700", "priceCurrency": "TRY" },
-        { "@type": "Offer", "itemOffered": { "@type": "Car", "name": "Kia Rio" }, "price": "1650", "priceCurrency": "TRY" },
-        { "@type": "Offer", "itemOffered": { "@type": "Car", "name": "Hyundai i20" }, "price": "1600", "priceCurrency": "TRY" },
-        { "@type": "Offer", "itemOffered": { "@type": "Car", "name": "Fiat Egea" }, "price": "1500", "priceCurrency": "TRY" },
-        { "@type": "Offer", "itemOffered": { "@type": "Car", "name": "Fiat Fiorino" }, "price": "1500", "priceCurrency": "TRY" },
-        { "@type": "Offer", "itemOffered": { "@type": "Car", "name": "Peugeot 301" }, "price": "1500", "priceCurrency": "TRY" },
-        { "@type": "Offer", "itemOffered": { "@type": "Car", "name": "Renault Symbol" }, "price": "1500", "priceCurrency": "TRY" }
-      ]
+      }
     }
     </script>
 
     <style>
+        :root {
+            --studio-bg: #E7E7E5;
+        }
+
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background-color: #f8f9fa; border-radius: 4px; }
+        ::-webkit-scrollbar-track { background-color: var(--studio-bg); }
         ::-webkit-scrollbar-thumb { background-color: #adb5bd; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background-color: #1A1D20; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; -webkit-tap-highlight-color: transparent; }
         
         html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
-        @media (min-width: 1025px) { html { zoom: 0.9; } }
 
         body { 
-            background-color: #ffffff; 
+            background-color: var(--studio-bg); 
             color: #1A1D20; 
             min-height: 100vh; 
             overflow-x: hidden; 
             position: relative; 
             -webkit-font-smoothing: antialiased;
             user-select: none;
+            transition: background-color 0.4s ease;
         }
 
         input, select, textarea { user-select: text; outline: none; font-family: 'Montserrat', sans-serif; }
@@ -77,236 +62,211 @@
 
         .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background-color: #FFC107; width: 0%; z-index: 50000; pointer-events: none; transition: width 0.1s ease-out; }
 
-        .shadow-soft { box-shadow: 0 12px 35px rgba(26, 29, 32, 0.05); }
-        .shadow-md { box-shadow: 0 8px 25px rgba(26, 29, 32, 0.07); }
-        .shadow-float { box-shadow: 0 20px 50px rgba(26, 29, 32, 0.15); }
-        .shadow-inset { box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); }
+        .shadow-soft { box-shadow: 0 14px 35px rgba(26, 29, 32, 0.06); }
+        .shadow-float { box-shadow: 0 20px 50px rgba(26, 29, 32, 0.16); }
 
-        /* 1. SOL ÜST: LOGO & EVRENSEL PWA */
-        header { position: absolute; top: 50px; left: 60px; z-index: 100; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-        .logo { font-size: 34px; font-weight: 900; letter-spacing: -1px; margin-bottom: 35px; color: #1A1D20; }
+        /* ÜSTTEN DÜŞEN BİLDİRİM TOAST (PWA YÜKLENDİ & SİPARİŞ ONAYI) */
+        .top-toast {
+            position: fixed; top: 22px; left: 50%; 
+            transform: translateX(-50%) translateY(-150px);
+            background: rgba(26, 29, 32, 0.96); 
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            padding: 14px 28px; border-radius: 999px; 
+            display: flex; align-items: center; gap: 14px;
+            color: #ffffff; font-weight: 800; font-size: 14px; 
+            z-index: 99999; opacity: 0; pointer-events: none;
+            transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease; 
+            border: 2px solid #00E676; 
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25), 0 0 20px rgba(0, 230, 118, 0.25);
+        }
+        .top-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .top-toast .check-icon { 
+            background: #00E676; color: #1A1D20; border-radius: 50%; 
+            width: 32px; height: 32px; display: flex; justify-content: center; 
+            align-items: center; font-size: 17px; font-weight: 900; flex-shrink: 0;
+            box-shadow: 0 0 12px rgba(0, 230, 118, 0.6);
+        }
+
+        /* 1. SOL ÜST: LOGO & PWA KUTUSU */
+        header { position: absolute; top: 45px; left: 50px; z-index: 100; transition: all 0.5s ease; }
+        .logo { font-size: 34px; font-weight: 900; letter-spacing: -1px; margin-bottom: 28px; color: #1A1D20; }
         .logo span { color: #FFC107; }
         
-        .pwa-box { width: 250px; background: #ffffff; border: 1px solid #F1F3F5; border-radius: 16px; padding: 28px 20px; text-align: center; position: relative; }
-        .pwa-icon-bg { width: 60px; height: 70px; background: #FFC107; border-radius: 12px; margin: 0 auto 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 15px rgba(255,193,7,0.3); }
-        .pwa-icon-inner { width: 40px; height: 50px; background: #ffffff; border-radius: 6px; position: relative; }
+        .pwa-box { width: 245px; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); border: 1.5px solid #ffffff; border-radius: 20px; padding: 26px 20px; text-align: center; }
+        .pwa-icon-bg { width: 58px; height: 68px; background: #FFC107; border-radius: 12px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 15px rgba(255,193,7,0.3); }
+        .pwa-icon-inner { width: 38px; height: 48px; background: #ffffff; border-radius: 6px; position: relative; }
         .pwa-arrow { position: absolute; top: 22%; left: 50%; transform: translateX(-50%) rotate(45deg); border: solid #FFC107; border-width: 0 4px 4px 0; padding: 6px; }
-        .pwa-box h3 { font-size: 17px; font-weight: 900; margin-bottom: 8px; color: #1A1D20; }
-        .pwa-box p { font-size: 11px; font-weight: 600; color: #6C757D; line-height: 1.5; margin-bottom: 18px; }
-        .pwa-btn { width: 100%; padding: 14px; background: #FFC107; border: none; border-radius: 10px; font-size: 13px; font-weight: 900; color: #1A1D20; cursor: pointer; transition: all 0.236s ease; }
-        .pwa-btn:hover { background: #FFCA28; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(255,193,7,0.35); }
+        .pwa-box h3 { font-size: 16px; font-weight: 900; margin-bottom: 8px; color: #1A1D20; }
+        .pwa-box p { font-size: 11px; font-weight: 600; color: #495057; line-height: 1.5; margin-bottom: 18px; }
+        .pwa-btn { width: 100%; padding: 14px; background: #FFC107; border: none; border-radius: 12px; font-size: 13px; font-weight: 900; color: #1A1D20; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 6px 15px rgba(255,193,7,0.3); }
+        .pwa-btn:hover { background: #FFCA28; transform: translateY(-2px); }
         .pwa-btn:active { transform: scale(0.96); }
 
-        /* 2. ÜST MENÜ (GÖLGELİ VE SABİT KAPSÜL) */
+        /* 2. MODERNİZE EDİLMİŞ ÜST MENÜ (KAYISI & MALATYA) */
         .top-capsule { 
-            position: fixed; top: 25px; left: 50%; transform: translateX(-50%); 
-            width: 860px; height: 56px; 
-            background: rgba(248, 249, 250, 0.92); 
-            border: 1.5px solid #E9ECEF; border-radius: 30px; 
+            position: fixed; top: 22px; left: 50%; transform: translateX(-50%); 
+            width: 860px; height: 60px; 
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(248, 249, 250, 0.85) 100%);
+            backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1.5px solid rgba(255, 255, 255, 0.95); border-radius: 999px; 
             display: flex; align-items: center; justify-content: space-between; 
-            padding: 0 35px; z-index: 1000; 
-            box-shadow: 0 14px 35px rgba(26, 29, 32, 0.08), 0 4px 12px rgba(26, 29, 32, 0.04);
-            transition: all 0.4s ease;
+            padding: 0 36px; z-index: 1000; 
+            box-shadow: 0 18px 40px rgba(26, 29, 32, 0.1), 0 4px 12px rgba(26, 29, 32, 0.05), inset 0 1px 0 rgba(255, 255, 255, 1);
         }
-        @media (min-width: 769px) {
-            .top-capsule { backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+        .status-item { display: flex; align-items: center; gap: 10px; font-size: 13.5px; font-weight: 800; color: #1A1D20; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+        .dot-green { background: #00E676; box-shadow: 0 0 10px rgba(0,230,118,0.7); }
+        .dot-red { background: #D32F2F; box-shadow: 0 0 10px rgba(211,47,47,0.7); }
+        
+        .malatya-brand { 
+            display: flex; align-items: center; gap: 10px; 
+            background: rgba(255, 193, 7, 0.14); 
+            border: 1.5px solid rgba(255, 193, 7, 0.45);
+            padding: 7px 22px; border-radius: 999px;
+            box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.8);
         }
-        .status-item { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 800; color: #1A1D20; }
-        .dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
-        .dot-green { background: #00E676; box-shadow: 0 0 8px rgba(0,230,118,0.6); }
-        .dot-red { background: #D32F2F; box-shadow: 0 0 8px rgba(211,47,47,0.6); }
-        .neon-text { font-size: 25px; font-weight: 900; color: #FF8F00; text-shadow: 0 0 10px rgba(255,193,7,0.45); letter-spacing: -0.5px; cursor: pointer; }
+        .malatya-text { 
+            font-size: 21px; font-weight: 900; color: #1A1D20; 
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+        .apricot-icon { width: 26px; height: 26px; display: block; filter: drop-shadow(0 2px 4px rgba(255, 143, 0, 0.35)); }
 
         /* 3. ARAMA VE KATEGORİ FİLTRELERİ */
-        .search-wrapper { position: absolute; top: 155px; left: 50%; transform: translateX(-50%); width: 960px; text-align: center; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 90; }
-        .search-title { font-size: 22px; font-weight: 800; margin-bottom: 28px; color: #1A1D20; }
+        .search-wrapper { position: absolute; top: 135px; left: 50%; transform: translateX(-50%); width: 880px; text-align: center; transition: all 0.55s cubic-bezier(0.4, 0, 0.2, 1); z-index: 90; }
+        .search-title { font-size: 21px; font-weight: 800; margin-bottom: 22px; color: #1A1D20; }
         
-        .search-bar { height: 72px; background: #ffffff; border: 2px solid #FFC107; border-radius: 36px; display: flex; align-items: center; position: relative; padding-left: 95px; padding-right: 230px; margin-bottom: 25px; transition: 0.3s; cursor: pointer; }
-        .search-bar:hover { box-shadow: 0 10px 25px rgba(255,193,7,0.22); transform: translateY(-1px); }
-        .search-placeholder { font-size: 15px; font-weight: 700; color: #6C757D; text-align: left; }
+        .search-bar { height: 68px; background: #ffffff; border: 2px solid #FFC107; border-radius: 36px; display: flex; align-items: center; position: relative; padding-left: 92px; padding-right: 225px; margin-bottom: 20px; transition: 0.3s; cursor: pointer; }
+        .search-bar:hover { box-shadow: 0 12px 28px rgba(255,193,7,0.25); transform: translateY(-1px); }
+        .search-placeholder { font-size: 14.5px; font-weight: 700; color: #6C757D; text-align: left; }
         
-        .avatar-circle { position: absolute; left: -8px; width: 88px; height: 88px; background: #1A1D20; border-radius: 50%; border: 2.5px dashed #FFC107; display: flex; align-items: center; justify-content: center; font-size: 36px; box-shadow: 0 8px 20px rgba(0,0,0,0.18); transition: transform 0.3s ease; }
-        .search-bar:hover .avatar-circle { transform: scale(1.05); }
+        .avatar-circle { position: absolute; left: -6px; width: 82px; height: 82px; background: #1A1D20; border-radius: 50%; border: 2.5px dashed #FFC107; display: flex; align-items: center; justify-content: center; font-size: 34px; box-shadow: 0 8px 20px rgba(0,0,0,0.18); }
 
-        .smart-chat-bubble {
-            position: absolute; top: 108%; left: 36px; transform: translateX(-50%);
-            background-color: #1A1D20; color: #FFC107; padding: 6px 14px; border-radius: 12px;
-            font-weight: 800; font-size: 11px; white-space: nowrap;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 1.5px solid #FFC107;
-            opacity: 0; visibility: hidden; pointer-events: none; z-index: 95;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
-        .smart-chat-bubble.show { opacity: 1; visibility: visible; }
-        .smart-chat-bubble::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 6px solid #FFC107; }
-
-        .search-actions { position: absolute; right: 15px; display: flex; gap: 8px; }
-        .search-btn { padding: 11px 20px; background: #F8F9FA; border: 1px solid #E9ECEF; border-radius: 20px; font-size: 13px; font-weight: 800; color: #1A1D20; cursor: pointer; transition: 0.2s; }
+        .search-actions { position: absolute; right: 14px; display: flex; gap: 8px; }
+        .search-btn { padding: 10px 18px; background: #F8F9FA; border: 1px solid #E9ECEF; border-radius: 20px; font-size: 12.5px; font-weight: 800; color: #1A1D20; cursor: pointer; transition: 0.2s; }
         .search-btn:hover { background: #FFC107; border-color: #FFC107; }
 
-        .filter-row { display: flex; gap: 12px; margin-bottom: 14px; width: 100%; justify-content: center; flex-wrap: wrap; }
-        .filter-chip { padding: 13px 26px; text-align: center; background: #ffffff; border: 1.5px solid #E9ECEF; border-radius: 25px; font-size: 13px; font-weight: 700; color: #6C757D; cursor: pointer; transition: all 0.2s ease; }
-        .filter-chip:hover { border-color: #FFC107; color: #1A1D20; }
-        .filter-chip.active { background: #FFC107; border-color: #FFC107; color: #1A1D20; font-weight: 900; box-shadow: 0 6px 15px rgba(255,193,7,0.25); }
+        .filter-row { display: flex; gap: 10px; margin-bottom: 12px; width: 100%; justify-content: center; flex-wrap: wrap; }
+        .filter-chip { padding: 11px 22px; text-align: center; background: rgba(255, 255, 255, 0.92); border: 1.5px solid #ffffff; border-radius: 25px; font-size: 13px; font-weight: 700; color: #495057; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        .filter-chip:hover { border-color: #FFC107; color: #1A1D20; background: #ffffff; }
+        .filter-chip.active { background: #FFC107; border-color: #FFC107; color: #1A1D20; font-weight: 900; box-shadow: 0 6px 15px rgba(255,193,7,0.3); }
 
         .fade-out-up { opacity: 0 !important; transform: translate(-50%, -40px) !important; pointer-events: none !important; }
         .fade-out-side { opacity: 0 !important; transform: translateX(40px) !important; pointer-events: none !important; }
 
-        /* 4. SAĞ AKILLI FİLTRE PANELİ (ANLIK FİLTRELEME) */
-        .right-filter-panel { position: absolute; top: 155px; right: 60px; width: 280px; background: #ffffff; border: 1px solid #F1F3F5; border-radius: 16px; padding: 25px; z-index: 100; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-        .rf-title { font-size: 17px; font-weight: 900; margin-bottom: 16px; color: #1A1D20; }
-        .rf-line { width: 100%; height: 2px; background: #F1F3F5; margin-bottom: 18px; }
-        .rf-label { font-size: 12px; font-weight: 700; color: #6C757D; margin-bottom: 8px; display: block; }
+        /* 4. SAĞ AKILLI FİLTRE PANELİ (SIRALAMA ÖLÇÜTÜ TAMAMEN BUTON HALİNDE) */
+        .right-filter-panel { position: absolute; top: 135px; right: 50px; width: 270px; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); border: 1.5px solid #ffffff; border-radius: 20px; padding: 24px; z-index: 100; transition: all 0.55s ease; }
+        .rf-title { font-size: 16.5px; font-weight: 900; margin-bottom: 14px; color: #1A1D20; }
+        .rf-line { width: 100%; height: 2px; background: #F1F3F5; margin-bottom: 16px; }
+        .rf-label { font-size: 11.5px; font-weight: 800; color: #6C757D; margin-bottom: 10px; display: block; text-transform: uppercase; letter-spacing: 0.4px; }
         
-        .rf-select-wrapper { position: relative; margin-bottom: 22px; }
-        .rf-select { width: 100%; padding: 12px 35px 12px 14px; background: #FFF8E1; border: 1.5px solid #FFC107; border-radius: 10px; font-size: 12.5px; font-weight: 800; color: #1A1D20; appearance: none; -webkit-appearance: none; cursor: pointer; }
-        .rf-select-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); pointer-events: none; font-size: 10px; color: #1A1D20; font-weight: 900; }
-        
-        .rf-radio-group { display: flex; flex-direction: column; gap: 14px; }
+        /* Fiyat: Yüksekten Düşüğe Tıklanabilir Buton */
+        .rf-sort-btn {
+            width: 100%; padding: 12px 14px; margin-bottom: 20px;
+            background: #FFF8E1; border: 1.5px solid #FFC107; border-radius: 10px;
+            font-size: 13px; font-weight: 800; color: #1A1D20;
+            display: flex; align-items: center; gap: 10px; cursor: pointer;
+            transition: all 0.2s ease; text-align: left;
+        }
+        .rf-sort-btn:hover { background: #FFECB3; }
+        .rf-sort-btn.active { background: #FFC107; border-color: #1A1D20; box-shadow: 0 4px 12px rgba(255,193,7,0.35); }
+        .rf-sort-btn .rf-box { border-color: #1A1D20; background: #ffffff; }
+        .rf-sort-btn.active .rf-box { background: #1A1D20; border-color: #1A1D20; }
+        .rf-sort-btn.active .rf-box::after { content: '✔'; font-size: 11px; color: #FFC107; font-weight: 900; }
+
+        .rf-radio-group { display: flex; flex-direction: column; gap: 12px; }
         .rf-radio { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 4px 0; }
-        .rf-box { width: 20px; height: 20px; border-radius: 6px; border: 1.5px solid #DEE2E6; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .rf-box { width: 20px; height: 20px; border-radius: 6px; border: 1.5px solid #ADB5BD; background: #ffffff; display: flex; align-items: center; justify-content: center; transition: 0.2s; flex-shrink: 0; }
         .rf-radio.active .rf-box { background: #FFC107; border-color: #FFC107; }
         .rf-radio.active .rf-box::after { content: '✔'; font-size: 12px; color: #1A1D20; font-weight: 900; }
-        .rf-text { font-size: 14px; font-weight: 600; color: #1A1D20; }
+        .rf-text { font-size: 13.5px; font-weight: 600; color: #1A1D20; }
         .rf-radio.active .rf-text { font-weight: 800; }
 
-        /* 5. ÇEREZ (COOKIE) BUTONU VE BİLDİRİMİ */
-        .cookie-btn { position: fixed; bottom: 30px; left: 30px; width: 52px; height: 52px; background: #1A1D20; border: 2px solid #FFC107; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; transition: 0.3s; box-shadow: 0 8px 20px rgba(0,0,0,0.22); }
+        /* 5. ÇEREZ BUTONU */
+        .cookie-btn { position: fixed; bottom: 28px; left: 28px; width: 50px; height: 50px; background: #1A1D20; border: 2px solid #FFC107; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; transition: 0.3s; box-shadow: 0 8px 20px rgba(0,0,0,0.22); }
         .cookie-btn:hover { transform: scale(1.1); background: #FFC107; border-color: #1A1D20; }
-        .cookie-btn svg { width: 26px; height: 26px; stroke: #FFC107; fill: none; transition: 0.3s; }
+        .cookie-btn svg { width: 24px; height: 24px; stroke: #FFC107; fill: none; transition: 0.3s; }
         .cookie-btn:hover svg { stroke: #1A1D20; }
 
-        .cookie-popup { position: fixed; bottom: 95px; left: 30px; width: 320px; background: #ffffff; border: 2px solid #FFC107; border-radius: 16px; padding: 20px; z-index: 1001; box-shadow: 0 15px 40px rgba(0,0,0,0.15); display: none; flex-direction: column; gap: 12px; }
+        .cookie-popup { position: fixed; bottom: 90px; left: 28px; width: 310px; background: #ffffff; border: 2px solid #FFC107; border-radius: 16px; padding: 18px; z-index: 1001; box-shadow: 0 15px 40px rgba(0,0,0,0.15); display: none; flex-direction: column; gap: 10px; }
         .cookie-popup.show { display: flex; }
-        .cookie-popup h4 { font-size: 15px; font-weight: 900; color: #1A1D20; }
+        .cookie-popup h4 { font-size: 14px; font-weight: 900; color: #1A1D20; }
         .cookie-popup p { font-size: 12px; font-weight: 600; color: #6C757D; line-height: 1.4; }
         .cookie-accept-btn { padding: 10px; background: #1A1D20; color: #FFC107; border: none; border-radius: 8px; font-size: 12px; font-weight: 900; cursor: pointer; }
 
-        /* 6. ARAÇ KARTLARI (GENİŞLETİLMİŞ 3 SÜTUNLU MİMARİ) */
+        /* 6. ARAÇ KARTLARI (ÇAKIŞMASIZ PADDING-TOP, BÜYÜTÜLMÜŞ & YAKINLAŞTIRILMIŞ VİDEO ALANI) */
         .cars-container { 
-            position: relative; margin-top: 520px; width: 100%; 
-            padding: 0 50px 140px; 
+            position: relative; 
+            padding: 460px 40px 140px; 
+            width: 100%; 
             display: grid; grid-template-columns: repeat(3, 1fr); 
-            gap: 90px 45px; z-index: 10; 
+            gap: 85px 35px; z-index: 10; 
             transition: transform 0.75s cubic-bezier(0.25, 1, 0.5, 1); 
         }
-        .cars-container.lift-up { transform: translateY(-350px); }
+        .cars-container.lift-up { transform: translateY(-320px); }
         
         .car-card { 
-            text-align: center; background: #ffffff; 
+            text-align: center; background: transparent; 
             display: flex; flex-direction: column; align-items: center; 
-            width: 100%; max-width: 580px; margin: 0 auto; 
-            padding: 15px; border-radius: 24px;
+            width: 100%; max-width: 620px; margin: 0 auto; 
             transition: opacity 0.35s ease, transform 0.35s ease; 
         }
         .car-card.hidden { display: none !important; }
         
-        /* Video Kutusu & GPU Hızlandırma & Beyaz Arka Plan Bütünleştirme */
+        /* Büyütülmüş ve Yakınlaştırılmış Yüksek Kaliteli Video Alanı */
         .car-media-box { 
-            position: relative; width: 100%; height: 310px; margin-bottom: 18px; 
+            position: relative; width: 100%; height: 380px; margin-bottom: 12px; 
             display: flex; align-items: center; justify-content: center; 
-            cursor: ew-resize; overflow: hidden; border-radius: 16px;
-            background-color: #ffffff;
+            cursor: grab; overflow: hidden; border-radius: 24px;
+            background-color: var(--studio-bg);
+            -webkit-mask-image: radial-gradient(ellipse 92% 88% at 50% 50%, #000 78%, transparent 100%);
+            mask-image: radial-gradient(ellipse 92% 88% at 50% 50%, #000 78%, transparent 100%);
         }
+        .car-media-box:active { cursor: grabbing; }
+        
         .car-video { 
-            width: 100%; height: 100%; object-fit: contain; 
-            mix-blend-mode: multiply; 
-            filter: contrast(1.04);
-            will-change: transform, contents;
-            transform: translateZ(0);
+            width: 100%; height: 100%; object-fit: cover; 
+            transform: scale(1.26) translateZ(0);
+            will-change: transform;
             opacity: 1 !important;
             display: block;
             pointer-events: none;
         }
 
-        /* 360° BASTON OYMA HİSSİYATLI VİTES TOPUZU (5 KADEMELİ JOYSTICK) */
-        .slider-wrapper { 
-            position: relative; width: 310px; height: 56px; margin-bottom: 22px; 
-            display: flex; justify-content: center; align-items: center; 
-            cursor: pointer; user-select: none; touch-action: pan-y;
+        /* Sabit 360° Kaydırma Rozeti (Vites Topuzu Kaldırıldı) */
+        .swipe-badge {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 11px 28px; margin-bottom: 18px;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1.5px solid #ffffff; border-radius: 999px;
+            font-size: 12.5px; font-weight: 800; color: #1A1D20;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+            cursor: ew-resize; user-select: none;
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
-        .hint-text { 
-            position: absolute; padding: 12px 28px; background: #ffffff; 
-            border: 1.5px solid #DEE2E6; border-radius: 25px; 
-            font-size: 13px; font-weight: 800; color: #1A1D20; 
-            transition: opacity 0.45s ease; white-space: nowrap; z-index: 3; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-        }
-        
-        .gear-track { 
-            position: absolute; width: 100%; height: 12px; 
-            background: linear-gradient(180deg, #CED4DA 0%, #E9ECEF 100%); 
-            border: 1px solid #ADB5BD;
-            border-radius: 6px; opacity: 0; transition: opacity 0.45s ease; 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 0 12px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.15); 
-        }
-        .gear-track::before { content: '◀'; font-size: 11px; color: #495057; font-weight: 900; }
-        .gear-track::after { content: '▶'; font-size: 11px; color: #495057; font-weight: 900; }
-        
-        /* Baston Boğumlu & Oymalı 'R' Vites Topuzu */
-        .gear-knob { 
-            position: absolute; left: 50%; width: 54px; height: 54px; 
-            background: radial-gradient(circle at 35% 30%, #343A40, #1A1D20 70%); 
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-            color: #FFC107; font-size: 21px; font-weight: 900; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.45), inset 0 -4px 8px rgba(0,0,0,0.9), inset 0 3px 5px rgba(255,255,255,0.25); 
-            border: 2.5px solid #2B3035;
-            outline: 2px dashed rgba(255, 193, 7, 0.35);
-            outline-offset: -6px;
-            transform-origin: 50% 85%;
-            transform: translateX(-50%) rotate(0deg); 
-            opacity: 0; transition: opacity 0.45s ease; 
-            cursor: grab; z-index: 5; 
-        }
-        /* Baston Boğumu (Alt Çıkıntı Bileziği) */
-        .gear-knob::after {
-            content: ''; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%);
-            width: 28px; height: 7px; background: linear-gradient(90deg, #495057, #ADB5BD, #495057);
-            border-radius: 4px; border: 1px solid #1A1D20; box-shadow: 0 3px 6px rgba(0,0,0,0.4);
-        }
-        /* Oymalı (Carved) R Harfi */
-        .gear-knob span { 
-            display: block; 
-            color: #FFC107;
-            text-shadow: -1.5px -1.5px 2px rgba(0,0,0,0.95), 1px 1px 1px rgba(255,255,255,0.25); 
-            pointer-events: none; letter-spacing: -1px;
-        }
-        .gear-knob:active { cursor: grabbing; }
-        
-        @keyframes errorShake { 
-            0%, 100% { margin-top: 0; } 
-            20%, 60% { margin-top: -9px; background: #D32F2F; border-color: #FFCDD2; } 
-            40%, 80% { margin-top: 9px; background: #D32F2F; } 
-        }
-        .shake-error { animation: errorShake 0.38s ease; }
-
-        .state-text .hint-text { opacity: 1; pointer-events: auto; }
-        .state-text .gear-track, .state-text .gear-knob { opacity: 0; pointer-events: none; }
-        .state-slider .hint-text { opacity: 0; pointer-events: none; }
-        .state-slider .gear-track, .state-slider .gear-knob { opacity: 1; pointer-events: auto; }
+        .car-card:hover .swipe-badge { border-color: #FFC107; transform: scale(1.03); }
         
         .car-name { font-size: 28px; font-weight: 900; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px; color: #1A1D20; }
-        .car-price { font-size: 40px; font-weight: 900; margin-bottom: 22px; color: #1A1D20; }
-        .car-price span { font-size: 18px; color: #6C757D; font-weight: 700; }
+        .car-price { font-size: 40px; font-weight: 900; margin-bottom: 20px; color: #1A1D20; }
+        .car-price span { font-size: 18px; color: #495057; font-weight: 700; }
         
-        /* SİYAH DAİRESEL LÜKS İKONLAR */
-        .car-specs { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; }
-        .spec-item { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 700; color: #495057; }
-        .dark-icon { width: 32px; height: 32px; background: #1A1D20; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 10px rgba(26,29,32,0.15); }
+        /* Tek Satırda 5 Özellik İkonu */
+        .car-specs { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: nowrap; margin-bottom: 26px; width: 100%; }
+        .spec-item { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 800; color: #1A1D20; white-space: nowrap; }
+        .dark-icon { width: 28px; height: 28px; background: #1A1D20; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 8px rgba(26,29,32,0.15); }
 
-        /* SİPARİŞ BUTONLARI (BEYAZ ARAÇ: SARI BUTON / SİYAH SEGMENT: SİYAH BUTON) */
+        /* SİPARİŞ BUTONLARI */
         .order-btn { 
             padding: 18px 42px; border-radius: 30px; font-size: 14.5px; font-weight: 900; 
-            cursor: pointer; border: none; transition: transform 0.236s ease, box-shadow 0.236s ease, background-color 0.236s ease; 
-            letter-spacing: 0.8px; width: 88%; max-width: 330px; text-transform: uppercase; 
+            cursor: pointer; border: none; transition: all 0.25s ease; 
+            letter-spacing: 0.8px; width: 85%; max-width: 320px; text-transform: uppercase; 
         }
-        .order-btn.dark-btn { background: #1A1D20; color: #FFC107; box-shadow: 0 8px 22px rgba(26,29,32,0.25); }
-        .order-btn.dark-btn:hover { background: #2B3035; box-shadow: 0 12px 28px rgba(26,29,32,0.35); }
+        .order-btn.dark-btn { background: #1A1D20; color: #FFC107; box-shadow: 0 8px 22px rgba(26,29,32,0.22); }
+        .order-btn.dark-btn:hover { background: #2B3035; transform: translateY(-2px); box-shadow: 0 12px 28px rgba(26,29,32,0.32); }
         .order-btn.light-btn { background: #FFC107; color: #1A1D20; box-shadow: 0 8px 22px rgba(255,193,7,0.35); }
-        .order-btn.light-btn:hover { background: #FFCA28; box-shadow: 0 12px 28px rgba(255,193,7,0.45); }
+        .order-btn.light-btn:hover { background: #FFCA28; transform: translateY(-2px); box-shadow: 0 12px 28px rgba(255,193,7,0.45); }
         .order-btn:active { transform: scale(0.96) !important; }
 
-        /* 7. SİPARİŞ & RANDEVU MODALI (REFERANS EĞİTİM MİMARİSİ) */
+        /* 7. SİPARİŞ & RANDEVU MODALI */
         .modal-overlay { 
             position: fixed; inset: 0; background-color: rgba(15, 23, 42, 0.82); 
             backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
@@ -316,7 +276,7 @@
         .modal-overlay.show { display: flex; opacity: 1; }
         
         .modal-box { 
-            background-color: #ffffff; border-radius: 24px; padding: 95px 38px 36px !important; 
+            background-color: #ffffff; border-radius: 24px; padding: 100px 38px 36px !important; 
             width: 100%; max-width: 560px; margin: auto; position: relative; 
             box-shadow: 0 30px 60px -12px rgba(0,0,0,0.6); border: 2px solid #FFF8E1; 
             pointer-events: auto; overflow: visible !important; text-align: center;
@@ -332,15 +292,14 @@
         }
         .modal-close-btn:hover { background: #FFEBEE; color: #D32F2F; transform: rotate(90deg); }
 
-        /* Üstteki Dönen 360° Araç Kutusu */
         .modal-car-floating {
-            position: absolute; top: -75px; left: 50%; transform: translateX(-50%);
-            width: 230px; height: 145px; border-radius: 22px; background: #ffffff;
+            position: absolute; top: -78px; left: 50%; transform: translateX(-50%);
+            width: 240px; height: 150px; border-radius: 22px; background: var(--studio-bg);
             overflow: hidden; display: flex; align-items: center; justify-content: center;
-            border: 3px solid #FFC107; padding: 10px; z-index: 20;
-            box-shadow: 0 0 0 5px rgba(255,255,255,0.6), 0 15px 35px rgba(0,0,0,0.35);
+            border: 3px solid #FFC107; z-index: 20;
+            box-shadow: 0 0 0 5px rgba(255,255,255,0.7), 0 15px 35px rgba(0,0,0,0.35);
         }
-        .modal-car-floating video { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+        .modal-car-floating video { width: 100%; height: 100%; object-fit: cover; transform: scale(1.22); }
 
         .modal-title { font-size: 26px; font-weight: 900; color: #1A1D20; margin-bottom: 4px; }
         .modal-subtitle { font-size: 13px; font-weight: 800; color: #FF8F00; margin-bottom: 22px; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -373,21 +332,9 @@
         }
         .modal-submit-btn:hover { background: #FFCA28; transform: translateY(-2px); }
 
-        /* 8. BAŞARI BİLDİRİMİ (TOAST) */
-        .success-toast {
-            position: fixed; top: 25px; left: 50%; transform: translateX(-50%) translateY(-160px);
-            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(15px);
-            padding: 16px 30px; border-radius: 50px; display: flex; align-items: center; gap: 15px;
-            color: #1A1D20; font-weight: 800; font-size: 14px; z-index: 99999; opacity: 0;
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); border: 2px solid #FFC107; 
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
-        }
-        .success-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-        .success-toast .icon { background: #00E676; color: #1A1D20; border-radius: 50%; min-width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: 900; }
-
-        /* 9. DİJİTAL ASİSTAN (REFERANS JAGUAR ÇOKLU BALON SOHBET PANELİ) */
+        /* 8. DİJİTAL ASİSTAN (REFERANS JAGUAR) */
         .chat-panel { 
-            position: fixed; bottom: 30px; right: 35px; width: 410px; height: 580px; 
+            position: fixed; bottom: 30px; right: 35px; width: 410px; height: 560px; 
             background-color: #ffffff; border-radius: 22px; box-shadow: 0 25px 60px rgba(0,0,0,0.22); 
             z-index: 54010; display: flex; flex-direction: column; overflow: hidden; 
             opacity: 0; visibility: hidden; transform: translateY(30px) scale(0.92); 
@@ -416,36 +363,38 @@
 
         .chat-action-buttons { display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: 6px; }
         .chat-action-btn { background-color: #FFC107; color: #1A1D20; border: 0; padding: 12px 16px; border-radius: 999px; font-size: 13px; font-weight: 900; text-align: center; cursor: pointer; box-shadow: 0 4px 10px rgba(255, 193, 7, 0.3); transition: all 0.2s ease; }
-        .chat-action-btn:hover { background-color: #FFCA28; transform: translateY(-2px); }
 
         .typing-indicator { display: none; gap: 10px; align-items: flex-end; }
         .typing-dots-box { display: flex; gap: 5px; padding: 14px 18px; background-color: #ffffff; border-radius: 16px 16px 16px 4px; border: 1px solid #E9ECEF; }
         .typing-dot { width: 6px; height: 6px; background-color: #ADB5BD; border-radius: 50%; animation: bounceDot 0.9s infinite alternate; }
         .typing-dot:nth-child(2) { animation-delay: 0.2s; }
         .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes bounceDot { from { opacity: 0.3; transform: translateY(0); } to { opacity: 1; transform: translateY(-4px); background-color: #FFC107; } }
+        @keyframes bounceDot { from { opacity: 0.3; transform: translateY(0); } to { opacity: 1; transform: translateY(-4px); background: #FFC107; } }
 
         .chat-input-container { display: flex; gap: 8px; margin-top: 10px; width: 100%; }
         .chat-text-input { flex: 1; padding: 11px 14px; border-radius: 10px; border: 1.5px solid #CED4DA; font-size: 13px; font-weight: 600; color: #1A1D20; background-color: #ffffff; }
-        .chat-text-input:focus { border-color: #FFC107; }
         .chat-send-btn { background-color: #1A1D20; color: #FFC107; border: 0; padding: 11px 18px; border-radius: 10px; font-weight: 900; font-size: 13px; cursor: pointer; }
 
         .chat-footer { background-color: #ffffff; padding: 10px; text-align: center; font-size: 11px; color: #6C757D; border-top: 1px solid #F1F3F5; font-weight: 800; }
 
-        /* MOBİL UYUMLULUK (TEK SÜTUN DİKEY AKIŞ) */
-        @media (max-width: 1024px) {
+        /* MOBİL VE TABLET UYUMLULUK */
+        @media (max-width: 1360px) {
+            .search-wrapper { width: 680px; }
+            .car-specs { flex-wrap: wrap; }
+        }
+        @media (max-width: 1080px) {
             header { position: relative; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 20px 20px 0; }
             .logo { margin-bottom: 0; font-size: 26px; }
             .pwa-box { display: none; }
-            .top-capsule { position: relative; top: 15px; width: 94%; height: auto; padding: 12px 18px; flex-direction: column; gap: 6px; text-align: center; }
-            .neon-text { font-size: 20px; }
-            .search-wrapper { position: relative; top: 35px; width: 94%; }
+            .top-capsule { position: relative; top: 15px; width: 94%; height: auto; padding: 14px 18px; flex-direction: column; gap: 8px; text-align: center; border-radius: 24px; }
+            .search-wrapper { position: relative; top: 30px; width: 94%; }
             .search-bar { padding-left: 70px; padding-right: 15px; height: 62px; }
             .avatar-circle { width: 64px; height: 64px; font-size: 28px; left: -4px; }
             .search-actions { display: none; }
-            .right-filter-panel { position: relative; top: 50px; right: auto; left: 50%; transform: translateX(-50%); width: 94%; margin-bottom: 20px; }
-            .cars-container { margin-top: 70px; grid-template-columns: 1fr; padding: 0 20px 110px; gap: 65px; }
+            .right-filter-panel { position: relative; top: 45px; right: auto; left: 50%; transform: translateX(-50%); width: 94%; }
+            .cars-container { padding: 70px 20px 110px; grid-template-columns: 1fr; gap: 65px; }
             .cars-container.lift-up { transform: translateY(-180px); }
+            .car-specs { flex-wrap: wrap; }
             .chat-panel { width: 92%; right: 4%; bottom: 20px; height: 500px; }
             .modal-box { padding: 85px 20px 25px !important; margin-top: 60px; }
             .form-row-2 { grid-template-columns: 1fr; }
@@ -454,8 +403,29 @@
 </head>
 <body id="main-body">
 
-    <!-- VEKTÖREL İKON KÜTÜPHANESİ (SİYAH DAİRE İÇİ BEYAZ LINE-ART) -->
+    <!-- VEKTÖREL İKON KÜTÜPHANESİ (KAYISI + SİYAH DAİRE İÇİ BEYAZ İKONLAR) -->
     <svg style="display:none;" aria-hidden="true">
+        <!-- Özel Malatya Kayısısı Vektörü (Sıfır Performans Kaybı) -->
+        <symbol id="icon-apricot" viewBox="0 0 36 36">
+            <defs>
+                <radialGradient id="apricotGrad" cx="35%" cy="30%" r="70%">
+                    <stop offset="0%" stop-color="#FFE082"/>
+                    <stop offset="45%" stop-color="#FFA000"/>
+                    <stop offset="100%" stop-color="#E65100"/>
+                </radialGradient>
+            </defs>
+            <!-- Yaprak -->
+            <path d="M18 6 C22 1, 29 2, 28 8 C24 9, 20 8, 18 6 Z" fill="#2E7D32"/>
+            <!-- Sap -->
+            <path d="M18 7 Q17 3 14 2" stroke="#5D4037" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+            <!-- Kayısı Gövdesi -->
+            <circle cx="18" cy="20" r="13" fill="url(#apricotGrad)"/>
+            <!-- Kayısı Boğum Çizgisi -->
+            <path d="M18 7 C13 14, 13 26, 18 33" stroke="#BF360C" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.55"/>
+            <!-- Parlama -->
+            <ellipse cx="13" cy="15" rx="2.5" ry="4" transform="rotate(-25 13 15)" fill="#FFFFFF" opacity="0.45"/>
+        </symbol>
+
         <!-- Yakıt Pompası -->
         <symbol id="icon-fuel" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 22V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"></path>
@@ -467,21 +437,21 @@
         <symbol id="icon-ev" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
         </symbol>
-        <!-- 5 Yetişkin (Kişi Grubu) -->
+        <!-- 5 Yetişkin -->
         <symbol id="icon-users" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
             <circle cx="9" cy="7" r="4"></circle>
             <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
             <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
         </symbol>
-        <!-- H-Vites Şanzıman (Otomatik / Manuel Görseldeki Birebir İkon) -->
+        <!-- H-Vites Şanzıman -->
         <symbol id="icon-gearbox" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="6" y1="5" x2="6" y2="19"></line>
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="18" y1="5" x2="18" y2="12"></line>
             <line x1="6" y1="12" x2="18" y2="12"></line>
         </symbol>
-        <!-- Direksiyon Tutan Sürücü (Minimum 21 Yaş Görseldeki Birebir İkon) -->
+        <!-- Direksiyon Tutan Sürücü (Minimum 21 Yaş) -->
         <symbol id="icon-driver-age" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="14" cy="5" r="2.5"></circle>
             <path d="M6 10l4 2 4-2"></path>
@@ -496,25 +466,22 @@
         </symbol>
     </svg>
 
-    <!-- BAŞARI BİLDİRİMİ (TOAST) -->
-    <div id="success-notification" class="success-toast" role="status" aria-live="polite">
-        <div class="icon" aria-hidden="true">✓</div>
-        <div>
-            <div style="font-size: 15px; margin-bottom: 3px; color: #1A1D20; font-weight: 900;">Sipariş ve Randevunuz Oluşturulmuştur!</div>
-            <div style="color: #6C757D; font-weight: 700; font-size: 12px;">Seçtiğiniz araç belirtilen saatte hazır edilecektir.</div>
-        </div>
+    <!-- ÜSTTEN DÜŞEN 2 SANİYELİK YEŞİL TİKLİ BİLDİRİM (PWA & SİPARİŞ) -->
+    <div id="top-toast" class="top-toast" role="status" aria-live="polite">
+        <div class="check-icon" aria-hidden="true">✓</div>
+        <div id="top-toast-text">Uygulama yüklenmiştir</div>
     </div>
 
     <div class="progress-bar" id="progressBar"></div>
 
-    <!-- 1. SOL ÜST: LOGO VE EVRENSEL PWA KUTUSU -->
+    <!-- 1. SOL ÜST: LOGO VE PWA KUTUSU -->
     <header id="header-area">
         <div class="logo">REFERANS<span>.</span></div>
         <div class="pwa-box shadow-soft" role="region" aria-label="Uygulama Yükleme Paneli">
             <div class="pwa-icon-bg"><div class="pwa-icon-inner"><div class="pwa-arrow"></div></div></div>
             <h3>Ana Ekrana Ekle</h3>
             <p>Kampanyalar ve hızlı rezervasyon için cihazınıza yükleyin.</p>
-            <button class="pwa-btn magnetic-btn" onclick="triggerUniversalPWA()" aria-label="Uygulamayı Cihaza Yükle">HEMEN YÜKLE</button>
+            <button class="pwa-btn" onclick="triggerPWAInstall()" aria-label="Uygulamayı Cihaza Yükle">HEMEN YÜKLE</button>
         </div>
     </header>
 
@@ -534,22 +501,23 @@
         <button class="cookie-accept-btn" onclick="toggleCookiePopup()">KABUL ET VE KAPAT</button>
     </div>
 
-    <!-- 2. ÜST MENÜ (SABİT KALIR, ASİSTAN AÇILINCA KAYBOLMAZ) -->
+    <!-- 2. MODERNİZE EDİLMİŞ ÜST MENÜ (SAĞLI SOLLU KAYISI & MALATYA) -->
     <nav class="top-capsule" id="top-menu" aria-label="Hızlı Durum Çubuğu">
         <div class="status-item"><div class="dot dot-green"></div> Şu Anda Açığız</div>
-        <div class="neon-text" onclick="openOrderModal('HIZLI REZERVASYON', 'honda-civic-360.mp4', '1.500 ₺')">Arabanı Sipariş Ver!</div>
+        <div class="malatya-brand">
+            <svg class="apricot-icon"><use href="#icon-apricot"></use></svg>
+            <span class="malatya-text">MALATYA</span>
+            <svg class="apricot-icon"><use href="#icon-apricot"></use></svg>
+        </div>
         <div class="status-item">Anında Adrese Ücretsiz Teslimat <div class="dot dot-red"></div></div>
     </nav>
 
-    <!-- 3. ARAMA VE KATEGORİ FİLTRELERİ (ASİSTAN TETİKLEYİCİ) -->
+    <!-- 3. ARAMA VE KATEGORİ FİLTRELERİ -->
     <section class="search-wrapper" id="search-section" aria-label="Dijital Asistan ve Hızlı Filtreler">
         <h1 class="search-title">✨ Nasıl bir araba bakmıştınız? Lütfen seçiniz</h1>
         
         <div class="search-bar shadow-soft" onclick="openAssistant()" role="button" tabindex="0" aria-label="Dijital Asistanı Başlat">
-            <div class="avatar-circle">
-                🐆
-                <div class="smart-chat-bubble" id="topChatBubble">Yardımcı Olabilirim 🐆</div>
-            </div>
+            <div class="avatar-circle">🐆</div>
             <div class="search-placeholder">Dijital asistanınıza tarif edin veya bir seçenek belirleyin...</div>
             <div class="search-actions" onclick="event.stopPropagation();">
                 <button class="search-btn" onclick="quickChipFilter('ekonomik', this)">Fırsat Araçları</button>
@@ -572,19 +540,16 @@
         </div>
     </section>
 
-    <!-- 4. SAĞ AKILLI FİLTRE PANELİ (BUTONSUZ ANLIK LİSTELEME) -->
+    <!-- 4. SAĞ AKILLI FİLTRE PANELİ (SIRALAMA ÖLÇÜTÜ TAMAMEN BUTON HALİNDE) -->
     <aside class="right-filter-panel shadow-soft" id="right-panel" aria-label="Gelişmiş Fiyat ve Sıralama Filtresi">
         <h2 class="rf-title">Gelişmiş Filtreleme</h2>
         <div class="rf-line"></div>
         
-        <label class="rf-label" for="sortSelect">Sıralama Ölçütü</label>
-        <div class="rf-select-wrapper">
-            <select id="sortSelect" class="rf-select shadow-inset" onchange="applySortAndFilter()">
-                <option value="anchor" selected>Önerilen (Fırsat & Lüks Dengesi)</option>
-                <option value="highToLow">Fiyat: Yüksekten Düşüğe</option>
-            </select>
-            <div class="rf-select-icon">▼</div>
-        </div>
+        <span class="rf-label">Sıralama Ölçütü</span>
+        <button type="button" class="rf-sort-btn" id="sortHighToLowBtn" onclick="toggleHighToLowSort()">
+            <div class="rf-box"></div>
+            <span>Fiyat: Yüksekten Düşüğe</span>
+        </button>
 
         <span class="rf-label">Fiyat Aralığı (Günlük)</span>
         <div class="rf-radio-group" id="filter-radios" role="radiogroup" aria-label="Günlük Fiyat Filtresi">
@@ -603,254 +568,210 @@
         </div>
     </aside>
 
-    <!-- 5. ARAÇ FİLOSU (11 ARAÇ - B/S ÇIPALAMA STRATEJİSİ SIRALAMASI) -->
+    <!-- 5. ARAÇ FİLOSU (11 ARAÇ - YÜKSEK KALİTE BÜYÜTÜLMÜŞ VİDEO & DOĞRUDAN KAYDIRMA) -->
     <main class="cars-container" id="cars-grid" aria-label="Kiralık Araç Filosu">
 
-        <!-- 1. HONDA CIVIC (B - Beyaz Fırsat Segmenti -> Sarı Buton) -->
+        <!-- 1. HONDA CIVIC -->
         <article class="car-card" data-order="1" data-price="1600" data-gear="otomatik" data-fuel="benzin" data-type="sedan">
             <div class="car-media-box">
-                <video class="car-video" data-src="honda-civic-360.mp4" src="assets/honda-civic-360.mp4" preload="metadata" loop muted playsinline></video>
+                <video class="car-video" data-src="honda-civic-360.mp4" src="honda-civic-360.mp4" preload="auto" loop muted playsinline></video>
             </div>
-            <div class="slider-wrapper state-text">
-                <div class="hint-text">← 360° İncelemek İçin Kaydırın →</div>
-                <div class="gear-track"></div>
-                <div class="gear-knob" role="slider" aria-label="Honda Civic 360 Derece Vites Kontrolü"><span>R</span></div>
-            </div>
+            <div class="swipe-badge">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">HONDA CIVIC</h3>
             <div class="car-price">1.600 ₺ <span>/ Gün</span></div>
             <div class="car-specs">
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-fuel"></use></svg></div> Benzin</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-gearbox"></use></svg></div> Otomatik</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-fuel"></use></svg></div> Benzin</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-gearbox"></use></svg></div> Otomatik</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
             </div>
-            <button class="order-btn light-btn magnetic-btn" onclick="openOrderModal('HONDA CIVIC', 'honda-civic-360.mp4', '1.600 ₺')">ARABAYI SİPARİŞ VER</button>
+            <button class="order-btn light-btn" onclick="openOrderModal('HONDA CIVIC', 'honda-civic-360.mp4', '1.600 ₺')">ARABAYI SİPARİŞ VER</button>
         </article>
 
-        <!-- 2. RENAULT MEGANE (S - Siyah Çıpa Segmenti -> Siyah Buton) -->
+        <!-- 2. RENAULT MEGANE -->
         <article class="car-card" data-order="2" data-price="2000" data-gear="otomatik" data-fuel="dizel" data-type="sedan">
             <div class="car-media-box">
-                <video class="car-video" data-src="renault-megane-360.mp4" src="assets/renault-megane-360.mp4" preload="metadata" loop muted playsinline></video>
+                <video class="car-video" data-src="renault-megane-360.mp4" src="renault-megane-360.mp4" preload="auto" loop muted playsinline></video>
             </div>
-            <div class="slider-wrapper state-text">
-                <div class="hint-text">← 360° İncelemek İçin Kaydırın →</div>
-                <div class="gear-track"></div>
-                <div class="gear-knob" role="slider" aria-label="Renault Megane 360 Derece Vites Kontrolü"><span>R</span></div>
-            </div>
+            <div class="swipe-badge">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">RENAULT MEGANE</h3>
             <div class="car-price">2.000 ₺ <span>/ Gün</span></div>
             <div class="car-specs">
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-fuel"></use></svg></div> Dizel</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-gearbox"></use></svg></div> Otomatik</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-fuel"></use></svg></div> Dizel</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-gearbox"></use></svg></div> Otomatik</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
             </div>
-            <button class="order-btn dark-btn magnetic-btn" onclick="openOrderModal('RENAULT MEGANE', 'renault-megane-360.mp4', '2.000 ₺')">ARABAYI SİPARİŞ VER</button>
+            <button class="order-btn dark-btn" onclick="openOrderModal('RENAULT MEGANE', 'renault-megane-360.mp4', '2.000 ₺')">ARABAYI SİPARİŞ VER</button>
         </article>
 
-        <!-- 3. CITROEN C ELYSEE (B - Beyaz Fırsat Segmenti -> Sarı Buton) -->
+        <!-- 3. CITROEN C ELYSEE -->
         <article class="car-card" data-order="3" data-price="1600" data-gear="manuel" data-fuel="dizel" data-type="sedan">
             <div class="car-media-box">
-                <video class="car-video" data-src="citroen-c-elysee-360.mp4" src="assets/citroen-c-elysee-360.mp4" preload="metadata" loop muted playsinline></video>
+                <video class="car-video" data-src="citroen-c-elysee-360.mp4" src="citroen-c-elysee-360.mp4" preload="auto" loop muted playsinline></video>
             </div>
-            <div class="slider-wrapper state-text">
-                <div class="hint-text">← 360° İncelemek İçin Kaydırın →</div>
-                <div class="gear-track"></div>
-                <div class="gear-knob" role="slider" aria-label="Citroen C Elysee 360 Derece Vites Kontrolü"><span>R</span></div>
-            </div>
+            <div class="swipe-badge">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">CITROEN C ELYSEE</h3>
             <div class="car-price">1.600 ₺ <span>/ Gün</span></div>
             <div class="car-specs">
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-fuel"></use></svg></div> Dizel</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-gearbox"></use></svg></div> Manuel</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-fuel"></use></svg></div> Dizel</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-gearbox"></use></svg></div> Manuel</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
             </div>
-            <button class="order-btn light-btn magnetic-btn" onclick="openOrderModal('CITROEN C ELYSEE', 'citroen-c-elysee-360.mp4', '1.600 ₺')">ARABAYI SİPARİŞ VER</button>
+            <button class="order-btn light-btn" onclick="openOrderModal('CITROEN C ELYSEE', 'citroen-c-elysee-360.mp4', '1.600 ₺')">ARABAYI SİPARİŞ VER</button>
         </article>
 
-        <!-- 4. NISSAN QASHQAI (S - Tavan Çıpa Premium SUV -> Siyah Buton) -->
+        <!-- 4. NISSAN QASHQAI -->
         <article class="car-card" data-order="4" data-price="2300" data-gear="manuel" data-fuel="dizel" data-type="suv">
             <div class="car-media-box">
-                <video class="car-video" data-src="nissan-qashqai-360.mp4" src="assets/nissan-qashqai-360.mp4" preload="none" loop muted playsinline></video>
+                <video class="car-video" data-src="nissan-qashqai-360.mp4" src="nissan-qashqai-360.mp4" preload="auto" loop muted playsinline></video>
             </div>
-            <div class="slider-wrapper state-text">
-                <div class="hint-text">← 360° İncelemek İçin Kaydırın →</div>
-                <div class="gear-track"></div>
-                <div class="gear-knob" role="slider" aria-label="Nissan Qashqai 360 Derece Vites Kontrolü"><span>R</span></div>
-            </div>
+            <div class="swipe-badge">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">NISSAN QASHQAI</h3>
             <div class="car-price">2.300 ₺ <span>/ Gün</span></div>
             <div class="car-specs">
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-fuel"></use></svg></div> Dizel</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-gearbox"></use></svg></div> Manuel</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-fuel"></use></svg></div> Dizel</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-gearbox"></use></svg></div> Manuel</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
             </div>
-            <button class="order-btn dark-btn magnetic-btn" onclick="openOrderModal('NISSAN QASHQAI', 'nissan-qashqai-360.mp4', '2.300 ₺')">ARABAYI SİPARİŞ VER</button>
+            <button class="order-btn dark-btn" onclick="openOrderModal('NISSAN QASHQAI', 'nissan-qashqai-360.mp4', '2.300 ₺')">ARABAYI SİPARİŞ VER</button>
         </article>
 
-        <!-- 5. TOYOTA COROLLA (B - Yeni Nesil Elektrik/Otomatik -> Sarı Buton) -->
+        <!-- 5. TOYOTA COROLLA -->
         <article class="car-card" data-order="5" data-price="1700" data-gear="otomatik" data-fuel="elektrik" data-type="sedan">
             <div class="car-media-box">
-                <video class="car-video" data-src="toyota-corolla-360.mp4" src="assets/toyota-corolla-360.mp4" preload="none" loop muted playsinline></video>
+                <video class="car-video" data-src="toyota-corolla-360.mp4" src="toyota-corolla-360.mp4" preload="auto" loop muted playsinline></video>
             </div>
-            <div class="slider-wrapper state-text">
-                <div class="hint-text">← 360° İncelemek İçin Kaydırın →</div>
-                <div class="gear-track"></div>
-                <div class="gear-knob" role="slider" aria-label="Toyota Corolla 360 Derece Vites Kontrolü"><span>R</span></div>
-            </div>
+            <div class="swipe-badge">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">TOYOTA COROLLA</h3>
             <div class="car-price">1.700 ₺ <span>/ Gün</span></div>
             <div class="car-specs">
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-ev"></use></svg></div> Elektrik</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-gearbox"></use></svg></div> Otomatik</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-ev"></use></svg></div> Elektrik</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-gearbox"></use></svg></div> Otomatik</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
             </div>
-            <button class="order-btn light-btn magnetic-btn" onclick="openOrderModal('TOYOTA COROLLA', 'toyota-corolla-360.mp4', '1.700 ₺')">ARABAYI SİPARİŞ VER</button>
+            <button class="order-btn light-btn" onclick="openOrderModal('TOYOTA COROLLA', 'toyota-corolla-360.mp4', '1.700 ₺')">ARABAYI SİPARİŞ VER</button>
         </article>
 
-        <!-- 6. KIA RIO (S - Siyah Kontrast Segmenti -> Siyah Buton) -->
+        <!-- 6. KIA RIO -->
         <article class="car-card" data-order="6" data-price="1650" data-gear="manuel" data-fuel="dizel" data-type="hatchback">
             <div class="car-media-box">
-                <video class="car-video" data-src="kia-rio-360.mp4" src="assets/kia-rio-360.mp4" preload="none" loop muted playsinline></video>
+                <video class="car-video" data-src="kia-rio-360.mp4" src="kia-rio-360.mp4" preload="auto" loop muted playsinline></video>
             </div>
-            <div class="slider-wrapper state-text">
-                <div class="hint-text">← 360° İncelemek İçin Kaydırın →</div>
-                <div class="gear-track"></div>
-                <div class="gear-knob" role="slider" aria-label="Kia Rio 360 Derece Vites Kontrolü"><span>R</span></div>
-            </div>
+            <div class="swipe-badge">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">KIA RIO</h3>
             <div class="car-price">1.650 ₺ <span>/ Gün</span></div>
             <div class="car-specs">
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-fuel"></use></svg></div> Dizel</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-gearbox"></use></svg></div> Manuel</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-fuel"></use></svg></div> Dizel</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-gearbox"></use></svg></div> Manuel</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
             </div>
-            <button class="order-btn dark-btn magnetic-btn" onclick="openOrderModal('KIA RIO', 'kia-rio-360.mp4', '1.650 ₺')">ARABAYI SİPARİŞ VER</button>
+            <button class="order-btn dark-btn" onclick="openOrderModal('KIA RIO', 'kia-rio-360.mp4', '1.650 ₺')">ARABAYI SİPARİŞ VER</button>
         </article>
 
-        <!-- 7. HYUNDAI İ20 (B - Beyaz Otomatik Fırsat -> Sarı Buton) -->
+        <!-- 7. HYUNDAI İ20 -->
         <article class="car-card" data-order="7" data-price="1600" data-gear="otomatik" data-fuel="benzin" data-type="hatchback">
             <div class="car-media-box">
-                <video class="car-video" data-src="hyundai-i20-360.mp4" src="assets/hyundai-i20-360.mp4" preload="none" loop muted playsinline></video>
+                <video class="car-video" data-src="hyundai-i20-360.mp4" src="hyundai-i20-360.mp4" preload="metadata" loop muted playsinline></video>
             </div>
-            <div class="slider-wrapper state-text">
-                <div class="hint-text">← 360° İncelemek İçin Kaydırın →</div>
-                <div class="gear-track"></div>
-                <div class="gear-knob" role="slider" aria-label="Hyundai i20 360 Derece Vites Kontrolü"><span>R</span></div>
-            </div>
+            <div class="swipe-badge">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">HYUNDAI İ20</h3>
             <div class="car-price">1.600 ₺ <span>/ Gün</span></div>
             <div class="car-specs">
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-fuel"></use></svg></div> Benzin</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-gearbox"></use></svg></div> Otomatik</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-fuel"></use></svg></div> Benzin</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-gearbox"></use></svg></div> Otomatik</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
             </div>
-            <button class="order-btn light-btn magnetic-btn" onclick="openOrderModal('HYUNDAI İ20', 'hyundai-i20-360.mp4', '1.600 ₺')">ARABAYI SİPARİŞ VER</button>
+            <button class="order-btn light-btn" onclick="openOrderModal('HYUNDAI İ20', 'hyundai-i20-360.mp4', '1.600 ₺')">ARABAYI SİPARİŞ VER</button>
         </article>
 
-        <!-- 8. FIAT EGEA (S - Siyah Buton) -->
+        <!-- 8. FIAT EGEA -->
         <article class="car-card" data-order="8" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan">
             <div class="car-media-box">
-                <video class="car-video" data-src="fiat-egea-360.mp4" src="assets/fiat-egea-360.mp4" preload="none" loop muted playsinline></video>
+                <video class="car-video" data-src="fiat-egea-360.mp4" src="fiat-egea-360.mp4" preload="metadata" loop muted playsinline></video>
             </div>
-            <div class="slider-wrapper state-text">
-                <div class="hint-text">← 360° İncelemek İçin Kaydırın →</div>
-                <div class="gear-track"></div>
-                <div class="gear-knob" role="slider" aria-label="Fiat Egea 360 Derece Vites Kontrolü"><span>R</span></div>
-            </div>
+            <div class="swipe-badge">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">FIAT EGEA</h3>
             <div class="car-price">1.500 ₺ <span>/ Gün</span></div>
             <div class="car-specs">
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-fuel"></use></svg></div> Dizel</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-gearbox"></use></svg></div> Manuel</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-fuel"></use></svg></div> Dizel</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-gearbox"></use></svg></div> Manuel</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
             </div>
-            <button class="order-btn dark-btn magnetic-btn" onclick="openOrderModal('FIAT EGEA', 'fiat-egea-360.mp4', '1.500 ₺')">ARABAYI SİPARİŞ VER</button>
+            <button class="order-btn dark-btn" onclick="openOrderModal('FIAT EGEA', 'fiat-egea-360.mp4', '1.500 ₺')">ARABAYI SİPARİŞ VER</button>
         </article>
 
-        <!-- 9. FIAT FIORINO (B - Sarı Buton) -->
+        <!-- 9. FIAT FIORINO -->
         <article class="car-card" data-order="9" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="ticari">
             <div class="car-media-box">
-                <video class="car-video" data-src="fiat-fiorino-360.mp4" src="assets/fiat-fiorino-360.mp4" preload="none" loop muted playsinline></video>
+                <video class="car-video" data-src="fiat-fiorino-360.mp4" src="fiat-fiorino-360.mp4" preload="auto" loop muted playsinline></video>
             </div>
-            <div class="slider-wrapper state-text">
-                <div class="hint-text">← 360° İncelemek İçin Kaydırın →</div>
-                <div class="gear-track"></div>
-                <div class="gear-knob" role="slider" aria-label="Fiat Fiorino 360 Derece Vites Kontrolü"><span>R</span></div>
-            </div>
+            <div class="swipe-badge">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">FIAT FIORINO</h3>
             <div class="car-price">1.500 ₺ <span>/ Gün</span></div>
             <div class="car-specs">
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-fuel"></use></svg></div> Dizel</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-gearbox"></use></svg></div> Manuel</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-fuel"></use></svg></div> Dizel</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-gearbox"></use></svg></div> Manuel</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
             </div>
-            <button class="order-btn light-btn magnetic-btn" onclick="openOrderModal('FIAT FIORINO', 'fiat-fiorino-360.mp4', '1.500 ₺')">ARABAYI SİPARİŞ VER</button>
+            <button class="order-btn light-btn" onclick="openOrderModal('FIAT FIORINO', 'fiat-fiorino-360.mp4', '1.500 ₺')">ARABAYI SİPARİŞ VER</button>
         </article>
 
-        <!-- 10. PEUGEOT 301 (S - Siyah Buton) -->
+        <!-- 10. PEUGEOT 301 -->
         <article class="car-card" data-order="10" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan">
             <div class="car-media-box">
-                <video class="car-video" data-src="peugeot-301-360.mp4" src="assets/peugeot-301-360.mp4" preload="none" loop muted playsinline></video>
+                <video class="car-video" data-src="peugeot-301-360.mp4" src="peugeot-301-360.mp4" preload="metadata" loop muted playsinline></video>
             </div>
-            <div class="slider-wrapper state-text">
-                <div class="hint-text">← 360° İncelemek İçin Kaydırın →</div>
-                <div class="gear-track"></div>
-                <div class="gear-knob" role="slider" aria-label="Peugeot 301 360 Derece Vites Kontrolü"><span>R</span></div>
-            </div>
+            <div class="swipe-badge">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">PEUGEOT 301</h3>
             <div class="car-price">1.500 ₺ <span>/ Gün</span></div>
             <div class="car-specs">
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-fuel"></use></svg></div> Dizel</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-gearbox"></use></svg></div> Manuel</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-fuel"></use></svg></div> Dizel</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-gearbox"></use></svg></div> Manuel</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
             </div>
-            <button class="order-btn dark-btn magnetic-btn" onclick="openOrderModal('PEUGEOT 301', 'peugeot-301-360.mp4', '1.500 ₺')">ARABAYI SİPARİŞ VER</button>
+            <button class="order-btn dark-btn" onclick="openOrderModal('PEUGEOT 301', 'peugeot-301-360.mp4', '1.500 ₺')">ARABAYI SİPARİŞ VER</button>
         </article>
 
-        <!-- 11. RENAULT SYMBOL (S - Siyah Buton) -->
+        <!-- 11. RENAULT SYMBOL -->
         <article class="car-card" data-order="11" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan">
             <div class="car-media-box">
-                <video class="car-video" data-src="renault-symbol-360.mp4" src="assets/renault-symbol-360.mp4" preload="none" loop muted playsinline></video>
+                <video class="car-video" data-src="renault-symbol-360.mp4" src="renault-symbol-360.mp4" preload="metadata" loop muted playsinline></video>
             </div>
-            <div class="slider-wrapper state-text">
-                <div class="hint-text">← 360° İncelemek İçin Kaydırın →</div>
-                <div class="gear-track"></div>
-                <div class="gear-knob" role="slider" aria-label="Renault Symbol 360 Derece Vites Kontrolü"><span>R</span></div>
-            </div>
+            <div class="swipe-badge">← 360° İncelemek İçin Aracı Kaydırın →</div>
             <h3 class="car-name">RENAULT SYMBOL</h3>
             <div class="car-price">1.500 ₺ <span>/ Gün</span></div>
             <div class="car-specs">
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-fuel"></use></svg></div> Dizel</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-gearbox"></use></svg></div> Manuel</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
-                <div class="spec-item"><div class="dark-icon"><svg width="16" height="16"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-fuel"></use></svg></div> Dizel</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-users"></use></svg></div> 5 Yetişkin</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-gearbox"></use></svg></div> Manuel</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-driver-age"></use></svg></div> Minimum: 21 yaş</div>
+                <div class="spec-item"><div class="dark-icon"><svg width="15" height="15"><use href="#icon-shield"></use></svg></div> Tam Kasko</div>
             </div>
-            <button class="order-btn dark-btn magnetic-btn" onclick="openOrderModal('RENAULT SYMBOL', 'renault-symbol-360.mp4', '1.500 ₺')">ARABAYI SİPARİŞ VER</button>
+            <button class="order-btn dark-btn" onclick="openOrderModal('RENAULT SYMBOL', 'renault-symbol-360.mp4', '1.500 ₺')">ARABAYI SİPARİŞ VER</button>
         </article>
 
     </main>
 
-    <!-- 6. SİPARİŞ VE RANDEVU MODALI (ÜSTTE 360° DÖNEN ARAÇ VİDEOLU & DİNAMİK ÖRNEKLİ) -->
+    <!-- 6. SİPARİŞ VE RANDEVU MODALI -->
     <div id="randevuModal" class="modal-overlay" onclick="if(event.target===this) closeOrderModal()" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-box">
             <button onclick="closeOrderModal()" class="modal-close-btn" aria-label="Sipariş Penceresini Kapat">✕</button>
@@ -959,88 +880,80 @@
         let deferredPrompt = null;
         let currentPriceFilter = 'all';
         let currentCategoryFilter = 'all';
-        let activeModalCar = 'HONDA CIVIC';
+        let isHighToLowSort = false;
+        let toastTimer = null;
 
-        // 1. EVRENSEL PWA YÜKLEME MANTIĞI (Android / PC / iOS)
+        // 1. ÜSTTEN DÜŞEN 2 SANİYELİK YEŞİL TİKLİ BİLDİRİM FONKSİYONU (ALERT YOK)
+        window.showTopToast = function(message) {
+            const toast = document.getElementById('top-toast');
+            const toastText = document.getElementById('top-toast-text');
+            if (!toast || !toastText) return;
+
+            toastText.innerText = message;
+            toast.classList.add('show');
+
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        };
+
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
         });
 
-        window.triggerUniversalPWA = function() {
+        window.triggerPWAInstall = function() {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-            } else {
-                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-                if (isIOS) {
-                    alert("iPhone/iPad Ana Ekrana Eklemek İçin:\n1. Tarayıcınızın altındaki 'Paylaş' (Kare ve yukarı ok) simgesine dokunun.\n2. Açılan menüden 'Ana Ekrana Ekle' seçeneğine basın.");
-                } else {
-                    alert("Cihazınızın tarayıcı menüsünden (sağ üstteki üç nokta) 'Uygulamayı Yükle / Ana Ekrana Ekle' seçeneğine tıklayarak Referans Rentecar kısayolunu hemen ekleyebilirsiniz.");
-                }
             }
+            showTopToast("Uygulama yüklenmiştir");
         };
 
         window.toggleCookiePopup = function() {
             document.getElementById('cookiePopup').classList.toggle('show');
         };
 
-        // 2. AKILLI VİDEO YOLU ÇÖZÜCÜ VE İLK KARE İŞLEYİCİ (assets/ ve kök dizin tam uyumlu)
+        // 2. VİDEO ARKA PLAN RENGİNİ OTOMATİK OKUYUP SİTE ARKA PLANINA EŞİTLEYEN VE İLK KAREYİ YÜKLEYEN MOTOR
         document.addEventListener("DOMContentLoaded", function() {
             const allVideos = document.querySelectorAll('video.car-video');
+            let bgSampled = false;
 
             allVideos.forEach(video => {
                 const fileName = video.getAttribute('data-src');
 
-                // Eğer assets/ klasöründe bulamazsa otomatik olarak ana dizinden (root) çeker
+                // Kök dizinde bulamazsa otomatik olarak assets/ klasörünü dener
                 video.addEventListener('error', function handleVideoErr() {
-                    if (video.getAttribute('src').includes('assets/')) {
-                        video.src = fileName;
+                    if (!video.getAttribute('src').includes('assets/')) {
+                        video.src = 'assets/' + fileName;
                         video.load();
                     }
                 }, { once: true });
 
-                video.addEventListener('loadedmetadata', () => {
+                video.addEventListener('loadeddata', () => {
                     video.currentTime = 0.05;
-                });
 
-                // Hover veya Dokunma anında kesintisiz 360 dönüş için ön belleğe al (Akıllı Preload)
-                const card = video.closest('.car-card');
-                if (card) {
-                    card.addEventListener('mouseenter', () => {
-                        if (video.preload !== 'auto') {
-                            video.preload = 'auto';
-                        }
-                    }, { passive: true });
-                    card.addEventListener('touchstart', () => {
-                        if (video.preload !== 'auto') {
-                            video.preload = 'auto';
-                        }
-                    }, { passive: true });
-                }
+                    // İlk yüklenen videonun stüdyo arka plan rengini otomatik örnekleyip tüm siteye uygular
+                    if (!bgSampled && video.videoWidth > 0) {
+                        try {
+                            const canvas = document.createElement('canvas');
+                            canvas.width = 16;
+                            canvas.height = 16;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(video, 0, 0, 16, 16);
+                            const p = ctx.getImageData(2, 2, 1, 1).data;
+                            if (p[3] > 0 && p[0] > 180 && p[1] > 180 && p[2] > 180) {
+                                const hex = `rgb(${p[0]}, ${p[1]}, ${p[2]})`;
+                                document.documentElement.style.setProperty('--studio-bg', hex);
+                                bgSampled = true;
+                            }
+                        } catch (e) {}
+                    }
+                });
             });
 
-            // Görüş alanına giren videoların ilk karesini hazırla (IntersectionObserver)
-            if ('IntersectionObserver' in window) {
-                const videoObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const v = entry.target;
-                            if (v.preload === 'none') {
-                                v.preload = 'metadata';
-                            }
-                        }
-                    });
-                }, { rootMargin: '250px 0px' });
-
-                allVideos.forEach(v => videoObserver.observe(v));
-            }
-
-            // Üst Asistan Uyarı Balonu
-            const bubble = document.getElementById('topChatBubble');
-            if (bubble && !isChatOpen) bubble.classList.add('show');
-
-            // TBT SIFIRLAYICI: 8 Saniye Gecikmeli Dinamik Form Örnekleri (Referans Eğitim Mimarisi)
+            // Dinamik Form Örnekleri
             setTimeout(() => {
                 const isimler = ["Muhammed", "Hamza", "Ebubekir", "Hüseyin", "Ali", "Ömer", "Osman", "Ayşe", "Fatma", "Sümeyye", "Nurgül"];
                 let isimIndex = 0;
@@ -1062,33 +975,10 @@
                         fSaatDefault.text = "Önce Tarih Seçiniz (Örn: " + saatler[saatIndex] + ")";
                     }
                 }, 3000);
-
-                const teslimatlar = ["Adrese Ücretsiz Teslimat", "Malatya Havalimanı", "Malatya Merkez Şube", "MAŞTİ Otogar"];
-                let tesIndex = 0;
-                setInterval(() => {
-                    const fTes = document.getElementById('fTeslimat');
-                    if (fTes && fTes.selectedIndex === 0) {
-                        tesIndex = (tesIndex + 1) % teslimatlar.length;
-                        fTes.options[0].text = "Teslimat Noktası (Örn: " + teslimatlar[tesIndex] + ")";
-                    }
-                }, 3200);
-            }, 8000);
-
-            // Manyetik Buton Efekti
-            document.querySelectorAll('.magnetic-btn').forEach(btn => {
-                btn.addEventListener('mousemove', e => {
-                    const rect = btn.getBoundingClientRect();
-                    const x = e.clientX - rect.left - rect.width / 2;
-                    const y = e.clientY - rect.top - rect.height / 2;
-                    btn.style.transform = `translate(${x * 0.12}px, ${y * 0.12}px) scale(1.03)`;
-                });
-                btn.addEventListener('mouseleave', () => {
-                    btn.style.transform = 'translate(0px, 0px) scale(1)';
-                });
-            });
+            }, 5000);
         });
 
-        // 3. KAYDIRMA İLERLEME ÇUBUĞU (PASSIVE LISTENER)
+        // 3. KAYDIRMA ÇUBUĞU
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -1097,7 +987,14 @@
             if (pBar) pBar.style.width = scrolled + "%";
         }, { passive: true });
 
-        // 4. ANLIK (REAL-TIME) FİLTRELEME VE SIRALAMA MOTORU
+        // 4. ANLIK FİLTRELEME VE "FİYAT: YÜKSEKTEN DÜŞÜĞE" BUTON MANTIĞI
+        window.toggleHighToLowSort = function() {
+            const btn = document.getElementById('sortHighToLowBtn');
+            isHighToLowSort = !isHighToLowSort;
+            btn.classList.toggle('active', isHighToLowSort);
+            applySortAndFilter();
+        };
+
         const radioGroup = document.querySelectorAll('.rf-radio');
         radioGroup.forEach(radio => {
             radio.addEventListener('click', () => {
@@ -1124,11 +1021,9 @@
         window.applySortAndFilter = function() {
             const grid = document.getElementById('cars-grid');
             const cards = Array.from(grid.querySelectorAll('.car-card'));
-            const sortType = document.getElementById('sortSelect').value;
 
-            // Sıralama (Çıpa Sıralaması veya Yüksekten Düşüğe - Düşükten Yükseğe Satış Stratejisi Gereği Yoktur)
             cards.sort((a, b) => {
-                if (sortType === 'highToLow') {
+                if (isHighToLowSort) {
                     return parseInt(b.getAttribute('data-price')) - parseInt(a.getAttribute('data-price'));
                 } else {
                     return parseInt(a.getAttribute('data-order')) - parseInt(b.getAttribute('data-order'));
@@ -1164,35 +1059,87 @@
             });
         };
 
-        // 5. DİJİTAL ASİSTAN (REFERANS JAGUAR) AÇILIŞ / KAPANIŞ VE SOHBET SİMÜLASYONU
-        function getRandomDelay() { return Math.floor(Math.random() * (2100 - 1200 + 1)) + 1200; }
+        // 5. DOĞRUDAN ARAÇ ÜZERİNDE 360° KAYDIRMA (SCRUBBING) MOTORU
+        (function initDirect360Scrubbing() {
+            const cards = document.querySelectorAll('.car-card');
+            let activeVideo = null;
+            let isScrubbing = false;
+            let lastX = 0;
+
+            function startScrub(video, clientX) {
+                if (video.preload !== 'auto') video.preload = 'auto';
+                activeVideo = video;
+                isScrubbing = true;
+                lastX = clientX;
+            }
+
+            function moveScrub(clientX) {
+                if (!isScrubbing || !activeVideo || !activeVideo.duration || activeVideo.seeking) return;
+                const dx = clientX - lastX;
+                lastX = clientX;
+                const sensitivity = 0.032;
+                let nextTime = activeVideo.currentTime + (dx * sensitivity);
+                if (nextTime >= activeVideo.duration) nextTime %= activeVideo.duration;
+                if (nextTime < 0) nextTime = activeVideo.duration + (nextTime % activeVideo.duration);
+                if (!isNaN(nextTime)) {
+                    activeVideo.currentTime = nextTime;
+                }
+            }
+
+            function stopScrub() {
+                isScrubbing = false;
+                activeVideo = null;
+            }
+
+            cards.forEach(card => {
+                const mediaBox = card.querySelector('.car-media-box');
+                const badge = card.querySelector('.swipe-badge');
+                const video = card.querySelector('video');
+
+                [mediaBox, badge].forEach(el => {
+                    if (!el) return;
+                    el.addEventListener('mousedown', (e) => {
+                        e.preventDefault();
+                        startScrub(video, e.clientX);
+                    });
+                    el.addEventListener('touchstart', (e) => {
+                        if (e.touches.length > 0) {
+                            startScrub(video, e.touches[0].clientX);
+                        }
+                    }, { passive: true });
+                });
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (isScrubbing) moveScrub(e.clientX);
+            }, { passive: true });
+
+            window.addEventListener('touchmove', (e) => {
+                if (isScrubbing && e.touches.length > 0) {
+                    moveScrub(e.touches[0].clientX);
+                }
+            }, { passive: true });
+
+            window.addEventListener('mouseup', stopScrub);
+            window.addEventListener('touchend', stopScrub);
+        })();
+
+        // 6. DİJİTAL ASİSTAN (REFERANS JAGUAR)
+        function getRandomDelay() { return Math.floor(Math.random() * (1800 - 1100 + 1)) + 1100; }
 
         window.openAssistant = function() {
-            const searchSection = document.getElementById('search-section');
-            const rightPanel = document.getElementById('right-panel');
-            const carsGrid = document.getElementById('cars-grid');
-            const chatPanel = document.getElementById('chatPanel');
-            const bubble = document.getElementById('topChatBubble');
-
-            if (bubble) bubble.style.display = 'none';
-            // Üst kapsül menü ve logo sabit kalır, sadece arama alanı kaybolur ve araçlar yukarı kalkar
-            searchSection.classList.add('fade-out-up');
-            rightPanel.classList.add('fade-out-side');
-            carsGrid.classList.add('lift-up');
-            chatPanel.classList.add('show');
+            document.getElementById('search-section').classList.add('fade-out-up');
+            document.getElementById('right-panel').classList.add('fade-out-side');
+            document.getElementById('cars-grid').classList.add('lift-up');
+            document.getElementById('chatPanel').classList.add('show');
             isChatOpen = true;
         };
 
         window.closeAssistant = function() {
-            const searchSection = document.getElementById('search-section');
-            const rightPanel = document.getElementById('right-panel');
-            const carsGrid = document.getElementById('cars-grid');
-            const chatPanel = document.getElementById('chatPanel');
-
-            searchSection.classList.remove('fade-out-up');
-            rightPanel.classList.remove('fade-out-side');
-            carsGrid.classList.remove('lift-up');
-            chatPanel.classList.remove('show');
+            document.getElementById('search-section').classList.remove('fade-out-up');
+            document.getElementById('right-panel').classList.remove('fade-out-side');
+            document.getElementById('cars-grid').classList.remove('lift-up');
+            document.getElementById('chatPanel').classList.remove('show');
             isChatOpen = false;
 
             setTimeout(() => {
@@ -1266,7 +1213,7 @@
                     typingIndicator.style.display = 'none';
                     currentCategoryFilter = 'dizel';
                     applySortAndFilter();
-                    addBotMessage("Sizin için yakıt cimrisi <strong>Dizel</strong> araçlarımızı ekranınızda listeledim. 360° vites topuzunu kaydırarak inceleyebilirsiniz.");
+                    addBotMessage("Sizin için yakıt cimrisi <strong>Dizel</strong> araçlarımızı ekranınızda listeledim.");
                     showResetActionInChat();
                 }, getRandomDelay());
             }
@@ -1332,14 +1279,14 @@
 
                         setTimeout(() => {
                             typingIndicator.style.display = 'none';
-                            addBotMessage("Tüm araçlarımızda <strong>Tam Kasko</strong>, <strong>Minimum 21 Yaş</strong> kuralı ve <strong>Malatya içi Ücretsiz Adrese Teslimat</strong> mevcuttur. Hemen rezervasyon penceresini açmamı ister misiniz?");
+                            addBotMessage("Tüm araçlarımızda <strong>Tam Kasko</strong>, <strong>Minimum 21 Yaş</strong> kuralı ve <strong>Malatya içi Ücretsiz Adrese Teslimat</strong> mevcuttur.");
                             showResetActionInChat();
                         }, getRandomDelay());
                     };
 
                     btnEl.onclick = handleSend;
                     inputEl.addEventListener('keyup', (e) => { if (e.key === 'Enter') handleSend(); });
-                }, 1100);
+                }, 1000);
             }
         };
 
@@ -1349,16 +1296,15 @@
             actionDiv.className = 'chat-action-buttons';
             actionDiv.innerHTML = `
                 <button class="chat-action-btn" onclick="resetChatMessages()">🔄 Başka Bir Filtre Seç</button>
-                <button class="chat-action-btn" style="background:#1A1D20; color:#FFC107;" onclick="openOrderModal('HIZLI REZERVASYON', 'honda-civic-360.mp4', '1.600 ₺')">📅 Hemen Sipariş Oluştur</button>
+                <button class="chat-action-btn" style="background:#1A1D20; color:#FFC107;" onclick="openOrderModal('HIZLI REZERVASYON', 'renault-megane-360.mp4', '1.600 ₺')">📅 Hemen Sipariş Oluştur</button>
             `;
             chatBody.appendChild(actionDiv);
             scrollToBottom();
         }
 
-        // 6. SİPARİŞ & RANDEVU MODALI, EN YAKIN TARİH VE KVKK MASKELEME SİSTEMİ
+        // 7. SİPARİŞ & RANDEVU MODALI
         window.openOrderModal = function(carName, videoFile, priceStr) {
             randevuAcilisZamani = Date.now();
-            activeModalCar = carName;
 
             const errBanner = document.getElementById('errBanner');
             if (errBanner) errBanner.style.display = 'none';
@@ -1367,12 +1313,12 @@
 
             const modalVideo = document.getElementById('modal-video');
             modalVideo.onerror = function() {
-                if (modalVideo.src.includes('assets/')) {
-                    modalVideo.src = videoFile;
+                if (!modalVideo.src.includes('assets/')) {
+                    modalVideo.src = 'assets/' + videoFile;
                     modalVideo.play().catch(()=>{});
                 }
             };
-            modalVideo.src = 'assets/' + videoFile;
+            modalVideo.src = videoFile;
             modalVideo.play().catch(()=>{});
 
             const overlay = document.getElementById('randevuModal');
@@ -1393,7 +1339,6 @@
             }, 400);
         };
 
-        // En Yakın Tarihi Otomatik Bulucu
         window.findNearestDate = function() {
             const btn = document.getElementById('autoDateBtn');
             const tarihInput = document.getElementById('fTarih');
@@ -1402,9 +1347,7 @@
 
             setTimeout(() => {
                 const now = new Date();
-                if (now.getHours() >= 19) {
-                    now.setDate(now.getDate() + 1);
-                }
+                if (now.getHours() >= 19) now.setDate(now.getDate() + 1);
                 const y = now.getFullYear();
                 const m = String(now.getMonth() + 1).padStart(2, '0');
                 const d = String(now.getDate()).padStart(2, '0');
@@ -1416,7 +1359,7 @@
                     btn.innerHTML = "EN YAKIN TARİHİ SEÇ";
                     btn.style.pointerEvents = "auto";
                 }, 2000);
-            }, 450);
+            }, 400);
         };
 
         const fTarih = document.getElementById('fTarih');
@@ -1448,7 +1391,6 @@
                 const anlikZaman = new Date();
                 const suAnkiSaatStr = String(anlikZaman.getHours()).padStart(2, '0') + ":" + String(anlikZaman.getMinutes()).padStart(2, '0');
 
-                // KVKK Maskeli Örnek Dolu Saat Simülasyonu (Sosyal Kanıt)
                 const maskedBusySlots = {
                     "11:00": "M******D",
                     "15:00": "H***A"
@@ -1480,10 +1422,8 @@
             });
         }
 
-        // Anti-Bot Korumalı Form Gönderimi
         window.submitAppt = function(event) {
             if (event && !event.isTrusted) return;
-
             const botTrap = document.getElementById('botTrap');
             if (botTrap && botTrap.value !== '') return;
 
@@ -1521,196 +1461,10 @@
                 btn.innerHTML = 'SİPARİŞİ TAMAMLA';
                 btn.disabled = false;
                 closeOrderModal();
-
-                const toast = document.getElementById('success-notification');
-                if (toast) {
-                    toast.classList.add('show');
-                    setTimeout(() => { toast.classList.remove('show'); }, 5500);
-                }
+                showTopToast("Sipariş ve randevunuz oluşturulmuştur");
                 document.getElementById('apptForm').reset();
-            }, 900);
+            }, 700);
         };
-
-        // 7. 360° 5 KADEMELİ FİZİKSEL VİTES (JOYSTICK) VE DECODER KİLİDİ ÖNLEYİCİ MOTOR
-        (function init360JoystickEngine() {
-            const sliders = document.querySelectorAll('.slider-wrapper');
-            const maxDrag = 125; // Vites topuzunun sağa ve sola gidebileceği maksimum mesafe (px)
-            let activeKnob = null;
-            let activeWrapper = null;
-            let activeVideo = null;
-            let isDragging = false;
-            let currentX = 0;
-            let animFrame = null;
-            let lastTime = 0;
-
-            // 1.8 sn yazı -> 2.8 sn vites topuzu döngüsü
-            function startCycle(wrapper) {
-                if (wrapper.classList.contains('interacted')) return;
-                setTimeout(() => {
-                    if (wrapper.classList.contains('interacted')) return;
-                    wrapper.classList.remove('state-text');
-                    wrapper.classList.add('state-slider');
-                    setTimeout(() => {
-                        if (wrapper.classList.contains('interacted')) return;
-                        wrapper.classList.remove('state-slider');
-                        wrapper.classList.add('state-text');
-                        startCycle(wrapper);
-                    }, 2800);
-                }, 1800);
-            }
-
-            function beginDrag(wrapper, knob, video, clientX) {
-                wrapper.classList.add('interacted');
-                wrapper.classList.remove('state-text');
-                wrapper.classList.add('state-slider');
-
-                if (video.preload !== 'auto') {
-                    video.preload = 'auto';
-                }
-
-                isDragging = true;
-                activeWrapper = wrapper;
-                activeKnob = knob;
-                activeVideo = video;
-                activeKnob.style.transition = 'none';
-
-                updateKnobPosition(clientX, 0);
-
-                lastTime = performance.now();
-                cancelAnimationFrame(animFrame);
-                animFrame = requestAnimationFrame(stepVideoPlayback);
-            }
-
-            function updateKnobPosition(clientX, movementY) {
-                if (!isDragging || !activeKnob || !activeWrapper) return;
-
-                // Yukarı / Aşağı yanlış çekme uyarısı (Titreme)
-                if (Math.abs(movementY) > 11) {
-                    activeKnob.classList.add('shake-error');
-                    setTimeout(() => { if (activeKnob) activeKnob.classList.remove('shake-error'); }, 380);
-                }
-
-                const rect = activeWrapper.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const deltaX = clientX - centerX;
-
-                currentX = Math.max(-maxDrag, Math.min(maxDrag, deltaX));
-
-                // 5 Kademeli Eğilme (Tilt) ve Fiziksel Kayma
-                const ratio = currentX / maxDrag; // -1.0 ile +1.0 arası
-                const steppedStage = Math.round(ratio * 5); // -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5
-                const tiltAngle = steppedStage * 6; // Her kademede 6 derece, maksimum 30 derece yatış
-
-                activeKnob.style.transform = `translateX(calc(-50% + ${currentX}px)) rotate(${tiltAngle}deg)`;
-            }
-
-            function endDrag() {
-                if (!isDragging || !activeKnob) return;
-                isDragging = false;
-                const tempKnob = activeKnob;
-                activeKnob = null;
-                activeVideo = null;
-                activeWrapper = null;
-                currentX = 0;
-
-                tempKnob.style.transition = 'transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1)';
-                tempKnob.style.transform = 'translateX(-50%) rotate(0deg)';
-                cancelAnimationFrame(animFrame);
-            }
-
-            // 5 Kademeli Hız Şanzımanı (0.3x, 0.5x, 0.7x, 0.9x, 1.1x) + !video.seeking Kilidi
-            function stepVideoPlayback(now) {
-                if (!isDragging || !activeVideo) return;
-
-                const dt = (now - lastTime) / 1000;
-                lastTime = now;
-
-                if (activeVideo.readyState >= 1 && !activeVideo.seeking) {
-                    const pullRatio = currentX / maxDrag;
-                    const absPull = Math.abs(pullRatio);
-                    let stageSpeed = 0;
-
-                    if (absPull > 0.08 && absPull <= 0.25) stageSpeed = 0.3;
-                    else if (absPull > 0.25 && absPull <= 0.45) stageSpeed = 0.5;
-                    else if (absPull > 0.45 && absPull <= 0.65) stageSpeed = 0.7;
-                    else if (absPull > 0.65 && absPull <= 0.85) stageSpeed = 0.9;
-                    else if (absPull > 0.85) stageSpeed = 1.1;
-
-                    if (pullRatio < 0) stageSpeed = -stageSpeed;
-
-                    if (stageSpeed !== 0 && activeVideo.duration) {
-                        let nextTime = activeVideo.currentTime + (stageSpeed * dt);
-                        if (nextTime >= activeVideo.duration) nextTime = nextTime % activeVideo.duration;
-                        else if (nextTime < 0) nextTime = activeVideo.duration + (nextTime % activeVideo.duration);
-
-                        if (!isNaN(nextTime)) {
-                            activeVideo.currentTime = nextTime;
-                        }
-                    }
-                }
-                animFrame = requestAnimationFrame(stepVideoPlayback);
-            }
-
-            sliders.forEach(wrapper => {
-                const knob = wrapper.querySelector('.gear-knob');
-                const mediaBox = wrapper.previousElementSibling;
-                const video = mediaBox.querySelector('video');
-
-                startCycle(wrapper);
-
-                // Fare Etkileşimi
-                wrapper.addEventListener('mousedown', (e) => {
-                    e.preventDefault();
-                    beginDrag(wrapper, knob, video, e.clientX);
-                });
-
-                // Dokunmatik (Mobil) Etkileşimi
-                wrapper.addEventListener('touchstart', (e) => {
-                    if (e.touches.length > 0) {
-                        beginDrag(wrapper, knob, video, e.touches[0].clientX);
-                    }
-                }, { passive: true });
-
-                // Doğrudan Araç Görseli Üzerinde Sürükleme Desteği (Çeşitlilik İçin)
-                let boxDrag = false;
-                let lastBoxX = 0;
-                mediaBox.style.pointerEvents = 'auto';
-
-                mediaBox.addEventListener('mousedown', (e) => {
-                    boxDrag = true;
-                    lastBoxX = e.clientX;
-                    wrapper.classList.add('interacted');
-                    wrapper.classList.remove('state-text');
-                    wrapper.classList.add('state-slider');
-                    if (video.preload !== 'auto') video.preload = 'auto';
-                });
-
-                mediaBox.addEventListener('mousemove', (e) => {
-                    if (!boxDrag || !video.duration || video.seeking) return;
-                    const dx = e.clientX - lastBoxX;
-                    lastBoxX = e.clientX;
-                    let t = video.currentTime + (dx * 0.035);
-                    if (t >= video.duration) t %= video.duration;
-                    if (t < 0) t = video.duration + (t % video.duration);
-                    video.currentTime = t;
-                });
-
-                window.addEventListener('mouseup', () => { boxDrag = false; });
-            });
-
-            window.addEventListener('mousemove', (e) => {
-                if (isDragging) updateKnobPosition(e.clientX, e.movementY || 0);
-            }, { passive: true });
-
-            window.addEventListener('touchmove', (e) => {
-                if (isDragging && e.touches.length > 0) {
-                    updateKnobPosition(e.touches[0].clientX, 0);
-                }
-            }, { passive: true });
-
-            window.addEventListener('mouseup', endDrag);
-            window.addEventListener('touchend', endDrag);
-        })();
     </script>
 </body>
 </html>
