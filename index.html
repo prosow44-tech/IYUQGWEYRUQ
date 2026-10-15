@@ -827,7 +827,7 @@
 
             <div class="modal-Lower-wrap" id="modalLowerWrap">
                 <h3 id="modalTitle" class="modal-title">SİPARİŞ & RANDEVU AL</h3>
-                <p id="modal-car-name" class="modal-subtitle">RENAULT MEGANE • 2.000 ₺ / GÜN</p>
+                <p id="modal-car-name" class="modal-subtitle">ARAÇ SEÇİLDİ</p>
 
                 <div id="errBanner" class="err-banner" aria-live="assertive">
                     <span aria-hidden="true">❌</span><span id="errText">Hata</span>
@@ -993,7 +993,10 @@
             // studiogamey2@gmail.com TAKVİM + ANLIK GMAIL BİLDİRİM WEB APP URL'Sİ
             const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyrzlGcxZsc0pdWaZWwF6X4gHOH-JbJByvOuZSo0b2-IY0FXgTVypIk2cFnF9JqApxH/exec";
 
-            const DEFAULT_BUSY_PREVIEW = {};
+            // Tüm araçlar için standartlaştırılmış takvim sorgu anahtarı (kurulumVeTestKaydi'nin oluşturduğu eski TEST kaydını yok sayar, sadece gerçek siparişleri kontrol eder)
+            function getCleanCalendarCarKey(carName) {
+                return String(carName || "").trim() + " [FİLO]";
+            }
 
             const JAGUAR_THEMES = {
                 uygun: { title: "Fiyat/Performans Serisi", sources: ["siyah_jaguar.mp4", "assets/siyah_jaguar.mp4", "jaguar.mp4"] },
@@ -1013,7 +1016,7 @@
             let currentCategoryFilter = 'all';
             let isHighToLowSort = false;
             let toastTimer = null;
-            let activeModalCar = 'RENAULT MEGANE';
+            let activeModalCar = '';
             let lastRandomCarKey = '';
             let securityFlagged = false;
             let jaguarChromaRAF = null;
@@ -1936,10 +1939,10 @@
             }
 
             function checkCarAvailabilityFromGoogleScript(carName) {
-                if (DEFAULT_BUSY_PREVIEW[carName]) setModalCarAvailability(false);
-                else setModalCarAvailability(true);
+                setModalCarAvailability(true);
+                const queryKey = getCleanCalendarCarKey(carName);
 
-                fetch(WEB_APP_URL + "?islem=aracDurum&arac=" + encodeURIComponent(carName))
+                fetch(WEB_APP_URL + "?islem=aracDurum&arac=" + encodeURIComponent(queryKey))
                     .then(r => r.json())
                     .then(data => {
                         if (activeModalCar !== carName) return;
@@ -2140,7 +2143,8 @@
                 btn.innerHTML = "Aranıyor...";
                 btn.style.pointerEvents = "none";
 
-                fetch(WEB_APP_URL + "?islem=enYakinTarih&arac=" + encodeURIComponent(activeModalCar))
+                const queryKey = getCleanCalendarCarKey(activeModalCar);
+                fetch(WEB_APP_URL + "?islem=enYakinTarih&arac=" + encodeURIComponent(queryKey))
                 .then(response => response.json())
                 .then(data => {
                     if (data && data.tarih) {
@@ -2207,7 +2211,8 @@
                     saatSelect.disabled = false;
                     saatSelect.options[0].text = "Dolu saatler kontrol ediliyor...";
 
-                    fetch(WEB_APP_URL + "?islem=saatSorgula&tarih=" + val + "&arac=" + encodeURIComponent(activeModalCar))
+                    const queryKey = getCleanCalendarCarKey(activeModalCar);
+                    fetch(WEB_APP_URL + "?islem=saatSorgula&tarih=" + val + "&arac=" + encodeURIComponent(queryKey))
                     .then(response => response.json())
                     .then(doluSaatler => {
                         saatSelect.options[0].text = "Saat Seçiniz";
@@ -2284,16 +2289,18 @@
                 btn.innerHTML = 'Takvim Kontrol Ediliyor...';
                 btn.disabled = true;
 
+                const cleanCarKey = getCleanCalendarCarKey(activeModalCar);
+
                 fetch(WEB_APP_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify({
                         isim,
                         telefon,
-                        arac: activeModalCar,
+                        arac: cleanCarKey,
                         paket,
                         teslimat,
-                        hizmet: `${activeModalCar} - ${teslimat} (${paket}) [KVKK Onaylı]`,
+                        hizmet: `${cleanCarKey} - ${teslimat} (${paket}) [KVKK Onaylı]`,
                         tarih,
                         saat
                     })
