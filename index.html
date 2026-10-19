@@ -50,14 +50,14 @@
     <style>
         :root{--studio-bg:#E6E6E4;--studio-top:#EAEAE8;--studio-bottom:#DFDFDD}
         ::-webkit-scrollbar{width:6px;height:6px}
-        ::-webkit-scrollbar-track{background-color:var(--studio-bg);border-radius:4px}
+        ::-webkit-scrollbar-track{background-color:#E6E6E4;border-radius:4px}
         ::-webkit-scrollbar-thumb{background-color:#94a3b8;border-radius:10px}
         ::-webkit-scrollbar-thumb:hover{background-color:#1A1D20}
         *{margin:0;padding:0;box-sizing:border-box;font-family:'Montserrat',system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent}
-        html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
-        body{background-color:var(--studio-bg);color:#1A1D20;margin:0 auto;padding:0;width:100%;max-width:100%;min-height:100vh;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:none;-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none;position:relative;transition:background-color .35s ease}
+        html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;background-color:#E6E6E4}
+        body{background-color:#E6E6E4!important;color:#1A1D20;margin:0 auto;padding:0;width:100%;max-width:100%;min-height:100vh;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:none;-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none;position:relative}
         input,select,textarea{user-select:text;-webkit-user-select:text;outline:0;font-family:'Montserrat',system-ui,-apple-system,sans-serif}
-        video,img,canvas{outline:0;user-select:none;-webkit-user-drag:none;pointer-events:none}
+        video,img{outline:0;user-select:none;-webkit-user-drag:none;pointer-events:none}
         .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
         .assistant-avatar-img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:64% 50%!important;transform:scale(1.06) translateX(-4%)!important;border-radius:50%!important;display:block!important}
         .progress-bar{position:fixed;top:0;left:0;height:3px;background-color:#FFC107;width:0%;z-index:60000;pointer-events:none;transition:width .1s ease-out}
@@ -87,7 +87,6 @@
         .jaguar-back-btn:hover{background:#FFCA28;transform:translateY(-50%) scale(1.04)}
         .jaguar-video-clean{width:100%;max-width:920px;height:365px;margin:0 auto;display:flex;align-items:center;justify-content:center;background:transparent!important;position:relative}
         .jaguar-video-clean video{width:100%;height:100%;object-fit:contain;display:block;background:transparent!important;mix-blend-mode:multiply}
-        .jaguar-video-clean canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:none;background:transparent!important;pointer-events:none}
         header.pc-header{position:absolute;top:45px;left:45px;z-index:100;transition:all .5s ease}
         .logo{font-size:34px;font-weight:900;letter-spacing:-1px;margin-bottom:28px;color:#1A1D20}
         .logo span{color:#FFC107}
@@ -150,11 +149,10 @@
         .car-card.hidden{display:none!important}
         .car-card.interacting-zoom{z-index:60!important;transform:scale(1.12)}
         .car-card.interacting-zoom .car-media-box{transform:scale(1.08)}
-        .video-skeleton{background-color:var(--studio-bg)}
-        .car-media-box{position:relative;width:100%;height:390px;margin-bottom:9px;display:flex;align-items:center;justify-content:center;cursor:grab;overflow:hidden;border-radius:26px;background:transparent;touch-action:none;transition:transform .38s cubic-bezier(.22,1,.36,1);-webkit-mask-image:radial-gradient(ellipse 96% 93% at 50% 50%,#000 84%,transparent 100%);mask-image:radial-gradient(ellipse 96% 93% at 50% 50%,#000 84%,transparent 100%)}
+        .video-skeleton{background-color:#E6E6E4!important}
+        .car-media-box{position:relative;width:100%;height:390px;margin-bottom:9px;display:flex;align-items:center;justify-content:center;cursor:grab;overflow:hidden;border-radius:26px;background-color:#E6E6E4!important;touch-action:none;transition:transform .38s cubic-bezier(.22,1,.36,1)}
         .car-media-box:active{cursor:grabbing}
-        .car-video,.car-canvas{width:100%;height:100%;object-fit:contain!important;transform-origin:50% 56%;transform:scale(1.22) translateY(-1.5%)!important;opacity:1!important;display:block;pointer-events:none;background-color:transparent;will-change:transform}
-        .car-canvas{position:absolute;inset:0;z-index:2;display:none}
+        .car-video{width:100%;height:100%;object-fit:contain!important;transform-origin:50% 56%;transform:scale(1.22) translateY(-1.5%)!important;opacity:1!important;display:block;pointer-events:none;background-color:transparent!important}
         .security-armor{position:absolute;inset:0;z-index:5;background:transparent;cursor:grab;touch-action:none;user-select:none;-webkit-user-drag:none}
         .security-armor:active{cursor:grabbing}
         .swipe-badge{display:inline-flex;align-items:center;justify-content:center;padding:8px 26px;margin-bottom:2px;background:rgba(255,255,255,.94);border:1.5px solid #fff;border-radius:999px;font-size:13px;font-weight:800;color:#1A1D20;box-shadow:0 6px 18px rgba(0,0,0,.05);cursor:ew-resize;user-select:none;touch-action:none;transition:transform .2s ease,border-color .2s ease,background-color .2s ease}
@@ -181,7 +179,7 @@
         .modal-box.is-unavailable{background-color:#D4D7DC!important;border-color:#94A3B8!important}
         .modal-Lower-wrap{position:relative;transition:filter .35s ease,opacity .35s ease}
         .modal-box.is-unavailable .modal-Lower-wrap{filter:grayscale(100%) contrast(.92);opacity:.42;pointer-events:none!important;user-select:none!important}
-        .unavailable-sash-banner{display:none;position:absolute;top:67%;left:50%;width:108%;transform:translate(-50%,-50%) rotate(-6.5deg);background:rgba(20,23,28,.84);backdrop-filter:blur(15px) saturate(160%);-webkit-backdrop-filter:blur(15px) saturate(160%);border-top:3px solid #FFC107;border-bottom:3px solid #FFC107;padding:22px 24px;z-index:50;box-shadow:0 22px 50px rgba(0,0,0,.55),0 0 25px rgba(255,193,7,.22);border-radius:14px;text-align:center;pointer-events:auto;animation:sashPopIn .45s cubic-bezier(.34,1.56,.64,1) forwards}
+        .unavailable-sash-banner{display:none;position:absolute;top:67%;left:50%;width:108%;transform:translate(-50%,-50%) rotate(-6.5deg);background:rgba(20,23,28,.92);border-top:3px solid #FFC107;border-bottom:3px solid #FFC107;padding:22px 24px;z-index:50;box-shadow:0 22px 50px rgba(0,0,0,.55),0 0 25px rgba(255,193,7,.22);border-radius:14px;text-align:center;pointer-events:auto;animation:sashPopIn .35s cubic-bezier(.34,1.56,.64,1) forwards}
         @keyframes sashPopIn{from{opacity:0;transform:translate(-50%,-50%) rotate(-6.5deg) scale(.88)}to{opacity:1;transform:translate(-50%,-50%) rotate(-6.5deg) scale(1)}}
         .modal-box.is-unavailable .unavailable-sash-banner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
         .sash-main-text{color:#FFC107;font-size:20px;font-weight:900;letter-spacing:.6px;line-height:1.4;text-transform:uppercase;text-shadow:0 2px 10px rgba(0,0,0,.6)}
@@ -189,9 +187,8 @@
         .sash-sub-btn:hover{background:#FFCA28;transform:scale(1.05)}
         .modal-close-btn{position:absolute;top:-15px;right:-15px;width:44px;height:44px;border-radius:50%;background:#1A1D20;border:2.5px solid #FFC107;color:#FFC107;font-weight:900;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;z-index:60;box-shadow:0 8px 20px rgba(0,0,0,.28)}
         .modal-close-btn:hover{background:#D32F2F;color:#fff;border-color:#fff;transform:rotate(90deg)}
-        .modal-car-showcase{position:relative;width:calc(100% + 24px);margin-left:-12px;height:410px;border-radius:22px;background:linear-gradient(180deg,var(--studio-top) 0%,var(--studio-bg) 55%,var(--studio-bottom) 100%);overflow:hidden;display:flex;align-items:center;justify-content:center;border:3px solid #FFC107;margin-bottom:14px;box-shadow:inset 0 0 25px rgba(0,0,0,.04),0 12px 30px rgba(0,0,0,.08);pointer-events:none;z-index:20}
-        .modal-car-showcase video,.modal-car-showcase canvas{width:100%;height:100%;object-fit:contain!important;transform-origin:50% 56%;transform:scale(1.34) translateY(-1%)!important;background-color:transparent;pointer-events:none;display:block}
-        .modal-car-showcase canvas{position:absolute;inset:0;z-index:3;display:none}
+        .modal-car-showcase{position:relative;width:calc(100% + 24px);margin-left:-12px;height:410px;border-radius:22px;background:linear-gradient(180deg,#EAEAE8 0%,#E6E6E4 55%,#DFDFDD 100%)!important;overflow:hidden;display:flex;align-items:center;justify-content:center;border:3px solid #FFC107;margin-bottom:14px;box-shadow:inset 0 0 25px rgba(0,0,0,.04),0 12px 30px rgba(0,0,0,.08);pointer-events:none;z-index:20}
+        .modal-car-showcase video{width:100%;height:100%;object-fit:contain!important;transform-origin:50% 56%;transform:scale(1.34) translateY(-1%)!important;background-color:transparent!important;pointer-events:none;display:block}
         .modal-title{font-size:25px;font-weight:900;color:#1A1D20;margin-bottom:2px}
         .modal-subtitle{font-size:13.5px;font-weight:900;color:#B45309;margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px}
         .err-banner{background-color:rgba(239,68,68,.1);border:2px solid #ef4444;color:#b91c1c;padding:10px 14px;border-radius:12px;display:none;align-items:center;gap:10px;font-weight:800;font-size:12.5px;margin-bottom:14px;text-align:left}
@@ -260,8 +257,8 @@
         }
         @media (max-width:1024px){
             header.pc-header,nav.top-capsule,section.search-wrapper,aside.right-filter-panel{display:none!important}
-            .mobile-sticky-dock{display:flex;flex-direction:column;gap:5px;position:fixed;top:0;left:0;width:100%;z-index:40000;background:rgba(230,230,228,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1.5px solid rgba(255,255,255,.85);box-shadow:0 6px 20px rgba(26,29,32,.06);padding:5px 8px 6px;transition:padding .3s ease}
-            .mob-dock-top{display:flex;align-items:center;justify-content:space-between;height:32px;background:rgba(255,255,255,.94);border:1px solid #fff;border-radius:999px;padding:0 12px;position:relative;overflow:hidden;max-height:32px;opacity:1;transition:max-height .32s ease,opacity .25s ease,margin .32s ease,border-width .25s ease}
+            .mobile-sticky-dock{display:flex;flex-direction:column;gap:5px;position:fixed;top:0;left:0;width:100%;z-index:40000;background:#E6E6E4;border-bottom:1.5px solid #fff;box-shadow:0 6px 20px rgba(26,29,32,.06);padding:5px 8px 6px;transition:padding .3s ease}
+            .mob-dock-top{display:flex;align-items:center;justify-content:space-between;height:32px;background:#fff;border:1px solid #fff;border-radius:999px;padding:0 12px;position:relative;overflow:hidden;max-height:32px;opacity:1;transition:max-height .32s ease,opacity .25s ease,margin .32s ease,border-width .25s ease}
             .mobile-sticky-dock.scrolled-down .mob-dock-top{max-height:0!important;opacity:0!important;margin-top:-5px!important;border-width:0!important;pointer-events:none}
             .mob-brand-stack{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;line-height:1}
             .mob-logo-main{font-size:12px;font-weight:900;letter-spacing:-.3px;color:#1A1D20;line-height:1}
@@ -279,7 +276,7 @@
             .mob-ai-btn{background:#1A1D20;color:#FFC107;border:none;padding:5px 12px;border-radius:999px;font-size:10.5px;font-weight:900;flex-shrink:0;letter-spacing:.5px;display:inline-block}
             .mob-dock-filters{display:flex;align-items:stretch;gap:6px;overflow-x:auto;white-space:nowrap;scrollbar-width:none;-ms-overflow-style:none;padding:1px 0}
             .mob-dock-filters::-webkit-scrollbar{display:none}
-            .mob-f-btn{height:32px;padding:0 2.9vw;border-radius:999px;background:rgba(255,255,255,.95);border:1.5px solid #fff;font-size:3.15vw;font-weight:800;color:#1A1D20;cursor:pointer;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.04)}
+            .mob-f-btn{height:32px;padding:0 2.9vw;border-radius:999px;background:#fff;border:1.5px solid #fff;font-size:3.15vw;font-weight:800;color:#1A1D20;cursor:pointer;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.04)}
             .mob-f-btn.sort-two-line{flex-direction:column;line-height:1.05;padding:2px 2.8vw;background:#1A1D20;color:#FFC107;border-color:#FFC107;font-size:2.65vw;text-align:center}
             .mob-f-btn.sort-two-line span{display:block;text-align:center}
             .mob-f-btn.sort-two-line.active{background:#FFC107;color:#1A1D20;border-color:#1A1D20}
@@ -291,8 +288,8 @@
             .cars-container{padding:112px 14px 120px!important;grid-template-columns:1fr!important;gap:28px!important;transform:none!important;transition:padding-top .32s ease}
             .cars-container.mob-expanded-top{padding-top:80px!important}
             .car-card{width:100%!important;max-width:500px!important;background:transparent!important;border:none!important;box-shadow:none!important;padding:0!important;transition:transform .35s cubic-bezier(.22,1,.36,1)!important}
-            .car-media-box{width:100%!important;height:29vh!important;min-height:195px;max-height:255px;margin-bottom:0!important;border-radius:20px;touch-action:none!important;transition:transform .35s cubic-bezier(.22,1,.36,1)!important}
-            .car-video,.car-canvas{transform:scale(1.28) translateY(-1%)!important}
+            .car-media-box{width:100%!important;height:29vh!important;min-height:195px;max-height:255px;margin-bottom:0!important;border-radius:20px;background-color:#E6E6E4!important;touch-action:none!important;transition:transform .35s cubic-bezier(.22,1,.36,1)!important}
+            .car-video{transform:scale(1.28) translateY(-1%)!important}
             .car-card.interacting-zoom{z-index:80!important;transform:scale(1.14)!important}
             .car-card.interacting-zoom .car-media-box{transform:scale(1.1)!important}
             .swipe-badge{background:transparent!important;border:none!important;box-shadow:none!important;padding:0 8px!important;margin-bottom:1px!important;font-size:11.5px!important;font-weight:900!important;color:#1A1D20!important;touch-action:none!important}
@@ -308,7 +305,7 @@
             .dark-icon{width:23px;height:23px}
             .dark-icon svg{width:12.5px;height:12.5px}
             .order-btn{padding:14px 26px;font-size:13.5px;width:90%;max-width:310px}
-            .mobile-pwa-bottom-sheet{display:flex;align-items:center;justify-content:space-between;gap:12px;position:fixed;bottom:10px;left:50%;transform:translateX(-50%);width:94%;max-width:420px;height:20vh;min-height:135px;max-height:175px;background:rgba(26,29,32,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:2px solid #FFC107;border-radius:22px;padding:14px 16px;z-index:48000;box-shadow:0 20px 50px rgba(0,0,0,.38);transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .3s ease}
+            .mobile-pwa-bottom-sheet{display:flex;align-items:center;justify-content:space-between;gap:12px;position:fixed;bottom:10px;left:50%;transform:translateX(-50%);width:94%;max-width:420px;height:20vh;min-height:135px;max-height:175px;background:#1A1D20;border:2px solid #FFC107;border-radius:22px;padding:14px 16px;z-index:48000;box-shadow:0 20px 50px rgba(0,0,0,.38);transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .3s ease}
             .mobile-pwa-bottom-sheet.dismissed{transform:translate(-50%,140%);opacity:0;pointer-events:none}
             .mob-pwa-sheet-close{position:absolute;top:8px;right:10px;width:30px;height:30px;border-radius:50%;background:#343A40;color:#fff;border:1px solid #495057;font-size:13px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center}
             .mob-pwa-sheet-icon{width:52px;height:60px;background:#FFC107;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 15px rgba(255,193,7,.3)}
@@ -339,7 +336,7 @@
             .modal-box{padding:10px 12px 18px!important;width:98%}
             .modal-close-btn{top:-10px;right:-6px;width:36px;height:36px;font-size:15px}
             .modal-car-showcase{width:calc(100% + 16px);margin-left:-8px;height:265px;margin-bottom:10px}
-            .modal-car-showcase video,.modal-car-showcase canvas{transform:scale(1.36) translateY(-1%)!important}
+            .modal-car-showcase video{transform:scale(1.36) translateY(-1%)!important}
             .modal-title{font-size:20px}
             .modal-subtitle{font-size:11.5px;margin-bottom:10px}
             .form-row-2{grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
@@ -434,7 +431,6 @@
         </div>
         <div class="jaguar-video-clean" id="jaguar-video-box">
             <video id="jaguar-stage-video" src="" autoplay loop muted playsinline disablePictureInPicture></video>
-            <canvas id="jaguar-stage-canvas" aria-hidden="true"></canvas>
         </div>
     </section>
 
@@ -570,13 +566,13 @@
         </div>
     </aside>
 
+    <!-- ARAÇ FİLOSU (SIFIR CANVAS RAM YÜKÜ, DOĞRUDAN DONANIMSAL VIDEO MOTORU) -->
     <main class="cars-container" id="cars-grid" aria-label="Kiralık Araç Filosu">
 
         <!-- 1. HONDA CIVIC -->
         <article class="car-card" data-order="1" data-name="HONDA CIVIC" data-price-str="1.600 ₺" data-price="1600" data-gear="otomatik" data-fuel="benzin" data-type="sedan" data-seg="uygun,aile" data-vkey="honda-civic-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="honda-civic-360.mp4" src="honda-civic-360.mp4" preload="metadata" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
-                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Honda Civic 360 Derece Döndür">
@@ -600,7 +596,6 @@
         <article class="car-card" data-order="2" data-name="RENAULT MEGANE" data-price-str="2.000 ₺" data-price="2000" data-gear="otomatik" data-fuel="dizel" data-type="sedan" data-seg="vip,aile" data-vkey="renault-megane-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="renault-megane-360.mp4" src="renault-megane-360.mp4" preload="metadata" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
-                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Renault Megane 360 Derece Döndür">
@@ -624,7 +619,6 @@
         <article class="car-card" data-order="3" data-name="CITROEN C ELYSEE" data-price-str="1.600 ₺" data-price="1600" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-seg="uygun,aile" data-vkey="citroen-c-elysee-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="citroen-c-elysee-360.mp4" src="citroen-c-elysee-360.mp4" preload="metadata" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
-                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Citroen C Elysee 360 Derece Döndür">
@@ -648,7 +642,6 @@
         <article class="car-card" data-order="4" data-name="NISSAN QASHQAI" data-price-str="2.300 ₺" data-price="2300" data-gear="manuel" data-fuel="dizel" data-type="suv" data-seg="vip,aile" data-vkey="nissan-qashqai-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="nissan-qashqai-360.mp4" src="nissan-qashqai-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
-                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Nissan Qashqai 360 Derece Döndür">
@@ -672,7 +665,6 @@
         <article class="car-card" data-order="5" data-name="TOYOTA COROLLA" data-price-str="1.700 ₺" data-price="1700" data-gear="otomatik" data-fuel="hibrit" data-type="sedan" data-seg="vip,uygun,aile" data-vkey="toyota-corolla-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="toyota-corolla-360.mp4" src="toyota-corolla-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
-                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Toyota Corolla 360 Derece Döndür">
@@ -696,7 +688,6 @@
         <article class="car-card" data-order="6" data-name="KIA RIO" data-price-str="1.650 ₺" data-price="1650" data-gear="manuel" data-fuel="dizel" data-type="hatchback" data-seg="uygun" data-vkey="kia-rio-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="kia-rio-360.mp4" src="kia-rio-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
-                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Kia Rio 360 Derece Döndür">
@@ -720,7 +711,6 @@
         <article class="car-card" data-order="7" data-name="HYUNDAI İ20" data-price-str="1.600 ₺" data-price="1600" data-gear="otomatik" data-fuel="benzin" data-type="hatchback" data-seg="uygun" data-vkey="hyundai-i20-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="hyundai-i20-360.mp4" src="hyundai-i20-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
-                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Hyundai i20 360 Derece Döndür">
@@ -744,7 +734,6 @@
         <article class="car-card" data-order="8" data-name="FIAT EGEA" data-price-str="1.500 ₺" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-seg="uygun,aile" data-vkey="fiat-egea-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="fiat-egea-360.mp4" src="fiat-egea-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
-                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Fiat Egea 360 Derece Döndür">
@@ -768,7 +757,6 @@
         <article class="car-card" data-order="9" data-name="FIAT FIORINO" data-price-str="1.500 ₺" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="ticari" data-seg="ticari,uygun" data-vkey="fiat-fiorino-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="fiat-fiorino-360.mp4" src="fiat-fiorino-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
-                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Fiat Fiorino 360 Derece Döndür">
@@ -792,7 +780,6 @@
         <article class="car-card" data-order="10" data-name="PEUGEOT 301" data-price-str="1.500 ₺" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-seg="uygun,aile" data-vkey="peugeot-301-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="peugeot-301-360.mp4" src="peugeot-301-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
-                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Peugeot 301 360 Derece Döndür">
@@ -816,7 +803,6 @@
         <article class="car-card" data-order="11" data-name="RENAULT SYMBOL" data-price-str="1.500 ₺" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-seg="uygun" data-vkey="renault-symbol-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="renault-symbol-360.mp4" src="renault-symbol-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
-                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Renault Symbol 360 Derece Döndür">
@@ -844,8 +830,7 @@
             <button onclick="closeOrderModal()" class="modal-close-btn" aria-label="Sipariş Penceresini Kapat">✕</button>
 
             <div class="modal-car-showcase video-skeleton" id="modal-showcase-box">
-                <video id="modal-video" aria-hidden="true" tabindex="-1" src="" playsinline muted disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
-                <canvas id="modal-canvas" aria-hidden="true"></canvas>
+                <video id="modal-video" aria-hidden="true" tabindex="-1" src="" loop playsinline muted disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
             </div>
 
             <div class="unavailable-sash-banner" id="unavailableSashBanner" role="alert" aria-live="assertive">
@@ -1010,20 +995,43 @@
         (function() {
             "use strict";
 
-            const FULL_360_FRAMES = 90;
             const STAGGER_INTERVAL_MS = 280;
-            const PERSISTENT_CACHE_NAME = "referans-360-kalici-bellek-v2";
+            const PERSISTENT_CACHE_NAME = "referans-360-kalici-v3";
             const HOLD_TURN_SPEED = 0.098;
             const STEPDOWN_BASE_SPEED = 0.098;
             const DRAG_PIXELS_PC = 1030;
             const DRAG_PIXELS_MOBILE = 140;
-            const MODAL_PINGPONG_SPEED = 0.14;
 
             // YENİ DEPLOY EDİLEN GOOGLE APPS SCRIPT WEB APP URL'Sİ
-            const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyAOAINWpU4zO3b5uOMcCduWKlu02y7Bg4oj8e93uc6UojRehp7hlPqdAD5nHigYW2U/exec";
+            const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwI5wsJ_okMI1if5-0yKiwJKK6AEB5Wk6NwbsGVRaT_xiDRcPtW79x3-kjAiryIcY0/exec";
 
             function getCleanCalendarCarKey(carName) {
                 return String(carName || "").trim() + " [FİLO]";
+            }
+
+            function getTodayDateString() {
+                const now = new Date();
+                return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+            }
+
+            // ANLIK MÜSAİTLİK BELLEĞİ (SİPARİŞ VERİLEN ARACI AÇILIR AÇILMAZ "MÜSAİT DEĞİL" GÖSTERİR)
+            const busyCarsCache = new Map();
+            try {
+                const savedBusy = JSON.parse(localStorage.getItem('referans_busy_cars_' + getTodayDateString()) || '{}');
+                Object.keys(savedBusy).forEach(k => {
+                    if (savedBusy[k] === false) busyCarsCache.set(k, false);
+                });
+            } catch (e) {}
+
+            function markCarUnavailableLocally(carName) {
+                if (!carName) return;
+                busyCarsCache.set(carName, false);
+                try {
+                    const storageKey = 'referans_busy_cars_' + getTodayDateString();
+                    const savedBusy = JSON.parse(localStorage.getItem(storageKey) || '{}');
+                    savedBusy[carName] = false;
+                    localStorage.setItem(storageKey, JSON.stringify(savedBusy));
+                } catch (e) {}
             }
 
             const JAGUAR_THEMES = {
@@ -1047,15 +1055,8 @@
             let activeModalCar = '';
             let lastRandomCarKey = '';
             let securityFlagged = false;
-            let jaguarChromaRAF = null;
-
-            const gpuFrameBank = new Map();
-            const persistentBlobUrls = new Map();
-            const cardElementMap = new Map();
             let staggerTimers = [];
-            let extractionQueue = [];
-            let currentExtractingJob = null;
-            let focusedSpinFileName = null;
+            let focusedSpinCard = null;
 
             if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
                 window.addEventListener('load', () => {
@@ -1063,27 +1064,18 @@
                 });
             }
 
-            async function getOrStorePersistentVideoUrl(fileName) {
-                if (persistentBlobUrls.has(fileName)) return persistentBlobUrls.get(fileName);
-                if (!location.protocol.startsWith('http') || !('caches' in window)) return fileName;
-                try {
-                    const cache = await caches.open(PERSISTENT_CACHE_NAME);
-                    let response = await cache.match(fileName);
-                    if (!response) {
-                        const netRes = await fetch(fileName).catch(() => fetch('assets/' + fileName));
-                        if (netRes && netRes.ok) {
-                            cache.put(fileName, netRes.clone()).catch(() => {});
-                            response = netRes;
+            // Videoyu tarayıcının Kalıcı Disk Önbelleğine (Cache Storage) kaydeder (RAM şişirmez)
+            function warmDiskCacheForVideo(fileName) {
+                if (!location.protocol.startsWith('http') || !('caches' in window)) return;
+                caches.open(PERSISTENT_CACHE_NAME).then(cache => {
+                    cache.match(fileName).then(existing => {
+                        if (!existing) {
+                            fetch(fileName).then(res => {
+                                if (res && res.ok) cache.put(fileName, res);
+                            }).catch(() => {});
                         }
-                    }
-                    if (response) {
-                        const blob = await response.blob();
-                        const blobUrl = URL.createObjectURL(blob);
-                        persistentBlobUrls.set(fileName, blobUrl);
-                        return blobUrl;
-                    }
-                } catch (e) {}
-                return fileName;
+                    }).catch(() => {});
+                }).catch(() => {});
             }
 
             window.showTopToast = function(message) {
@@ -1139,51 +1131,6 @@
                 if (sheet) sheet.classList.add('dismissed');
             };
 
-            function startJaguarWhiteRemovalEngine(video, canvas) {
-                if (jaguarChromaRAF) cancelAnimationFrame(jaguarChromaRAF);
-                const ctx = canvas.getContext('2d', { willReadFrequently: true });
-                let chromaSupported = true;
-
-                function processJaguarFrame() {
-                    if (!document.body.classList.contains('jaguar-mode-active')) return;
-                    if (video.readyState >= 2 && video.videoWidth > 0 && chromaSupported) {
-                        const targetW = Math.min(640, video.videoWidth);
-                        const targetH = Math.round(targetW * (video.videoHeight / video.videoWidth));
-                        if (canvas.width !== targetW) {
-                            canvas.width = targetW;
-                            canvas.height = targetH;
-                        }
-                        try {
-                            ctx.drawImage(video, 0, 0, targetW, targetH);
-                            const frameData = ctx.getImageData(0, 0, targetW, targetH);
-                            const d = frameData.data;
-                            for (let i = 0, len = d.length; i < len; i += 4) {
-                                const r = d[i], g = d[i + 1], b = d[i + 2];
-                                if (r > 212 && g > 212 && b > 212) {
-                                    const maxDiff = Math.max(Math.abs(r - g), Math.abs(g - b), Math.abs(r - b));
-                                    if (maxDiff < 18) {
-                                        const avg = (r + g + b) * 0.3333;
-                                        if (avg >= 238) d[i + 3] = 0;
-                                        else if (avg > 212) d[i + 3] = Math.round(((238 - avg) / 26) * 255);
-                                    }
-                                }
-                            }
-                            ctx.putImageData(frameData, 0, 0);
-                            if (canvas.style.display !== 'block') {
-                                canvas.style.display = 'block';
-                                video.style.opacity = '0';
-                            }
-                        } catch (e) {
-                            chromaSupported = false;
-                            canvas.style.display = 'none';
-                            video.style.opacity = '1';
-                        }
-                    }
-                    jaguarChromaRAF = requestAnimationFrame(processJaguarFrame);
-                }
-                jaguarChromaRAF = requestAnimationFrame(processJaguarFrame);
-            }
-
             window.selectCategoryWithJaguar = function(category) {
                 if (currentCategoryFilter === category && document.body.classList.contains('jaguar-mode-active')) {
                     exitJaguarStage();
@@ -1194,14 +1141,9 @@
                 document.getElementById('jaguar-stage-title').innerText = theme.title;
 
                 const jVideo = document.getElementById('jaguar-stage-video');
-                const jCanvas = document.getElementById('jaguar-stage-canvas');
-                jCanvas.style.display = 'none';
-                jVideo.style.opacity = '1';
-
                 let srcIdx = 0;
                 jVideo.onloadeddata = function() {
                     jVideo.play().catch(()=>{});
-                    startJaguarWhiteRemovalEngine(jVideo, jCanvas);
                 };
                 jVideo.onerror = function() {
                     srcIdx++;
@@ -1228,18 +1170,11 @@
             };
 
             window.exitJaguarStage = function() {
-                if (jaguarChromaRAF) {
-                    cancelAnimationFrame(jaguarChromaRAF);
-                    jaguarChromaRAF = null;
-                }
                 currentCategoryFilter = 'all';
                 document.body.classList.remove('jaguar-mode-active');
                 const jVideo = document.getElementById('jaguar-stage-video');
-                const jCanvas = document.getElementById('jaguar-stage-canvas');
-                if (jCanvas) jCanvas.style.display = 'none';
                 if (jVideo) {
                     jVideo.pause();
-                    jVideo.style.opacity = '1';
                     jVideo.removeAttribute('src');
                 }
                 document.querySelectorAll('.pc-cat-chip, .mob-cat-chip').forEach(c => c.classList.remove('active'));
@@ -1289,7 +1224,7 @@
                     card.classList.toggle('hidden', !passCat);
                 });
 
-                scheduleTopToBottomCascade();
+                scheduleTopToBottomVideoLoad();
             };
 
             window.addEventListener('scroll', () => {
@@ -1314,350 +1249,76 @@
                 }
             }, { passive: true });
 
-            function ensureGpuBank(fileName, videoEl) {
-                if (!fileName) return null;
-                if (!gpuFrameBank.has(fileName)) {
-                    gpuFrameBank.set(fileName, {
-                        rawSlots: new Array(FULL_360_FRAMES).fill(null),
-                        frames: [],
-                        checkpointTime: 0.005,
-                        filledCount: 0,
-                        complete: false,
-                        width: 0,
-                        height: 0
-                    });
-                }
-                const bank = gpuFrameBank.get(fileName);
-                if (videoEl && videoEl.videoWidth > 0 && !bank.width) {
-                    bank.width = videoEl.videoWidth;
-                    bank.height = videoEl.videoHeight;
-                }
-                return bank;
-            }
-
-            function activateCardPosterAndQueue(card, highPriority) {
-                if (!card || !card._vFile) return;
-                const fileName = card._vFile;
-                const video = card.querySelector('video.car-video');
-                const bank = ensureGpuBank(fileName, video);
-
-                if (video && video.preload === 'none') {
-                    video.preload = 'metadata';
-                    video.load();
-                }
-                if (!bank.complete) {
-                    enqueueCarForExtraction(fileName, highPriority);
-                }
-            }
-
-            function scheduleTopToBottomCascade() {
+            // EN ÜSTTEN EN ALTA DOĞRU (1. ARAÇ -> 11. ARAÇ) SIFIR ÇÖKME GARANTİLİ VİDEO YÜKLEME
+            function scheduleTopToBottomVideoLoad() {
                 staggerTimers.forEach(t => clearTimeout(t));
                 staggerTimers = [];
 
-                const allOrderedCards = Array.from(document.querySelectorAll('.car-card:not(.hidden)'));
-                allOrderedCards.forEach((card, idx) => {
-                    const delayMs = (idx + 1) * STAGGER_INTERVAL_MS;
+                const visibleCards = Array.from(document.querySelectorAll('.car-card:not(.hidden)'));
+                visibleCards.forEach((card, idx) => {
                     const timerId = setTimeout(() => {
-                        if (focusedSpinFileName && focusedSpinFileName !== card._vFile) {
-                            enqueueCarForExtraction(card._vFile, false);
-                            return;
+                        if (focusedSpinCard && focusedSpinCard !== card) return;
+                        const video = card.querySelector('video.car-video');
+                        if (video && video.preload === 'none') {
+                            video.preload = 'auto';
+                            video.load();
                         }
-                        activateCardPosterAndQueue(card, false);
-                    }, delayMs);
+                        if (card._vFile) warmDiskCacheForVideo(card._vFile);
+                    }, (idx + 1) * STAGGER_INTERVAL_MS);
                     staggerTimers.push(timerId);
                 });
             }
 
-            function enqueueCarForExtraction(fileName, isUrgentFocus) {
-                if (!fileName) return;
-                const bank = ensureGpuBank(fileName, null);
-                if (bank.complete) return;
+            // SAYFA AÇILDIĞINDA TÜM ARAÇLARIN BUGÜNKÜ MÜSAİTLİK DURUMUNU ÖNCEDEN ÖĞRENİR
+            function prefetchAllCarsAvailability() {
+                const cards = Array.from(document.querySelectorAll('.car-card'));
+                const todayStr = getTodayDateString();
 
-                const existingIdx = extractionQueue.indexOf(fileName);
-                if (existingIdx !== -1) {
-                    if (isUrgentFocus && existingIdx > 0) {
-                        extractionQueue.splice(existingIdx, 1);
-                        extractionQueue.unshift(fileName);
-                    }
-                } else if (!currentExtractingJob || currentExtractingJob.fileName !== fileName) {
-                    if (isUrgentFocus) extractionQueue.unshift(fileName);
-                    else extractionQueue.push(fileName);
-                }
+                cards.forEach((card, index) => {
+                    const carName = card.getAttribute('data-name');
+                    if (!carName) return;
+                    const queryKey = getCleanCalendarCarKey(carName);
 
-                if (isUrgentFocus && currentExtractingJob && currentExtractingJob.fileName !== fileName) {
-                    currentExtractingJob.pauseForPreempt();
-                    return;
-                }
-                processNextInExtractionQueue();
-            }
-
-            function finalizeDense90Frames(bank) {
-                if (bank.filledCount < 16) return false;
-                const finalFrames = new Array(FULL_360_FRAMES);
-                let lastValid = null;
-
-                for (let i = 0; i < FULL_360_FRAMES; i++) {
-                    if (bank.rawSlots[i]) lastValid = bank.rawSlots[i];
-                }
-                if (!lastValid) return false;
-
-                for (let i = 0; i < FULL_360_FRAMES; i++) {
-                    if (bank.rawSlots[i]) {
-                        finalFrames[i] = bank.rawSlots[i];
-                        lastValid = bank.rawSlots[i];
-                    } else {
-                        let nextValid = null;
-                        for (let j = i + 1; j < FULL_360_FRAMES; j++) {
-                            if (bank.rawSlots[j]) { nextValid = bank.rawSlots[j]; break; }
-                        }
-                        finalFrames[i] = nextValid || lastValid;
-                    }
-                }
-                bank.frames = finalFrames;
-                bank.complete = true;
-                return true;
-            }
-
-            function processNextInExtractionQueue() {
-                if (currentExtractingJob) return;
-
-                if (focusedSpinFileName) {
-                    const focusedBank = gpuFrameBank.get(focusedSpinFileName);
-                    if (focusedBank && !focusedBank.complete) {
-                        const idx = extractionQueue.indexOf(focusedSpinFileName);
-                        if (idx > 0) {
-                            extractionQueue.splice(idx, 1);
-                            extractionQueue.unshift(focusedSpinFileName);
-                        } else if (idx === -1) {
-                            extractionQueue.unshift(focusedSpinFileName);
-                        }
-                    } else {
-                        return;
-                    }
-                }
-
-                if (extractionQueue.length === 0) return;
-
-                const fileName = extractionQueue.shift();
-                const bank = ensureGpuBank(fileName, null);
-                if (!bank || bank.complete) {
-                    processNextInExtractionQueue();
-                    return;
-                }
-
-                const cardEl = cardElementMap.get(fileName);
-                if (cardEl) {
-                    const cardVideo = cardEl.querySelector('video.car-video');
-                    if (cardVideo && cardVideo.preload === 'none') {
-                        cardVideo.preload = 'metadata';
-                        cardVideo.load();
-                    }
-                }
-
-                let isPreempted = false;
-                const extVideo = document.createElement('video');
-                extVideo.muted = true;
-                extVideo.playsInline = true;
-                extVideo.setAttribute('muted', '');
-                extVideo.setAttribute('playsinline', '');
-                extVideo.preload = 'auto';
-
-                let watchdog = null;
-                let pollRAF = null;
-
-                function stopAndCleanup(wasPreempted) {
-                    if (watchdog) clearTimeout(watchdog);
-                    if (pollRAF) cancelAnimationFrame(pollRAF);
-
-                    if (wasPreempted) {
-                        if (extVideo.currentTime > bank.checkpointTime) {
-                            bank.checkpointTime = extVideo.currentTime;
-                        }
-                        if (!extractionQueue.includes(fileName)) {
-                            extractionQueue.unshift(fileName);
-                        }
-                    }
-
-                    extVideo.pause();
-                    extVideo.removeAttribute('src');
-                    extVideo.load();
-                    currentExtractingJob = null;
-
-                    const nextDelay = focusedSpinFileName ? 10 : 120;
-                    setTimeout(processNextInExtractionQueue, nextDelay);
-                }
-
-                currentExtractingJob = {
-                    fileName,
-                    pauseForPreempt: function() {
-                        if (isPreempted) return;
-                        isPreempted = true;
-                        stopAndCleanup(true);
-                    }
-                };
-
-                function resetWatchdog() {
-                    if (watchdog) clearTimeout(watchdog);
-                    watchdog = setTimeout(() => {
-                        finalizeDense90Frames(bank);
-                        stopAndCleanup(false);
-                    }, 5500);
-                }
-
-                function captureSlotAtTime(mediaTime) {
-                    if (!extVideo.duration || !extVideo.videoWidth) return;
-                    const ratio = Math.max(0, Math.min(0.9999, mediaTime / extVideo.duration));
-                    const slotIdx = Math.min(FULL_360_FRAMES - 1, Math.max(0, Math.floor(ratio * FULL_360_FRAMES)));
-                    bank.checkpointTime = Math.max(bank.checkpointTime, mediaTime);
-
-                    if (bank.rawSlots[slotIdx]) return;
-
-                    if (window.createImageBitmap) {
-                        createImageBitmap(extVideo).then(bmp => {
-                            if (!bank.rawSlots[slotIdx]) {
-                                bank.rawSlots[slotIdx] = bmp;
-                                bank.filledCount++;
-                            }
-                        }).catch(() => {});
-                    } else {
-                        try {
-                            const c = document.createElement('canvas');
-                            c.width = bank.width;
-                            c.height = bank.height;
-                            c.getContext('2d').drawImage(extVideo, 0, 0);
-                            bank.rawSlots[slotIdx] = c;
-                            bank.filledCount++;
-                        } catch (e) {}
-                    }
-                }
-
-                extVideo.addEventListener('error', () => {
-                    const cSrc = extVideo.getAttribute('src') || '';
-                    if (!cSrc.includes('assets/') && !cSrc.startsWith('blob:')) {
-                        extVideo.src = 'assets/' + fileName;
-                        extVideo.load();
-                    } else {
-                        stopAndCleanup(false);
-                    }
-                });
-
-                extVideo.addEventListener('ended', () => {
-                    if (isPreempted) return;
-                    captureSlotAtTime(extVideo.duration - 0.01);
                     setTimeout(() => {
-                        finalizeDense90Frames(bank);
-                        stopAndCleanup(false);
-                    }, 35);
-                }, { once: true });
+                        fetch(WEB_APP_URL + "?islem=aracDurum&arac=" + encodeURIComponent(queryKey))
+                            .then(r => r.json())
+                            .then(data => {
+                                if (data && (data.musait === false || data.durum === 'dolu')) {
+                                    markCarUnavailableLocally(carName);
+                                }
+                            }).catch(() => {});
 
-                extVideo.addEventListener('loadeddata', () => {
-                    if (isPreempted) return;
-                    if (!extVideo.duration || !extVideo.videoWidth) {
-                        stopAndCleanup(false);
-                        return;
-                    }
-                    bank.width = extVideo.videoWidth;
-                    bank.height = extVideo.videoHeight;
-
-                    resetWatchdog();
-                    extVideo.currentTime = Math.min(extVideo.duration - 0.05, bank.checkpointTime || 0.005);
-                    extVideo.playbackRate = 2.0;
-
-                    if ('requestVideoFrameCallback' in extVideo) {
-                        const onFrame = (now, metadata) => {
-                            if (isPreempted || !currentExtractingJob) return;
-                            resetWatchdog();
-                            captureSlotAtTime(metadata.mediaTime);
-                            if (!extVideo.ended && extVideo.currentTime < extVideo.duration - 0.02) {
-                                extVideo.requestVideoFrameCallback(onFrame);
-                            } else {
-                                finalizeDense90Frames(bank);
-                                stopAndCleanup(false);
-                            }
-                        };
-                        extVideo.requestVideoFrameCallback(onFrame);
-                    } else {
-                        const pollLoop = () => {
-                            if (isPreempted || !currentExtractingJob) return;
-                            resetWatchdog();
-                            if (!extVideo.paused) captureSlotAtTime(extVideo.currentTime);
-                            if (!extVideo.ended && extVideo.currentTime < extVideo.duration - 0.02) {
-                                pollRAF = requestAnimationFrame(pollLoop);
-                            } else {
-                                finalizeDense90Frames(bank);
-                                stopAndCleanup(false);
-                            }
-                        };
-                        pollRAF = requestAnimationFrame(pollLoop);
-                    }
-
-                    extVideo.play().catch(() => { stopAndCleanup(false); });
-                }, { once: true });
-
-                getOrStorePersistentVideoUrl(fileName).then(persistentUrl => {
-                    if (isPreempted) return;
-                    extVideo.src = persistentUrl;
-                    extVideo.load();
+                        fetch(WEB_APP_URL + "?islem=saatSorgula&tarih=" + todayStr + "&arac=" + encodeURIComponent(queryKey))
+                            .then(r => r.json())
+                            .then(doluSaatler => {
+                                if (Array.isArray(doluSaatler) && doluSaatler.length > 0) {
+                                    markCarUnavailableLocally(carName);
+                                }
+                            }).catch(() => {});
+                    }, (index + 1) * 350);
                 });
             }
 
-            function renderCardAngle60FPS(card, angleProgress) {
+            function renderCardAngleNative(card, angleProgress) {
                 let norm = angleProgress % 1;
                 if (norm < 0) norm += 1;
                 card._angle = norm;
 
-                const fileName = card._vFile;
                 const video = card.querySelector('video.car-video');
-                const canvas = card.querySelector('canvas.car-canvas');
-                const bank = fileName ? ensureGpuBank(fileName, video) : null;
-
-                if (bank && bank.complete && bank.frames.length === FULL_360_FRAMES && canvas) {
-                    const exactIdx = Math.min(FULL_360_FRAMES - 1, Math.max(0, Math.round(norm * (FULL_360_FRAMES - 1))));
-                    if (card._lastDrawnSlot === exactIdx && canvas.style.display === 'block') return;
-
-                    const bmp = bank.frames[exactIdx];
-                    if (bmp) {
-                        card._lastDrawnSlot = exactIdx;
-                        const targetW = bank.width || bmp.width || 960;
-                        const targetH = bank.height || bmp.height || 540;
-                        if (canvas.width !== targetW) {
-                            canvas.width = targetW;
-                            canvas.height = targetH;
-                        }
-                        if (canvas.style.display !== 'block') canvas.style.display = 'block';
-                        const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        ctx.drawImage(bmp, 0, 0, canvas.width, canvas.height);
-                        return;
-                    }
-                }
-
                 if (video && video.duration) {
                     const targetTime = 0.01 + norm * Math.max(0.1, video.duration - 0.03);
                     card._pendingSeekTime = targetTime;
-                    if (!video.seeking) video.currentTime = targetTime;
+                    if (!video.seeking) {
+                        video.currentTime = targetTime;
+                    }
                 }
             }
 
             document.addEventListener("DOMContentLoaded", function() {
                 const allCards = document.querySelectorAll('.car-card');
-                let bgSampled = false;
 
                 const trapEl = document.getElementById('honeypot-media-trap');
                 if (trapEl) trapEl.addEventListener('click', () => { securityFlagged = true; });
-
-                const viewportObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        const card = entry.target;
-                        if (entry.isIntersecting && card._vFile) {
-                            const video = card.querySelector('video.car-video');
-                            if (video && video.preload === 'none') {
-                                video.preload = 'metadata';
-                                video.load();
-                            }
-                        }
-                    });
-                }, { rootMargin: '200px 0px' });
 
                 allCards.forEach((card) => {
                     const video = card.querySelector('video.car-video');
@@ -1666,16 +1327,15 @@
                     video.removeAttribute('data-src');
                     card._vFile = fileName;
                     card._angle = 0;
-                    card._lastDrawnSlot = -1;
                     card._pendingSeekTime = null;
-
-                    cardElementMap.set(fileName, card);
-                    ensureGpuBank(fileName, null);
 
                     video.muted = true;
 
                     card.addEventListener('mouseenter', () => {
-                        if (!focusedSpinFileName && card._vFile) activateCardPosterAndQueue(card, true);
+                        if (video.preload !== 'auto') {
+                            video.preload = 'auto';
+                            video.load();
+                        }
                     }, { passive: true });
 
                     video.addEventListener('seeked', () => {
@@ -1699,37 +1359,11 @@
                         if (video.parentElement.classList.contains('video-skeleton')) {
                             video.parentElement.classList.remove('video-skeleton');
                         }
-                        ensureGpuBank(fileName, video);
-
-                        if (!bgSampled && video.videoWidth > 0) {
-                            try {
-                                const sampleCanvas = document.createElement('canvas');
-                                sampleCanvas.width = 32;
-                                sampleCanvas.height = 32;
-                                const ctx = sampleCanvas.getContext('2d');
-                                ctx.drawImage(video, 0, 0, 32, 32);
-                                const topP = ctx.getImageData(16, 2, 1, 1).data;
-                                const midP = ctx.getImageData(2, 16, 1, 1).data;
-                                const botP = ctx.getImageData(16, 30, 1, 1).data;
-                                if (midP[3] > 0 && midP[0] > 165) {
-                                    document.documentElement.style.setProperty('--studio-top', `rgb(${topP[0]}, ${topP[1]}, ${topP[2]})`);
-                                    document.documentElement.style.setProperty('--studio-bg', `rgb(${midP[0]}, ${midP[1]}, ${midP[2]})`);
-                                    document.documentElement.style.setProperty('--studio-bottom', `rgb(${botP[0]}, ${botP[1]}, ${botP[2]})`);
-                                    bgSampled = true;
-                                }
-                            } catch (e) {}
-                        }
                     });
-
-                    viewportObserver.observe(card);
                 });
 
-                // Sayfa çizimi tamamlandıktan sonra en üstten en alta kalıcı belleğe indirmeye başlar
-                if (document.readyState === 'complete') {
-                    scheduleTopToBottomCascade();
-                } else {
-                    window.addEventListener('load', scheduleTopToBottomCascade, { once: true });
-                }
+                scheduleTopToBottomVideoLoad();
+                prefetchAllCarsAvailability();
 
                 const bubble = document.getElementById('topChatBubble');
                 if (bubble && !isChatOpen) bubble.classList.add('show');
@@ -1794,11 +1428,6 @@
                     });
                 }
 
-                function releaseFocusAndResumeOthers() {
-                    focusedSpinFileName = null;
-                    setTimeout(processNextInExtractionQueue, 120);
-                }
-
                 function onPointerDown(card, clientX) {
                     if (holdDelayTimer) {
                         clearTimeout(holdDelayTimer);
@@ -1811,8 +1440,11 @@
                     const badge = card.querySelector('.swipe-badge');
                     const mediaBox = card.querySelector('.car-media-box');
 
-                    focusedSpinFileName = card._vFile;
-                    activateCardPosterAndQueue(card, true);
+                    focusedSpinCard = card;
+                    if (video.preload !== 'auto') {
+                        video.preload = 'auto';
+                        video.load();
+                    }
 
                     activeCard = card;
                     activeVideo = video;
@@ -1848,7 +1480,7 @@
                     if (!activeCard || Math.abs(pendingAngleDelta) < 0.0001) return;
                     const deltaToApply = pendingAngleDelta;
                     pendingAngleDelta = 0;
-                    renderCardAngle60FPS(activeCard, activeCard._angle + deltaToApply);
+                    renderCardAngleNative(activeCard, activeCard._angle + deltaToApply);
                 }
 
                 function onPointerMove(clientX, rawEvent) {
@@ -1893,7 +1525,7 @@
                     if (mode === 'hold' || mode === 'pending' || idleTime > 85) {
                         mode = 'none';
                         if (activeBadge) activeBadge.classList.remove('spinning');
-                        releaseFocusAndResumeOthers();
+                        focusedSpinCard = null;
                     } else if (mode === 'drag') {
                         mode = 'stepdown';
                         stepDownStartTime = performance.now();
@@ -1909,19 +1541,19 @@
                     if (activeCard) {
                         if (isPointerDown && mode === 'hold') {
                             const holdSpeed = window.innerWidth <= 1024 ? 0.14 : HOLD_TURN_SPEED;
-                            renderCardAngle60FPS(activeCard, activeCard._angle + (spinDir * holdSpeed * dt));
+                            renderCardAngleNative(activeCard, activeCard._angle + (spinDir * holdSpeed * dt));
                         } else if (!isPointerDown && mode === 'stepdown') {
                             const elapsed = now - stepDownStartTime;
                             let multiplier = elapsed < 100 ? 1.0 : elapsed < 200 ? 0.9 : elapsed < 300 ? 0.8 : 0;
 
                             if (multiplier > 0) {
                                 const stepBase = window.innerWidth <= 1024 ? 0.12 : STEPDOWN_BASE_SPEED;
-                                renderCardAngle60FPS(activeCard, activeCard._angle + (spinDir * stepBase * multiplier * dt));
+                                renderCardAngleNative(activeCard, activeCard._angle + (spinDir * stepBase * multiplier * dt));
                             } else {
                                 mode = 'none';
                                 if (activeVideo && !activeVideo.paused) activeVideo.pause();
                                 if (activeBadge) activeBadge.classList.remove('spinning');
-                                releaseFocusAndResumeOthers();
+                                focusedSpinCard = null;
                             }
                         }
                     }
@@ -1962,137 +1594,75 @@
                 window.addEventListener('touchcancel', onPointerUp);
             })();
 
-            let modalPingPongRAF = null;
-
             function setModalCarAvailability(isAvailable) {
                 const modalBox = document.getElementById('appointment-modal-box');
                 if (!modalBox) return;
                 modalBox.classList.toggle('is-unavailable', !isAvailable);
             }
 
+            // AÇILIR AÇILMAZ ANINDA MÜSAİTLİK KONTROLÜ (ÖNCE BELLEKTEN 0 SN'DE, ARDINDAN CANLI TAKVİMDEN)
             function checkCarAvailabilityFromGoogleScript(carName) {
-                setModalCarAvailability(true);
+                if (busyCarsCache.get(carName) === false) {
+                    setModalCarAvailability(false);
+                } else {
+                    setModalCarAvailability(true);
+                }
+
                 const queryKey = getCleanCalendarCarKey(carName);
+                const todayStr = getTodayDateString();
 
                 fetch(WEB_APP_URL + "?islem=aracDurum&arac=" + encodeURIComponent(queryKey))
                     .then(r => r.json())
                     .then(data => {
                         if (activeModalCar !== carName) return;
-                        if (data && (data.musait === false || data.durum === 'dolu')) setModalCarAvailability(false);
-                        else if (data && data.musait === true) setModalCarAvailability(true);
+                        if (data && (data.musait === false || data.durum === 'dolu')) {
+                            markCarUnavailableLocally(carName);
+                            setModalCarAvailability(false);
+                        }
                     })
                     .catch(() => {});
-            }
 
-            function start60FPSModalPingPong(video, canvas, fileName) {
-                if (modalPingPongRAF) cancelAnimationFrame(modalPingPongRAF);
-
-                const bank = ensureGpuBank(fileName, video);
-                const liveModalFrames = (bank && bank.complete && bank.frames.length === FULL_360_FRAMES) ? bank.frames.slice() : [];
-                let isFirstForwardPlay = liveModalFrames.length === 0;
-                let lastCapturedTime = -1;
-                let progress = 0.0;
-                let direction = 1;
-                let lastTick = performance.now();
-                let lastDrawnModalIdx = -1;
-
-                if (isFirstForwardPlay) {
-                    canvas.style.display = 'none';
-                    video.loop = false;
-                    video.currentTime = 0.01;
-                    video.playbackRate = 0.85;
-                    video.play().catch(() => {});
-                } else {
-                    video.pause();
-                    canvas.width = bank.width || 960;
-                    canvas.height = bank.height || 540;
-                    canvas.style.display = 'block';
-                }
-
-                function tickModal(now) {
-                    const dt = Math.min(0.05, (now - lastTick) / 1000);
-                    lastTick = now;
-
-                    if (isFirstForwardPlay) {
-                        if (video.readyState >= 2 && video.duration) {
-                            if (video.currentTime > lastCapturedTime + 0.032 && video.videoWidth > 0) {
-                                lastCapturedTime = video.currentTime;
-                                try {
-                                    const c = document.createElement('canvas');
-                                    c.width = video.videoWidth;
-                                    c.height = video.videoHeight;
-                                    c.getContext('2d').drawImage(video, 0, 0);
-                                    liveModalFrames.push(c);
-                                } catch (e) {}
-                            }
-                            if (video.ended || video.currentTime >= video.duration - 0.03) {
-                                video.pause();
-                                isFirstForwardPlay = false;
-                                progress = 1.0;
-                                direction = -1;
-                                if (liveModalFrames.length > 15) {
-                                    canvas.width = liveModalFrames[0].width || 960;
-                                    canvas.height = liveModalFrames[0].height || 540;
-                                    canvas.style.display = 'block';
-                                }
-                            }
+                fetch(WEB_APP_URL + "?islem=saatSorgula&tarih=" + todayStr + "&arac=" + encodeURIComponent(queryKey))
+                    .then(r => r.json())
+                    .then(doluSaatler => {
+                        if (activeModalCar !== carName) return;
+                        if (Array.isArray(doluSaatler) && doluSaatler.length > 0) {
+                            markCarUnavailableLocally(carName);
+                            setModalCarAvailability(false);
                         }
-                    } else if (liveModalFrames.length > 1) {
-                        progress += direction * MODAL_PINGPONG_SPEED * dt;
-                        if (progress >= 1.0) { progress = 1.0; direction = -1; }
-                        else if (progress <= 0.0) { progress = 0.0; direction = 1; }
-
-                        const total = liveModalFrames.length;
-                        const idx = Math.min(total - 1, Math.max(0, Math.round(progress * (total - 1))));
-
-                        if (idx !== lastDrawnModalIdx) {
-                            lastDrawnModalIdx = idx;
-                            const bmp = liveModalFrames[idx];
-                            if (bmp) {
-                                const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
-                                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                                ctx.drawImage(bmp, 0, 0, canvas.width, canvas.height);
-                            }
-                        }
-                    }
-                    modalPingPongRAF = requestAnimationFrame(tickModal);
-                }
-                modalPingPongRAF = requestAnimationFrame(tickModal);
+                    })
+                    .catch(() => {});
             }
 
             window.openOrderModal = function(carName, videoFile, priceStr) {
                 randevuAcilisZamani = Date.now();
                 activeModalCar = carName;
 
-                focusedSpinFileName = videoFile;
-                if (currentExtractingJob && currentExtractingJob.fileName !== videoFile) {
-                    currentExtractingJob.pauseForPreempt();
-                }
-
                 const errBanner = document.getElementById('errBanner');
                 if (errBanner) errBanner.style.display = 'none';
 
                 document.getElementById('modal-car-name').innerText = `${carName} • ${priceStr} / GÜN`;
+
+                // Pencere açıldığı salisede doluysa anında "Müsait değil başka modelleri inceleyin!" gösterir
                 checkCarAvailabilityFromGoogleScript(carName);
 
                 const modalVideo = document.getElementById('modal-video');
-                const modalCanvas = document.getElementById('modal-canvas');
                 modalVideo.parentElement.classList.add('video-skeleton');
-                modalCanvas.style.display = 'none';
 
                 modalVideo.onerror = function() {
                     const cSrc = modalVideo.getAttribute('src') || '';
-                    if (!cSrc.includes('assets/') && !cSrc.startsWith('blob:')) {
+                    if (!cSrc.includes('assets/')) {
                         modalVideo.src = 'assets/' + videoFile;
                         modalVideo.load();
                     }
                 };
                 modalVideo.onloadeddata = function() {
                     modalVideo.parentElement.classList.remove('video-skeleton');
-                    start60FPSModalPingPong(modalVideo, modalCanvas, videoFile);
+                    modalVideo.playbackRate = 0.85;
+                    modalVideo.play().catch(() => {});
                 };
 
-                modalVideo.src = persistentBlobUrls.get(videoFile) || videoFile;
+                modalVideo.src = videoFile;
                 modalVideo.load();
 
                 const overlay = document.getElementById('randevuModal');
@@ -2122,24 +1692,15 @@
             };
 
             window.closeOrderModal = function() {
-                if (modalPingPongRAF) {
-                    cancelAnimationFrame(modalPingPongRAF);
-                    modalPingPongRAF = null;
-                }
-                focusedSpinFileName = null;
-                setTimeout(processNextInExtractionQueue, 150);
-
                 const overlay = document.getElementById('randevuModal');
                 const modalVideo = document.getElementById('modal-video');
-                const modalCanvas = document.getElementById('modal-canvas');
                 overlay.classList.remove('show');
                 document.body.style.overflow = '';
                 setTimeout(() => {
                     overlay.style.display = 'none';
                     modalVideo.pause();
-                    modalCanvas.style.display = 'none';
                     modalVideo.removeAttribute('src');
-                }, 400);
+                }, 350);
             };
 
             window.openContractModal = function(titleText) {
@@ -2201,8 +1762,7 @@
 
             const fTarih = document.getElementById('fTarih');
             if (fTarih) {
-                const today = new Date();
-                const todayStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+                const todayStr = getTodayDateString();
                 fTarih.min = todayStr;
 
                 fTarih.addEventListener('change', function() {
@@ -2247,32 +1807,14 @@
                     .then(doluSaatler => {
                         saatSelect.options[0].text = "Saat Seçiniz";
                         if (doluSaatler && doluSaatler.length > 0) {
-                            doluSaatler.forEach(item => {
-                                let parts = (typeof item === 'string') ? item.split('|') : [];
-                                let rSaat = parts[0] || item.saat || item;
-                                let rIsim = parts[1] || item.isim || "";
-
-                                for (let i = 1; i < saatSelect.options.length; i++) {
-                                    if (saatSelect.options[i].value === rSaat) {
-                                        saatSelect.options[i].disabled = true;
-                                        let maskText = "";
-                                        if (rIsim) {
-                                            let ad = rIsim.trim().split(' ')[0];
-                                            if (ad.length > 2) maskText = ` - ${ad.charAt(0)}${"*".repeat(ad.length - 2)}${ad.charAt(ad.length - 1)}`;
-                                            else if (ad.length === 2) maskText = ` - ${ad.charAt(0)}*`;
-                                            else maskText = ` - ${ad}`;
-                                        }
-                                        saatSelect.options[i].text = `${rSaat} (DOLU${maskText.toUpperCase()})`;
-                                    }
-                                }
-                            });
+                            // Seçilen tarihte bu araç zaten kiralanmışsa formu doldurtmadan anında "Müsait değil" şeridini açar
+                            setModalCarAvailability(false);
                         }
                     })
                     .catch(() => { saatSelect.options[0].text = "Saat Seçiniz"; });
                 });
             }
 
-            // KESİNTİSİZ GET KAYIT PROTOKOLÜ + POST YEDEKLEMESİ (SAHTE ONAY VERMEZ, %100 TAKVİME YAZAR)
             window.submitAppt = function(event) {
                 if (event && !event.isTrusted) return;
                 if (securityFlagged) return;
@@ -2320,7 +1862,8 @@
                 btn.innerHTML = 'Takvim Kontrol Ediliyor...';
                 btn.disabled = true;
 
-                const cleanCarKey = getCleanCalendarCarKey(activeModalCar);
+                const orderedCarName = activeModalCar;
+                const cleanCarKey = getCleanCalendarCarKey(orderedCarName);
                 const payloadObj = {
                     islem: "siparisKaydet",
                     isim,
@@ -2351,6 +1894,7 @@
                     btn.innerHTML = 'SİPARİŞİ TAMAMLA';
                     btn.disabled = false;
                     if (res && res.durum === 'dolu') {
+                        markCarUnavailableLocally(orderedCarName);
                         setModalCarAvailability(false);
                         return;
                     }
@@ -2358,6 +1902,8 @@
                         showErr(res.mesaj || "Takvim kaydı sırasında hata oluştu.");
                         return;
                     }
+                    // Sipariş tamamlandığı an aracı yerel bellekte de "Dolu" olarak işaretler; tekrar tıklandığında açılır açılmaz "Müsait değil" der
+                    markCarUnavailableLocally(orderedCarName);
                     closeOrderModal();
                     showTopToast("Sipariş ve randevunuz oluşturulmuştur");
                     document.getElementById('apptForm').reset();
