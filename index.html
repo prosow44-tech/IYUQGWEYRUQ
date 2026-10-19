@@ -57,7 +57,7 @@
         html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;background-color:#E6E6E4}
         body{background-color:#E6E6E4!important;color:#1A1D20;margin:0 auto;padding:0;width:100%;max-width:100%;min-height:100vh;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:none;-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none;position:relative}
         input,select,textarea{user-select:text;-webkit-user-select:text;outline:0;font-family:'Montserrat',system-ui,-apple-system,sans-serif}
-        video,img{outline:0;user-select:none;-webkit-user-drag:none;pointer-events:none}
+        video,img,canvas{outline:0;user-select:none;-webkit-user-drag:none;pointer-events:none}
         .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
         .assistant-avatar-img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:64% 50%!important;transform:scale(1.06) translateX(-4%)!important;border-radius:50%!important;display:block!important}
         .progress-bar{position:fixed;top:0;left:0;height:3px;background-color:#FFC107;width:0%;z-index:60000;pointer-events:none;transition:width .1s ease-out}
@@ -152,7 +152,8 @@
         .video-skeleton{background-color:#E6E6E4!important}
         .car-media-box{position:relative;width:100%;height:390px;margin-bottom:9px;display:flex;align-items:center;justify-content:center;cursor:grab;overflow:hidden;border-radius:26px;background-color:#E6E6E4!important;touch-action:none;transition:transform .38s cubic-bezier(.22,1,.36,1)}
         .car-media-box:active{cursor:grabbing}
-        .car-video{width:100%;height:100%;object-fit:contain!important;transform-origin:50% 56%;transform:scale(1.22) translateY(-1.5%)!important;opacity:1!important;display:block;pointer-events:none;background-color:transparent!important}
+        .car-video,.car-canvas{width:100%;height:100%;object-fit:contain!important;transform-origin:50% 56%;transform:scale(1.22) translateY(-1.5%)!important;opacity:1!important;display:block;pointer-events:none;background-color:#E6E6E4!important}
+        .car-canvas{position:absolute;inset:0;z-index:2;display:none}
         .security-armor{position:absolute;inset:0;z-index:5;background:transparent;cursor:grab;touch-action:none;user-select:none;-webkit-user-drag:none}
         .security-armor:active{cursor:grabbing}
         .swipe-badge{display:inline-flex;align-items:center;justify-content:center;padding:8px 26px;margin-bottom:2px;background:rgba(255,255,255,.94);border:1.5px solid #fff;border-radius:999px;font-size:13px;font-weight:800;color:#1A1D20;box-shadow:0 6px 18px rgba(0,0,0,.05);cursor:ew-resize;user-select:none;touch-action:none;transition:transform .2s ease,border-color .2s ease,background-color .2s ease}
@@ -187,8 +188,9 @@
         .sash-sub-btn:hover{background:#FFCA28;transform:scale(1.05)}
         .modal-close-btn{position:absolute;top:-15px;right:-15px;width:44px;height:44px;border-radius:50%;background:#1A1D20;border:2.5px solid #FFC107;color:#FFC107;font-weight:900;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;z-index:60;box-shadow:0 8px 20px rgba(0,0,0,.28)}
         .modal-close-btn:hover{background:#D32F2F;color:#fff;border-color:#fff;transform:rotate(90deg)}
-        .modal-car-showcase{position:relative;width:calc(100% + 24px);margin-left:-12px;height:410px;border-radius:22px;background:linear-gradient(180deg,#EAEAE8 0%,#E6E6E4 55%,#DFDFDD 100%)!important;overflow:hidden;display:flex;align-items:center;justify-content:center;border:3px solid #FFC107;margin-bottom:14px;box-shadow:inset 0 0 25px rgba(0,0,0,.04),0 12px 30px rgba(0,0,0,.08);pointer-events:none;z-index:20}
-        .modal-car-showcase video{width:100%;height:100%;object-fit:contain!important;transform-origin:50% 56%;transform:scale(1.34) translateY(-1%)!important;background-color:transparent!important;pointer-events:none;display:block}
+        .modal-car-showcase{position:relative;width:calc(100% + 24px);margin-left:-12px;height:410px;border-radius:22px;background:#E6E6E4!important;overflow:hidden;display:flex;align-items:center;justify-content:center;border:3px solid #FFC107;margin-bottom:14px;box-shadow:inset 0 0 25px rgba(0,0,0,.04),0 12px 30px rgba(0,0,0,.08);pointer-events:none;z-index:20}
+        .modal-car-showcase video,.modal-car-showcase canvas{width:100%;height:100%;object-fit:contain!important;transform-origin:50% 56%;transform:scale(1.34) translateY(-1%)!important;background-color:#E6E6E4!important;pointer-events:none;display:block}
+        .modal-car-showcase canvas{position:absolute;inset:0;z-index:3;display:none}
         .modal-title{font-size:25px;font-weight:900;color:#1A1D20;margin-bottom:2px}
         .modal-subtitle{font-size:13.5px;font-weight:900;color:#B45309;margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px}
         .err-banner{background-color:rgba(239,68,68,.1);border:2px solid #ef4444;color:#b91c1c;padding:10px 14px;border-radius:12px;display:none;align-items:center;gap:10px;font-weight:800;font-size:12.5px;margin-bottom:14px;text-align:left}
@@ -289,7 +291,7 @@
             .cars-container.mob-expanded-top{padding-top:80px!important}
             .car-card{width:100%!important;max-width:500px!important;background:transparent!important;border:none!important;box-shadow:none!important;padding:0!important;transition:transform .35s cubic-bezier(.22,1,.36,1)!important}
             .car-media-box{width:100%!important;height:29vh!important;min-height:195px;max-height:255px;margin-bottom:0!important;border-radius:20px;background-color:#E6E6E4!important;touch-action:none!important;transition:transform .35s cubic-bezier(.22,1,.36,1)!important}
-            .car-video{transform:scale(1.28) translateY(-1%)!important}
+            .car-video,.car-canvas{transform:scale(1.28) translateY(-1%)!important}
             .car-card.interacting-zoom{z-index:80!important;transform:scale(1.14)!important}
             .car-card.interacting-zoom .car-media-box{transform:scale(1.1)!important}
             .swipe-badge{background:transparent!important;border:none!important;box-shadow:none!important;padding:0 8px!important;margin-bottom:1px!important;font-size:11.5px!important;font-weight:900!important;color:#1A1D20!important;touch-action:none!important}
@@ -336,7 +338,7 @@
             .modal-box{padding:10px 12px 18px!important;width:98%}
             .modal-close-btn{top:-10px;right:-6px;width:36px;height:36px;font-size:15px}
             .modal-car-showcase{width:calc(100% + 16px);margin-left:-8px;height:265px;margin-bottom:10px}
-            .modal-car-showcase video{transform:scale(1.36) translateY(-1%)!important}
+            .modal-car-showcase video,.modal-car-showcase canvas{transform:scale(1.36) translateY(-1%)!important}
             .modal-title{font-size:20px}
             .modal-subtitle{font-size:11.5px;margin-bottom:10px}
             .form-row-2{grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
@@ -566,13 +568,14 @@
         </div>
     </aside>
 
-    <!-- ARAÇ FİLOSU (SIFIR CANVAS RAM YÜKÜ, DOĞRUDAN DONANIMSAL VIDEO MOTORU) -->
+    <!-- ARAÇ FİLOSU (HİBRİT 60 FPS CANVAS + DİNAMİK 3 ARAÇLIK VRAM HAVUZU) -->
     <main class="cars-container" id="cars-grid" aria-label="Kiralık Araç Filosu">
 
         <!-- 1. HONDA CIVIC -->
         <article class="car-card" data-order="1" data-name="HONDA CIVIC" data-price-str="1.600 ₺" data-price="1600" data-gear="otomatik" data-fuel="benzin" data-type="sedan" data-seg="uygun,aile" data-vkey="honda-civic-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="honda-civic-360.mp4" src="honda-civic-360.mp4" preload="metadata" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Honda Civic 360 Derece Döndür">
@@ -596,6 +599,7 @@
         <article class="car-card" data-order="2" data-name="RENAULT MEGANE" data-price-str="2.000 ₺" data-price="2000" data-gear="otomatik" data-fuel="dizel" data-type="sedan" data-seg="vip,aile" data-vkey="renault-megane-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="renault-megane-360.mp4" src="renault-megane-360.mp4" preload="metadata" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Renault Megane 360 Derece Döndür">
@@ -619,6 +623,7 @@
         <article class="car-card" data-order="3" data-name="CITROEN C ELYSEE" data-price-str="1.600 ₺" data-price="1600" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-seg="uygun,aile" data-vkey="citroen-c-elysee-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="citroen-c-elysee-360.mp4" src="citroen-c-elysee-360.mp4" preload="metadata" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Citroen C Elysee 360 Derece Döndür">
@@ -642,6 +647,7 @@
         <article class="car-card" data-order="4" data-name="NISSAN QASHQAI" data-price-str="2.300 ₺" data-price="2300" data-gear="manuel" data-fuel="dizel" data-type="suv" data-seg="vip,aile" data-vkey="nissan-qashqai-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="nissan-qashqai-360.mp4" src="nissan-qashqai-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Nissan Qashqai 360 Derece Döndür">
@@ -665,6 +671,7 @@
         <article class="car-card" data-order="5" data-name="TOYOTA COROLLA" data-price-str="1.700 ₺" data-price="1700" data-gear="otomatik" data-fuel="hibrit" data-type="sedan" data-seg="vip,uygun,aile" data-vkey="toyota-corolla-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="toyota-corolla-360.mp4" src="toyota-corolla-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Toyota Corolla 360 Derece Döndür">
@@ -688,6 +695,7 @@
         <article class="car-card" data-order="6" data-name="KIA RIO" data-price-str="1.650 ₺" data-price="1650" data-gear="manuel" data-fuel="dizel" data-type="hatchback" data-seg="uygun" data-vkey="kia-rio-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="kia-rio-360.mp4" src="kia-rio-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Kia Rio 360 Derece Döndür">
@@ -711,6 +719,7 @@
         <article class="car-card" data-order="7" data-name="HYUNDAI İ20" data-price-str="1.600 ₺" data-price="1600" data-gear="otomatik" data-fuel="benzin" data-type="hatchback" data-seg="uygun" data-vkey="hyundai-i20-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="hyundai-i20-360.mp4" src="hyundai-i20-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Hyundai i20 360 Derece Döndür">
@@ -734,6 +743,7 @@
         <article class="car-card" data-order="8" data-name="FIAT EGEA" data-price-str="1.500 ₺" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-seg="uygun,aile" data-vkey="fiat-egea-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="fiat-egea-360.mp4" src="fiat-egea-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Fiat Egea 360 Derece Döndür">
@@ -757,6 +767,7 @@
         <article class="car-card" data-order="9" data-name="FIAT FIORINO" data-price-str="1.500 ₺" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="ticari" data-seg="ticari,uygun" data-vkey="fiat-fiorino-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="fiat-fiorino-360.mp4" src="fiat-fiorino-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Fiat Fiorino 360 Derece Döndür">
@@ -780,6 +791,7 @@
         <article class="car-card" data-order="10" data-name="PEUGEOT 301" data-price-str="1.500 ₺" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-seg="uygun,aile" data-vkey="peugeot-301-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="peugeot-301-360.mp4" src="peugeot-301-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Peugeot 301 360 Derece Döndür">
@@ -803,6 +815,7 @@
         <article class="car-card" data-order="11" data-name="RENAULT SYMBOL" data-price-str="1.500 ₺" data-price="1500" data-gear="manuel" data-fuel="dizel" data-type="sedan" data-seg="uygun" data-vkey="renault-symbol-360.mp4">
             <div class="car-media-box video-skeleton">
                 <video aria-hidden="true" tabindex="-1" class="car-video" data-src="renault-symbol-360.mp4" src="renault-symbol-360.mp4" preload="none" muted playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas class="car-canvas" aria-hidden="true"></canvas>
                 <div class="security-armor" title="360° İncelemek İçin Kaydırın"></div>
             </div>
             <div class="swipe-badge" role="button" tabindex="0" aria-label="Renault Symbol 360 Derece Döndür">
@@ -830,7 +843,8 @@
             <button onclick="closeOrderModal()" class="modal-close-btn" aria-label="Sipariş Penceresini Kapat">✕</button>
 
             <div class="modal-car-showcase video-skeleton" id="modal-showcase-box">
-                <video id="modal-video" aria-hidden="true" tabindex="-1" src="" loop playsinline muted disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <video id="modal-video" aria-hidden="true" tabindex="-1" src="" playsinline muted disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback"></video>
+                <canvas id="modal-canvas" aria-hidden="true"></canvas>
             </div>
 
             <div class="unavailable-sash-banner" id="unavailableSashBanner" role="alert" aria-live="assertive">
@@ -995,14 +1009,25 @@
         (function() {
             "use strict";
 
-            const STAGGER_INTERVAL_MS = 280;
-            const PERSISTENT_CACHE_NAME = "referans-360-kalici-v3";
+            // =========================================================
+            // 4 ADIMLI HİBRİT 360° MOTORU (SIFIR KASMA + SIFIR CHROME ÇÖKMESİ)
+            // 1. Kalıcı Disk Belleği (Cache Storage + Blob): 11 aracın MP4 dosyası (~25MB) kalıcı diske iner.
+            // 2. 640x360 & 60 Kare Optimum Çözünürlük: Araç başına bellek 740MB'tan 28MB'a düşürüldü.
+            // 3. Dinamik 3 Araçlık VRAM Havuzu: Ekran kartında aynı anda en fazla 3-4 açık araç tutulur, eskiler bmp.close() ile boşaltılır.
+            // 4. Atıl <video> Çözücüleri Kapatma + #E6E6E4 Sabit Arka Plan: Kapak karesi çizildiği an <video> kapatılır, siyah ekran asla oluşmaz.
+            // =========================================================
+            const IS_MOBILE_DEVICE = window.innerWidth <= 1024;
+            const FULL_360_FRAMES = 60;
+            const TARGET_FRAME_WIDTH = 640;
+            const MAX_VRAM_CARS = IS_MOBILE_DEVICE ? 3 : 4;
+            const STAGGER_INTERVAL_MS = 260;
+            const PERSISTENT_CACHE_NAME = "referans-360-kalici-disk-v4";
             const HOLD_TURN_SPEED = 0.098;
             const STEPDOWN_BASE_SPEED = 0.098;
             const DRAG_PIXELS_PC = 1030;
             const DRAG_PIXELS_MOBILE = 140;
+            const MODAL_PINGPONG_SPEED = 0.14;
 
-            // YENİ DEPLOY EDİLEN GOOGLE APPS SCRIPT WEB APP URL'Sİ
             const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwI5wsJ_okMI1if5-0yKiwJKK6AEB5Wk6NwbsGVRaT_xiDRcPtW79x3-kjAiryIcY0/exec";
 
             function getCleanCalendarCarKey(carName) {
@@ -1014,7 +1039,6 @@
                 return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
             }
 
-            // ANLIK MÜSAİTLİK BELLEĞİ (SİPARİŞ VERİLEN ARACI AÇILIR AÇILMAZ "MÜSAİT DEĞİL" GÖSTERİR)
             const busyCarsCache = new Map();
             try {
                 const savedBusy = JSON.parse(localStorage.getItem('referans_busy_cars_' + getTodayDateString()) || '{}');
@@ -1055,8 +1079,17 @@
             let activeModalCar = '';
             let lastRandomCarKey = '';
             let securityFlagged = false;
-            let staggerTimers = [];
-            let focusedSpinCard = null;
+
+            const gpuFrameBank = new Map();
+            const persistentBlobUrls = new Map();
+            const cardElementMap = new Map();
+            let extractionQueue = [];
+            let currentExtractingJob = null;
+            let focusedSpinFileName = null;
+
+            // Kare yakalama için tek bir ortak 640x360 ara canvas (Siyah arka planı %100 engeller)
+            const sharedCaptureCanvas = document.createElement('canvas');
+            const sharedCaptureCtx = sharedCaptureCanvas.getContext('2d', { alpha: false });
 
             if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
                 window.addEventListener('load', () => {
@@ -1064,18 +1097,386 @@
                 });
             }
 
-            // Videoyu tarayıcının Kalıcı Disk Önbelleğine (Cache Storage) kaydeder (RAM şişirmez)
-            function warmDiskCacheForVideo(fileName) {
-                if (!location.protocol.startsWith('http') || !('caches' in window)) return;
-                caches.open(PERSISTENT_CACHE_NAME).then(cache => {
-                    cache.match(fileName).then(existing => {
-                        if (!existing) {
-                            fetch(fileName).then(res => {
-                                if (res && res.ok) cache.put(fileName, res);
-                            }).catch(() => {});
+            // 1. KATMAN: KALICI DİSK BELLEĞİ (11 ARACI SIRA İLE KALICI DİSKE İNDİRİR, SİLMEZ)
+            async function getOrDownloadPersistentBlobUrl(fileName) {
+                if (persistentBlobUrls.has(fileName)) {
+                    return persistentBlobUrls.get(fileName);
+                }
+                if (!location.protocol.startsWith('http')) {
+                    return fileName;
+                }
+                try {
+                    let response = null;
+                    if ('caches' in window) {
+                        const cache = await caches.open(PERSISTENT_CACHE_NAME);
+                        response = await cache.match(fileName);
+                        if (!response) {
+                            const netRes = await fetch(fileName).catch(() => fetch('assets/' + fileName));
+                            if (netRes && netRes.ok) {
+                                cache.put(fileName, netRes.clone()).catch(() => {});
+                                response = netRes;
+                            }
                         }
-                    }).catch(() => {});
-                }).catch(() => {});
+                    } else {
+                        const netRes = await fetch(fileName).catch(() => fetch('assets/' + fileName));
+                        if (netRes && netRes.ok) response = netRes;
+                    }
+                    if (response) {
+                        const blob = await response.blob();
+                        const blobUrl = URL.createObjectURL(blob);
+                        persistentBlobUrls.set(fileName, blobUrl);
+                        return blobUrl;
+                    }
+                } catch (e) {}
+                return fileName;
+            }
+
+            // En üstten en alta (1. araçtan 11. araca) tüm MP4 dosyalarını kalıcı diske sırayla indirir
+            async function downloadAllVideosTopToBottomIntoPersistentDisk() {
+                const allCards = Array.from(document.querySelectorAll('.car-card'));
+                for (let i = 0; i < allCards.length; i++) {
+                    const fileName = allCards[i]._vFile;
+                    if (fileName) {
+                        await getOrDownloadPersistentBlobUrl(fileName);
+                        await new Promise(r => setTimeout(r, 120));
+                    }
+                }
+            }
+
+            // 2. KATMAN: DİNAMİK VRAM HAVUZU (CHROME'UN ÇÖKMEMESİ İÇİN EN FAZLA 3-4 ARACIN AÇIK KARELERİNİ TUTAR)
+            function enforceSafeVRAMLimit(protectedFileName) {
+                let loadedList = [];
+                gpuFrameBank.forEach((bank, key) => {
+                    if ((bank.complete || bank.filledCount > 0) && key !== protectedFileName && key !== focusedSpinFileName) {
+                        loadedList.push({ key, lastUsed: bank.lastUsed || 0 });
+                    }
+                });
+
+                while (loadedList.length >= MAX_VRAM_CARS) {
+                    loadedList.sort((a, b) => a.lastUsed - b.lastUsed);
+                    const oldest = loadedList.shift();
+                    const oldBank = gpuFrameBank.get(oldest.key);
+                    if (oldBank) {
+                        const closedSet = new Set();
+                        oldBank.rawSlots.forEach(bmp => {
+                            if (bmp && !closedSet.has(bmp) && typeof bmp.close === 'function') {
+                                closedSet.add(bmp);
+                                try { bmp.close(); } catch (e) {}
+                            }
+                        });
+                        oldBank.rawSlots.fill(null);
+                        oldBank.frames = [];
+                        oldBank.filledCount = 0;
+                        oldBank.complete = false;
+                        oldBank.checkpointTime = 0.005;
+                    }
+                }
+            }
+
+            function ensureGpuBank(fileName) {
+                if (!fileName) return null;
+                if (!gpuFrameBank.has(fileName)) {
+                    gpuFrameBank.set(fileName, {
+                        rawSlots: new Array(FULL_360_FRAMES).fill(null),
+                        frames: [],
+                        checkpointTime: 0.005,
+                        filledCount: 0,
+                        complete: false,
+                        lastUsed: performance.now(),
+                        width: TARGET_FRAME_WIDTH,
+                        height: 360
+                    });
+                }
+                const bank = gpuFrameBank.get(fileName);
+                bank.lastUsed = performance.now();
+                return bank;
+            }
+
+            function enqueueCarForExtraction(fileName, isUrgentFocus) {
+                if (!fileName) return;
+                const bank = ensureGpuBank(fileName);
+                if (bank.complete) return;
+
+                const existingIdx = extractionQueue.indexOf(fileName);
+                if (existingIdx !== -1) {
+                    if (isUrgentFocus && existingIdx > 0) {
+                        extractionQueue.splice(existingIdx, 1);
+                        extractionQueue.unshift(fileName);
+                    }
+                } else if (!currentExtractingJob || currentExtractingJob.fileName !== fileName) {
+                    if (isUrgentFocus) extractionQueue.unshift(fileName);
+                    else if (extractionQueue.length < MAX_VRAM_CARS) extractionQueue.push(fileName);
+                }
+
+                if (isUrgentFocus && currentExtractingJob && currentExtractingJob.fileName !== fileName) {
+                    currentExtractingJob.pauseForPreempt();
+                    return;
+                }
+                processNextInExtractionQueue();
+            }
+
+            function finalizeDenseFrames(bank) {
+                if (bank.filledCount < 10) return false;
+                const finalFrames = new Array(FULL_360_FRAMES);
+                let lastValid = null;
+
+                for (let i = 0; i < FULL_360_FRAMES; i++) {
+                    if (bank.rawSlots[i]) lastValid = bank.rawSlots[i];
+                }
+                if (!lastValid) return false;
+
+                for (let i = 0; i < FULL_360_FRAMES; i++) {
+                    if (bank.rawSlots[i]) {
+                        finalFrames[i] = bank.rawSlots[i];
+                        lastValid = bank.rawSlots[i];
+                    } else {
+                        let nextValid = null;
+                        for (let j = i + 1; j < FULL_360_FRAMES; j++) {
+                            if (bank.rawSlots[j]) { nextValid = bank.rawSlots[j]; break; }
+                        }
+                        finalFrames[i] = nextValid || lastValid;
+                    }
+                }
+                bank.frames = finalFrames;
+                bank.complete = true;
+                return true;
+            }
+
+            function processNextInExtractionQueue() {
+                if (currentExtractingJob) return;
+
+                if (focusedSpinFileName) {
+                    const focusedBank = gpuFrameBank.get(focusedSpinFileName);
+                    if (focusedBank && !focusedBank.complete) {
+                        const idx = extractionQueue.indexOf(focusedSpinFileName);
+                        if (idx > 0) {
+                            extractionQueue.splice(idx, 1);
+                            extractionQueue.unshift(focusedSpinFileName);
+                        } else if (idx === -1) {
+                            extractionQueue.unshift(focusedSpinFileName);
+                        }
+                    } else {
+                        return;
+                    }
+                }
+
+                if (extractionQueue.length === 0) return;
+
+                const fileName = extractionQueue.shift();
+                const bank = ensureGpuBank(fileName);
+                if (!bank || bank.complete) {
+                    processNextInExtractionQueue();
+                    return;
+                }
+
+                enforceSafeVRAMLimit(fileName);
+
+                let isPreempted = false;
+                const extVideo = document.createElement('video');
+                extVideo.muted = true;
+                extVideo.playsInline = true;
+                extVideo.setAttribute('muted', '');
+                extVideo.setAttribute('playsinline', '');
+                extVideo.preload = 'auto';
+
+                let watchdog = null;
+                let pollRAF = null;
+
+                function stopAndCleanup(wasPreempted) {
+                    if (watchdog) clearTimeout(watchdog);
+                    if (pollRAF) cancelAnimationFrame(pollRAF);
+
+                    if (wasPreempted) {
+                        if (extVideo.currentTime > bank.checkpointTime) {
+                            bank.checkpointTime = extVideo.currentTime;
+                        }
+                        if (!extractionQueue.includes(fileName)) {
+                            extractionQueue.unshift(fileName);
+                        }
+                    }
+
+                    extVideo.pause();
+                    extVideo.removeAttribute('src');
+                    extVideo.load();
+                    currentExtractingJob = null;
+
+                    const nextDelay = focusedSpinFileName ? 10 : STAGGER_INTERVAL_MS;
+                    setTimeout(processNextInExtractionQueue, nextDelay);
+                }
+
+                currentExtractingJob = {
+                    fileName,
+                    pauseForPreempt: function() {
+                        if (isPreempted) return;
+                        isPreempted = true;
+                        stopAndCleanup(true);
+                    }
+                };
+
+                function resetWatchdog() {
+                    if (watchdog) clearTimeout(watchdog);
+                    watchdog = setTimeout(() => {
+                        finalizeDenseFrames(bank);
+                        stopAndCleanup(false);
+                    }, 4200);
+                }
+
+                function captureSlotAtTime(mediaTime) {
+                    if (!extVideo.duration || !extVideo.videoWidth) return;
+                    const ratio = Math.max(0, Math.min(0.9999, mediaTime / extVideo.duration));
+                    const slotIdx = Math.min(FULL_360_FRAMES - 1, Math.max(0, Math.floor(ratio * FULL_360_FRAMES)));
+                    bank.checkpointTime = Math.max(bank.checkpointTime, mediaTime);
+
+                    if (bank.rawSlots[slotIdx]) return;
+
+                    if (sharedCaptureCanvas.width !== bank.width || sharedCaptureCanvas.height !== bank.height) {
+                        sharedCaptureCanvas.width = bank.width;
+                        sharedCaptureCanvas.height = bank.height;
+                    }
+
+                    // SİYAH ARKA PLAN ÖNLEYİCİ: Önce #E6E6E4 stüdyo rengi boyanır, üstüne kare çizilir
+                    sharedCaptureCtx.fillStyle = '#E6E6E4';
+                    sharedCaptureCtx.fillRect(0, 0, bank.width, bank.height);
+                    sharedCaptureCtx.drawImage(extVideo, 0, 0, bank.width, bank.height);
+
+                    if (window.createImageBitmap) {
+                        createImageBitmap(sharedCaptureCanvas).then(bmp => {
+                            if (!bank.rawSlots[slotIdx]) {
+                                bank.rawSlots[slotIdx] = bmp;
+                                bank.filledCount++;
+                            } else if (typeof bmp.close === 'function') {
+                                bmp.close();
+                            }
+                        }).catch(() => {});
+                    } else {
+                        const c = document.createElement('canvas');
+                        c.width = bank.width;
+                        c.height = bank.height;
+                        c.getContext('2d', { alpha: false }).drawImage(sharedCaptureCanvas, 0, 0);
+                        bank.rawSlots[slotIdx] = c;
+                        bank.filledCount++;
+                    }
+                }
+
+                extVideo.addEventListener('error', () => {
+                    const cSrc = extVideo.getAttribute('src') || '';
+                    if (!cSrc.includes('assets/') && !cSrc.startsWith('blob:')) {
+                        extVideo.src = 'assets/' + fileName;
+                        extVideo.load();
+                    } else {
+                        stopAndCleanup(false);
+                    }
+                });
+
+                extVideo.addEventListener('ended', () => {
+                    if (isPreempted) return;
+                    captureSlotAtTime(extVideo.duration - 0.01);
+                    setTimeout(() => {
+                        finalizeDenseFrames(bank);
+                        stopAndCleanup(false);
+                    }, 30);
+                }, { once: true });
+
+                extVideo.addEventListener('loadeddata', () => {
+                    if (isPreempted) return;
+                    if (!extVideo.duration || !extVideo.videoWidth) {
+                        stopAndCleanup(false);
+                        return;
+                    }
+                    bank.width = TARGET_FRAME_WIDTH;
+                    bank.height = Math.round(TARGET_FRAME_WIDTH * (extVideo.videoHeight / extVideo.videoWidth)) || 360;
+
+                    resetWatchdog();
+                    extVideo.currentTime = Math.min(extVideo.duration - 0.05, bank.checkpointTime || 0.005);
+                    extVideo.playbackRate = 2.4;
+
+                    if ('requestVideoFrameCallback' in extVideo) {
+                        const onFrame = (now, metadata) => {
+                            if (isPreempted || !currentExtractingJob) return;
+                            resetWatchdog();
+                            captureSlotAtTime(metadata.mediaTime);
+                            if (!extVideo.ended && extVideo.currentTime < extVideo.duration - 0.02) {
+                                extVideo.requestVideoFrameCallback(onFrame);
+                            } else {
+                                finalizeDenseFrames(bank);
+                                stopAndCleanup(false);
+                            }
+                        };
+                        extVideo.requestVideoFrameCallback(onFrame);
+                    } else {
+                        const pollLoop = () => {
+                            if (isPreempted || !currentExtractingJob) return;
+                            resetWatchdog();
+                            if (!extVideo.paused) captureSlotAtTime(extVideo.currentTime);
+                            if (!extVideo.ended && extVideo.currentTime < extVideo.duration - 0.02) {
+                                pollRAF = requestAnimationFrame(pollLoop);
+                            } else {
+                                finalizeDenseFrames(bank);
+                                stopAndCleanup(false);
+                            }
+                        };
+                        pollRAF = requestAnimationFrame(pollLoop);
+                    }
+
+                    extVideo.play().catch(() => { stopAndCleanup(false); });
+                }, { once: true });
+
+                getOrDownloadPersistentBlobUrl(fileName).then(blobUrl => {
+                    if (isPreempted) return;
+                    extVideo.src = blobUrl;
+                    extVideo.load();
+                });
+            }
+
+            // KART ÜZERİNDE 60 FPS ÇİZİM (HEM TAMAMLANMIŞ DİZİDEN HEM DE O AN YÜKLENEN CANLI SLOTLARDAN ÇİZER)
+            function renderCardAngle60FPS(card, angleProgress) {
+                let norm = angleProgress % 1;
+                if (norm < 0) norm += 1;
+                card._angle = norm;
+
+                const fileName = card._vFile;
+                const canvas = card.querySelector('canvas.car-canvas');
+                if (!fileName || !canvas) return;
+
+                const bank = ensureGpuBank(fileName);
+                const exactIdx = Math.min(FULL_360_FRAMES - 1, Math.max(0, Math.round(norm * (FULL_360_FRAMES - 1))));
+
+                let bmp = null;
+                if (bank.complete && bank.frames.length === FULL_360_FRAMES) {
+                    bmp = bank.frames[exactIdx];
+                } else if (bank.filledCount > 0) {
+                    bmp = bank.rawSlots[exactIdx];
+                    if (!bmp) {
+                        for (let offset = 1; offset < FULL_360_FRAMES; offset++) {
+                            if (exactIdx - offset >= 0 && bank.rawSlots[exactIdx - offset]) {
+                                bmp = bank.rawSlots[exactIdx - offset];
+                                break;
+                            }
+                            if (exactIdx + offset < FULL_360_FRAMES && bank.rawSlots[exactIdx + offset]) {
+                                bmp = bank.rawSlots[exactIdx + offset];
+                                break;
+                            }
+                        }
+                    }
+                } else {
+                    enqueueCarForExtraction(fileName, true);
+                }
+
+                if (bmp) {
+                    if (card._lastDrawnSlot === exactIdx && canvas.style.display === 'block') return;
+                    card._lastDrawnSlot = exactIdx;
+
+                    if (canvas.width !== bank.width || canvas.height !== bank.height) {
+                        canvas.width = bank.width;
+                        canvas.height = bank.height;
+                    }
+                    if (canvas.style.display !== 'block') canvas.style.display = 'block';
+
+                    const ctx = canvas.getContext('2d', { alpha: false });
+                    ctx.fillStyle = '#E6E6E4';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(bmp, 0, 0, canvas.width, canvas.height);
+                }
             }
 
             window.showTopToast = function(message) {
@@ -1142,9 +1543,7 @@
 
                 const jVideo = document.getElementById('jaguar-stage-video');
                 let srcIdx = 0;
-                jVideo.onloadeddata = function() {
-                    jVideo.play().catch(()=>{});
-                };
+                jVideo.onloadeddata = function() { jVideo.play().catch(()=>{}); };
                 jVideo.onerror = function() {
                     srcIdx++;
                     if (srcIdx < theme.sources.length) {
@@ -1224,8 +1623,17 @@
                     card.classList.toggle('hidden', !passCat);
                 });
 
-                scheduleTopToBottomVideoLoad();
+                primeTopVisibleCards();
             };
+
+            function primeTopVisibleCards() {
+                const visibleCards = Array.from(document.querySelectorAll('.car-card:not(.hidden)')).slice(0, MAX_VRAM_CARS);
+                visibleCards.forEach((card, i) => {
+                    setTimeout(() => {
+                        if (card._vFile) enqueueCarForExtraction(card._vFile, false);
+                    }, (i + 1) * STAGGER_INTERVAL_MS);
+                });
+            }
 
             window.addEventListener('scroll', () => {
                 const winScroll = window.scrollY || document.documentElement.scrollTop;
@@ -1249,27 +1657,6 @@
                 }
             }, { passive: true });
 
-            // EN ÜSTTEN EN ALTA DOĞRU (1. ARAÇ -> 11. ARAÇ) SIFIR ÇÖKME GARANTİLİ VİDEO YÜKLEME
-            function scheduleTopToBottomVideoLoad() {
-                staggerTimers.forEach(t => clearTimeout(t));
-                staggerTimers = [];
-
-                const visibleCards = Array.from(document.querySelectorAll('.car-card:not(.hidden)'));
-                visibleCards.forEach((card, idx) => {
-                    const timerId = setTimeout(() => {
-                        if (focusedSpinCard && focusedSpinCard !== card) return;
-                        const video = card.querySelector('video.car-video');
-                        if (video && video.preload === 'none') {
-                            video.preload = 'auto';
-                            video.load();
-                        }
-                        if (card._vFile) warmDiskCacheForVideo(card._vFile);
-                    }, (idx + 1) * STAGGER_INTERVAL_MS);
-                    staggerTimers.push(timerId);
-                });
-            }
-
-            // SAYFA AÇILDIĞINDA TÜM ARAÇLARIN BUGÜNKÜ MÜSAİTLİK DURUMUNU ÖNCEDEN ÖĞRENİR
             function prefetchAllCarsAvailability() {
                 const cards = Array.from(document.querySelectorAll('.car-card'));
                 const todayStr = getTodayDateString();
@@ -1299,19 +1686,36 @@
                 });
             }
 
-            function renderCardAngleNative(card, angleProgress) {
-                let norm = angleProgress % 1;
-                if (norm < 0) norm += 1;
-                card._angle = norm;
+            // Kartın kapak karesini <canvas>'a çizer ve atıl <video> çözücüsünü anında kapatır (0 Decoder Yükü!)
+            function captureCardPosterAndReleaseVideoDecoder(card, video, canvas) {
+                if (card._posterCaptured || !video.videoWidth) return;
+                card._posterCaptured = true;
 
-                const video = card.querySelector('video.car-video');
-                if (video && video.duration) {
-                    const targetTime = 0.01 + norm * Math.max(0.1, video.duration - 0.03);
-                    card._pendingSeekTime = targetTime;
-                    if (!video.seeking) {
-                        video.currentTime = targetTime;
-                    }
+                const w = TARGET_FRAME_WIDTH;
+                const h = Math.round(TARGET_FRAME_WIDTH * (video.videoHeight / video.videoWidth)) || 360;
+                const bank = ensureGpuBank(card._vFile);
+                if (bank) {
+                    bank.width = w;
+                    bank.height = h;
                 }
+
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d', { alpha: false });
+                ctx.fillStyle = '#E6E6E4';
+                ctx.fillRect(0, 0, w, h);
+                ctx.drawImage(video, 0, 0, w, h);
+
+                canvas.style.display = 'block';
+                video.style.display = 'none';
+                if (video.parentElement.classList.contains('video-skeleton')) {
+                    video.parentElement.classList.remove('video-skeleton');
+                }
+
+                // Donanımsal video çözücüyü serbest bırakır (11 videonun telefonu kilitlemesini önler)
+                video.pause();
+                video.removeAttribute('src');
+                video.load();
             }
 
             document.addEventListener("DOMContentLoaded", function() {
@@ -1320,49 +1724,74 @@
                 const trapEl = document.getElementById('honeypot-media-trap');
                 if (trapEl) trapEl.addEventListener('click', () => { securityFlagged = true; });
 
+                const viewportObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const card = entry.target;
+                        if (entry.isIntersecting && card._vFile) {
+                            const video = card.querySelector('video.car-video');
+                            if (!card._posterCaptured && video && video.preload === 'none') {
+                                getOrDownloadPersistentBlobUrl(card._vFile).then(url => {
+                                    if (!card._posterCaptured) {
+                                        video.preload = 'metadata';
+                                        video.src = url;
+                                        video.load();
+                                    }
+                                });
+                            }
+                            if (!focusedSpinFileName) {
+                                enqueueCarForExtraction(card._vFile, false);
+                            }
+                        }
+                    });
+                }, { rootMargin: '160px 0px' });
+
                 allCards.forEach((card) => {
                     const video = card.querySelector('video.car-video');
+                    const canvas = card.querySelector('canvas.car-canvas');
                     const fileName = card.getAttribute('data-vkey');
                     card.removeAttribute('data-vkey');
                     video.removeAttribute('data-src');
                     card._vFile = fileName;
                     card._angle = 0;
-                    card._pendingSeekTime = null;
+                    card._lastDrawnSlot = -1;
+                    card._posterCaptured = false;
+
+                    cardElementMap.set(fileName, card);
+                    ensureGpuBank(fileName);
 
                     video.muted = true;
 
                     card.addEventListener('mouseenter', () => {
-                        if (video.preload !== 'auto') {
-                            video.preload = 'auto';
-                            video.load();
+                        if (!focusedSpinFileName && card._vFile) {
+                            enqueueCarForExtraction(card._vFile, true);
                         }
                     }, { passive: true });
 
-                    video.addEventListener('seeked', () => {
-                        if (card._pendingSeekTime !== null && Math.abs(video.currentTime - card._pendingSeekTime) > 0.025) {
-                            const nextT = card._pendingSeekTime;
-                            card._pendingSeekTime = null;
-                            video.currentTime = nextT;
-                        }
-                    });
-
                     video.addEventListener('error', function handleVideoErr() {
                         const currentSrc = video.getAttribute('src') || '';
-                        if (!currentSrc.includes('assets/')) {
+                        if (currentSrc && !currentSrc.includes('assets/') && !currentSrc.startsWith('blob:')) {
                             video.src = 'assets/' + fileName;
                             video.load();
                         }
                     }, { once: true });
 
                     video.addEventListener('loadeddata', () => {
-                        if (video.currentTime === 0) video.currentTime = 0.02;
-                        if (video.parentElement.classList.contains('video-skeleton')) {
-                            video.parentElement.classList.remove('video-skeleton');
+                        if (video.currentTime === 0) {
+                            video.currentTime = 0.02;
+                        } else {
+                            captureCardPosterAndReleaseVideoDecoder(card, video, canvas);
                         }
                     });
+
+                    video.addEventListener('seeked', () => {
+                        captureCardPosterAndReleaseVideoDecoder(card, video, canvas);
+                    }, { once: true });
+
+                    viewportObserver.observe(card);
                 });
 
-                scheduleTopToBottomVideoLoad();
+                primeTopVisibleCards();
+                setTimeout(downloadAllVideosTopToBottomIntoPersistentDisk, 900);
                 prefetchAllCarsAvailability();
 
                 const bubble = document.getElementById('topChatBubble');
@@ -1407,7 +1836,6 @@
             (function init60FPSCardSpinEngine() {
                 const cards = document.querySelectorAll('.car-card');
                 let activeCard = null;
-                let activeVideo = null;
                 let activeBadge = null;
                 let isPointerDown = false;
                 let mode = 'none';
@@ -1428,35 +1856,32 @@
                     });
                 }
 
+                function releaseFocusAndResumeOthers() {
+                    focusedSpinFileName = null;
+                    setTimeout(processNextInExtractionQueue, 120);
+                }
+
                 function onPointerDown(card, clientX) {
                     if (holdDelayTimer) {
                         clearTimeout(holdDelayTimer);
                         holdDelayTimer = null;
                     }
-                    if (activeVideo && !activeVideo.paused) activeVideo.pause();
                     clearZoomState();
 
-                    const video = card.querySelector('video.car-video');
                     const badge = card.querySelector('.swipe-badge');
                     const mediaBox = card.querySelector('.car-media-box');
 
-                    focusedSpinCard = card;
-                    if (video.preload !== 'auto') {
-                        video.preload = 'auto';
-                        video.load();
-                    }
+                    focusedSpinFileName = card._vFile;
+                    enqueueCarForExtraction(card._vFile, true);
 
                     activeCard = card;
-                    activeVideo = video;
                     activeBadge = badge;
                     isPointerDown = true;
                     lastX = clientX;
                     pendingAngleDelta = 0;
                     lastMoveTime = performance.now();
 
-                    if (typeof card._angle !== 'number') {
-                        card._angle = video.duration ? (video.currentTime / video.duration) : 0;
-                    }
+                    if (typeof card._angle !== 'number') card._angle = 0;
 
                     activeCard.classList.add('interacting-zoom');
                     if (activeBadge) activeBadge.classList.add('spinning');
@@ -1480,7 +1905,7 @@
                     if (!activeCard || Math.abs(pendingAngleDelta) < 0.0001) return;
                     const deltaToApply = pendingAngleDelta;
                     pendingAngleDelta = 0;
-                    renderCardAngleNative(activeCard, activeCard._angle + deltaToApply);
+                    renderCardAngle60FPS(activeCard, activeCard._angle + deltaToApply);
                 }
 
                 function onPointerMove(clientX, rawEvent) {
@@ -1518,14 +1943,13 @@
                     if (!isPointerDown) return;
                     isPointerDown = false;
 
-                    if (activeVideo && !activeVideo.paused) activeVideo.pause();
                     clearZoomState();
 
                     const idleTime = performance.now() - lastMoveTime;
                     if (mode === 'hold' || mode === 'pending' || idleTime > 85) {
                         mode = 'none';
                         if (activeBadge) activeBadge.classList.remove('spinning');
-                        focusedSpinCard = null;
+                        releaseFocusAndResumeOthers();
                     } else if (mode === 'drag') {
                         mode = 'stepdown';
                         stepDownStartTime = performance.now();
@@ -1541,19 +1965,18 @@
                     if (activeCard) {
                         if (isPointerDown && mode === 'hold') {
                             const holdSpeed = window.innerWidth <= 1024 ? 0.14 : HOLD_TURN_SPEED;
-                            renderCardAngleNative(activeCard, activeCard._angle + (spinDir * holdSpeed * dt));
+                            renderCardAngle60FPS(activeCard, activeCard._angle + (spinDir * holdSpeed * dt));
                         } else if (!isPointerDown && mode === 'stepdown') {
                             const elapsed = now - stepDownStartTime;
                             let multiplier = elapsed < 100 ? 1.0 : elapsed < 200 ? 0.9 : elapsed < 300 ? 0.8 : 0;
 
                             if (multiplier > 0) {
                                 const stepBase = window.innerWidth <= 1024 ? 0.12 : STEPDOWN_BASE_SPEED;
-                                renderCardAngleNative(activeCard, activeCard._angle + (spinDir * stepBase * multiplier * dt));
+                                renderCardAngle60FPS(activeCard, activeCard._angle + (spinDir * stepBase * multiplier * dt));
                             } else {
                                 mode = 'none';
-                                if (activeVideo && !activeVideo.paused) activeVideo.pause();
                                 if (activeBadge) activeBadge.classList.remove('spinning');
-                                focusedSpinCard = null;
+                                releaseFocusAndResumeOthers();
                             }
                         }
                     }
@@ -1594,13 +2017,14 @@
                 window.addEventListener('touchcancel', onPointerUp);
             })();
 
+            let modalPingPongRAF = null;
+
             function setModalCarAvailability(isAvailable) {
                 const modalBox = document.getElementById('appointment-modal-box');
                 if (!modalBox) return;
                 modalBox.classList.toggle('is-unavailable', !isAvailable);
             }
 
-            // AÇILIR AÇILMAZ ANINDA MÜSAİTLİK KONTROLÜ (ÖNCE BELLEKTEN 0 SN'DE, ARDINDAN CANLI TAKVİMDEN)
             function checkCarAvailabilityFromGoogleScript(carName) {
                 if (busyCarsCache.get(carName) === false) {
                     setModalCarAvailability(false);
@@ -1634,36 +2058,102 @@
                     .catch(() => {});
             }
 
+            function startModalSmoothPingPong(video, canvas, fileName) {
+                if (modalPingPongRAF) cancelAnimationFrame(modalPingPongRAF);
+
+                const bank = ensureGpuBank(fileName);
+                let progress = 0.0;
+                let direction = 1;
+                let lastTick = performance.now();
+                let lastDrawnIdx = -1;
+
+                if (bank && bank.complete && bank.frames.length === FULL_360_FRAMES) {
+                    video.pause();
+                    video.style.display = 'none';
+                    canvas.width = bank.width;
+                    canvas.height = bank.height;
+                    canvas.style.display = 'block';
+                } else {
+                    canvas.style.display = 'none';
+                    video.style.display = 'block';
+                    video.loop = true;
+                    video.playbackRate = 0.85;
+                    video.play().catch(() => {});
+                    enqueueCarForExtraction(fileName, true);
+                }
+
+                function tickModal(now) {
+                    const dt = Math.min(0.05, (now - lastTick) / 1000);
+                    lastTick = now;
+
+                    if (bank && bank.complete && bank.frames.length === FULL_360_FRAMES) {
+                        if (canvas.style.display !== 'block') {
+                            video.pause();
+                            video.style.display = 'none';
+                            canvas.width = bank.width;
+                            canvas.height = bank.height;
+                            canvas.style.display = 'block';
+                        }
+
+                        progress += direction * MODAL_PINGPONG_SPEED * dt;
+                        if (progress >= 1.0) { progress = 1.0; direction = -1; }
+                        else if (progress <= 0.0) { progress = 0.0; direction = 1; }
+
+                        const idx = Math.min(FULL_360_FRAMES - 1, Math.max(0, Math.round(progress * (FULL_360_FRAMES - 1))));
+                        if (idx !== lastDrawnIdx) {
+                            lastDrawnIdx = idx;
+                            const bmp = bank.frames[idx];
+                            if (bmp) {
+                                const ctx = canvas.getContext('2d', { alpha: false });
+                                ctx.fillStyle = '#E6E6E4';
+                                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                                ctx.drawImage(bmp, 0, 0, canvas.width, canvas.height);
+                            }
+                        }
+                    }
+                    modalPingPongRAF = requestAnimationFrame(tickModal);
+                }
+                modalPingPongRAF = requestAnimationFrame(tickModal);
+            }
+
             window.openOrderModal = function(carName, videoFile, priceStr) {
                 randevuAcilisZamani = Date.now();
                 activeModalCar = carName;
+                focusedSpinFileName = videoFile;
 
                 const errBanner = document.getElementById('errBanner');
                 if (errBanner) errBanner.style.display = 'none';
 
                 document.getElementById('modal-car-name').innerText = `${carName} • ${priceStr} / GÜN`;
-
-                // Pencere açıldığı salisede doluysa anında "Müsait değil başka modelleri inceleyin!" gösterir
                 checkCarAvailabilityFromGoogleScript(carName);
 
                 const modalVideo = document.getElementById('modal-video');
+                const modalCanvas = document.getElementById('modal-canvas');
                 modalVideo.parentElement.classList.add('video-skeleton');
 
-                modalVideo.onerror = function() {
-                    const cSrc = modalVideo.getAttribute('src') || '';
-                    if (!cSrc.includes('assets/')) {
-                        modalVideo.src = 'assets/' + videoFile;
-                        modalVideo.load();
-                    }
-                };
-                modalVideo.onloadeddata = function() {
+                const bank = ensureGpuBank(videoFile);
+                if (bank && bank.complete) {
                     modalVideo.parentElement.classList.remove('video-skeleton');
-                    modalVideo.playbackRate = 0.85;
-                    modalVideo.play().catch(() => {});
-                };
-
-                modalVideo.src = videoFile;
-                modalVideo.load();
+                    startModalSmoothPingPong(modalVideo, modalCanvas, videoFile);
+                } else {
+                    modalCanvas.style.display = 'none';
+                    modalVideo.style.display = 'block';
+                    modalVideo.onerror = function() {
+                        const cSrc = modalVideo.getAttribute('src') || '';
+                        if (!cSrc.includes('assets/') && !cSrc.startsWith('blob:')) {
+                            modalVideo.src = 'assets/' + videoFile;
+                            modalVideo.load();
+                        }
+                    };
+                    modalVideo.onloadeddata = function() {
+                        modalVideo.parentElement.classList.remove('video-skeleton');
+                        startModalSmoothPingPong(modalVideo, modalCanvas, videoFile);
+                    };
+                    getOrDownloadPersistentBlobUrl(videoFile).then(blobUrl => {
+                        modalVideo.src = blobUrl;
+                        modalVideo.load();
+                    });
+                }
 
                 const overlay = document.getElementById('randevuModal');
                 overlay.style.display = 'flex';
@@ -1692,14 +2182,24 @@
             };
 
             window.closeOrderModal = function() {
+                if (modalPingPongRAF) {
+                    cancelAnimationFrame(modalPingPongRAF);
+                    modalPingPongRAF = null;
+                }
+                focusedSpinFileName = null;
+                setTimeout(processNextInExtractionQueue, 150);
+
                 const overlay = document.getElementById('randevuModal');
                 const modalVideo = document.getElementById('modal-video');
+                const modalCanvas = document.getElementById('modal-canvas');
                 overlay.classList.remove('show');
                 document.body.style.overflow = '';
                 setTimeout(() => {
                     overlay.style.display = 'none';
                     modalVideo.pause();
+                    modalCanvas.style.display = 'none';
                     modalVideo.removeAttribute('src');
+                    modalVideo.load();
                 }, 350);
             };
 
@@ -1807,7 +2307,6 @@
                     .then(doluSaatler => {
                         saatSelect.options[0].text = "Saat Seçiniz";
                         if (doluSaatler && doluSaatler.length > 0) {
-                            // Seçilen tarihte bu araç zaten kiralanmışsa formu doldurtmadan anında "Müsait değil" şeridini açar
                             setModalCarAvailability(false);
                         }
                     })
@@ -1902,7 +2401,6 @@
                         showErr(res.mesaj || "Takvim kaydı sırasında hata oluştu.");
                         return;
                     }
-                    // Sipariş tamamlandığı an aracı yerel bellekte de "Dolu" olarak işaretler; tekrar tıklandığında açılır açılmaz "Müsait değil" der
                     markCarUnavailableLocally(orderedCarName);
                     closeOrderModal();
                     showTopToast("Sipariş ve randevunuz oluşturulmuştur");
